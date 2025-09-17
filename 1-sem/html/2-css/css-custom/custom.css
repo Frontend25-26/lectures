@@ -263,3 +263,9 @@ i {
     align-items: center;
     gap: 10px;
 }
+
+.qr-card .qr-img {
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+}
