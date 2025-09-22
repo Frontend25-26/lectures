@@ -55,6 +55,8 @@
         }
 
         const now = new Date();
+        const urlParams = new URLSearchParams(window.location.search);
+        const isVisibleAll = urlParams.get('view_all') === 'true';
 
         semester.courses.forEach(course => {
             const column = document.createElement('div');
@@ -99,7 +101,7 @@
                             link.appendChild(dateSpan);
                         }
 
-                        if (isAvailable) {
+                        if (isAvailable || isVisibleAll) {
                             item.appendChild(link);
                             list.appendChild(item);
                         }
