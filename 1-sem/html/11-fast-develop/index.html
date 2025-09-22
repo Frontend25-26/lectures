@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>CSS</title>
+
+    <meta name="description" content="Лекция #3 по курсу «вёрстка». CSS">
+    <meta name="author" content="Олег Мохов, Руслан Крохин">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        <!--
+        Yandex.Metrika
+        counter -->
+            (function (m, e, t, r, i, k, a) {
+                m[i] = m[i] || function () {
+                    (m[i].a = m[i].a || []).push(arguments)
+                };
+                m[i].l = 1 * new Date();
+                for (var j = 0; j < document.scripts.length; j++) {
+                    if (document.scripts[j].src === r) {
+                        return;
+                    }
+                }
+                k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+            })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(95067685, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true
+        });
+        <!-- /Yandex.Metrika counter -->
+    </script>
+
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <h3>11. Ускорение разработки</h3>
+        <ol>
+            <li>
+                Введение - 5 минут
+            </li>
+            <li>
+                Быстрое написание кода - 15 минут
+                <ol>
+                    <li>Emmet - 10 минут</li>
+                    <li>Пресеты в <a href="https://codelab.pro/kak-sozdavat-snippety-v-vs-code/">VSCode</a> и
+                        <a href="https://habr.com/ru/articles/764510/">WebStorm</a> - 5 минут
+                    </li>
+                </ol>
+            </li>
+            <li>
+                Готовые CSS-фреймворки - 40 минут
+                <ol>
+                    <li>Bootstrap - 25 минут</li>
+                    <ol>
+                        <li>Колоночная система - 10 минут</li>
+                        <li>Компоненты CSS - 10 минут</li>
+                        <li>JS функции - 5 минут</li>
+                    </ol>
+                    <li>Tailwind - 15 минут</li>
+                </ol>
+            </li>
+            <li>
+                Препроцессоры и постпроцессоры - 25 минут
+                <ol>
+                    <li>Sass - 15 минут</li>
+                    <li>Post CSS - 10 минут</li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</div>
+<script src="/utils/lib/js/head.min.js"></script>
+<script src="/utils/js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+
+<script>
+    $('.links a').on('mouseover', function () {
+        var text = $(this).data('content');
+        $('.output-links').text(text);
+
+    });
+    $('.links a').on('blur', function () {
+        $('.output-links').text('');
+
+    });
+
+    Reveal.addEventListener('fragmentshown', function (event) {
+        if (Reveal.isFirstSlide()) {
+            var root = $(event.fragment);
+            console.log(root);
+            setTimeout(function () {
+                $(root).find('h1').addClass('bounceInDown');
+                $(root).find('h4').addClass('bounceInRight');
+                $(root).find('small').eq(0).addClass('bounceInLeft');
+                $(root).find('small').eq(1).addClass('bounceInUp');
+            }, 0);
+        }
+    });
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: '/utils/lib/js/classList.js', condition: function () {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '/utils/plugin/markdown/marked.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: '/utils/plugin/markdown/markdown.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () {
+                    return !!document.querySelector('pre code');
+                }, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+            { src: '/utils/plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+
+</script>
+<script src="/utils/lib/js/code-example.js"></script>
+</body>
+</html>

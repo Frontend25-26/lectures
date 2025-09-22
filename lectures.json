@@ -1,0 +1,43 @@
+{
+  "semesters": [
+    {
+      "name": "Первый семестр",
+      "courses": [
+        {
+          "name": "Верстка",
+          "lectures": [
+            {
+              "title": "Основы HTML",
+              "link": "/1-sem/html/1-html/index.html",
+              "openDate": "2025-09-01T10:00:00",
+              "order": 1
+            },
+            {
+              "title": "Основы CSS",
+              "link": "/1-sem/html/2-css/index.html",
+              "openDate": "2025-10-04T10:00:00",
+              "order": 2
+            }
+          ]
+        },
+        {
+          "name": "JavaScript",
+          "lectures": [
+            {
+              "title": "Типы данных part. 1",
+              "link": "/1-sem/js/1-types/index.html",
+              "openDate": "2025-09-15T10:00:00",
+              "order": 1
+            },
+            {
+              "title": "Типы данных part. 2",
+              "link": "/1-sem/js/2-types/index.html",
+              "openDate": "2025-10-04T10:00:00",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

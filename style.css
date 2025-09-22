@@ -1,0 +1,139 @@
+:root {
+    --primary: #4dabf7;
+    --secondary: #339af0;
+    --accent: #ff922b;
+    --bg: #212529;
+    --card-bg: #2b3035;
+    --text: #f8f9fa;
+    --border: #495057;
+    --hover-bg: #343a40;
+    --disabled: #6c757d;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary);
+}
+
+h1 {
+    color: var(--primary);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    color: var(--secondary);
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+
+.lecture-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.lecture-column {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lecture-column:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.lecture-column h3 {
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin: 0;
+}
+
+.lecture-list {
+    list-style: none;
+    padding: 0;
+}
+
+.lecture-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--border);
+    transition: background-color 0.2s ease;
+}
+
+.lecture-list li:hover {
+    background-color: var(--hover-bg);
+}
+
+.lecture-list a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+}
+
+.lecture-list a:hover {
+    color: var(--accent);
+    transform: translateX(5px);
+    background-color: rgba(255, 146, 43, 0.1);
+}
+
+.badge {
+    display: inline-block;
+    background-color: var(--primary);
+    color: var(--bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.loading {
+    color: var(--secondary);
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+}
+
+.error {
+    color: #ff6b6b;
+    text-align: center;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .lecture-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.lecture-date {
+    font-size: 0.8rem;
+    color: var(--disabled);
+    margin-left: 0.5rem;
+}

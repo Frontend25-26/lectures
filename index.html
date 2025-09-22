@@ -1,11 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ITMOxFrontEnd 2025-2026</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Список лекций:</h1>
-<a href="/1-sem/html/2-css/index.html">2. CSS</a>
+<div class="container">
+    <header>
+        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+        <h2 class="js-semester-name">Загрузка...</h2>
+    </header>
+
+    <div class="lecture-grid js-courses-container">
+        <div class="loading">Идёт загрузка лекций...</div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('lectures.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка сети');
+                return response.json();
+            })
+            .then(data => {
+                renderLectures(data);
+            })
+            .catch(error => {
+                console.error('Ошибка загрузки данных:', error);
+                document.querySelector('.js-semester-name').textContent = 'Ошибка загрузки лекций';
+                document.querySelector('.js-courses-container').innerHTML =
+                    '<div class="error">Пожалуйста, попробуйте позже</div>';
+            });
+    });
+
+    function renderLectures(data) {
+        if (!data.semesters || data.semesters.length === 0) {
+            document.querySelector('.js-courses-container').innerHTML =
+                '<div class="error">Нет данных о семестрах</div>';
+            return;
+        }
+
+        const semester = data.semesters[0];
+        document.querySelector('.js-semester-name').textContent = semester.name;
+
+        const container = document.querySelector('.js-courses-container');
+        container.innerHTML = '';
+
+        if (!semester.courses || semester.courses.length === 0) {
+            container.innerHTML = '<div class="error">Нет доступных курсов</div>';
+            return;
+        }
+
+        const now = new Date();
+
+        semester.courses.forEach(course => {
+            const column = document.createElement('div');
+            column.className = 'lecture-column';
+
+            const title = document.createElement('h3');
+            title.textContent = course.name;
+            column.appendChild(title);
+
+            const list = document.createElement('ul');
+            list.className = 'lecture-list';
+
+            if (!course.lectures || course.lectures.length === 0) {
+                const item = document.createElement('li');
+                item.textContent = 'Лекции пока не добавлены';
+                item.style.color = 'var(--disabled)';
+                list.appendChild(item);
+            } else {
+                course.lectures
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .forEach(lecture => {
+                        const item = document.createElement('li');
+                        const lectureDate = lecture.openDate ? new Date(lecture.openDate) : null;
+                        const isAvailable = lectureDate && lectureDate <= now;
+
+                        const link = document.createElement('a');
+                        link.href = lecture.link;
+
+                        const badge = document.createElement('span');
+                        badge.className = 'badge';
+                        badge.textContent = lecture.order || '?';
+
+                        const titleText = document.createTextNode(lecture.title || 'Без названия');
+
+                        link.appendChild(badge);
+                        link.appendChild(titleText);
+
+                        if (lectureDate) {
+                            const dateSpan = document.createElement('span');
+                            dateSpan.className = 'lecture-date';
+                            dateSpan.textContent = ` (${ formatDate(lectureDate) })`;
+                            link.appendChild(dateSpan);
+                        }
+
+                        if (isAvailable) {
+                            item.appendChild(link);
+                            list.appendChild(item);
+                        }
+
+                    });
+            }
+
+            column.appendChild(list);
+            container.appendChild(column);
+        });
+    }
+
+    function formatDate(date) {
+        return date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    }
+</script>
 </body>
 </html>
