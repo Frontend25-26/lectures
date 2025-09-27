@@ -1,0 +1,218 @@
+.yu-code {
+  background-color: transparent !important;
+}
+
+.yu-pre {
+  box-shadow: none !important;
+}
+
+.yu-bad {
+  color: #f63f3f;
+}
+
+.yu-good {
+  color: #008b00;
+}
+
+.yu-wrapper {
+  background-color: white;
+  padding: 24px;
+}
+
+.yu-solid-border {
+  border: 1px solid black;
+}
+
+.yu-solid-border-padding {
+  border-radius: 10px;
+
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.yu-dashed-border {
+  border: 1px dashed black;
+}
+
+.yu-border-radius {
+  border-radius: 10px;
+}
+
+.yu-paragraph {
+  font-size: 24px;
+}
+
+.yu-flex-img-reset {
+  height: 150px;
+  margin: 0 !important;
+}
+
+.yu-flex-img {
+  height: 150px;
+  max-width: 200px !important;
+  margin: 0 !important;
+}
+
+.yu-cat1 {
+  width: 200px;
+  height: 150px;
+  background-image: url("../../../assets/lesson3.html/cat1.png");
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+  background-size: cover;
+}
+
+.yu-cat2 {
+  width: 200px;
+  height: 150px;
+  background-image: url("../../../assets/lesson3.html/cat2.jpeg");
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+  background-size: cover;
+}
+
+.yu-cat3 {
+  width: 200px;
+  height: 150px;
+  background-image: url("../../../assets/lesson3.html/cat3.png");
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+  background-size: cover;
+}
+
+.yu-cat4 {
+  width: 200px;
+  height: 150px;
+  background-image: url("../../../assets/lesson3.html/cat4.png");
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+  background-size: cover;
+}
+
+.yu-cat5 {
+  width: 200px;
+  height: 150px;
+  background-image: url("../../../assets/lesson3.html/cat5.jpeg");
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+  background-size: cover;
+}
+
+.yu-cat6 {
+  width: 200px;
+  height: 150px;
+  background-image: url("../../../assets/lesson3.html/cat6.jpeg");
+  background-repeat: no-repeat;
+  background-position: -40px 0px;
+  background-size: cover;
+}
+
+.yu-grid,
+.yu-grid-template,
+.yu-grid-template1 {
+  display: grid;
+  margin: auto;
+  width: 700px;
+  height: 450px;
+  font-size: 20px;
+
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.yu-grid-template {
+  grid-template-areas:
+    "red green orange orange"
+    "red blue blue yellow";
+  grid-template-rows: 300px 150px;
+}
+
+.yu-grid-template1 {
+  grid-template-areas:
+    "red green orange orange"
+    "red blue yellow yellow";
+  grid-template-rows: 300px 150px;
+}
+
+.yu-grid-item-red,
+.yu-grid-item-green,
+.yu-grid-item-blue,
+.yu-grid-item-yellow,
+.yu-grid-item-orange,
+.yu-grid-item-purple {
+  padding: 10px;
+}
+
+.yu-grid-item-red {
+  background-color: #fcbcb8;
+}
+
+.yu-grid-item-green {
+  background-color: #77dd77;
+}
+
+.yu-grid-item-blue {
+  background-color: #afdafc;
+}
+
+.yu-grid-item-yellow {
+  background-color: #feeb72;
+}
+
+.yu-grid-item-orange {
+  background-color: #ff7514;
+}
+
+.yu-grid-item-purple {
+  background-color: #a2a2d0;
+}
+
+.yu-grid-item-red-template {
+  background-color: #fcbcb8;
+  grid-area: red;
+}
+
+.yu-grid-item-green-template {
+  background-color: #77dd77;
+  grid-area: green;
+}
+
+.yu-grid-item-blue-template {
+  background-color: #afdafc;
+  grid-area: blue;
+}
+
+.yu-grid-item-yellow-template {
+  background-color: #feeb72;
+  grid-area: yellow;
+}
+
+.yu-grid-item-orange-template {
+  background-color: #ff7514;
+  grid-area: orange;
+}
+
+.yu-grid-item-purple-template {
+  background-color: #a2a2d0;
+  grid-area: purple;
+}
+
+.yu-img-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yu-img-caption {
+  font-size: 12px;
+  color: black;
+  opacity: 0.5;
+}
+
+.reveal .slide-number {
+  color: rgb(0, 134, 179);
+  background: none;
+  left: 8px;
+  font-size: 24px;
+}

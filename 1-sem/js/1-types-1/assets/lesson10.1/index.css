@@ -1,0 +1,9 @@
+.textLeft {
+    text-align: left;
+}
+
+.mediumDescription {
+    font-size: 25px;
+    text-align: justify;
+    text-indent: 40px;
+}

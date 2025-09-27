@@ -1,0 +1,17 @@
+body {
+    background-color: black;
+    color: #b8b8b8;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title {
+    text-align: center;
+}
+
+p {
+    display: block;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #424242;
+    margin: 0 0 20px;
+}

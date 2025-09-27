@@ -1,0 +1,84 @@
+.fragment.toggle {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.reveal .slides section mark.fragment.toggle.visible {
+    color: white;
+    background: transparent;
+}
+
+.reveal .slides section mark.fragment {
+    background: transparent;
+    visibility: visible;
+    color: white;
+    opacity: 1;
+}
+
+.reveal .slides section mark.fragment.visible.current-fragment.toggle,
+.reveal .slides section mark.fragment.visible {
+    background: hotpink;
+}
+
+mark {
+    border-radius: 5px;
+}
+
+.fragment:before {
+    visibility: hidden;
+}
+
+.resource {
+    text-align: left;
+    bottom: 0;
+    font-size: 12px;
+    background-color: #8f8f8f;
+    border-radius: 5px;
+    width: fit-content;
+    border: 2px #8f8f8f solid;
+}
+
+.resource:before {
+    content: '🔗';
+}
+
+.resource a {
+    color: black;
+}
+
+.resource a:hover {
+    color: #3d3d3d;
+}
+
+ol.square {
+    list-style-type: square;
+}
+
+.regularText {
+    text-align: left;
+}
+
+.smol {
+    font-size: 32px;
+}
+
+.pink {
+    color: hotpink !important;
+}
+
+.pink:hover {
+    color: #bd2f79 !important;
+}
+
+code.codeStyle {
+    font-size: 20px;
+    line-height: 28px;
+    background-color: black;
+    color: #ffffff;
+}
+
+.bold {
+    font-weight: bold
+}
+
+.pink
