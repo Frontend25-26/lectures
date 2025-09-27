@@ -65,16 +65,23 @@
 <div class="reveal">
 
     <div class="slides">
-        <section style="font-size: 70px;">
+        <section style="font-size: 70px; height: 100%; width: 100%">
             <div class="fragment">
                 <h1 class="animated">CSS</h1>
 
                 <p style="text-align: center;">Илья Степанов</p>
             </div>
+            <div class="fragment" style="position: absolute; bottom: 10px; right: 10px; font-size: 0.4em; opacity: 0.5">
+                Designed by Олег Мохов
+            </div>
         </section>
 
         <section>
             <img src="img/css-is-awesome.png" style="background: #fff"/>
+        </section>
+
+        <section>
+            <img src="img/beautifull_css.jpeg" style="background: #fff"/>
         </section>
 
         <section>
@@ -1545,46 +1552,6 @@ color: green !important;
             </ul>
         </section>
 
-        <section data-background-image="img/carrey.gif">
-            <h1 style="text-shadow: #000 0 0 4px; color: #fff">Ускоренный набор HTML и CSS</h1>
-        </section>
-        <section>
-            <h2>Зачем ускоряться</h2>
-            <ul>
-                <li class="fragment">Теги долго печатать (&lt;/&gt;)</li>
-                <li class="fragment">Длинные свойства долго печатать <span class="fragment" style="font-style: italic">(list-style-position, border-color-top)</span>
-                </li>
-                <li class="fragment">Похожие, но разные окончания <span class="fragment" style="font-style: italic">(height vs width)</span>
-                </li>
-                <li class="fragment">Не помню синтаксис правила <span class="fragment" style="font-style: italic">(font: 10px/12px Arial bold; transition: all 0.5s linear .5s)</span>
-                </li>
-            </ul>
-        </section>
-        <section>
-            <h2>Autocomplete</h2>
-            <video src="img/autocomplete-1.mp4" controls loop></video>
-        </section>
-
-        <section class="css-creators">
-            <div class="creators">
-                <figure class=fragment>
-                    <img height=325 src="img/chikuyonok.jpg"/>
-                    <figcaption>Сергей Чикуёнок</figcaption>
-                </figure>
-            </div>
-            <div class=fragment>
-                <h1 style="text-shadow: #000 0 0 4px; color: #fff">2009 – ZenCoding</h1>
-            </div>
-        </section>
-        <section>
-            <h2>Emmet CSS</h2>
-            <video src="img/autocomplete-2.mp4" controls loop></video>
-        </section>
-
-        <section>
-            <h2>Emmet HTML</h2>
-            <video src="img/autocomplete-3.mp4" controls loop></video>
-        </section>
         <section data-background-image="img/27-why.jpg">
             <h1 style="text-shadow: #000 0 0 4px; color: #fff; margin-top: 100px;">Как?</h1>
         </section>
@@ -1593,18 +1560,14 @@ color: green !important;
             <pre class="html size-xl"><code>
 <div style="color: red"></div>
             </code></pre>
-            <pre class="fragment html size-xl"><code>
-<style>@import (
-
-<
-url to css >
-
-)</style>
+            <pre class="fragment html size-xl"><code><style>@import (<url to css>)</style>
             </code></pre>
             <pre class="fragment html size-xl"><code>
-<style>div {
-    color: red
-}</style>
+<style>
+    div {
+        color: red
+    }
+</style>
             </code></pre>
             <pre class="fragment html size-xl"><code>
 <link rel="stylesheet" href="<url to css>">
