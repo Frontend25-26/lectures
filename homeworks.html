@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITMOxFrontEnd 2025-2026</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="/index.html">Лекции</a></li>
+                <li><a href="#" class="active">Домашние задания</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="rules-section">
+        <h2>Правила сдачи и оценивания ДЗ</h2>
+        <div class="rules-content">
+            <p>В вашем репозитории работаем с двумя ветками: <code>main</code> для отправки решений и
+                <code>feedback</code> для обратной связи. Все изменения пушите напрямую в <code>main</code> — они
+                автоматически создадут Merge Request для проверки практиком.</p>
+
+            <h3>Настройка GitHub Pages</h3>
+            <ol class="steps">
+                <li>В настройках репозитория (<em>Settings → Pages</em>) выберите источник <strong>GitHub
+                    Actions</strong></li>
+                <li>Укажите имя репозитория в <code>config.js</code> (формат: <code>/hw1-username</code>)</li>
+            </ol>
+            <p class="note">Рекомендуем выполнить настройку до первого коммита!</p>
+
+            <h3>Критерии оценивания</h3>
+            <ul class="criteria">
+                <li><strong>10 баллов</strong> — максимальная оценка за каждое ДЗ</li>
+                <li><strong>Сдача работы</strong> — получение подтверждения ✅ от ментора и закрытие Pull Request</li>
+                <li><strong>8 баллов</strong> — максимальный балл при сдаче через 2+ недели после публикации задания
+                </li>
+            </ul>
+
+            <div class="grading-note">
+                <p>Итоговый результат: выполнение всех ДЗ без экзамена даёт максимальную оценку <strong>3 (E)</strong>
+                    после нормировки баллов.</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="js-semester-name semester-name">Первый семестр</h2>
+
+    <div class="lecture-grid js-courses-container">
+        <div class="lecture-column">
+            <h3>Верстка</h3>
+            <div class="assignments-table">
+                <div class="table-header">
+                    <div class="col-number">№</div>
+                    <div class="col-title">Название</div>
+                    <div class="col-deadline">Мягкий дедлайн</div>
+                </div>
+                <a href="https://classroom.github.com/a/PtV9F7qh" class="table-row">
+                    <div class="col-number"><span class="badge">1</span></div>
+                    <div class="col-title">Основы HTML</div>
+                    <div class="col-deadline">12 октября 2025 г.</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="lecture-column">
+            <h3>JavaScript</h3>
+            <div class="assignments-table">
+                <div class="table-header">
+                    <div class="col-number">№</div>
+                    <div class="col-title">Название</div>
+                    <div class="col-deadline">Мягкий дедлайн</div>
+                </div>
+                <div class="table-row coming-soon">
+                    <div class="col-number"><span class="badge">1</span></div>
+                    <div class="col-title">Типы данных part. 1</div>
+                    <div class="col-deadline">4 октября 2025 г.</div>
+                    <div class="tooltip">Будет на лекции</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -45,6 +45,37 @@ h2 {
     font-weight: 400;
 }
 
+.main-menu {
+    margin: 1.5rem 0;
+}
+
+.main-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.main-menu a {
+    color: var(--text);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.main-menu a:hover {
+    background-color: var(--hover-bg);
+}
+
+.main-menu a.active {
+    background-color: var(--primary);
+    color: var(--bg);
+}
+
 .lecture-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -68,7 +99,7 @@ h2 {
     color: var(--accent);
     border-bottom: 1px solid var(--border);
     padding-bottom: 0.5rem;
-    margin: 0;
+    margin: 0 0 8px 0;
 }
 
 .lecture-list {
@@ -126,14 +157,338 @@ h2 {
     padding: 2rem;
 }
 
-@media (max-width: 768px) {
-    .lecture-grid {
-        grid-template-columns: 1fr;
-    }
+.assignments-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.table-header, .table-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 150px;
+    gap: 1rem;
+    padding: 0.75rem;
+    align-items: center;
+}
+
+.table-header {
+    font-weight: bold;
+    color: var(--secondary);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.table-row {
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.table-row:hover {
+    background-color: var(--hover-bg);
+}
+
+.table-row a {
+    color: inherit;
+    text-decoration: none;
+    display: contents;
+}
+
+.coming-soon {
+    color: var(--disabled);
+    cursor: not-allowed;
+}
+
+.coming-soon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: var(--accent);
+    color: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    right: 0;
+    top: -40px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--accent) transparent transparent transparent;
+}
+
+.badge {
+    display: inline-block;
+    background-color: var(--primary);
+    color: var(--bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+.loading {
+    color: var(--secondary);
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
 }
 
 .lecture-date {
     font-size: 0.8rem;
     color: var(--disabled);
     margin-left: 0.5rem;
+}
+
+.error {
+    color: #ff6b6b;
+    text-align: center;
+    padding: 2rem;
+}
+
+@media (max-width: 900px) {
+    .lecture-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table-header, .table-row {
+        grid-template-columns: 40px minmax(0, 2fr) minmax(0, 1fr);
+    }
+}
+
+.table-row {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+a:visited .table-row {
+    color: var(--secondary);
+}
+
+.rules-section {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.rules-section h2, .rules-section h3 {
+    text-align: center;
+}
+
+.rules-section ol {
+    padding-left: 0;
+}
+
+.rules-section ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.rules-section h2 {
+    color: var(--accent);
+    margin: 0 0 1.8rem 0;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.rules-content {
+    line-height: 1.75;
+    font-size: 1.05rem;
+}
+
+h3 {
+    color: var(--secondary);
+    margin: 1.8rem 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.steps {
+    padding-left: 1.8rem;
+    margin: 1.2rem 0;
+    counter-reset: step;
+}
+
+.steps li {
+    position: relative;
+    margin-bottom: 0.8rem;
+    padding-left: 2.2rem;
+    list-style-type: none;
+}
+
+.steps li:before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    background: var(--primary);
+    color: white;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.8rem;
+    font-size: 0.9rem;
+}
+
+.criteria {
+    padding-left: 1.8rem;
+    margin: 1.2rem 0;
+}
+
+.criteria li {
+    position: relative;
+    margin-bottom: 0.7rem;
+    padding-left: 1.5rem;
+}
+
+.criteria li:before {
+    content: "•";
+    color: var(--primary);
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -0.2rem;
+}
+
+.note {
+    font-size: 0.9rem;
+    color: var(--disabled);
+    font-style: italic;
+    margin: -0.5rem 0 1.5rem 1.8rem;
+}
+
+.grading-note {
+    background: rgba(255, 146, 43, 0.1);
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border-left: 4px solid var(--accent);
+}
+
+.grading-note p {
+    margin: 0;
+    font-weight: 500;
+}
+
+code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: var(--primary);
+}
+
+strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.semester-name {
+    text-align: center;
+}
+
+
+@media (max-width: 450px) {
+    .assignments-table {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .table-header {
+        display: none; /* Скрываем заголовок таблицы на мобильных */
+    }
+
+    .table-row {
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        background: var(--hover-bg);
+        border-radius: 8px;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        position: relative;
+    }
+
+    .col-number,
+    .col-title,
+    .col-deadline {
+        display: flex;
+        align-items: center;
+        padding: 0.3rem 0;
+    }
+
+    .col-number::before {
+        content: "Номер: ";
+        color: var(--disabled);
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+    }
+
+    .col-title::before {
+        content: "Тема: ";
+        color: var(--disabled);
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+    }
+
+    .col-deadline::before {
+        content: "Дедлайн: ";
+        color: var(--disabled);
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+    }
+
+    .badge {
+        margin-right: 0;
+    }
+
+    .coming-soon .tooltip {
+        top: auto;
+        bottom: -40px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .coming-soon .tooltip::after {
+        top: -10px;
+        bottom: auto;
+        left: 50%;
+        border-color: transparent transparent var(--accent) transparent;
+    }
+}
+
+.main-menu a {
+    display: block;
+    text-align: center;
+}
+
+@media (max-width: 450px) {
+    .lecture-list a {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .container {
+        padding: 16px;
+    }
 }
