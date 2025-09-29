@@ -104,7 +104,7 @@
                     </template>
                     <template data-type="css">
                         p {
-                            color: green;
+                        color: green;
                         }
                     </template>
                 </code-example>
@@ -124,7 +124,7 @@
                     </template>
                     <template data-type="css">
                         span {
-                            color: red !important;
+                        color: red !important;
                         }
                     </template>
                 </code-example>
@@ -139,9 +139,9 @@
                     </template>
                     <template data-type="css">
                         div {
-                            font-size: 50px;
-                            font-family: ComicSans;
-                            color: black;
+                        font-size: 50px;
+                        font-family: ComicSans;
+                        color: black;
                         }
 
 
@@ -516,6 +516,15 @@ p {
         </section>
         <section>
             <h1 style="text-shadow: #000 0 0 4px; color: #fff">Селектор тега</h1>
+            <pre class="css size-l"><code>body {
+    /* styles */
+}
+
+h1 {
+    /* styles */
+}
+
+            </code></pre>
         </section>
         <section>
             <h1 style="text-shadow: #000 0 0 4px; color: #fff">Классы и идентификаторы</h1>
@@ -1369,7 +1378,7 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         div {
-                            color: green; /* 0 0 1 */
+                        color: green; /* 0 0 1 */
                         }
                     </template>
                 </code-example>
@@ -1387,8 +1396,8 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         div {
-                            color: green; /* 0 0 1 */
-                            /* abbr { color: green } – нет специфичности */
+                        color: green; /* 0 0 1 */
+                        /* abbr { color: green } – нет специфичности */
                         }
                     </template>
                 </code-example>
@@ -1409,10 +1418,10 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         * {
-                            color: red; /* 0 0 0 */
+                        color: red; /* 0 0 0 */
                         }
                         div {
-                            color: green; /* 0 0 1 */
+                        color: green; /* 0 0 1 */
                         }
                     </template>
                 </code-example>
@@ -1430,11 +1439,11 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         * {
-                            color: red; /* 0 0 0 */
+                        color: red; /* 0 0 0 */
                         }
                         div {
-                            color: green; /* 0 0 1 */
-                            /* abbr { color : green } – нет специфичности */
+                        color: green; /* 0 0 1 */
+                        /* abbr { color : green } – нет специфичности */
                         }
                     </template>
                 </code-example>
@@ -1560,7 +1569,12 @@ color: green !important;
             <pre class="html size-xl"><code>
 <div style="color: red"></div>
             </code></pre>
-            <pre class="fragment html size-xl"><code><style>@import (<url to css>)</style>
+            <pre class="fragment html size-xl"><code><style>@import (
+
+            <
+            url to css >
+
+            )</style>
             </code></pre>
             <pre class="fragment html size-xl"><code>
 <style>
@@ -1629,22 +1643,22 @@ color: green !important;
                 ## Технические требования
 
                 - Обязательные элементы стилизации
-                - Псевдоклассы (например, `:hover`, `:active`, `:focus`).
-                - Псевдоэлементы (`::before`, `::after`).
-                - Кастомные шрифты (можно через Google Fonts или локально).
+                    - Псевдоклассы (например, `:hover`, `:active`, `:focus`).
+                    - Псевдоэлементы (`::before`, `::after`).
+                    - Кастомные шрифты (можно через Google Fonts или локально).
 
                 - Креативность (вот некоторые идеи)
-                - Всплывающие подсказки.
-                - "Пузыри" для цитат.
-                - Градиенты, текстуры, эффекты "pop art".
+                    - Всплывающие подсказки.
+                    - "Пузыри" для цитат.
+                    - Градиенты, текстуры, эффекты "pop art".
 
                 ---
 
                 ### Правила сдачи
 
                 - Pull Request с обновлёнными файлами:
-                - `index.html` (можно доработать структуру, но не ломать семантику).
-                - `styles.css` (основной файл стилей).
+                    - `index.html` (можно доработать структуру, но не ломать семантику).
+                    - `styles.css` (основной файл стилей).
                 - Дополнительные ресурсы (шрифты, изображения).
                 - Название PR — ваши фамилия и имя.
 
@@ -1653,16 +1667,11 @@ color: green !important;
                 ### Оценивание
 
                 - **10 баллов** — получен **OK** и закрыт PR до **18.10.2025, 23:59:59 GMT+3**;
-                - **7 баллов** — сдача в течение **+2 недель** после дедлайна.
+                - **5 баллов** — сдача в течение **+2 недель** после дедлайна.
 
                 ---
 
                 ## Удачи! Пусть ваш герой засияет в новом стиле! 🚀
-
-                ---
-
-                *(Пример вдохновения: [Comic Book
-                Styling](https://i.pinimg.com/originals/fd/26/9b/fd269b23b48eb11b1dba61cb1b7e04c0.jpg))*
             </section>
     </div>
 </div>
