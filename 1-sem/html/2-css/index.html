@@ -183,6 +183,19 @@
             <img src="img/piter-css.gif"/>
         </section>
 
+        <section>
+            <img src="https://cdn2.myquiz.ru/customization/default/logo/logo-mobile.svg" style="background: #3a28a7; padding: 1em">
+
+            <div class="qr-card">
+                <img src="img/qr-quiz.svg" width="350"
+                     border="0" title="QR код" class="qr-img" style="background: #fff; border-radius: 15px;">
+                <h3 style="color: #3a28a7; background: #fff; border-radius: 15px; padding: 0.2em; margin-top: 10px;">
+                    00887034
+                </h3>
+            </div>
+
+        </section>
+
         <section data-background-image="img/history.jpg">
             <h1 style="margin-top: 250px; text-shadow: #000 3px 2px 2px;">История</h1>
         </section>
@@ -236,6 +249,7 @@
     <p><font size="8px" color="gray" face="Arial">Текст параграфа 3</font></p>
 &lt;/body&gt;
                         </code></pre>
+            <a href="https://www.spacejam.com/1996/" target="_blank" class="fragment">Пример сайта с тегом &lt;font&gt;</a>
         </section>
         <section data-background-image="img/parking.jpg">
             <h1 style="text-shadow: #000 3px 2px 2px;">HTML – это язык разметки</h1>
@@ -668,17 +682,184 @@ div#red {
             <h1 style="text-shadow: #000 0 0 4px; color: #fff">Селекторы атрибутов</h1>
         </section>
         <section>
-            <h2>Селекторы атрибутов</h2>
-            <p>
-            <pre class="css size-xl">
-<code class="fragment">[href] { color: red; }</code>
-<code class="fragment">[href="http://ya.ru"] { color: red; }
-[href*="ya"] { color: red; }</code>
-<code class="fragment">[href^="https://"] { color: red; }
-[href$="ya.ru"] { color: red; }</code>
-<code class="fragment">[lang~="en-US"] { color: red; }
-[lang|="en"] { color: red; }</code>
-                        </pre>
+            <section>
+                <h1  style="text-shadow: #000 0 0 4px; color: #fff">Селекторы атрибутов</h1>
+            </section>
+
+            <section>
+                <h2><code>[name]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [href] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2><code>[name = value]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [href="https://apple.com"] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2><code>[name *= value]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [href*="apple"] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2><code>[name ^= value]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [href^="https://"] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2><code>[name $= value]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [href$=".com"] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2><code>[name ~= value]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [lang~="en-GB"] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2><code>[name |= value]</code></h2>
+                <code-example>
+                    <template data-type="html">
+                        <a href="https://apple.com" lang="en en-US en-GB">США</a>
+                        <a href="http://apple.com/ru" lang="ru-RU">Россия</a>
+                        <a href="https://apple.com/kz" lang="kz-KZ ru-KZ">Казахстан</a>
+                        <a href="http://apple.com/fr" lang="fr-FR">Франция</a>
+                        <a href="https://apple.com/de" lang="de-DE de-AT">Германия</a>
+                        <a href="https://amazon.com" lang="en">Amazon</a>
+                        <a href="https://amazon.com" lang="en-GB">Amazon GB</a>
+                        <a lang="none">Empty</a>
+                    </template>
+                    <template data-type="css">
+                        * {
+                            color: black;
+                        }
+
+                        [lang|="en"] {
+                            color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
         </section>
 
         <section data-background-image="img/tsar.jpg">
@@ -706,7 +887,7 @@ a:focus { color: yellow }
         </section>
         <section>
             <h2>Динамические псевдоклассы</h2>
-            <p>
+
             <pre class="css size-xl">
 <span class="fragment">:enabled</span>
 <span class="fragment">:disabled</span>
