@@ -111,7 +111,7 @@
                         if (!isAvailable && !isVisibleAll) return;
 
                         const hasHomework = typeof lecture.homework === 'string';
-                        const deadline = calculateDeadline(lecture.openDate);
+                        const deadline = lecture.homeworkDate ? new Date(lecture.homeworkDate) : calculateDeadline(lecture.openDate);
 
                         if (hasHomework) {
                             // Задание доступно
