@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITMOxFrontEnd 2025-2026</title>
+    <title>ITMOxFrontEnd 2025-2026 - Домашние задания</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,7 +28,7 @@
             <ol class="steps">
                 <li>В настройках репозитория (<em>Settings → Pages</em>) выберите источник <strong>GitHub
                     Actions</strong></li>
-                <li>Укажите имя репозитория в <code>config.js</code> (формат: <code>/hw1-username</code>)</li>
+                <li>Укажите имя репозитория в <code>config.js</code></li>
             </ol>
             <p class="note">Рекомендуем выполнить настройку до первого коммита!</p>
 
@@ -47,42 +47,126 @@
         </div>
     </div>
 
-    <h2 class="js-semester-name semester-name">Первый семестр</h2>
-
-    <div class="lecture-grid js-courses-container">
-        <div class="lecture-column">
-            <h3>Верстка</h3>
-            <div class="assignments-table">
-                <div class="table-header">
-                    <div class="col-number">№</div>
-                    <div class="col-title">Название</div>
-                    <div class="col-deadline">Мягкий дедлайн</div>
-                </div>
-                <a href="https://classroom.github.com/a/PtV9F7qh" class="table-row">
-                    <div class="col-number"><span class="badge">1</span></div>
-                    <div class="col-title">Основы HTML</div>
-                    <div class="col-deadline">12 октября 2025 г.</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="lecture-column">
-            <h3>JavaScript</h3>
-            <div class="assignments-table">
-                <div class="table-header">
-                    <div class="col-number">№</div>
-                    <div class="col-title">Название</div>
-                    <div class="col-deadline">Мягкий дедлайн</div>
-                </div>
-                <div class="table-row coming-soon">
-                    <div class="col-number"><span class="badge">1</span></div>
-                    <div class="col-title">Типы данных part. 1</div>
-                    <div class="col-deadline">4 октября 2025 г.</div>
-                    <div class="tooltip">Будет на лекции</div>
-                </div>
-            </div>
-        </div>
+    <div id="semesters-container">
+        <!-- Сюда будет вставлено содержимое из JSON -->
     </div>
+
+    <script>
+        // Функция для форматирования даты
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('ru-RU', options);
+        }
+
+        // Функция для расчета дедлайна (openDate + 2 недели)
+        function calculateDeadline(openDate) {
+            const date = new Date(openDate);
+            date.setDate(date.getDate() + 14); // Добавляем 2 недели
+            date.setHours(23, 59, 59, 999); // Устанавливаем конец дня
+            return date;
+        }
+
+        // Функция для создания HTML-структуры
+        function renderSemesters(data) {
+            const now = new Date();
+            const urlParams = new URLSearchParams(window.location.search);
+            const isVisibleAll = urlParams.get('view_all') === 'true';
+
+            const container = document.getElementById('semesters-container');
+            container.innerHTML = '';
+
+            data.semesters.forEach(semester => {
+                const semesterTitle = document.createElement('h2');
+                semesterTitle.className = 'semester-name';
+                semesterTitle.textContent = semester.name;
+                container.appendChild(semesterTitle);
+
+                const coursesContainer = document.createElement('div');
+                coursesContainer.className = 'lecture-grid';
+
+                semester.courses.forEach(course => {
+                    const courseColumn = document.createElement('div');
+                    courseColumn.className = 'lecture-column';
+
+                    const courseTitle = document.createElement('h3');
+                    courseTitle.textContent = course.name;
+                    courseColumn.appendChild(courseTitle);
+
+                    const assignmentsTable = document.createElement('div');
+                    assignmentsTable.className = 'assignments-table';
+
+                    const tableHeader = document.createElement('div');
+                    tableHeader.className = 'table-header';
+                    tableHeader.innerHTML = `
+                        <div class="col-number">№</div>
+                        <div class="col-title">Название</div>
+                        <div class="col-deadline">Мягкий дедлайн</div>
+                    `;
+                    assignmentsTable.appendChild(tableHeader);
+
+                    course.lectures.forEach(lecture => {
+                        const lectureDate = lecture.openDate ? new Date(lecture.openDate) : null;
+                        const isAvailable = lectureDate && lectureDate <= now;
+
+                        if (!isAvailable && !isVisibleAll) return;
+
+                        const hasHomework = typeof lecture.homework === 'string';
+                        const deadline = calculateDeadline(lecture.openDate);
+
+                        if (hasHomework) {
+                            // Задание доступно
+                            const row = document.createElement('a');
+                            row.className = 'table-row';
+                            row.href = lecture.homework;
+                            row.innerHTML = `
+                                <div class="col-number"><span class="badge">${ lecture.order }</span></div>
+                                <div class="col-title">${ lecture.title }</div>
+                                <div class="col-deadline">${ formatDate(deadline) }</div>
+                            `;
+                            assignmentsTable.appendChild(row);
+                        } else {
+                            const tooltipText = lecture.homework_text ?? 'Домашнее задание не предусмотрено';
+
+                            // Задание отсутствует
+                            const row = document.createElement('div');
+                            row.className = 'table-row coming-soon';
+                            row.innerHTML = `
+                                <div class="col-number"><span class="badge">${ lecture.order }</span></div>
+                                <div class="col-title">${ lecture.title }</div>
+                                <div class="col-deadline">${ formatDate(deadline) }</div>
+                                <div class="tooltip">${ tooltipText }</div>
+                            `;
+                            assignmentsTable.appendChild(row);
+                        }
+                    });
+
+                    courseColumn.appendChild(assignmentsTable);
+                    coursesContainer.appendChild(courseColumn);
+                });
+
+                container.appendChild(coursesContainer);
+            });
+        }
+
+        // Функция для загрузки JSON
+        async function loadJSON() {
+            try {
+                const response = await fetch('lectures.json');
+                if (!response.ok) throw new Error('Не удалось загрузить данные');
+                const data = await response.json();
+                renderSemesters(data);
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                document.getElementById('semesters-container').innerHTML = `
+                    <div class="error-message">
+                        Не удалось загрузить данные о домашних заданиях. Пожалуйста, попробуйте позже.
+                    </div>
+                `;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadJSON);
+    </script>
 </div>
 </body>
 </html>

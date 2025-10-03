@@ -10,13 +10,15 @@
               "title": "Основы HTML",
               "link": "/1-sem/html/1-html/index.html",
               "openDate": "2025-09-27T10:00:00",
-              "order": 1
+              "order": 1,
+              "homework": "https://classroom.github.com/a/PtV9F7qh"
             },
             {
               "title": "Основы CSS",
               "link": "/1-sem/html/2-css/index.html",
-              "openDate": "2025-10-04T10:00:00",
-              "order": 2
+              "openDate": "2025-10-04T11:00:00",
+              "order": 2,
+              "homework": "https://classroom.github.com/a/rmQe_SPb"
             }
           ]
         },
@@ -26,14 +28,16 @@
             {
               "title": "Типы данных part. 1",
               "link": "/1-sem/js/1-types-1/index.html",
-              "openDate": "2025-09-27T11:00:00",
-              "order": 1
+              "openDate": "2025-09-27T12:30:00",
+              "order": 1,
+              "homework_text": "Квиз на лекции 04 октября 2025 г."
             },
             {
               "title": "Типы данных part. 2",
               "link": "/1-sem/js/2-types/index.html",
-              "openDate": "2025-10-04T10:00:00",
-              "order": 2
+              "openDate": "2025-10-04T12:30:00",
+              "order": 2,
+              "homework_text": "Ждем ссылку на GitHubClassroom"
             }
           ]
         }
