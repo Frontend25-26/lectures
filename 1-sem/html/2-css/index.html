@@ -104,7 +104,7 @@
                     </template>
                     <template data-type="css">
                         p {
-                        color: green;
+                            color: green;
                         }
                     </template>
                 </code-example>
@@ -124,7 +124,7 @@
                     </template>
                     <template data-type="css">
                         span {
-                        color: red !important;
+                            color: red !important;
                         }
                     </template>
                 </code-example>
@@ -139,11 +139,10 @@
                     </template>
                     <template data-type="css">
                         div {
-                        font-size: 50px;
-                        font-family: ComicSans;
-                        color: black;
+                            font-size: 50px;
+                            font-family: ComicSans;
+                            color: black;
                         }
-
 
                         .yandex { color: #EEEE00; }
 
@@ -398,7 +397,8 @@ p {
             <pre class="css size-l">
 селектор<mark class="fragment" data-fragment-index="1">,</mark>
 селектор<mark class="fragment" data-fragment-index="1">,</mark>
-селектор <mark class="fragment" data-fragment-index="2">{</mark> <mark class="fragment" data-fragment-index="5">/* блок объявления стилей */</mark>
+селектор <mark class="fragment" data-fragment-index="2">{</mark>
+    <mark class="fragment" data-fragment-index="5">/* блок объявления стилей */</mark>
     свойство<mark class="fragment" data-fragment-index="3">:</mark> значение<mark class="fragment"
                                                                                   data-fragment-index="4">;</mark>
     свойство<mark class="fragment" data-fragment-index="3">:</mark> значение<mark class="fragment"
@@ -516,6 +516,9 @@ p {
         </section>
         <section>
             <h1 style="text-shadow: #000 0 0 4px; color: #fff">Селектор тега</h1>
+        </section>
+        <section>
+            <h2>Селектор тега</h2>
             <pre class="css size-l"><code>body {
     /* styles */
 }
@@ -523,11 +526,7 @@ p {
 h1 {
     /* styles */
 }
-
             </code></pre>
-        </section>
-        <section>
-            <h1 style="text-shadow: #000 0 0 4px; color: #fff">Классы и идентификаторы</h1>
         </section>
         <section data-background-image="img/wow.gif">
             <h1 style="text-shadow: #000 0 0 4px; color: #fff">Классы и идентификаторы</h1>
@@ -674,9 +673,11 @@ div#red {
             <pre class="css size-xl">
 <code class="fragment">[href] { color: red; }</code>
 <code class="fragment">[href="http://ya.ru"] { color: red; }
-[href*="http://ya.ru"] { color: red; }</code>
+[href*="ya"] { color: red; }</code>
 <code class="fragment">[href^="https://"] { color: red; }
 [href$="ya.ru"] { color: red; }</code>
+<code class="fragment">[lang~="en-US"] { color: red; }
+[lang|="en"] { color: red; }</code>
                         </pre>
         </section>
 
@@ -1378,7 +1379,7 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         div {
-                        color: green; /* 0 0 1 */
+                            color: green; /* 0 0 1 */
                         }
                     </template>
                 </code-example>
@@ -1396,8 +1397,8 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         div {
-                        color: green; /* 0 0 1 */
-                        /* abbr { color: green } – нет специфичности */
+                            color: green; /* 0 0 1 */
+                            /* abbr { color: green } – нет специфичности */
                         }
                     </template>
                 </code-example>
@@ -1418,10 +1419,11 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         * {
-                        color: red; /* 0 0 0 */
+                            color: red; /* 0 0 0 */
                         }
+
                         div {
-                        color: green; /* 0 0 1 */
+                            color: green; /* 0 0 1 */
                         }
                     </template>
                 </code-example>
@@ -1439,11 +1441,12 @@ color: green !important;
                     </template>
                     <template data-type="css">
                         * {
-                        color: red; /* 0 0 0 */
+                            color: red; /* 0 0 0 */
                         }
+
                         div {
-                        color: green; /* 0 0 1 */
-                        /* abbr { color : green } – нет специфичности */
+                            color: green; /* 0 0 1 */
+                            /* abbr { color : green } – нет специфичности */
                         }
                     </template>
                 </code-example>
@@ -1569,19 +1572,14 @@ color: green !important;
             <pre class="html size-xl"><code>
 <div style="color: red"></div>
             </code></pre>
-            <pre class="fragment html size-xl"><code><style>@import (
 
-            <
-            url to css >
-
-            )</style>
-            </code></pre>
-            <pre class="fragment html size-xl"><code>
-<style>
+            <pre class="fragment html size-xl"><code><style>
     div {
         color: red
     }
 </style>
+            </code></pre>
+            <pre class="fragment html size-xl"><code><style>@import (<url to css>)</style>
             </code></pre>
             <pre class="fragment html size-xl"><code>
 <link rel="stylesheet" href="<url to css>">
@@ -1623,15 +1621,15 @@ color: green !important;
                 В прошлой работе вы создали HTML-карточку героя, вдохновлённую комиксами. Теперь пришло время оживить её
                 с помощью CSS!
 
-                Ваша задача — стилизовать карточку так, чтобы она выглядела ярко, динамично и в духе комиксов.
+                Ваша задача — стилизовать карточку так, чтобы она выглядела ярко и динамично.
+
                 Используйте кастомные стили, псевдоклассы и псевдоэлементы, чтобы сделать её визуально привлекательной.
 
                 ---
 
                 ## Технические требования
 
-                - Отдельный CSS-файл
-                - Все стили должны быть вынесены в отдельный файл (`styles.css`).
+                - Все стили должны быть вынесены в отдельный файл (`style.css`).
                 - Подключите его к HTML через `&lt;link&gt;`.
 
                 - Гибкость и переиспользование стилей
@@ -1645,7 +1643,7 @@ color: green !important;
                 - Обязательные элементы стилизации
                     - Псевдоклассы (например, `:hover`, `:active`, `:focus`).
                     - Псевдоэлементы (`::before`, `::after`).
-                    - Кастомные шрифты (можно через Google Fonts или локально).
+                    - Кастомные шрифты (можно через [Google Fonts](https://fonts.google.com/) или [локально](https://snipp.ru/html-css/font-face)).
 
                 - Креативность (вот некоторые идеи)
                     - Всплывающие подсказки.
@@ -1658,8 +1656,8 @@ color: green !important;
 
                 - Pull Request с обновлёнными файлами:
                     - `index.html` (можно доработать структуру, но не ломать семантику).
-                    - `styles.css` (основной файл стилей).
-                - Дополнительные ресурсы (шрифты, изображения).
+                    - `style.css` (основной файл стилей).
+                    - Дополнительные ресурсы (шрифты, изображения).
                 - Название PR — ваши фамилия и имя.
 
                 ---

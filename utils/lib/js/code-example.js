@@ -75,10 +75,18 @@ class CodeExample extends HTMLElement {
     }
 
     cleanTemplate(content) {
-        const lines = content.split('\n').filter(line => line.trim() !== '');
+        const lines = content.split('\n');
         if (lines.length === 0) return '';
-        const minIndent = Math.min(...lines.map(line => line.match(/^\s*/)[0].length));
+
+        // Находим минимальный отступ среди непустых строк
+        const nonEmptyLines = lines.filter(line => line.trim() !== '');
+        const minIndent = nonEmptyLines.length > 0
+            ? Math.min(...nonEmptyLines.map(line => line.match(/^\s*/)[0].length))
+            : 0;
+
+        // Применяем отступ ко всем строкам, включая пустые
         return lines.map(line => line.slice(minIndent)).join('\n').trim();
+
     }
 }
 
