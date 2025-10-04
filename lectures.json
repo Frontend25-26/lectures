@@ -32,7 +32,8 @@
               "openDate": "2025-09-27T12:30:00",
               "order": 1,
               "homework_text": "Квиз на лекции 04 октября 2025 г.",
-              "homeworkDate": "2025-10-04T12:30:00"
+              "homeworkDate": "2025-10-04T12:30:00",
+              "homework": "https://play.myquiz.ru/p/00875481"
             },
             {
               "title": "Типы данных part. 2",
