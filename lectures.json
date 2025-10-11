@@ -42,6 +42,13 @@
               "order": 2,
               "homeworkDate": "2025-10-19T23:59:59",
               "homework": "https://classroom.github.com/a/oBwwOPNs"
+            },
+            {
+              "title": "Функции",
+              "link": "/1-sem/js/3-functions/index.html",
+              "openDate": "2025-10-11T12:30:00",
+              "order": 2,
+              "homework": "https://classroom.github.com/a/LMIHTLjy"
             }
           ]
         }
