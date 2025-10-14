@@ -2644,11 +2644,11 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
                     </template>
                     <template data-type="css">
                         p {
-                        --main-color: #F00;
-                        --secondary-color: #0FF;
+                            --main-color: #F00;
+                            --secondary-color: #0FF;
 
-                        color: var(--main-color);
-                        background-color: var(--secondary-color);
+                            color: var(--main-color);
+                            background-color: var(--secondary-color);
                         }
                     </template>
                 </code-example>
@@ -2673,11 +2673,11 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
                     </template>
                     <template data-type="css">
                         span {
-                        color: red;
+                            color: red;
 
-                        span {
-                        color: blue;
-                        }
+                            span {
+                                color: blue;
+                            }
                         }
                     </template>
                 </code-example>
@@ -2704,11 +2704,11 @@ span span {
                     </template>
                     <template data-type="css">
                         p {
-                        color: red;
+                            color: red;
 
-                        :hover {
-                        color: blue;
-                        }
+                            :hover {
+                                color: blue;
+                            }
                         }
                     </template>
                 </code-example>
@@ -2730,11 +2730,11 @@ p *:hover {
                     </template>
                     <template data-type="css">
                         p {
-                        color: red;
+                            color: red;
 
-                        &:hover {
-                        color: blue;
-                        }
+                            &:hover {
+                                color: blue;
+                            }
                         }
                     </template>
                 </code-example>
@@ -2755,28 +2755,7 @@ p:hover {
             </section>
 
             <section>
-                <h2>CSS 3 - Math functions</h2>
-                <div class="fragment">
-                    <code-example no-preview>
-                        <template data-type="css">
-                            div { width: calc(100% - 20px * 2 + 5vw / 3); }
-                        </template>
-                    </code-example>
-                </div>
-                <div class="fragment" style="margin-top: 1em;">
-                    <code-example no-preview>
-                        <template data-type="css">
-                            div { width: min(10vw, 150px); }
-                        </template>
-                    </code-example>
-                </div>
-                <div class="fragment" style="margin-top: 1em;">
-                    <code-example no-preview>
-                        <template data-type="css">
-                            div { width: max(20%, 150px); }
-                        </template>
-                    </code-example>
-                </div>
+                <h2>CSS 3 - Math functions
                 <div class="fragment" style="margin-top: 1em;">
                     <code-example no-preview>
                         <template data-type="css">
@@ -2814,7 +2793,7 @@ p:hover {
                     </template>
                     <template data-type="css">
                         :is(article, section, aside) p {
-                        color: red;
+                            color: red;
                         }
                     </template>
                 </code-example>
@@ -2836,7 +2815,7 @@ aside p {
                     </template>
                     <template data-type="css">
                         :where(article, section, aside) p {
-                        color: red;
+                            color: red;
                         }
                     </template>
                 </code-example>
@@ -2864,15 +2843,15 @@ aside p {
                     </template>
                     <template data-type="css">
                         article p {
-                        color: black;
+                            color: black;
                         }
 
                         :is(article, section, aside) p {
-                        color: red;
+                            color: red;
                         }
 
                         :where(article, section, aside) p {
-                        color: blue;
+                            color: blue;
                         }
                     </template>
                 </code-example>
@@ -2889,7 +2868,7 @@ aside p {
 
                     <template data-type="css">
                         p:has(span) {
-                        color: red;
+                            color: red;
                         }
                     </template>
                 </code-example>
@@ -2915,9 +2894,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         @supports (display: inline-block) {
-                        .example {
-                        display: inline-block;
-                        }
+                            .example {
+                                display: inline-block;
+                            }
                         }
                     </template>
                 </code-example>
@@ -2925,10 +2904,10 @@ aside p {
                     <code-example class="fragment" no-preview>
                         <template data-type="css">
                             @supports (color) and (display: inline-block) {
-                            .example {
-                            color: red;
-                            display: inline-block;
-                            }
+                                .example {
+                                    color: red;
+                                    display: inline-block;
+                                }
                             }
                         </template>
                     </code-example>
@@ -2950,11 +2929,11 @@ aside p {
                         @layer base, components;
 
                         @layer base {
-                        span { background: blue; }
+                            span { background: blue; }
                         }
 
                         @layer components {
-                        span { background: red; }
+                            span { background: red; }
                         }
                     </template>
                 </code-example>
@@ -2970,11 +2949,11 @@ aside p {
                         @layer base, components;
 
                         @layer components {
-                        span { background: red; }
+                            span { background: red; }
                         }
 
                         @layer base {
-                        span { background: blue; }
+                            span { background: blue; }
                         }
                     </template>
                 </code-example>
@@ -2990,11 +2969,11 @@ aside p {
                         @layer base, components;
 
                         @layer base {
-                        span { background: blue; }
+                            span { background: blue; }
                         }
 
                         @layer components {
-                        span { background: red; }
+                            span { background: red; }
                         }
 
                         span { background: green; }
@@ -3043,7 +3022,7 @@ aside p {
                         $primary-color: #3498db;
 
                         h1 {
-                        font: $primary-color;
+                            font: $primary-color;
                         }
                     </template>
                 </code-example>
@@ -3051,7 +3030,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         h1 {
-                        font: #3498db;
+                            font: #3498db;
                         }
                     </template>
                 </code-example>
@@ -3064,7 +3043,7 @@ aside p {
                         @use 'base.scss' as base;
 
                         h1 {
-                        font: base.$primary-color;
+                            font: base.$primary-color;
                         }
                     </template>
                 </code-example>
@@ -3072,7 +3051,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         h1 {
-                        font: #3498db;
+                            font: #3498db;
                         }
                     </template>
                 </code-example>
@@ -3083,9 +3062,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         div {
-                        span {
-                        padding: 10px;
-                        }
+                            span {
+                                padding: 10px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3093,7 +3072,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         div span {
-                        padding: 10px;
+                            padding: 10px;
                         }
                     </template>
                 </code-example>
@@ -3104,9 +3083,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         div {
-                        &:hover {
-                        color: red;
-                        }
+                            &:hover {
+                                color: red;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3114,7 +3093,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         div:hover {
-                        color: red ;
+                            color: red ;
                         }
                     </template>
                 </code-example>
@@ -3125,9 +3104,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         .list {
-                        &__item {
-                        color: red;
-                        }
+                            &__item {
+                                color: red;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3135,7 +3114,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .list__item {
-                        color: red;
+                            color: red;
                         }
                     </template>
                 </code-example>
@@ -3146,9 +3125,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         .a, .b {
-                        .c, .d {
-                        padding: 10px;
-                        }
+                            .c, .d {
+                                padding: 10px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3159,7 +3138,7 @@ aside p {
                         .a .d,
                         .b .c,
                         .b .d {
-                        padding: 10px;
+                            padding: 10px;
                         }
                     </template>
                 </code-example>
@@ -3170,11 +3149,11 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         p {
-                        font: {
-                        family: 'Arial';
-                        weight: bold;
-                        size: 0.5em;
-                        }
+                            font: {
+                                family: 'Arial';
+                                weight: bold;
+                                size: 0.5em;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3182,9 +3161,9 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         p {
-                        font-family: 'Arial';
-                        font-weight: bold;
-                        font-size: 0.5em;
+                            font-family: 'Arial';
+                            font-weight: bold;
+                            font-size: 0.5em;
                         }
                     </template>
                 </code-example>
@@ -3195,9 +3174,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         p {
-                        margin: 5px {
-                        top: 10px;
-                        }
+                            margin: 5px {
+                                top: 10px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3205,8 +3184,8 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         p {
-                        margin: 5px;
-                        margin-top: 10px;
+                            margin: 5px;
+                            margin-top: 10px;
                         }
                     </template>
                 </code-example>
@@ -3217,17 +3196,17 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         %template {
-                        color: red;
+                            color: red;
                         }
 
                         .blue {
-                        @extend %template;
-                        background: blue;
+                            @extend %template;
+                            background: blue;
                         }
 
                         .green {
-                        @extend %template;
-                        background: green;
+                            @extend %template;
+                            background: green;
                         }
                     </template>
                 </code-example>
@@ -3235,15 +3214,15 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .blue, .green {
-                        color: red;
+                            color: red;
                         }
 
                         .blue {
-                        background: blue;
+                            background: blue;
                         }
 
                         .green {
-                        background: green;
+                            background: green;
                         }
                     </template>
                 </code-example>
@@ -3254,12 +3233,12 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         .button {
-                        padding: 10px;
+                            padding: 10px;
                         }
 
                         .button--green {
-                        @extend .button;
-                        background: green;
+                            @extend .button;
+                            background: green;
                         }
                     </template>
                 </code-example>
@@ -3267,12 +3246,12 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .button {
-                        padding: 10px;
+                            padding: 10px;
                         }
 
                         .button--green {
-                        @extend .button;
-                        background: green;
+                            @extend .button;
+                            background: green;
                         }
                     </template>
                 </code-example>
@@ -3285,13 +3264,13 @@ aside p {
                         $size: 'big';
 
                         @if $size == 'big' {
-                        .btn {
-                        font-size: 16px;
-                        }
+                            .btn {
+                                font-size: 16px;
+                            }
                         } @else {
-                        .btn {
-                        font-size: 10px;
-                        }
+                            .btn {
+                                font-size: 10px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3302,9 +3281,9 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         @for $i from 1 through 3 {
-                        .item-#{$i} {
-                        width: 2em * $i;
-                        }
+                            .item-#{$i} {
+                                width: 2em * $i;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3312,15 +3291,15 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         .item-1 {
-                        width: 2em;
+                            width: 2em;
                         }
 
                         .item-2 {
-                        width: 4em;
+                            width: 4em;
                         }
 
                         .item-3 {
-                        width: 6em;
+                            width: 6em;
                         }
                     </template>
                 </code-example>
@@ -3333,9 +3312,9 @@ aside p {
                         $colors: red, blue, green;
 
                         @each $color in $colors {
-                        .item-#{$color} {
-                        color: $color;
-                        }
+                            .item-#{$color} {
+                                color: $color;
+                            }
                         }
                     </template>
                 </code-example>
@@ -3343,15 +3322,15 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         .item-red {
-                        color: red;
+                            color: red;
                         }
 
                         .item-blue {
-                        color: blue;
+                            color: blue;
                         }
 
                         .item-green {
-                        color: green;
+                            color: green;
                         }
                     </template>
                 </code-example>
@@ -3362,11 +3341,11 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         @function double($n) {
-                        @return $n * 2;
+                            @return $n * 2;
                         }
 
                         .item {
-                        width: double(10px);
+                            width: double(10px);
                         }
                     </template>
                 </code-example>
@@ -3374,7 +3353,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .item {
-                        width: 20px;
+                            width: 20px;
                         }
                     </template>
                 </code-example>
@@ -3385,12 +3364,12 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         @mixin font($family, $size) {
-                        font-family: $family;
-                        font-size: $size;
+                            font-family: $family;
+                            font-size: $size;
                         }
 
                         .item {
-                        @include font('Arial', 16px);
+                            @include font('Arial', 16px);
                         }
                     </template>
                 </code-example>
@@ -3398,8 +3377,8 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .item {
-                        font-family: "Arial";
-                        font-size: 16px;
+                            font-family: "Arial";
+                            font-size: 16px;
                         }
                     </template>
                 </code-example>
@@ -3410,17 +3389,17 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         @mixin btn($size, $color) {
-                        @if $size == 'big' {
-                        font-size: 16px;
-                        } @else {
-                        font-size: 10px;
-                        }
+                            @if $size == 'big' {
+                                font-size: 16px;
+                            } @else {
+                                font-size: 10px;
+                            }
 
-                        background: $color;
+                            background: $color;
                         }
 
                         .button {
-                        @include btn('big', green);
+                            @include btn('big', green);
                         }
                     </template>
                 </code-example>
@@ -3428,8 +3407,8 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .button {
-                        font-size: 16px;
-                        background: green;
+                            font-size: 16px;
+                            background: green;
                         }
                     </template>
                 </code-example>
@@ -3444,7 +3423,7 @@ aside p {
                         $sizes: 20px, 30px, 25px;
 
                         .item {
-                        width: min($sizes...);
+                            width: min($sizes...);
                         }
                     </template>
                 </code-example>
@@ -3454,7 +3433,7 @@ aside p {
                         @use "sass:math";
 
                         .item {
-                        width: 20px;
+                            width: 20px;
                         }
                     </template>
                 </code-example>
@@ -3502,7 +3481,7 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         div {
-                        display: flex
+                            display: flex
                         }
                     </template>
                 </code-example>
@@ -3510,11 +3489,11 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         div {
-                        display: -webkit-box;
-                        display: -webkit-flex;
-                        display: -moz-box;
-                        display: -ms-flexbox;
-                        display: flex
+                            display: -webkit-box;
+                            display: -webkit-flex;
+                            display: -moz-box;
+                            display: -ms-flexbox;
+                            display: flex
                         }
                     </template>
                 </code-example>
@@ -3528,9 +3507,9 @@ aside p {
                         @custom-media --med (width == 50rem);
 
                         @media (--med) {
-                        a:hover {
-                        color: color-mod(black alpha(54%));
-                        }
+                            a:hover {
+                                color: color-mod(black alpha(54%));
+                            }
                         }
                     </template>
                 </code-example>
@@ -3538,9 +3517,9 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         @media (width: 50rem) {
-                        a:hover {
-                        color: rgba(0, 0, 0, 0.54);
-                        }
+                            a:hover {
+                                color: rgba(0, 0, 0, 0.54);
+                            }
                         }
                     </template>
                 </code-example>
@@ -3552,11 +3531,11 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         .icon {
-                        size: 48px;
+                            size: 48px;
                         }
 
                         .canvas {
-                        color: #abccfc #212231;
+                            color: #abccfc #212231;
                         }
                     </template>
                 </code-example>
@@ -3564,13 +3543,13 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .icon {
-                        width: 48px;
-                        height: 48px;
+                            width: 48px;
+                            height: 48px;
                         }
 
                         .canvas {
-                        color: #abccfc;
-                        background-color: #212231;
+                            color: #abccfc;
+                            background-color: #212231;
                         }
                     </template>
                 </code-example>
@@ -3590,9 +3569,9 @@ aside p {
                         $color: black;
 
                         .parent {
-                        .child {
-                        color: $color
-                        }
+                            .child {
+                                color: $color
+                            }
                         }
                     </template>
                 </code-example>
@@ -3600,7 +3579,7 @@ aside p {
                 <code-example no-preview class="fragment">
                     <template data-type="css">
                         .parent .child {
-                        color: black
+                            color: black
                         }
                     </template>
                 </code-example>
@@ -3612,11 +3591,11 @@ aside p {
                 <code-example no-preview>
                     <template data-type="css">
                         a {
-                        color: rgb(1, 1, 1)
+                            color: rgb(1, 1, 1)
                         }
 
                         div {
-                        color: rgb(0, 0, 0)
+                            color: rgb(0, 0, 0)
                         }
                     </template>
                 </code-example>
@@ -3632,15 +3611,49 @@ aside p {
             <section data-markdown data-separator="---">
                 # HomeWork 4
 
-                ## Три кота
+                ## 🐱 Три кота
                 ---
 
                 ## Описание задания
 
+                В этом задании вы создадите **три карточки котов**, применяя **три разных подхода к стилизации**:
+
+                1. **CSS3** — классический подход со новыми свойствами и селекторами.
+                2. **Bootstrap или TailwindCSS** — утилитарный подход с использованием готовых классов.
+                3. **SASS (SCSS)** — использование переменных, вложенности, миксинов и импорта.
+
+                Каждая карточка должна содержать информацию о коте и одинаковую структуру — но отличаться способом стилизации.
+
                 ---
 
-                ## Технические требования
+                ## 🧩 Структура карточки
 
+                Каждая карточка должна включать:
+
+                - 🖼️ Изображение кота
+                - 😺 Имя
+                - 🎂 Возраст
+                - 📝 Короткое описание
+                - ❤️ Кнопку «Лайк»
+                - 🤲 Кнопку «Погладить кота»
+
+                ---
+
+                ## ⚙️ Технические требования
+
+                - Разметка должна быть **семантической** (используйте `section`, `article`, `figure` и т.д.).
+                - Карточки должны иметь *примерно* единый визуальный стиль (одинаковые размеры, шрифты, расположение элементов).
+                - При наведении на кнопку должен быть **hover-эффект**.
+                - Карточки должны отображаться в ряд.
+                - В каждой карточке нужно использовать что-то, что рассказывалось на лекции
+                ---
+
+                ## 🎨 Как сделать интереснее?
+
+                - Подберите цветовую схему, которая отражает характер котов (например, пастельные тона или яркие акценты).
+                - Добавьте плавные анимации при наведении.
+                - Можно сделать кнопки с иконками (например, ❤️ и 🐾).
+                - Не бойтесь экспериментировать с современными свойствами CSS!
             </section>
             <section>
                 <h1>ФОТО РЕЗУЛЬТАТА ДЗ</h1>
