@@ -1,0 +1,3720 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+
+    <title>Fast Develop</title>
+
+    <meta name="description" content="Лекция #3 по курсу «вёрстка». CSS">
+    <meta name="author" content="Олег Мохов, Руслан Крохин">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <!-- TODO: Change QR and link to quiz -->
+            <a href="https://play.myquiz.ru/p/00887034" target="_blank">
+                <img src="https://cdn2.myquiz.ru/customization/default/logo/logo-mobile.svg"
+                     style="background: #3a28a7; padding: 1em">
+            </a>
+
+            <div class="qr-card">
+                <img src="img/qr-quiz.svg" width="350"
+                     border="0" title="QR код" class="qr-img" style="background: #fff; border-radius: 15px;">
+                <h3 style="color: #3a28a7; background: #fff; border-radius: 15px; padding: 0.2em; margin-top: 10px;">
+                    00887034
+                </h3>
+            </div>
+        </section>
+
+        <section style="font-size: 70px; height: 100%; width: 100%">
+            <div class="fragment">
+                <!-- TODO: Быстрая разработка || Ускоряем разработку || Fast Develop -->
+                <h1 class="animated" style="font-size: 2em;">Быстрая разработка</h1>
+
+                <p style="text-align: center; font-size: 1em ">Илья Степанов</p>
+            </div>
+        </section>
+
+        <section data-background-image="img/turtle.jpeg">
+            <h1 style="text-shadow: #000 3px 2px 2px;">Хочется быстрее</h1>
+        </section>
+
+        <section data-background-image="img/fast.gif">
+            <h1 style="text-shadow: #000 3px 2px 2px;">Хочется быстрее,<br>но не так</h1>
+        </section>
+
+        <section>
+            <h2>Требования:</h2>
+            <img class="fragment" src="img/header.png" alt="header">
+            <img class="fragment" src="img/form.png" alt="form" style="max-height: 45vh ;">
+        </section>
+
+        <!-- AI -->
+        <section data-background-image="img/smart.jpg">
+            <h1 style="text-shadow: #000 3px 2px 2px;">Artificial Intelligence</h1>
+        </section>
+
+        <!-- GPT -->
+        <section>
+            <section>
+                <h2>GPT</h2>
+                <div class="gpt-list">
+                    <div class="img-block fragment">
+                        <img src="img/gpt/chatgpt.JPEG" alt="chatgpt">
+                        <p class="fragment">ChatGPT</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/deepseek.JPEG" alt="deepseek">
+                        <p class="fragment">DeepSeek</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/yandexgpt.JPEG" alt="yandexgpt">
+                        <p class="fragment">YandexGPT</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/gigachat.PNG" alt="gigachat">
+                        <p class="fragment">GigaChat</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/gemini.JPEG" alt="gemini">
+                        <p class="fragment">Gemini</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/claude.JPEG" alt="claude">
+                        <p class="fragment">Claude</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/grok.JPEG" alt="grok">
+                        <p class="fragment">Grok</p>
+                    </div>
+                    <div class="img-block fragment">
+                        <img src="img/gpt/qwen.JPEG" alt="qwen">
+                        <p class="fragment">Qwen</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>GPT</h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Можно генерировать код кусками</li>
+                    <li class="plus fragment">Быстро генерирует тестовые данные и моки</li>
+                    <li class="plus fragment">Упрощает работу с регулярными выражениями</li>
+                    <br>
+                    <li class="minus fragment">Плохо соединяет куски вместе</li>
+                    <li class="minus fragment">Необходимо переключаться между окнами и копировать/вставлять код</li>
+                    <li class="minus fragment">Есть ограничение символов</li>
+                    <li class="minus fragment">Плохо погружается в большой контекст</li>
+                    <li class="minus fragment">Иногда даёт устаревшие или нерабочие примеры</li>
+                    <li class="minus fragment">Может предлагать избыточный или неэффективный код</li>
+                    <li class="minus fragment">Странное представление о "красивом" дизайне</li>
+                    <br>
+                    <li class="circle fragment">Уровень кода* - Junior</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>GPT - header</h2>
+                <pre class="html size-l code-example-one"><code><header class="site-header">
+    <div class="container">
+        <div class="logo">
+            <a href="https://itmo.ru/">
+                <img
+                        src="https://itmo.ru/promo/itmo-logo-dark.svg"
+                        alt="ITMO University Logo"/>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Услуги</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+                        </code></pre>
+            </section>
+
+            <section>
+                <h2>GPT - header</h2>
+                <pre class="html size-l code-example-one"><code><style>
+    /* Общие стили */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    /* Стили шапки */
+    .site-header {
+        width: 100%;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 16px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* Контейнер для выравнивания контента */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Логотип */
+    .logo img {
+        height: 40px;
+        display: block;
+    }
+
+    /* Навигационное меню */
+    .main-nav .nav-list {
+        list-style: none;
+        display: flex;
+        gap: 24px;
+    }
+
+    .main-nav .nav-list li a {
+        text-decoration: none;
+        color: #333333;
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+
+    .main-nav .nav-list li a {
+        color: #0077ff;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .main-nav .nav-list {
+            gap: 16px;
+        }
+
+        .main-nav .nav-list li a {
+            font-size: 14px;
+        }
+
+        .logo img {
+            height: 32px;
+        }
+    }
+</style></code></pre>
+            </section>
+
+            <section>
+                <h2>GPT - header</h2>
+
+                <code-example>
+                    <template data-type="html" no-preview>
+                        <header class="site-header">
+                            <div class="container">
+                                <div class="logo">
+                                    <a href="https://itmo.ru/">
+                                        <img
+                                                src="https://itmo.ru/promo/itmo-logo-dark.svg"
+                                                alt="ITMO University Logo"/>
+                                    </a>
+                                </div>
+                                <nav class="main-nav">
+                                    <ul class="nav-list">
+                                        <li><a href="#">Главная</a></li>
+                                        <li><a href="#">О нас</a></li>
+                                        <li><a href="#">Услуги</a></li>
+                                        <li><a href="#">Контакты</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </header>
+                    </template>
+                    <template data-type="css" no-preview>
+                        /* Общие стили */
+
+                        * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        }
+
+                        body {
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #f9f9f9;
+                        }
+
+                        /* Стили шапки */
+                        .site-header {
+                        width: 100%;
+                        background-color: #ffffff;
+                        border-bottom: 1px solid #e0e0e0;
+                        padding: 16px 0;
+                        position: sticky;
+                        top: 0;
+                        z-index: 1000;
+                        }
+
+                        /* Контейнер для выравнивания контента */
+                        .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        padding: 0 24px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        }
+
+                        /* Логотип */
+                        .logo img {
+                        height: 40px;
+                        display: block;
+                        }
+
+                        /* Навигационное меню */
+                        .main-nav .nav-list {
+                        list-style: none;
+                        display: flex;
+                        gap: 24px;
+                        }
+
+                        .main-nav .nav-list li a {
+                        text-decoration: none;
+                        color: #333333;
+                        font-weight: 500;
+                        font-size: 16px;
+                        transition: color 0.3s ease;
+                        }
+
+                        .main-nav .nav-list li a {
+                        color: #0077ff;
+                        }
+
+                        /* Адаптивность */
+                        @media (max-width: 768px) {
+                        .main-nav .nav-list {
+                        gap: 16px;
+                        }
+
+                        .main-nav .nav-list li a {
+                        font-size: 14px;
+                        }
+
+                        .logo img {
+                        height: 32px;
+                        }
+                        }
+                    </template>
+                </code-example>
+
+                <code-example fragment>
+                    <template data-type="html" no-preview>
+                        <header class="site-header">
+                            <div class="container">
+                                <div class="logo"><a href="https://itmo.ru/" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://itmo.ru/promo/itmo-logo-dark.svg" alt="ITMO University Logo"/>
+                                </a></div>
+                                <nav class="main-nav">
+                                    <ul class="nav-list">
+                                        <li><a href="#">Главная</a></li>
+                                        <li><a href="#">О нас</a></li>
+                                        <li><a href="#">Проекты</a></li>
+                                        <li><a href="#">Контакты</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </header>
+                    </template>
+                    <template data-type="css" no-preview>
+                        /* Общие сбросы и базовая стилизация */
+
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background: #1a1a1a;
+                        color: #ffffff;
+                        line-height: 1.6;
+                        }
+
+                        a {
+                        text-decoration: none;
+                        }
+
+                        /* Контейнер */
+                        .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        padding: 0 24px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        }
+
+                        /* Шапка */
+                        .site-header {
+                        width: 100%;
+                        padding: 16px 0;
+                        background: linear-gradient(135deg, rgba(28,28,28,0.95), rgba(0,0,0,0.8));
+                        backdrop-filter: blur(10px);
+                        position: sticky;
+                        top: 0;
+                        z-index: 1000;
+                        transition: background 0.3s ease;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+                        }
+
+                        /* Логотип /
+                        .logo img {
+                        height: 42px;
+                        filter: brightness(0) invert(1); / Сделать логотип белым, если темный */
+                        transition: transform 0.3s ease;
+                        }
+
+                        .logo img
+                        {
+                        transform: scale(1.05);
+                        }
+
+                        /* Навигационное меню */
+                        .main-nav .nav-list {
+                        list-style: none;
+                        display: flex;
+                        gap: 30px;
+                        }
+
+                        .main-nav .nav-list li a {
+                        color: #ccc;
+                        font-weight: 500;
+                        font-size: 16px;
+                        position: relative;
+                        padding: 4px 0;
+                        transition: color 0.3s ease;
+                        }
+
+                        .main-nav .nav-list li a::after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        bottom: -4px;
+                        height: 2px;
+                        width: 0;
+                        background: linear-gradient(to right, #00c6ff, #0072ff);
+                        transition: width 0.3s;
+                        }
+
+                        .main-nav .nav-list li a
+                        {
+                        color: #ffffff;
+                        }
+
+                        .main-nav .nav-list li a:hover::after {
+                        width: 100%;
+                        }
+
+                        /* Hero-секция */
+                        .hero {
+                        height: 100vh;
+                        padding: 80px 24px 24px;
+                        background: linear-gradient(135deg, #000000 0%, #191919 100%);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                        }
+
+                        .hero h1 {
+                        font-size: 48px;
+                        background: linear-gradient(to right, #42e695, #3bb2b8);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        margin-bottom: 16px;
+                        }
+
+                        .hero p {
+                        font-size: 18px;
+                        color: #bbbbbb;
+                        }
+
+                        /* Адаптивность */
+                        @media (max-width: 768px) {
+                        .main-nav .nav-list {
+                        gap: 16px;
+                        }
+
+                        .main-nav .nav-list li a {
+                        font-size: 14px;
+                        }
+
+                        .logo img {
+                        height: 36px;
+                        }
+
+                        .hero h1 {
+                        font-size: 36px;
+                        }
+
+                        .hero p {
+                        font-size: 16px;
+                        }
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+
+            <section>
+                <h2>GPT - form</h2>
+                <pre class="html size-l code-example-one"><code><div class="form-wrapper">
+    <form class="custom-form">
+        <h1>Свяжитесь с нами</h1>
+        <label>
+            <span>Имя:</span>
+            <input type="text" name="name" placeholder="Введите ваше имя" required>
+        </label>
+
+        <label>
+            <span>Email:</span>
+            <input type="email" name="email" placeholder="Введите ваш email" required>
+        </label>
+
+        <label>
+          <span>Комментарий:</span>
+          <textarea name="message" placeholder="Напишите ваш комментарий..." required></textarea>
+        </label>
+
+        <label>
+            <span>Прикрепить файл:</span>
+            <input type="file" name="file" class="custom-file">
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" required>
+            <span>Я принимаю <a href="#">условия соглашения</a></span>
+        </label>
+
+        <button type="submit">Отправить</button>
+    </form>
+</div></code></pre>
+            </section>
+
+            <section>
+                <h2>GPT - form</h2>
+                <pre class="html size-l code-example-one"><code><style>
+    /* Сбросы и базовые стили */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+    }
+
+    /* Обёртка формы */
+    .form-wrapper {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Заголовок */
+    .custom-form h1 {
+        text-align: center;
+        margin-bottom: 24px;
+        font-size: 28px;
+        background: linear-gradient(90deg, #66ffe6, #00c8ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Метки и поля */
+    .custom-form label {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-size: 15px;
+        color: #dcdcdc;
+    }
+
+    .custom-form input[type="text"],
+    .custom-form input[type="email"],
+    .custom-form input[type="file"],
+    .custom-form textarea {
+        margin-top: 8px;
+        padding: 12px 16px;
+        font-size: 14px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.07);
+        color: #ffffff;
+        outline: none;
+        transition: 0.3s ease;
+        width: 100%;
+    }
+
+    .custom-form input[type="text"],
+    .custom-form input[type="email"],
+    .custom-form textarea {
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 0 0 2px #00d9ff;
+    }
+
+    /* Textarea */
+    .custom-form textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    /* Checkbox */
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .checkbox-label input {
+        transform: scale(1.2);
+    }
+
+    .checkbox-label a {
+        color: #00d9ff;
+        text-decoration: underline dashed;
+        transition: color 0.3s;
+    }
+
+    .checkbox-label a {
+        color: #66ffe6;
+    }
+
+    /* Кнопка */
+    .custom-form button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .custom-form button {
+        background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+        transform: scale(1.02);
+    }
+
+    .custom-form button {
+        transform: scale(0.98);
+    }
+
+    @media (max-width: 600px) {
+        .form-wrapper {
+            padding: 24px;
+        }
+
+        .custom-form h1 {
+            font-size: 24px;
+        }
+    }
+</style></code></pre>
+            </section>
+
+            <section>
+                <code-example>
+                    <template data-type="html" no-preview>
+                        <div class="form-wrapper">
+                            <form class="custom-form">
+                                <h1>Свяжитесь с нами</h1>
+                                <label>
+                                    <span>Имя:</span>
+                                    <input type="text" name="name" placeholder="Введите ваше имя" required>
+                                </label>
+
+                                <label>
+                                    <span>Email:</span>
+                                    <input type="email" name="email" placeholder="Введите ваш email" required>
+                                </label>
+
+                                <label>
+                                    <span>Комментарий:</span>
+                                    <textarea name="message" placeholder="Напишите ваш комментарий..."
+                                              required></textarea>
+                                </label>
+
+                                <label>
+                                    <span>Прикрепить файл:</span>
+                                    <input type="file" name="file" class="custom-file">
+                                </label>
+
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span>Я принимаю <a href="#">условия соглашения</a></span>
+                                </label>
+
+                                <button type="submit">Отправить</button>
+                            </form>
+                        </div>
+                    </template>
+                    <template data-type="css" no-preview>
+                        /* Сбросы и базовые стили */
+                        * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                        }
+
+                        body {
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+                        color: #ffffff;
+                        min-height: 100vh;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 24px;
+                        }
+
+                        /* Обёртка формы */
+                        .form-wrapper {
+                        background: rgba(255, 255, 255, 0.05);
+                        backdrop-filter: blur(15px);
+                        border-radius: 20px;
+                        padding: 40px;
+                        max-width: 500px;
+                        width: 100%;
+                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        }
+
+                        /* Заголовок */
+                        .custom-form h1 {
+                        text-align: center;
+                        margin-bottom: 24px;
+                        font-size: 28px;
+                        background: linear-gradient(90deg, #66ffe6, #00c8ff);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        }
+
+                        /* Метки и поля */
+                        .custom-form label {
+                        display: flex;
+                        flex-direction: column;
+                        margin-bottom: 20px;
+                        font-weight: 500;
+                        font-size: 15px;
+                        color: #dcdcdc;
+                        }
+
+                        .custom-form input[type="text"],
+                        .custom-form input[type="email"],
+                        .custom-form input[type="file"],
+                        .custom-form textarea {
+                        margin-top: 8px;
+                        padding: 12px 16px;
+                        font-size: 14px;
+                        border: none;
+                        border-radius: 10px;
+                        background: rgba(255, 255, 255, 0.07);
+                        color: #ffffff;
+                        outline: none;
+                        transition: 0.3s ease;
+                        width: 100%;
+                        }
+
+                        .custom-form input[type="text"],
+                        .custom-form input[type="email"],
+                        .custom-form textarea {
+                        background: rgba(255, 255, 255, 0.12);
+                        box-shadow: 0 0 0 2px #00d9ff;
+                        }
+
+                        /* Textarea */
+                        .custom-form textarea {
+                        min-height: 100px;
+                        resize: vertical;
+                        }
+
+                        /* Checkbox */
+                        .checkbox-label {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        font-size: 14px;
+                        }
+
+                        .checkbox-label input {
+                        transform: scale(1.2);
+                        }
+
+                        .checkbox-label a {
+                        color: #00d9ff;
+                        text-decoration: underline dashed;
+                        transition: color 0.3s;
+                        }
+
+                        .checkbox-label a {
+                        color: #66ffe6;
+                        }
+
+                        /* Кнопка */
+                        .custom-form button {
+                        width: 100%;
+                        padding: 14px;
+                        background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+                        border: none;
+                        border-radius: 12px;
+                        font-weight: 600;
+                        color: #ffffff;
+                        font-size: 16px;
+                        cursor: pointer;
+                        transition: background 0.3s ease, transform 0.2s;
+                        }
+
+                        .custom-form button {
+                        background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+                        transform: scale(1.02);
+                        }
+
+                        .custom-form button {
+                        transform: scale(0.98);
+                        }
+
+                        @media (max-width: 600px) {
+                        .form-wrapper {
+                        padding: 24px;
+                        }
+
+                        .custom-form h1 {
+                        font-size: 24px;
+                        }
+                        }
+                    </template>
+                </code-example>
+            </section>
+        </section>
+
+        <!-- ChatGPT 5 -->
+        <section>
+            <section>
+                <h2>ChatGPT 5</h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Может работать в формате проекта - написание кода, разделенного на
+                        несколько файлов. В конце их можно скачать архивом
+                    </li>
+                    <li class="plus fragment">Из-за рассуждений выдает более корректный результат</li>
+                    <li class="plus fragment">Намного лучше вкус в дизайне</li>
+                    <li class="plus fragment">Можно загрузить свои файлы для контекста</li>
+                    <br>
+                    <li class="minus fragment">Переключение между окнами и вкладками</li>
+                    <li class="minus fragment">Плохая работа с средними и большими проектами</li>
+                    <li class="minus fragment">Ограниченное количество бесплатных токенов в сутки</li>
+                    <br>
+                    <li class="circle fragment">Уровень кода* - Junior+</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>ChatGPT 5 - header</h2>
+                <pre class="html size-l code-example-one"><code><header class="site-header">
+    <div class="logo">
+      <a href="https://itmo.ru" target="_blank" rel="noopener noreferrer">
+        <img src="assets/logo.svg" alt="ITMO Logo"/>
+      </a>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#">О нас</a></li>
+        <li><a href="#">Программы</a></li>
+        <li><a href="#">Поступление</a></li>
+        <li><a href="#">Контакты</a></li>
+      </ul>
+    </nav>
+  </header></code></pre>
+            </section>
+
+            <section>
+                <h2>ChatGPT 5 - header</h2>
+                <pre class="html size-l code-example-one"><code><style>
+    /* Общие стили */
+    body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        background-color: #f9f9fb;
+        color: #111;
+    }
+
+    /* Шапка */
+    .site-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 60px;
+        background: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* Логотип */
+    .logo img {
+        height: 42px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .logo img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Меню */
+    .main-nav ul {
+        list-style: none;
+        display: flex;
+        gap: 40px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-nav a {
+        text-decoration: none;
+        font-weight: 500;
+        color: #222;
+        font-size: 16px;
+        position: relative;
+        transition: color 0.2s ease;
+    }
+
+    /* Эффект подчеркивания */
+    .main-nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0;
+        height: 2px;
+        background: #007bff;
+        transition: width 0.3s ease;
+    }
+
+    .main-nav a:hover {
+        color: #007bff;
+    }
+
+    .main-nav a:hover::after {
+        width: 100%;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        .site-header {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px 30px;
+        }
+
+        .main-nav ul {
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 12px;
+        }
+    }
+</style></code></pre>
+            </section>
+
+            <section>
+                <h2>ChatGPT 5 - header</h2>
+                <code-example fragment>
+                    <template data-type="html" no-preview>
+                        <header class="site-header">
+                            <div class="logo">
+                                <a href="https://itmo.ru" target="_blank" rel="noopener noreferrer">
+                                    <img src="https://itmo.ru/promo/itmo-logo-dark.svg" alt="ITMO Logo"/>
+                                </a>
+                            </div>
+                            <nav class="main-nav">
+                                <ul>
+                                    <li><a href="#">О нас</a></li>
+                                    <li><a href="#">Программы</a></li>
+                                    <li><a href="#">Поступление</a></li>
+                                    <li><a href="#">Контакты</a></li>
+                                </ul>
+                            </nav>
+                        </header>
+                    </template>
+                    <template data-type="css" no-preview>
+                        /* Общие стили */
+                        body {
+                        margin: 0;
+                        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+                        background-color: #f9f9fb;
+                        color: #111;
+                        }
+
+                        /* Шапка */
+                        .site-header {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 18px 60px;
+                        background: #fff;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+                        position: sticky;
+                        top: 0;
+                        z-index: 1000;
+                        }
+
+                        /* Логотип */
+                        .logo img {
+                        height: 42px;
+                        transition: transform 0.2s ease-in-out;
+                        }
+
+                        .logo img:hover {
+                        transform: scale(1.05);
+                        }
+
+                        /* Меню */
+                        .main-nav ul {
+                        list-style: none;
+                        display: flex;
+                        gap: 40px;
+                        margin: 0;
+                        padding: 0;
+                        }
+
+                        .main-nav a {
+                        text-decoration: none;
+                        font-weight: 500;
+                        color: #222;
+                        font-size: 16px;
+                        position: relative;
+                        transition: color 0.2s ease;
+                        }
+
+                        /* Эффект подчеркивания */
+                        .main-nav a::after {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        bottom: -6px;
+                        width: 0;
+                        height: 2px;
+                        background: #007bff;
+                        transition: width 0.3s ease;
+                        }
+
+                        .main-nav a:hover {
+                        color: #007bff;
+                        }
+
+                        .main-nav a:hover::after {
+                        width: 100%;
+                        }
+
+                        /* Адаптивность */
+                        @media (max-width: 768px) {
+                        .site-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        padding: 16px 30px;
+                        }
+
+                        .main-nav ul {
+                        flex-direction: column;
+                        gap: 16px;
+                        margin-top: 12px;
+                        }
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>ChatGPT 5 - form</h2>
+                <pre class="html size-l code-example-one"><code><div class="form-container">
+    <h2>Оставьте заявку</h2>
+    <form>
+        <div class="form-group">
+            <label for="name">Ваше имя</label>
+            <input type="text" id="name" name="name" placeholder="Введите имя" required>
+       </div>
+
+        <div class="form-group">
+            <label for="email">Ваш email</label>
+            <input type="email" id="email" name="email" placeholder="Введите email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="file">Прикрепите файл</label>
+            <input type="file" id="file" name="file">
+        </div>
+
+        <div class="form-group">
+            <label for="comment">Комментарий</label>
+            <textarea id="comment" name="comment" rows="4" placeholder="Ваше сообщение..."></textarea>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" id="agree" name="agree" required>
+            <label for="agree">Я принимаю правила использования</label>
+        </div>
+
+        <button type="submit" class="submit-btn">Отправить</button>
+    </form>
+</div></code></pre>
+            </section>
+
+            <section>
+                <h2>ChatGPT 5 - form</h2>
+                <pre class="html size-l code-example-one"><code><style>
+    body {
+        font-family: "Segoe UI", Roboto, sans-serif;
+        background: #f6f8fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .form-container {
+        background: #fff;
+        padding: 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .form-container h2 {
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-size: 1.8rem;
+        color: #222;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        margin-bottom: 0.4rem;
+        font-weight: 600;
+        color: #444;
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 0.8rem 1rem;
+        border: 1px solid #d0d7de;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #0077ff;
+        box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.15);
+        outline: none;
+    }
+
+    /* file input стилизация */
+    .form-group input[type="file"] {
+        padding: 0.4rem;
+        border: none;
+    }
+
+    /* checkbox */
+    .form-check {
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+
+    .form-check input {
+        margin-right: 0.6rem;
+        width: 18px;
+        height: 18px;
+        accent-color: #0077ff;
+    }
+
+    /* кнопка */
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 0.9rem;
+        background: #0077ff;
+        border: none;
+        border-radius: 0.6rem;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.15s;
+    }
+
+    .submit-btn:hover {
+        background: #005ed1;
+    }
+
+    .submit-btn:active {
+        transform: scale(0.98);
+    }
+</style></code></pre>
+            </section>
+
+            <section>
+                <code-example fragment>
+                    <template data-type="html" no-preview>
+                        <div class="form-container">
+                            <h2>Оставьте заявку</h2>
+                            <form>
+                                <div class="form-group">
+                                    <label for="name1">Ваше имя</label>
+                                    <input type="text" id="name1" name="name" placeholder="Введите имя" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email1">Ваш email</label>
+                                    <input type="email" id="email1" name="email" placeholder="Введите email" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="file1">Прикрепите файл</label>
+                                    <input type="file" id="file1" name="file">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="comment1">Комментарий</label>
+                                    <textarea id="comment1" name="comment" rows="4"
+                                              placeholder="Ваше сообщение..."></textarea>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" id="agree1" name="agree" required>
+                                    <label for="agree1">Я принимаю правила использования</label>
+                                </div>
+
+                                <button type="submit" class="submit-btn">Отправить</button>
+                            </form>
+                        </div>
+                    </template>
+                    <template data-type="css" no-preview>
+                        body {
+                        font-family: "Segoe UI", Roboto, sans-serif;
+                        background: #f6f8fa;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                        margin: 0;
+                        }
+
+                        .form-container {
+                        background: #fff;
+                        padding: 2.5rem;
+                        border-radius: 1rem;
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                        width: 100%;
+                        max-width: 500px;
+                        }
+
+                        .form-container h2 {
+                        margin-bottom: 1.5rem;
+                        text-align: center;
+                        font-size: 1.8rem;
+                        color: #222;
+                        }
+
+                        .form-group {
+                        margin-bottom: 1.2rem;
+                        display: flex;
+                        flex-direction: column;
+                        }
+
+                        .form-group label {
+                        margin-bottom: 0.4rem;
+                        font-weight: 600;
+                        color: #444;
+                        font-size: 0.95rem;
+                        }
+
+                        .form-group input,
+                        .form-group textarea {
+                        padding: 0.8rem 1rem;
+                        border: 1px solid #d0d7de;
+                        border-radius: 0.5rem;
+                        font-size: 1rem;
+                        transition: border-color 0.3s, box-shadow 0.3s;
+                        resize: vertical;
+                        }
+
+                        .form-group input:focus,
+                        .form-group textarea:focus {
+                        border-color: #0077ff;
+                        box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.15);
+                        outline: none;
+                        }
+
+                        /* file input стилизация */
+                        .form-group input[type="file"] {
+                        padding: 0.4rem;
+                        border: none;
+                        }
+
+                        /* checkbox */
+                        .form-check {
+                        display: flex;
+                        align-items: center;
+                        font-size: 0.9rem;
+                        }
+
+                        .form-check input {
+                        margin-right: 0.6rem;
+                        width: 18px;
+                        height: 18px;
+                        accent-color: #0077ff;
+                        }
+
+                        /* кнопка */
+                        .submit-btn {
+                        display: block;
+                        width: 100%;
+                        padding: 0.9rem;
+                        background: #0077ff;
+                        border: none;
+                        border-radius: 0.6rem;
+                        color: #fff;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: background 0.3s, transform 0.15s;
+                        }
+
+                        .submit-btn:hover {
+                        background: #005ed1;
+                        }
+
+                        .submit-btn:active {
+                        transform: scale(0.98);
+                        }
+                    </template>
+                </code-example>
+            </section>
+        </section>
+
+        <!-- Cursor -->
+        <section>
+            <h2>Cursor (VSCode + RooCode)</h2>
+            <ul class="opinion">
+                <li class="plus fragment">Единый интерфейс</li>
+                <li class="plus fragment">Видны изменения в файлах перед принятием</li>
+                <li class="plus fragment">Прямой доступ к файлам и терминалу</li>
+                <li class="plus fragment">Можно сделать анализ всего проекта и сохранить в memory bank</li>
+                <li class="plus fragment">Генерирует код в разных файлах одновременно</li>
+                <br>
+                <li class="minus fragment">Плохо принимает контекст больших проектов</li>
+                <li class="minus fragment">Трудности с legacy-проектами</li>
+                <br>
+                <li class="circle fragment">Уровень кода* - Middle-</li>
+            </ul>
+        </section>
+
+        <!-- UI AI -->
+        <section>
+            <section>
+                <h2>UI AI - <a href="https://lovable.dev" target="_blank">lovable.dev</a></h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Ориентирован на создание красивых дизайнов</li>
+                    <li class="plus fragment">Можно вносить изменения в любой блок интерфейса</li>
+                    <li class="plus fragment">Делает заготовку для Backend</li>
+                    <li class="plus fragment">Выгрузка в репозиторий GitHub</li>
+                    <br>
+                    <li class="minus fragment">Нельзя поправить код на "лету"</li>
+                    <li class="minus fragment">Нельзя загрузить контекст</li>
+                    <li class="minus fragment">Нельзя использовать в существующем проекте</li>
+                    <li class="minus fragment">Малое количество бесплатных токенов в сутки</li>
+                    <br>
+                    <li class="circle fragment">Стек - React, ExpressJS, TypeScript (нестрогий)</li>
+                    <li class="circle fragment">Уровень кода* - Middle</li>
+                </ul>
+            </section>
+
+            <section>
+                <img src="img/lovable-example.png" alt="lovable example" style="max-height: 60vh; border-width: 0;">
+            </section>
+
+            <section>
+                <img src="img/lovable.gif" alt="lovable gif" style="max-height: 65vh; border-width: 0; width: 100%;">
+            </section>
+        </section>
+
+        <!-- Хочу писать код сам -->
+        <section data-background-image="img/myself.png">
+            <h1 style="text-shadow: #000 3px 2px 2px;">Хочу писать код сам</h1>
+        </section>
+
+        <!-- EMMET -->
+        <section>
+            <section>
+                <div class="creators">
+                    <figure>
+                        <img height="325" src="img/Vadim.jpg"/>
+                        <figcaption>Вадим Макеев - 2008</figcaption>
+                    </figure>
+                    <figure class="fragment">
+                        <img height="325" src="img/chikuyonok.jpg"/>
+                        <figcaption>Сергей Чикуёнок - 2009</figcaption>
+                    </figure>
+                </div>
+                <div class=fragment>
+                    <h2 style="text-shadow: #000 0 0 4px; color: #fff">2009 – Zen Coding</h2>
+                </div>
+            </section>
+
+            <section data-transition="none">
+                <div class="creators">
+                    <figure>
+                        <img height="325" src="img/Vadim.jpg"/>
+                        <figcaption>Вадим Макеев - 2008</figcaption>
+                    </figure>
+                    <figure>
+                        <img height="325" src="img/chikuyonok.jpg"/>
+                        <figcaption>Сергей Чикуёнок - 2009</figcaption>
+                    </figure>
+                </div>
+                <div>
+                    <strike><h2 style="text-shadow: #000 0 0 4px; color: #fff">2009 – Zen Coding</h2></strike>
+                </div>
+                <div>
+                    <h2 style="text-shadow: #000 0 0 4px; color: #fff">2012 – Emmet</h2>
+                </div>
+            </section>
+
+            <section>
+                <h2>Emmet - </h2>
+                <p>- плагин для текстовых редакторов, написанный на чистом JavaScript, позволяющий ускорить написание
+                    кода HTML, CSS и др. языков.</p>
+            </section>
+        </section>
+
+        <!-- EMMET - HTML -->
+        <section>
+            <section>
+                <h2>Emmet - DOM</h2>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>!</code></pre>
+
+                <pre class="code-example-one html size-l fragment"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;title&gt;Document&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Тег</h2>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>h1</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;h1&gt;&lt;/h1&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>main</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;main&gt;&lt;/main&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>br</code></pre>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 2em;"><code>&lt;br&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>img</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;img src="" alt=""&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Класс</h2>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>.container</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;div class="container"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>ul.list</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;ul class="list"&gt;&lt;/ul&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>ul.list.categories</code></pre>
+                <pre class="code-example-one html size-l fragment"><code>&lt;ul class="list categories"&gt;&lt;/ul&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Идентификатор</h2>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>#id</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;div id="id"&gt;&lt;/div&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>ul#id</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;ul id="id"&gt;&lt;/ul&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>ul#id1#id2</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;ul id="id2"&gt;&lt;/ul&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Несколько элементов</h2>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>li*3</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>li.item*3</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;li class="item"&gt;&lt;/li&gt;
+&lt;li class="item"&gt;&lt;/li&gt;
+&lt;li class="item"&gt;&lt;/li&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Вложенные элементы</h2>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>ul>li*3</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>ul>li.item*3>a*2</code></pre>
+                <pre class="code-example-one html size-l fragment"><code>&lt;ul&gt;
+    &lt;li class="item"&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="item"&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="item"&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;a href=""&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Элементы с текстом</h2>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>p{Привет мир!}</code></pre>
+                <pre class="code-example-one html size-l fragment"><code>&lt;p&gt;Привет мир!&lt;/p&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Множественные атрибуты</h2>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>a[href="#" target="_blank"]</code></pre>
+                <pre class="code-example-one html size-l fragment"><code>&lt;a href="#" target="_blank"&gt;&lt;/a&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Группировка элементов</h2>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>(header>nav)+(main>section)+footer</code></pre>
+                <pre class="code-example-one html size-l fragment"><code>&lt;header&gt;
+    &lt;nav&gt;&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+    &lt;section&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;/footer&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - Нумерованные элементы</h2>
+                <pre class="code-example-one html size-l fragment"
+                     style="margin-bottom: 1em;"><code>ul>li.item$*3</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;ul&gt;
+    &lt;li class="item1"&gt;&lt;/li&gt;
+    &lt;li class="item2"&gt;&lt;/li&gt;
+    &lt;li class="item3"&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 1em;"><code>ul>(li.item#item-$>{$. })*10</code></pre>
+                <pre class="code-example-one html size-l fragment" style="margin-bottom: 2em;"><code>&lt;ul&gt;
+    &lt;li class="item" id="item-1"&gt;1. &lt;/li&gt;
+    &lt;li class="item" id="item-2"&gt;2. &lt;/li&gt;
+    &lt;li class="item" id="item-3"&gt;3. &lt;/li&gt;
+    &lt;li class="item" id="item-4"&gt;4. &lt;/li&gt;
+    &lt;li class="item" id="item-5"&gt;5. &lt;/li&gt;
+    &lt;li class="item" id="item-6"&gt;6. &lt;/li&gt;
+    &lt;li class="item" id="item-7"&gt;7. &lt;/li&gt;
+    &lt;li class="item" id="item-8"&gt;8. &lt;/li&gt;
+    &lt;li class="item" id="item-9"&gt;9. &lt;/li&gt;
+    &lt;li class="item" id="item-10"&gt;10. &lt;/li&gt;
+&lt;/ul&gt; </code></pre>
+            </section>
+        </section>
+
+        <!-- EMMET - CSS -->
+        <section>
+            <section>
+                <h2>Emmet - CSS</h2>
+
+                <p>Если название свойства составное, тогда слитно либо через дефис набираем первые буквы каждого
+                    слова:</p>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>ff</code></pre>
+                <pre class="code-example-one css size-l fragment"
+                     style="margin-bottom: 2em;"><code>font-family: ;</code></pre>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>f-f</code></pre>
+                <pre class="code-example-one css size-l fragment"
+                     style="margin-bottom: 2em;"><code>font-family: ;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - CSS</h2>
+
+                <p>Однако это не всегда так:</p>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>font-size: ;</code></pre>
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>fs</code></pre>
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 2em;"><code>font-style: ;</code></pre>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>fz</code></pre>
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 2em;"><code>font-size: ;</code></pre>
+            </section>
+
+            <section>
+                <h2>Emmet - CSS</h2>
+
+                <p>Можно сразу прописывать значение у свойств:</p>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>m25</code></pre>
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 2em;"><code>margin: 25px;</code></pre>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>m25p</code></pre>
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 2em;"><code>margin: 25%;</code></pre>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>m25cm</code></pre>
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 2em;"><code>margin: 25cm;</code></pre>
+
+                <pre class="code-example-one css size-l fragment" style="margin-bottom: 1em;"><code>c:red</code></pre>
+                <pre class="code-example-one css size-l fragment"
+                     style="margin-bottom: 2em;"><code>color: red;</code></pre>
+
+            </section>
+        </section>
+
+        <section data-background-image="img/emmet-list.png">
+            <a style="text-shadow: #000 3px 2px 2px;" href="https://docs.emmet.io/cheat-sheet/">https://docs.emmet.io/cheat-sheet/</a>
+        </section>
+
+        <section>
+            <h1>Пресеты</h1>
+        </section>
+
+        <!-- WEBSTORM -->
+        <section>
+            <section>
+                <h1>Пресеты в WebStorm</h1>
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <p style="text-align: center">Settings > Editor > File and Code Templates</p>
+                <img src="img/preset-webstorm-1.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-2.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-3.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-4.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-5.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <pre class="code-example-one ts size-l fragment" data-fragment-index="1" style="margin-bottom: 1em;">import { FC } from 'react'
+
+export type <mark>${NAME}</mark>Props = {}
+
+export const <mark>${NAME}</mark>: FC&lt;<mark>${NAME}</mark>Props&gt; = ({}) => {
+    return &lt;&gt;<mark>#[[$END$]]#</mark>&lt;/&gt;
+}</pre>
+                <pre class="code-example-one ts size-l fragment" style="margin-bottom: 1em;"><code>import { FC } from 'react'
+
+export type TestProps = {}
+
+export const Test: FC&lt;TestProps&gt; = ({}) => {
+    return &lt;&gt;&lt;/&gt;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-6.gif" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Apache Velocity</h2>
+                <p class="fragment">Список predefined переменных:</p>
+                <div class="variables-grid fragment">
+                    <!-- DATE -->
+                    <div class="variable-card">
+                        <code>${DATE}</code> - Текущая системная дата
+                    </div>
+
+                    <!-- DAY -->
+                    <div class="variable-card">
+                        <code>${DAY}</code> - День месяца
+                    </div>
+
+                    <!-- DAY_NAME_SHORT -->
+                    <div class="variable-card">
+                        <code>${DAY_NAME_SHORT}</code> - Сокращённое название дня недели (Пн, Вт и т.д.)
+                    </div>
+
+                    <!-- DAY_NAME_FULL -->
+                    <div class="variable-card">
+                        <code>${DAY_NAME_FULL}</code> - Полное название дня недели (Понедельник, Вторник и т.д.)
+                    </div>
+
+                    <!-- DIR_PATH -->
+                    <div class="variable-card">
+                        <code>${DIR_PATH}</code> - Путь к директории нового файла (относительно корня проекта)
+                    </div>
+
+                    <!-- DS -->
+                    <div class="variable-card">
+                        <code>${DS}</code> - Символ доллара ($). Используется для экранирования
+                    </div>
+
+                    <!-- FILE_NAME -->
+                    <div class="variable-card">
+                        <code>${FILE_NAME}</code> - Имя нового файла
+                    </div>
+
+                    <!-- HOUR -->
+                    <div class="variable-card">
+                        <code>${HOUR}</code> - Текущий час
+                    </div>
+
+                    <!-- MINUTE -->
+                    <div class="variable-card">
+                        <code>${MINUTE}</code> - Текущая минута
+                    </div>
+
+                    <!-- SECOND -->
+                    <div class="variable-card">
+                        <code>${SECOND}</code> - Текущая секунда
+                    </div>
+
+                    <!-- MONTH -->
+                    <div class="variable-card">
+                        <code>${MONTH}</code> - Текущий месяц (число)
+                    </div>
+
+                    <!-- MONTH_NAME_SHORT -->
+                    <div class="variable-card">
+                        <code>${MONTH_NAME_SHORT}</code> - Сокращённое название месяца (Янв, Фев и т.д.)
+                    </div>
+
+                    <!-- MONTH_NAME_FULL -->
+                    <div class="variable-card">
+                        <code>${MONTH_NAME_FULL}</code> - Полное название месяца (Январь, Февраль и т.д.)
+                    </div>
+
+                    <!-- NAME -->
+                    <div class="variable-card">
+                        <code>${NAME}</code> - Имя новой сущности (файла, типа, интерфейса)
+                    </div>
+
+                    <!-- ORGANIZATION_NAME -->
+                    <div class="variable-card">
+                        <code>${ORGANIZATION_NAME}</code> - Название вашей организации из настроек проекта
+                    </div>
+
+                    <!-- PRODUCT_NAME -->
+                    <div class="variable-card">
+                        <code>${PRODUCT_NAME}</code> - Название IDE (WebStorm, PyCharm и т.д.)
+                    </div>
+
+                    <!-- PROJECT_NAME -->
+                    <div class="variable-card">
+                        <code>${PROJECT_NAME}</code> - Название текущего проекта
+                    </div>
+
+                    <!-- TIME -->
+                    <div class="variable-card">
+                        <code>${TIME}</code> - Текущее системное время
+                    </div>
+
+                    <!-- USER -->
+                    <div class="variable-card">
+                        <code>${USER}</code> - Имя пользователя системы
+                    </div>
+
+                    <!-- YEAR -->
+                    <div class="variable-card">
+                        <code>${YEAR}</code> - Текущий год
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Apache Velocity</h2>
+                <a href="https://velocity.apache.org/" target="_blank">https://velocity.apache.org/</a>
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <p style="text-align: center">Settings > Editor > Live Templates</p>
+                <img src="img/preset-webstorm-7.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-8.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-9.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в WebStorm</h2>
+                <img src="img/preset-webstorm-10.gif" alt="preset" style="max-height: 45vh;">
+            </section>
+        </section>
+
+        <!-- VS CODE -->
+        <section>
+            <section>
+                <h1>Пресеты в VS Code</h1>
+            </section>
+
+            <section>
+                <h2>Пресеты в VS Code</h2>
+                <p style="text-align: center">Ctrl/Cmd + Shift + P > Configure User Snippets</p>
+                <img src="img/preset-vscode-1.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в VS Code</h2>
+                <img src="img/preset-vscode-2.png" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в VS Code</h2>
+                <pre class="code-example-one json size-l fragment" data-fragment-index="1" style="margin-bottom: 1em;">{
+	"header": {
+		"prefix": "header",
+		"body": [
+			"&lt;header class=\"site-header\"&gt;",
+			"\t&lt;div class=\"logo\"&gt;&lt;/div&gt;",
+			"\t&lt;nav aria-label=\"\"&gt;",
+			"\t\t&lt;ul&gt;",
+			"\t\t\t&lt;li&gt;&lt;a href=\"\"&gt;&lt;/a&gt;&lt;/li&gt;",
+			"\t\t\t&lt;li&gt;&lt;a href=\"\"&gt;&lt;/a&gt;&lt;/li&gt;",
+			"\t\t\t&lt;li&gt;&lt;a href=\"\"&gt;&lt;/a&gt;&lt;/li&gt;",
+			"\t\t\t&lt;li&gt;&lt;a href=\"\"&gt;&lt;/a&gt;&lt;/li&gt;",
+			"\t\t&lt;/ul&gt;",
+			"\t&lt;/nav&gt;",
+			"&lt;/header&gt;"
+		]
+	}
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Пресеты в VS Code</h2>
+                <img src="img/preset-vscode-3.gif" alt="preset" style="max-height: 45vh;">
+            </section>
+
+            <section>
+                <h2>Пресеты в VS Code</h2>
+                <p class="fragment">Поля:</p>
+                <div class="variables-grid fragment">
+                    <div class="variable-card">
+                        <code>key</code> - Название пресета. Используется в Insert Snippet, если не задано поле <code>prefix</code>.
+                    </div>
+
+                    <div class="variable-card">
+                        <code>prefix</code> - Список ключевых слов, по которым будет вызывается этот сниппет. Если задан
+                        массив с несколькими значениями, то в Insert Snippet будут дублироваться со всеми вариантами
+                        названий.
+                    </div>
+
+                    <div class="variable-card">
+                        <code>body</code> - Содержимое пресета. <br>Можно использовать внутри синтаксис
+                        <code>${n:name}</code>: <code>n</code>&nbsp;-&nbsp;номер заполнителя (переход между ними по
+                        нажатию на
+                        <code>Tab</code>), <code>name</code>&nbsp;-&nbsp;значение по умолчанию. Заполнители обходятся по
+                        порядку,
+                        начиная с единицы; ноль — это необязательный особый случай, который всегда идёт последним и
+                        завершает режим фрагмента с курсором в указанной позиции.
+                    </div>
+
+                    <div class="variable-card">
+                        <code>description</code> - Описание пресета. Отображается перед вставкой кода.
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <p class="fragment">Список predefined переменных:</p>
+                <div class="variables-grid variables-grid--size-s fragment">
+                    <div class="variable-card"><code>TM_SELECTED_TEXT</code> - Выбранный в данный момент текст или
+                        пустая строка
+                    </div>
+                    <div class="variable-card"><code>TM_CURRENT_LINE</code> - Содержимое текущей строки
+                    </div>
+                    <div class="variable-card"><code>TM_CURRENT_WORD</code> - Содержимое слова под курсором или пустая
+                        строка
+                    </div>
+                    <div class="variable-card"><code>TM_LINE_INDEX</code> - Номер строки с отсчётом от нуля
+                    </div>
+                    <div class="variable-card"><code>TM_LINE_NUMBER</code> - Номер
+                        строки на основе
+                        одного индекса
+                    </div>
+                    <div class="variable-card"><code>TM_FILENAME</code> - Имя файла текущего
+                        документа
+                    </div>
+                    <div class="variable-card"><code>TM_FILENAME_BASE</code> - Имя файла текущего
+                        документа без расширения
+                    </div>
+                    <div class="variable-card"><code>TM_DIRECTORY</code> - Каталог
+                        текущего документа
+                    </div>
+                    <div class="variable-card"><code>TM_FILEPATH</code> - Полный путь к файлу текущего документа
+                    </div>
+                    <div class="variable-card"><code>RELATIVE_FILEPATH</code> - Относительный (к открытому рабочему
+                        пространству или
+                        папке) путь к файлу текущего документа
+                    </div>
+                    <div class="variable-card"><code>CLIPBOARD</code> - Содержимое вашего буфера обмена
+                    </div>
+                    <div class="variable-card"><code>WORKSPACE_NAME</code> - Название открытого
+                        рабочего пространства или папки
+                    </div>
+                    <div class="variable-card">
+                        <code>WORKSPACE_FOLDER</code> - Путь к открытому
+                        рабочему пространству или папке
+                    </div>
+                    <div class="variable-card">
+                        <code>CURSOR_INDEX</code> - Номер курсора с отсчётом от нуля
+                    </div>
+                    <div class="variable-card"><code>CURSOR_NUMBER</code> - Номер курсора на основе
+                        одного индекса
+                    </div>
+                    <div class="variable-card"><code>CURRENT_YEAR</code> - Текущий год
+                    </div>
+                    <div class="variable-card"><code>CURRENT_YEAR_SHORT</code> - Последние две цифры текущего
+                        года
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MONTH</code> - Месяц в виде двух цифр
+                        (например, «02»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MONTH_NAME</code> - Полное название месяца
+                        (например, «июль»)
+                    </div>
+                    <div class="variable-card">
+                        <code>CURRENT_MONTH_NAME_SHORT</code> - Сокращённое название месяца
+                        (например, «июль»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_DATE</code> - День месяца в виде двух цифр
+                        (например, «08»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_DAY_NAME</code> - Название дня недели (например,
+                        «понедельник»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_DAY_NAME_SHORT</code> - Сокращённое название дня недели
+                        (например, «пн»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_HOUR</code> - Текущее время в 24-часовом
+                        формате
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MINUTE</code> - Текущая минута в виде двух цифр
+                    </div>
+                    <div class="variable-card"><code>CURRENT_SECOND</code> - Текущая секунда в виде двух цифр
+                    </div>
+                    <div class="variable-card"><code>CURRENT_SECONDS_UNIX</code> - Количество секунд, прошедших с
+                        начала эпохи Unix
+                    </div>
+                    <div class="variable-card"><code>CURRENT_TIMEZONE_OFFSET</code> - Текущее смещение часового пояса
+                        UTC в формате <code>+HH:MM</code> или <code>-HH:MM</code> (пример <code>-07:00</code>).
+                    </div>
+                    <div class="variable-card"><code>CURRENT_YEAR</code> - Текущий год
+                    </div>
+                    <div class="variable-card"><code>CURRENT_YEAR_SHORT</code> - Последние две цифры текущего года
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MONTH</code> - Месяц в виде двух цифр
+                        (например, «02»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MONTH_NAME</code> - Полное название месяца
+                        (например, «июль»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MONTH_NAME_SHORT</code> - Сокращённое название
+                        месяца (например, «июль»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_DATE</code> - День месяца в виде двух цифр (например, «08»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_DAY_NAME</code> - Название дня недели
+                        (например, «понедельник»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_DAY_NAME_SHORT</code> - Сокращённое название дня
+                        недели (например, «пн»)
+                    </div>
+                    <div class="variable-card"><code>CURRENT_HOUR</code> - Текущее время в
+                        24-часовом формате
+                    </div>
+                    <div class="variable-card"><code>CURRENT_MINUTE</code> - Текущая минута в виде двух цифр
+                    </div>
+                    <div class="variable-card"><code>CURRENT_SECOND</code> - Текущая секунда в виде двух цифр
+                    </div>
+                    <div class="variable-card"><code>CURRENT_SECONDS_UNIX</code> - Количество секунд, прошедших с начала
+                        эпохи Unix
+                    </div>
+                    <div class="variable-card"><code>CURRENT_TIMEZONE_OFFSET</code> - Текущее смещение часового пояса
+                        UTC в формате
+                        <code>+HH:MM</code>
+                        или
+                        <code>-HH:MM</code>
+                        (пример
+                        <code>-07:00</code>
+                    </div>
+                    <div class="variable-card"><code>RANDOM</code> - 6 случайных цифр в
+                        десятичной системе
+                    </div>
+                    <div class="variable-card"><code>RANDOM_HEX</code> - 6 случайных цифр в
+                        системе Base-16
+                    </div>
+                    <div class="variable-card"><code>UUID</code> - UUID версии 4
+                    </div>
+                    <div class="variable-card"><code>BLOCK_COMMENT_START</code> - Пример вывода: в PHP
+                        <code>/*</code>
+                        или в
+                        HTML
+                        <code>&lt;!--</code>
+                    </div>
+                    <div class="variable-card"><code>BLOCK_COMMENT_END</code> - Пример вывода: в PHP <code>*/</code> или
+                        в
+                        HTML <code>--&gt;</code></div>
+                    <div class="variable-card"><code>LINE_COMMENT</code> - <code>//</code>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- BOOTSTRAP -->
+        <section>
+            <section>
+                <h1>Bootstrap</h1>
+                <img src="img/bootstrap.png" alt="Bootstrap" style="max-height: 30vh; background: #FFF">
+            </section>
+            <section>
+                <h2>Bootstrap</h2>
+                <img src="img/figma.jpg" alt="макет" style="max-height: 55vh; background: #FFF">
+            </section>
+            <section>
+                <h2>Bootstrap - Columns</h2>
+                <img src="img/columns.png" alt="макет" style="max-height: 55vh; background: #FFF">
+            </section>
+            <section>
+                <h2>Bootstrap - Columns</h2>
+                <img src="/utils/assets/lesson3.html/grid.gif" alt="макет" style="max-height: 55vh; background: #FFF">
+            </section>
+            <section>
+                <h2>Bootstrap - Colummns</h2>
+                <ul>
+                    <li class="fragment">Контейнеры центрируют и размещают Ваш контент по горизонтали - <code
+                            class="fragment">.container</code></li>
+                    <li class="fragment">Строчки (rows) являются оболочками для колонок - <code
+                            class="fragment">.row</code></li>
+                    <li class="fragment">Колонки могут занимать от 1 до 12 столбцов - <code class="fragment">.col-1,
+                        col-2, ..., .col-12</code></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Bootstrap - Colummns</h2>
+                <p>Система сеток Bootstrap может адаптироваться к контрольным точкам</p>
+                <table style="font-size: 0.75em; white-space: nowrap;">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            xs<br>
+                            <span>&lt;576px</span>
+                        </th>
+                        <th>
+                            sm<br>
+                            <span>≥576px</span>
+                        </th>
+                        <th>
+                            md<br>
+                            <span>≥768px</span>
+                        </th>
+                        <th>
+                            lg<br>
+                            <span>≥992px</span>
+                        </th>
+                        <th>
+                            xl<br>
+                            <span>≥1200px</span>
+                        </th>
+                        <th>
+                            xxl<br>
+                            <span>≥1400px</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>Контейнер <br><code>max-width</code></th>
+                        <td>auto</td>
+                        <td>540px</td>
+                        <td>720px</td>
+                        <td>960px</td>
+                        <td>1140px</td>
+                        <td>1320px</td>
+                    </tr>
+                    <tr>
+                        <th>Префикс класса</th>
+                        <td><code>.col-</code></td>
+                        <td><code>.col-sm-</code></td>
+                        <td><code>.col-md-</code></td>
+                        <td><code>.col-lg-</code></td>
+                        <td><code>.col-xl-</code></td>
+                        <td><code>.col-xxl-</code></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4"></div>
+                                <div class="col-sm-8 col-xxl-1 col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </template>
+                </code-example>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe id="bootstrapIframe" srcdoc='
+    <!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <style>
+        .row * {
+            background-color: rgba(112.520718, 44.062154, 249.437846, 0.15);
+            border: 1px solid rgba(112.520718, 44.062154, 249.437846, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .dynamic-col::after {
+            content: attr(data-cols);
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Функция для определения текущего количества колонок
+            function updateColumnCounts() {
+                const row = document.querySelector(".row:first-child");
+                const cols = row.querySelectorAll(".dynamic-col");
+                const colWidth = document.querySelector(".col-1").offsetWidth;
+
+                        cols.forEach(col => {
+                        const colCount = Math.round(col.offsetWidth / colWidth);
+                        // Устанавливаем значение
+                        col.setAttribute("data-cols", colCount);
+                        });
+                        }
+
+                        // Обновляем при загрузке и изменении размера
+                        updateColumnCounts();
+                        window.addEventListener("resize", updateColumnCounts);
+                        });
+                        </script>
+                        </head>
+                        <body>
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-4 dynamic-col"></div>
+                                <div class="col-md-8 col-xl-4 col-xxl-1 col-4 dynamic-col"></div>
+                                <div class="col-4 dynamic-col"></div>
+                                <div class="col dynamic-col"></div>
+                            </div>
+
+                            <br>
+                            <div class="row" style="height: 250px">
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                                <div class="col-1">1</div>
+                            </div>
+                        </div>
+                        </body>
+</html>
+' width="100%" height="500"></iframe>
+                        <script>
+                            const iframeContainer = document.querySelector('.iframe-container');
+                            iframeContainer.style.animation = 'resize 10s infinite alternate ease-in-out';
+                        </script>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Buttons</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <button type="button" class="btn btn-primary">Primary</button>
+                        <button type="button" class="btn btn-secondary">Secondary</button>
+                        <button type="button" class="btn btn-success">Success</button>
+                        <button type="button" class="btn btn-danger">Danger</button>
+                        <button type="button" class="btn btn-warning">Warning</button>
+                        <button type="button" class="btn btn-info">Info</button>
+                        <button type="button" class="btn btn-light">Light</button>
+                        <button type="button" class="btn btn-dark">Dark</button>
+                        <button type="button" class="btn btn-link">Link</button>
+                    </template>
+                </code-example>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe srcdoc='
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                    <style>body{
+                    padding: 20px;
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                    }</style>
+                </head>
+                <body>
+                    <button type="button" class="btn btn-primary">Primary</button>
+                    <button type="button" class="btn btn-secondary">Secondary</button>
+                    <button type="button" class="btn btn-success">Success</button>
+                    <button type="button" class="btn btn-danger">Danger</button>
+                    <button type="button" class="btn btn-warning">Warning</button>
+                    <button type="button" class="btn btn-info">Info</button>
+                    <button type="button" class="btn btn-light">Light</button>
+                    <button type="button" class="btn btn-dark">Dark</button>
+                    <button type="button" class="btn btn-link">Link</button>
+                </body>
+                </html>
+            ' width="100%" height="250"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Cards</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <div class="card" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </template>
+                </code-example>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe srcdoc='
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                    <style>
+                        body { padding: 20px; }
+                        .card-img-top {
+                            background: #ddd;
+                            height: 180px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-img-top"></div>
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ' width="100%" height="350"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Modal</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Launch demo modal
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Modal body text goes here.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </code-example>
+            </section>
+            <section>
+                <h2>Modal </h2>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe srcdoc='
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                    <style>body{padding:20px;}</style>
+                </head>
+                <body>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Modal body text goes here.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ' width="100%" height="500"></iframe>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Подключение</h2>
+                <p>Самый простой способ подключения - указание в <code>head</code> страницы ссылки на CDN актуальной
+                    версии фреймворка.</p>
+                <a href="https://bootstrap-5.ru/docs/5.3/getting-started/download/">Подробнее</a>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h1>Tailwind CSS</h1>
+                <img src="img/tailwind.png" alt="tailwind" style="max-height: 30vh; background: #FFF">
+            </section>
+
+            <section>
+                <h2>Tailwind CSS</h2>
+                <p> - utility-first CSS фреймворк.</p>
+                <p>В отличие от Bootstrap предлагает не готовые компоненты, а utility-классы для стилизации HTML</p>
+            </section>
+
+            <section>
+                <h2>Подключение</h2>
+                <ul>
+                    <li>CDN</li>
+                    <li class="fragment">Post CSS (
+                        <del>спойлер</del>
+                        )
+                    </li>
+                </ul>
+                <br>
+                <a href="https://tailwindcss.com/docs/installation/play-cdn" class="fragment">Подробнее</a>
+            </section>
+
+            <section>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <div class="mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
+                            <img class="size-12 shrink-0" src="/img/logo.svg" alt="ChitChat Logo"/>
+                            <div>
+                                <div class="text-xl font-medium text-black dark:text-white">ChitChat</div>
+                                <p class="text-gray-500 dark:text-gray-400">You have a new message!</p>
+                            </div>
+                        </div>
+                    </template>
+                </code-example>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe srcdoc='
+    <!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+        }
+    </style>
+                        </head>
+                        <body>
+                        <div class="mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
+  <svg class="size-12 shrink-0" viewBox="0 0 40 40"><defs><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="a"><stop stop-color="#2397B3" offset="0%"></stop><stop stop-color="#13577E" offset="100%"></stop></linearGradient><linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="b"><stop stop-color="#73DFF2" offset="0%"></stop><stop stop-color="#47B1EB" offset="100%"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><path d="M28.872 22.096c.084.622.128 1.258.128 1.904 0 7.732-6.268 14-14 14-2.176 0-4.236-.496-6.073-1.382l-6.022 2.007c-1.564.521-3.051-.966-2.53-2.53l2.007-6.022A13.944 13.944 0 0 1 1 24c0-7.331 5.635-13.346 12.81-13.95A9.967 9.967 0 0 0 13 14c0 5.523 4.477 10 10 10a9.955 9.955 0 0 0 5.872-1.904z" fill="url(#a)" transform="translate(1 1)"></path><path d="M35.618 20.073l2.007 6.022c.521 1.564-.966 3.051-2.53 2.53l-6.022-2.007A13.944 13.944 0 0 1 23 28c-7.732 0-14-6.268-14-14S15.268 0 23 0s14 6.268 14 14c0 2.176-.496 4.236-1.382 6.073z" fill="url(#b)" transform="translate(1 1)"></path><path d="M18 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM24 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM30 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="#FFF"></path></g></svg>
+  <div>
+    <div class="text-xl font-medium text-black dark:text-white">ChitChat</div>
+    <p class="text-gray-500 dark:text-gray-400">You have a new message!</p>
+  </div>
+</div>
+                        </body>
+</html>
+' width="100%" height="500"></iframe>
+                        <script>
+                            const iframeContainer = document.querySelector('.iframe-container');
+                            iframeContainer.style.animation = 'resize 10s infinite alternate ease-in-out';
+                        </script>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Работа с текстом</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <p class="text-sm text-gray-500">Маленький серый текст</p>
+                        <p class="text-lg font-bold text-blue-600">Крупный и жирный текст</p>
+                        <p class="text-center italic text-pink-500">Центрированный курсив</p>
+                    </template>
+                </code-example>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe srcdoc='
+      <!DOCTYPE html><html><head>
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head><body class="p-10 bg-white">
+      <div class="space-y-2">
+        <p class="text-sm text-gray-500">Маленький серый текст</p>
+        <p class="text-lg font-bold text-blue-600">Крупный и жирный текст</p>
+        <p class="text-center italic text-pink-500">Центрированный курсив</p>
+      </div>
+      </body></html>' width="100%" height="220"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Цвета в Tailwind</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <div class="w-16 h-16 bg-red-500 rounded"></div>
+                        <div class="w-16 h-16 bg-green-500 rounded"></div>
+                        <div class="w-16 h-16 bg-blue-500 rounded"></div>
+                    </template>
+                </code-example>
+                <div class="wrapper">
+                    <div class="iframe-container">
+                        <iframe srcdoc='
+      <!DOCTYPE html><html><head>
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head><body class="p-10 bg-white">
+      <div class="flex gap-3">
+        <div class="w-16 h-16 bg-red-500 rounded"></div>
+        <div class="w-16 h-16 bg-green-500 rounded"></div>
+        <div class="w-16 h-16 bg-blue-500 rounded"></div>
+      </div>
+      </body></html>' width="100%" height="200"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Отступы</h2>
+                <p>Отступы задаются через классы <code>m</code>, <code>p</code>, <code>mx</code>, <code>py</code> и т.д.
+                </p>
+                <p>Tailwind использует числовую шкалу отступов, где 1 == <code>0.25rem</code> (4px).</p>
+                <p class="fragment">Например:</p>
+                <ul>
+                    <li class="fragment"><code>m-3</code> → margin: 0.75rem (12px)</li>
+                    <li class="fragment"><code>py-6</code> → padding-top и padding-bottom: 1.5rem (24px)</li>
+                    <li class="fragment"><code>px-4</code> → padding-left и padding-right: 1rem (16px)</li>
+                    <li class="fragment"><code>pb-1</code> → padding-bottom: 0.25rem (4px)</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Отступы</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <div class="p-6 bg-gray-100">
+                            <div class="m-4 p-4 bg-blue-200 rounded">Внутренний блок</div>
+                        </div>
+                    </template>
+                </code-example>
+                <div class="iframe-container">
+                    <iframe srcdoc='
+      <!DOCTYPE html><html><head>
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head><body class="p-10">
+      <div class="p-6 bg-gray-100">
+        <div class="m-4 p-4 bg-blue-200 rounded">Внутренний блок</div>
+      </div>
+      </body></html>' width="100%" height="200"></iframe>
+                </div>
+            </section>
+
+            <section>
+                <h2>Адаптивность</h2>
+                <p>Tailwind использует префиксы для
+                    адаптации под различные экраны.</p>
+                <ul>
+                    <li><code>sm</code> — от 640px</li>
+                    <li><code>md</code> — от 768px</li>
+                    <li><code>lg</code> — от 1024px</li>
+                    <li><code>xl</code> — от 1280px</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Адаптивность</h2>
+                <code-example no-preview>
+                    <template data-type="html">
+                        <div class="bg-blue-300 p-4 text-center md:bg-green-300 lg:bg-pink-300">
+                            Hello!
+                        </div>
+                    </template>
+                </code-example>
+                <div class="iframe-container iframe-tailwind-container">
+                    <iframe srcdoc='
+      <!DOCTYPE html><html><head>
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head><body class="p-10">
+      <div class="bg-blue-300 p-4 text-center md:bg-green-300 lg:bg-pink-300">
+        Hello!
+      </div>
+      </body></html>' width="100%" height="200"></iframe>
+                </div>
+                <script>
+                    const iframeTailwindContainer = document.querySelector('.iframe-tailwind-container');
+                    iframeTailwindContainer.style.animation = 'resize 5s infinite alternate ease-in-out';
+                </script>
+            </section>
+
+
+            <section data-background-image="img/tailwind-cheat.png">
+                <h1><a style="text-shadow: #000 3px 2px 2px;" href="https://nerdcave.com/tailwind-cheat-sheet">Cheat
+                    Sheet</a></h1>
+            </section>
+
+        </section>
+
+        <section>
+            <img src="img/js-vs-css.jpg" alt="js-vs-css" style="height: 60vh;">
+        </section>
+
+
+        <section>
+            <section>
+                <h1>CSS 3</h1>
+                <img src="img/css3.png" alt="css" style="max-height: 30vh; background: #FFF">
+            </section>
+
+            <section>
+                <h2>CSS 3 - Variables</h2>
+                <code-example>
+                    <template data-type="html">
+                        <p>Hello!</p>
+                    </template>
+                    <template data-type="css">
+                        p {
+                        --main-color: #F00;
+                        --secondary-color: #0FF;
+
+                        color: var(--main-color);
+                        background-color: var(--secondary-color);
+                        }
+                    </template>
+                </code-example>
+
+                <pre class="code-example-one css size-l fragment" style="margin-top: 1em;"><code>p {
+    color: #F00;
+    background-color: #0FF;
+}</code></pre>
+                <p class="fragment">Но обычно задают в <code>:root</code></p>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Variables</h2>
+                <img src="img/caniuse.com_css-variables.png" alt="can i use css variables" style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - Nesting</h2>
+                <code-example>
+                    <template data-type="html">
+                        <span>Hello, <span>World!</span></span>
+                    </template>
+                    <template data-type="css">
+                        span {
+                        color: red;
+
+                        span {
+                        color: blue;
+                        }
+                        }
+                    </template>
+                </code-example>
+
+                <pre class="code-example-one css size-l fragment" style="margin-top: 1em;"><code>span {
+    color: red;
+}
+
+span span {
+    color: blue;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Nesting</h2>
+                <img src="img/caniuse.com_css-nesting.png" alt="can i use css nesting" style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - Nesting selector</h2>
+                <code-example>
+                    <template data-type="html">
+                        <p>Hello, <span>World!</span></p>
+                    </template>
+                    <template data-type="css">
+                        p {
+                        color: red;
+
+                        :hover {
+                        color: blue;
+                        }
+                        }
+                    </template>
+                </code-example>
+
+                <pre class="code-example-one css size-l fragment" style="margin-top: 1em;"><code>p {
+    color: red;
+}
+
+p *:hover {
+    color: blue;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Nesting selector</h2>
+                <code-example>
+                    <template data-type="html">
+                        <p>Hello, <span>World!</span></p>
+                    </template>
+                    <template data-type="css">
+                        p {
+                        color: red;
+
+                        &:hover {
+                        color: blue;
+                        }
+                        }
+                    </template>
+                </code-example>
+
+                <pre class="code-example-one css size-l fragment" style="margin-top: 1em;"><code>p {
+    color: red;
+}
+
+p:hover {
+    color: blue;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Nesting selector</h2>
+                <img src="img/caniuse.com_css-nesting-selector.png" alt="can i use css nesting selector"
+                     style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - Math functions</h2>
+                <div class="fragment">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: calc(100% - 20px * 2 + 5vw / 3); }
+                        </template>
+                    </code-example>
+                </div>
+                <div class="fragment" style="margin-top: 1em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: min(10vw, 150px); }
+                        </template>
+                    </code-example>
+                </div>
+                <div class="fragment" style="margin-top: 1em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: max(20%, 150px); }
+                        </template>
+                    </code-example>
+                </div>
+                <div class="fragment" style="margin-top: 1em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: clamp(10vw, 20%, 150px); }
+                        </template>
+                    </code-example>
+                </div>
+                <div class="fragment" style="margin-top: 0.5em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            clamp(MIN, VAL, MAX) == max(MIN, min(VAL, MAX))
+                        </template>
+                    </code-example>
+                </div>
+            </section>
+
+            <section>
+                <h2>CSS 3 - calc</h2>
+                <img src="img/caniuse.calc.png" alt="can i use css calc"
+                     style="max-height: 50vh">
+            </section>
+            <section>
+                <h2>CSS 3 - min, max, clamp</h2>
+                <img src="img/caniuse.math.png" alt="can i use css math"
+                     style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <code-example>
+                    <template data-type="html">
+                        <article>
+                            <p>Hello!</p>
+                        </article>
+                    </template>
+                    <template data-type="css">
+                        :is(article, section, aside) p {
+                        color: red;
+                        }
+                    </template>
+                </code-example>
+
+                <pre class="code-example-one css size-l fragment" style="margin-top: 1em;"><code>article p,
+section p,
+aside p {
+    color: red;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <code-example>
+                    <template data-type="html">
+                        <article>
+                            <p>Hello!</p>
+                        </article>
+                    </template>
+                    <template data-type="css">
+                        :where(article, section, aside) p {
+                        color: red;
+                        }
+                    </template>
+                </code-example>
+
+                <pre class="code-example-one css size-l fragment" style="margin-top: 1em;"><code>article p,
+section p,
+aside p {
+    color: red;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <p class="fragment">Специфичность <code>:is</code> - максимальная специфичность аргументов</p>
+                <p class="fragment">Специфичность <code>:where</code> - 0</p>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <code-example fragment>
+                    <template data-type="html">
+                        <article>
+                            <p>Hello, world</p>
+                        </article>
+                    </template>
+                    <template data-type="css">
+                        article p {
+                        color: black;
+                        }
+
+                        :is(article, section, aside) p {
+                        color: red;
+                        }
+
+                        :where(article, section, aside) p {
+                        color: blue;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <code-example>
+                    <template data-type="html">
+                        <p>
+                            Hello, <span>World!</span>
+                        </p>
+                    </template>
+
+                    <template data-type="css">
+                        p:has(span) {
+                        color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>:is</code></h2>
+                <img src="img/caniuse.is.png" alt="can i use is" style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>:where</code></h2>
+                <img src="img/caniuse.where.png" alt="can i use where" style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>:has</code></h2>
+                <img src="img/caniuse.has.png" alt="can i use has" style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>@supports</code></h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @supports (display: inline-block) {
+                        .example {
+                        display: inline-block;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <div style="margin-top: 1em;">
+                    <code-example class="fragment" no-preview>
+                        <template data-type="css">
+                            @supports (color) and (display: inline-block) {
+                            .example {
+                            color: red;
+                            display: inline-block;
+                            }
+                            }
+                        </template>
+                    </code-example>
+                </div>
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>@supports</code></h2>
+                <img src="img/caniuse.supports.png" alt="can i use supports" style="max-height: 50vh">
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>@layer</code></h2>
+                <code-example fragment>
+                    <template data-type="html">
+                        <span>Click me</span>
+                    </template>
+                    <template data-type="css">
+                        @layer base, components;
+
+                        @layer base {
+                        span { background: blue; }
+                        }
+
+                        @layer components {
+                        span { background: red; }
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>@layer</code></h2>
+                <code-example fragment>
+                    <template data-type="html">
+                        <span>Click me</span>
+                    </template>
+                    <template data-type="css">
+                        @layer base, components;
+
+                        @layer components {
+                        span { background: red; }
+                        }
+
+                        @layer base {
+                        span { background: blue; }
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>@layer</code></h2>
+                <code-example fragment>
+                    <template data-type="html">
+                        <span>Click me</span>
+                    </template>
+                    <template data-type="css">
+                        @layer base, components;
+
+                        @layer base {
+                        span { background: blue; }
+                        }
+
+                        @layer components {
+                        span { background: red; }
+                        }
+
+                        span { background: green; }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>CSS 3 - <code>@layer</code></h2>
+                <img src="img/caniuse.layer.png" alt="can i use layer" style="max-height: 50vh">
+            </section>
+        </section>
+
+        <!-- Препроцессор -->
+        <section>
+            <h2>Препроцессор</h2>
+            <p class="fragment" data-fragment-index="2">- это программа, которой на вход дается код написанный на
+                языке
+                препроцессора, а на
+                выходе мы получаем CSS.</p>
+            <h2 class="fragment" style="margin-top: 1em;" data-fragment-index="1">Постпроцессор</h2>
+            <p class="fragment" data-fragment-index="3">- это программа, которой на вход дается код CSS, а на
+                выходе мы получаем модифицированный CSS.</p>
+        </section>
+
+        <!-- SASS -->
+        <section>
+            <section>
+                <h1>SASS</h1>
+                <img src="img/sass.png" alt="sass" style="max-height: 30vh; background: #FFF">
+            </section>
+
+            <section>
+                <h2>Язык SASS</h2>
+                <ul>
+                    <li>SASS - старый синтаксис, завязанный на отступы и переносы строк (Python);</li>
+                    <li>SCSS - новый синтаксис, совместимый с CSS (CSS).</li>
+                </ul>
+                <img src="img/sass-vs-scss.png" alt="sass vs scss" style="height: 40vh">
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Variables</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        $primary-color: #3498db;
+
+                        h1 {
+                        font: $primary-color;
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        h1 {
+                        font: #3498db;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Modules</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @use 'base.scss' as base;
+
+                        h1 {
+                        font: base.$primary-color;
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        h1 {
+                        font: #3498db;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Nesting</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        div {
+                        span {
+                        padding: 10px;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        div span {
+                        padding: 10px;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Nesting selector</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        div {
+                        &:hover {
+                        color: red;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        div:hover {
+                        color: red ;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Nesting selector</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        .list {
+                        &__item {
+                        color: red;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .list__item {
+                        color: red;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Nesting</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        .a, .b {
+                        .c, .d {
+                        padding: 10px;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example class="fragment" no-preview>
+                    <template data-type="css">
+                        .a .c,
+                        .a .d,
+                        .b .c,
+                        .b .d {
+                        padding: 10px;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Nesting style</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        p {
+                        font: {
+                        family: 'Arial';
+                        weight: bold;
+                        size: 0.5em;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        p {
+                        font-family: 'Arial';
+                        font-weight: bold;
+                        font-size: 0.5em;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Nesting style</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        p {
+                        margin: 5px {
+                        top: 10px;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        p {
+                        margin: 5px;
+                        margin-top: 10px;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Templates</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        %template {
+                        color: red;
+                        }
+
+                        .blue {
+                        @extend %template;
+                        background: blue;
+                        }
+
+                        .green {
+                        @extend %template;
+                        background: green;
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .blue, .green {
+                        color: red;
+                        }
+
+                        .blue {
+                        background: blue;
+                        }
+
+                        .green {
+                        background: green;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Extends</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        .button {
+                        padding: 10px;
+                        }
+
+                        .button--green {
+                        @extend .button;
+                        background: green;
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .button {
+                        padding: 10px;
+                        }
+
+                        .button--green {
+                        @extend .button;
+                        background: green;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - If-else</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        $size: 'big';
+
+                        @if $size == 'big' {
+                        .btn {
+                        font-size: 16px;
+                        }
+                        } @else {
+                        .btn {
+                        font-size: 10px;
+                        }
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - For loop</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @for $i from 1 through 3 {
+                        .item-#{$i} {
+                        width: 2em * $i;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview>
+                    <template data-type="css">
+                        .item-1 {
+                        width: 2em;
+                        }
+
+                        .item-2 {
+                        width: 4em;
+                        }
+
+                        .item-3 {
+                        width: 6em;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Each loop</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        $colors: red, blue, green;
+
+                        @each $color in $colors {
+                        .item-#{$color} {
+                        color: $color;
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview>
+                    <template data-type="css">
+                        .item-red {
+                        color: red;
+                        }
+
+                        .item-blue {
+                        color: blue;
+                        }
+
+                        .item-green {
+                        color: green;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Functions</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @function double($n) {
+                        @return $n * 2;
+                        }
+
+                        .item {
+                        width: double(10px);
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .item {
+                        width: 20px;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Mixins</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @mixin font($family, $size) {
+                        font-family: $family;
+                        font-size: $size;
+                        }
+
+                        .item {
+                        @include font('Arial', 16px);
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .item {
+                        font-family: "Arial";
+                        font-size: 16px;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - Mixins</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @mixin btn($size, $color) {
+                        @if $size == 'big' {
+                        font-size: 16px;
+                        } @else {
+                        font-size: 10px;
+                        }
+
+                        background: $color;
+                        }
+
+                        .button {
+                        @include btn('big', green);
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .button {
+                        font-size: 16px;
+                        background: green;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>SASS (SCSS) - modules</h2>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @use "sass:math";
+
+                        $sizes: 20px, 30px, 25px;
+
+                        .item {
+                        width: min($sizes...);
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        @use "sass:math";
+
+                        .item {
+                        width: 20px;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>Компиляция в CSS</h2>
+                <ul>
+                    <li class="fragment">CLI</li>
+                    <li class="fragment">Special Application (<a href="https://prepros.io/">Prepros</a>)</li>
+                    <li class="fragment">Online (<a
+                            href="https://beautifytools.com/scss-compiler.php">beautifytools.com</a>)
+                    </li>
+                </ul>
+                <p class="fragment">
+                    Подробнее: <a href="https://sass-lang.com/install">sass-lang.com</a>
+                </p>
+            </section>
+        </section>
+
+        <!-- POST CSS -->
+        <section>
+            <section>
+                <h1>Post CSS</h1>
+                <img src="img/postcss.png" alt="post css" style="max-height: 30vh; background: #FFF">
+            </section>
+
+            <section>
+                <h2>Постпроцессор Post CSS:</h2>
+                <ul>
+                    <li class="fragment" data-fragment-index="1">Получает CSS файл</li>
+                    <li class="fragment" data-fragment-index="2">Парсит</li>
+                    <li class="fragment" data-fragment-index="5">Работает плагин 1</li>
+                    <li class="fragment" data-fragment-index="5">Работает плагин 2</li>
+                    <li class="fragment" data-fragment-index="5">...</li>
+                    <li class="fragment" data-fragment-index="5">Работает плагин n</li>
+                    <li class="fragment" data-fragment-index="3">Записывает результат в CSS файл</li>
+                    <li class="fragment" data-fragment-index="4">Возвращает CSS файл</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Autoprefixer</h2>
+                <p>добавляет браузерные префиксы к вашим правилам</p>
+                <code-example no-preview>
+                    <template data-type="css">
+                        div {
+                        display: flex
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        div {
+                        display: -webkit-box;
+                        display: -webkit-flex;
+                        display: -moz-box;
+                        display: -ms-flexbox;
+                        display: flex
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>Preset Env</h2>
+                <p>добавляет возможности, которые только обсуждаются в черновиках разработчиков css</p>
+                <code-example no-preview>
+                    <template data-type="css">
+                        @custom-media --med (width == 50rem);
+
+                        @media (--med) {
+                        a:hover {
+                        color: color-mod(black alpha(54%));
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        @media (width: 50rem) {
+                        a:hover {
+                        color: rgba(0, 0, 0, 0.54);
+                        }
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>Short</h2>
+                <p>добавляет сокращенную запись для различных правил</p>
+                <code-example no-preview>
+                    <template data-type="css">
+                        .icon {
+                        size: 48px;
+                        }
+
+                        .canvas {
+                        color: #abccfc #212231;
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .icon {
+                        width: 48px;
+                        height: 48px;
+                        }
+
+                        .canvas {
+                        color: #abccfc;
+                        background-color: #212231;
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>Auto Reset</h2>
+                <p>создает для всех селекторов один большой селектор, куда помещает правила, сбрасывающее все
+                    стили</p>
+            </section>
+
+            <section>
+                <h2>PreCSS</h2>
+                <p>добавляет возможности препроцессоров</p>
+                <code-example no-preview>
+                    <template data-type="css">
+                        $color: black;
+
+                        .parent {
+                        .child {
+                        color: $color
+                        }
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <code-example no-preview class="fragment">
+                    <template data-type="css">
+                        .parent .child {
+                        color: black
+                        }
+                    </template>
+                </code-example>
+            </section>
+
+            <section>
+                <h2>Stylelint</h2>
+                <p>Линтер CSS, работающий на этапе парсинга CSS</p>
+                <code-example no-preview>
+                    <template data-type="css">
+                        a {
+                        color: rgb(1, 1, 1)
+                        }
+
+                        div {
+                        color: rgb(0, 0, 0)
+                        }
+                    </template>
+                </code-example>
+                <br>
+                <pre class="fragment">2:21    Expected a trailing semicolon              declaration-block-trailing-semicolon
+6:21    Expected a trailing semicolon              declaration-block-trailing-semicolon
+7:1     Unexpected missing end-of-source newline   no-missing-end-of-source-newline
+                </pre>
+            </section>
+        </section>
+
+        <section>
+            <section data-markdown data-separator="---">
+                # HomeWork 4
+
+                ## Три кота
+                ---
+
+                ## Описание задания
+
+                ---
+
+                ## Технические требования
+
+            </section>
+            <section>
+                <h1>ФОТО РЕЗУЛЬТАТА ДЗ</h1>
+            </section>
+        </section>
+    </div>
+</div>
+<script src="/utils/lib/js/head.min.js"></script>
+<script src="/utils/js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $('.links a').on('mouseover', function () {
+        var text = $(this).data('content');
+        $('.output-links').text(text);
+
+    });
+    $('.links a').on('blur', function () {
+        $('.output-links').text('');
+
+    });
+
+    Reveal.addEventListener('fragmentshown', function (event) {
+        if (Reveal.isFirstSlide()) {
+            var root = $(event.fragment);
+            console.log(root);
+            setTimeout(function () {
+                $(root).find('h1').addClass('bounceInDown');
+                $(root).find('h4').addClass('bounceInRight');
+                $(root).find('small').eq(0).addClass('bounceInLeft');
+                $(root).find('small').eq(1).addClass('bounceInUp');
+            }, 0);
+        }
+    });
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: '/utils/lib/js/classList.js', condition: function () {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '/utils/plugin/markdown/marked.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: '/utils/plugin/markdown/markdown.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () {
+                    return !!document.querySelector('pre code');
+                }, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+            { src: '/utils/plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+
+</script>
+<script src="/utils/lib/js/code-example.js"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@ class CodeExample extends HTMLElement {
 
         if (html && !htmlTemplate.hasAttribute('no-preview')) {
             const pre = document.createElement('pre');
-            pre.className = `code-example-one html size-${ size } ${htmlTemplate.className}`;
+            pre.className = `code-example-one html size-${ size } ${ htmlTemplate.className }`;
             const code = document.createElement('code');
             code.textContent = html;
             pre.appendChild(code);
@@ -30,7 +30,7 @@ class CodeExample extends HTMLElement {
 
         if (css && !cssTemplate.hasAttribute('no-preview')) {
             const pre = document.createElement('pre');
-            pre.className = `code-example-one css size-${ size } ${cssTemplate.className}`;
+            pre.className = `code-example-one css size-${ size } ${ cssTemplate.className }`;
             const code = document.createElement('code');
             code.textContent = css;
             pre.appendChild(code);
@@ -39,7 +39,7 @@ class CodeExample extends HTMLElement {
 
         if (js && !jsTemplate.hasAttribute('no-preview')) {
             const pre = document.createElement('pre');
-            pre.className = `code-example-one js size-${ size } ${jsTemplate.className}`;
+            pre.className = `code-example-one js size-${ size } ${ jsTemplate.className }`;
             const code = document.createElement('code');
             code.textContent = js;
             pre.appendChild(code);
@@ -61,6 +61,7 @@ class CodeExample extends HTMLElement {
             text-align: left;
             padding: 5px;
             margin-top: 16px;
+            overflow: scroll;
           }
           ${ css }
         </style>
@@ -85,8 +86,9 @@ class CodeExample extends HTMLElement {
             : 0;
 
         // Применяем отступ ко всем строкам, включая пустые
-        return lines.map(line => line.slice(minIndent)).join('\n').trim();
-
+        return lines.map(line =>
+            line.slice(minIndent).replace(/&amp;/g, '&')
+        ).join('\n').trim();
     }
 }
 
