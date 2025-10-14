@@ -10,6 +10,10 @@
     --disabled: #6c757d;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     line-height: 1.6;
@@ -55,7 +59,8 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 0.5rem 2rem;
+    flex-wrap: wrap;
 }
 
 .main-menu a {
@@ -491,4 +496,51 @@ strong {
     .container {
         padding: 16px;
     }
+}
+
+.google-sheet {
+    text-align: left;
+}
+
+.google-sheet {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.google-sheet table {
+    width: max-content;
+    border-collapse: collapse;
+}
+
+.google-sheet th,
+.google-sheet td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+    background-color: var(--bg);
+    min-width: 90px;
+}
+
+.google-sheet th:first-child,
+.google-sheet td:first-child {
+    text-align: left;
+}
+
+.google-sheet th:first-child,
+.google-sheet td:first-child,
+.google-sheet td:nth-child(2),
+.google-sheet td:nth-child(3),
+.google-sheet th:nth-child(2),
+.google-sheet th:nth-child(3) {
+    border-right-width: 5px;
+}
+
+.google-sheet th {
+    border-bottom-width: 5px;
+}
+
+.google-sheet tr:hover td {
+    background-color: rgba(255, 255, 255, 0.1);
 }
