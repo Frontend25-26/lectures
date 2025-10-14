@@ -509,6 +509,12 @@ strong {
     justify-content: center;
 }
 
+@media (max-width: 768px) {
+    .google-sheet {
+        display: block;
+    }
+}
+
 .google-sheet table {
     width: max-content;
     border-collapse: collapse;
