@@ -39,24 +39,24 @@
     <div class="slides">
         <section>
             <!-- TODO: Change QR and link to quiz -->
-            <a href="https://play.myquiz.ru/p/00887034" target="_blank">
+            <a href="https://play.myquiz.ru/p/00895575" target="_blank">
                 <img src="https://cdn2.myquiz.ru/customization/default/logo/logo-mobile.svg"
                      style="background: #3a28a7; padding: 1em">
             </a>
 
             <div class="qr-card">
                 <img src="img/qr-quiz.svg" width="350"
-                     border="0" title="QR код" class="qr-img" style="background: #fff; border-radius: 15px;">
+                     border="0" title="QR код" class="qr-img"
+                     style="background: transparent; border: 0; border-radius: 15px;">
                 <h3 style="color: #3a28a7; background: #fff; border-radius: 15px; padding: 0.2em; margin-top: 10px;">
-                    00887034
+                    00895575
                 </h3>
             </div>
         </section>
 
         <section style="font-size: 70px; height: 100%; width: 100%">
             <div class="fragment">
-                <!-- TODO: Быстрая разработка || Ускоряем разработку || Fast Develop -->
-                <h1 class="animated" style="font-size: 2em;">Быстрая разработка</h1>
+                <h1 class="animated" style="font-size: 2em;">Fast Develop</h1>
 
                 <p style="text-align: center; font-size: 1em ">Илья Степанов</p>
             </div>
@@ -68,6 +68,30 @@
 
         <section data-background-image="img/fast.gif">
             <h1 style="text-shadow: #000 3px 2px 2px;">Хочется быстрее,<br>но не так</h1>
+        </section>
+
+        <section data-transition="convex">
+            <h2 style="color:#ffd54f; font-size:2.6em; margin-bottom:0.5em;">
+                Дисклеймер
+            </h2>
+
+            <p class="fragment">
+                Всё, что вы дальше услышите — мой сборник <strong>спорных лайфхаков</strong> и <strong>субъективных мнений</strong>, щедро приправленных <strong>личным опытом</strong> .
+            </p>
+
+            <p class="fragment">
+                Не спешите усвоить всё за раз — ваш мозг не SSD-накопитель. <br>
+                Возьмите паузу, переварите и вернитесь позже.
+            </p>
+
+            <h3 class="fragment">Правила: </h3>
+            <span class="fragment">Мнение → Проверяйте.</span><br>
+            <span class="fragment">🫠🤯 → Пересматривайте.</span><br>
+            <span class="fragment">Ваш опыт → Ваша правда.</span>
+
+            <p class="fragment">
+                (Да, всё сказанное — субъективно. И это нормально.)
+            </p>
         </section>
 
         <section>
@@ -272,75 +296,75 @@
                         /* Общие стили */
 
                         * {
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
+                            margin: 0;
+                            padding: 0;
+                            box-sizing: border-box;
                         }
 
                         body {
-                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f9f9f9;
+                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                            background-color: #f9f9f9;
                         }
 
                         /* Стили шапки */
                         .site-header {
-                        width: 100%;
-                        background-color: #ffffff;
-                        border-bottom: 1px solid #e0e0e0;
-                        padding: 16px 0;
-                        position: sticky;
-                        top: 0;
-                        z-index: 1000;
+                            width: 100%;
+                            background-color: #ffffff;
+                            border-bottom: 1px solid #e0e0e0;
+                            padding: 16px 0;
+                            position: sticky;
+                            top: 0;
+                            z-index: 1000;
                         }
 
                         /* Контейнер для выравнивания контента */
                         .container {
-                        max-width: 1200px;
-                        margin: 0 auto;
-                        padding: 0 24px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
+                            max-width: 1200px;
+                            margin: 0 auto;
+                            padding: 0 24px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
                         }
 
                         /* Логотип */
                         .logo img {
-                        height: 40px;
-                        display: block;
+                            height: 40px;
+                            display: block;
                         }
 
                         /* Навигационное меню */
                         .main-nav .nav-list {
-                        list-style: none;
-                        display: flex;
-                        gap: 24px;
+                            list-style: none;
+                            display: flex;
+                            gap: 24px;
                         }
 
                         .main-nav .nav-list li a {
-                        text-decoration: none;
-                        color: #333333;
-                        font-weight: 500;
-                        font-size: 16px;
-                        transition: color 0.3s ease;
+                            text-decoration: none;
+                            color: #333333;
+                            font-weight: 500;
+                            font-size: 16px;
+                            transition: color 0.3s ease;
                         }
 
                         .main-nav .nav-list li a {
-                        color: #0077ff;
+                            color: #0077ff;
                         }
 
                         /* Адаптивность */
                         @media (max-width: 768px) {
-                        .main-nav .nav-list {
-                        gap: 16px;
-                        }
+                            .main-nav .nav-list {
+                                gap: 16px;
+                            }
 
-                        .main-nav .nav-list li a {
-                        font-size: 14px;
-                        }
+                            .main-nav .nav-list li a {
+                                font-size: 14px;
+                            }
 
-                        .logo img {
-                        height: 32px;
-                        }
+                            .logo img {
+                                height: 32px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -368,133 +392,131 @@
 
                         * { margin: 0; padding: 0; box-sizing: border-box; }
                         body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background: #1a1a1a;
-                        color: #ffffff;
-                        line-height: 1.6;
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            background: #1a1a1a;
+                            color: #ffffff;
+                            line-height: 1.6;
                         }
 
                         a {
-                        text-decoration: none;
+                            text-decoration: none;
                         }
 
                         /* Контейнер */
                         .container {
-                        max-width: 1200px;
-                        margin: 0 auto;
-                        padding: 0 24px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
+                            max-width: 1200px;
+                            margin: 0 auto;
+                            padding: 0 24px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
                         }
 
                         /* Шапка */
                         .site-header {
-                        width: 100%;
-                        padding: 16px 0;
-                        background: linear-gradient(135deg, rgba(28,28,28,0.95), rgba(0,0,0,0.8));
-                        backdrop-filter: blur(10px);
-                        position: sticky;
-                        top: 0;
-                        z-index: 1000;
-                        transition: background 0.3s ease;
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+                            width: 100%;
+                            padding: 16px 0;
+                            background: linear-gradient(135deg, rgba(28,28,28,0.95), rgba(0,0,0,0.8));
+                            backdrop-filter: blur(10px);
+                            position: sticky;
+                            top: 0;
+                            z-index: 1000;
+                            transition: background 0.3s ease;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
                         }
 
                         /* Логотип /
                         .logo img {
-                        height: 42px;
-                        filter: brightness(0) invert(1); / Сделать логотип белым, если темный */
-                        transition: transform 0.3s ease;
+                            height: 42px;
+                            filter: brightness(0) invert(1); / Сделать логотип белым, если темный */
+                            transition: transform 0.3s ease;
                         }
 
-                        .logo img
-                        {
-                        transform: scale(1.05);
+                        .logo img {
+                            transform: scale(1.05);
                         }
 
                         /* Навигационное меню */
                         .main-nav .nav-list {
-                        list-style: none;
-                        display: flex;
-                        gap: 30px;
+                            list-style: none;
+                            display: flex;
+                            gap: 30px;
                         }
 
                         .main-nav .nav-list li a {
-                        color: #ccc;
-                        font-weight: 500;
-                        font-size: 16px;
-                        position: relative;
-                        padding: 4px 0;
-                        transition: color 0.3s ease;
+                            color: #ccc;
+                            font-weight: 500;
+                            font-size: 16px;
+                            position: relative;
+                            padding: 4px 0;
+                            transition: color 0.3s ease;
                         }
 
                         .main-nav .nav-list li a::after {
-                        content: '';
-                        position: absolute;
-                        left: 0;
-                        bottom: -4px;
-                        height: 2px;
-                        width: 0;
-                        background: linear-gradient(to right, #00c6ff, #0072ff);
-                        transition: width 0.3s;
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            bottom: -4px;
+                            height: 2px;
+                            width: 0;
+                            background: linear-gradient(to right, #00c6ff, #0072ff);
+                            transition: width 0.3s;
                         }
 
-                        .main-nav .nav-list li a
-                        {
-                        color: #ffffff;
+                        .main-nav .nav-list li a {
+                            color: #ffffff;
                         }
 
                         .main-nav .nav-list li a:hover::after {
-                        width: 100%;
+                            width: 100%;
                         }
 
                         /* Hero-секция */
                         .hero {
-                        height: 100vh;
-                        padding: 80px 24px 24px;
-                        background: linear-gradient(135deg, #000000 0%, #191919 100%);
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        text-align: center;
+                            height: 100vh;
+                            padding: 80px 24px 24px;
+                            background: linear-gradient(135deg, #000000 0%, #191919 100%);
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            text-align: center;
                         }
 
                         .hero h1 {
-                        font-size: 48px;
-                        background: linear-gradient(to right, #42e695, #3bb2b8);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        margin-bottom: 16px;
+                            font-size: 48px;
+                            background: linear-gradient(to right, #42e695, #3bb2b8);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                            margin-bottom: 16px;
                         }
 
                         .hero p {
-                        font-size: 18px;
-                        color: #bbbbbb;
+                            font-size: 18px;
+                            color: #bbbbbb;
                         }
 
                         /* Адаптивность */
                         @media (max-width: 768px) {
-                        .main-nav .nav-list {
-                        gap: 16px;
-                        }
+                            .main-nav .nav-list {
+                                gap: 16px;
+                            }
 
-                        .main-nav .nav-list li a {
-                        font-size: 14px;
-                        }
+                            .main-nav .nav-list li a {
+                                font-size: 14px;
+                            }
 
-                        .logo img {
-                        height: 36px;
-                        }
+                            .logo img {
+                                height: 36px;
+                            }
 
-                        .hero h1 {
-                        font-size: 36px;
-                        }
+                            .hero h1 {
+                                font-size: 36px;
+                            }
 
-                        .hero p {
-                        font-size: 16px;
-                        }
+                            .hero p {
+                                font-size: 16px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -714,136 +736,136 @@
                     <template data-type="css" no-preview>
                         /* Сбросы и базовые стили */
                         * {
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
+                            margin: 0;
+                            padding: 0;
+                            box-sizing: border-box;
                         }
 
                         body {
-                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-                        color: #ffffff;
-                        min-height: 100vh;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding: 24px;
+                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+                            color: #ffffff;
+                            min-height: 100vh;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 24px;
                         }
 
                         /* Обёртка формы */
                         .form-wrapper {
-                        background: rgba(255, 255, 255, 0.05);
-                        backdrop-filter: blur(15px);
-                        border-radius: 20px;
-                        padding: 40px;
-                        max-width: 500px;
-                        width: 100%;
-                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-                        border: 1px solid rgba(255, 255, 255, 0.1);
+                            background: rgba(255, 255, 255, 0.05);
+                            backdrop-filter: blur(15px);
+                            border-radius: 20px;
+                            padding: 40px;
+                            max-width: 500px;
+                            width: 100%;
+                            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
                         }
 
                         /* Заголовок */
                         .custom-form h1 {
-                        text-align: center;
-                        margin-bottom: 24px;
-                        font-size: 28px;
-                        background: linear-gradient(90deg, #66ffe6, #00c8ff);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
+                            text-align: center;
+                            margin-bottom: 24px;
+                            font-size: 28px;
+                            background: linear-gradient(90deg, #66ffe6, #00c8ff);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
                         }
 
                         /* Метки и поля */
                         .custom-form label {
-                        display: flex;
-                        flex-direction: column;
-                        margin-bottom: 20px;
-                        font-weight: 500;
-                        font-size: 15px;
-                        color: #dcdcdc;
+                            display: flex;
+                            flex-direction: column;
+                            margin-bottom: 20px;
+                            font-weight: 500;
+                            font-size: 15px;
+                            color: #dcdcdc;
                         }
 
                         .custom-form input[type="text"],
                         .custom-form input[type="email"],
                         .custom-form input[type="file"],
                         .custom-form textarea {
-                        margin-top: 8px;
-                        padding: 12px 16px;
-                        font-size: 14px;
-                        border: none;
-                        border-radius: 10px;
-                        background: rgba(255, 255, 255, 0.07);
-                        color: #ffffff;
-                        outline: none;
-                        transition: 0.3s ease;
-                        width: 100%;
+                            margin-top: 8px;
+                            padding: 12px 16px;
+                            font-size: 14px;
+                            border: none;
+                            border-radius: 10px;
+                            background: rgba(255, 255, 255, 0.07);
+                            color: #ffffff;
+                            outline: none;
+                            transition: 0.3s ease;
+                            width: 100%;
                         }
 
                         .custom-form input[type="text"],
                         .custom-form input[type="email"],
                         .custom-form textarea {
-                        background: rgba(255, 255, 255, 0.12);
-                        box-shadow: 0 0 0 2px #00d9ff;
+                            background: rgba(255, 255, 255, 0.12);
+                            box-shadow: 0 0 0 2px #00d9ff;
                         }
 
                         /* Textarea */
                         .custom-form textarea {
-                        min-height: 100px;
-                        resize: vertical;
+                            min-height: 100px;
+                            resize: vertical;
                         }
 
                         /* Checkbox */
                         .checkbox-label {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        font-size: 14px;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            font-size: 14px;
                         }
 
                         .checkbox-label input {
-                        transform: scale(1.2);
+                            transform: scale(1.2);
                         }
 
                         .checkbox-label a {
-                        color: #00d9ff;
-                        text-decoration: underline dashed;
-                        transition: color 0.3s;
+                            color: #00d9ff;
+                            text-decoration: underline dashed;
+                            transition: color 0.3s;
                         }
 
                         .checkbox-label a {
-                        color: #66ffe6;
+                            color: #66ffe6;
                         }
 
                         /* Кнопка */
                         .custom-form button {
-                        width: 100%;
-                        padding: 14px;
-                        background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-                        border: none;
-                        border-radius: 12px;
-                        font-weight: 600;
-                        color: #ffffff;
-                        font-size: 16px;
-                        cursor: pointer;
-                        transition: background 0.3s ease, transform 0.2s;
+                            width: 100%;
+                            padding: 14px;
+                            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+                            border: none;
+                            border-radius: 12px;
+                            font-weight: 600;
+                            color: #ffffff;
+                            font-size: 16px;
+                            cursor: pointer;
+                            transition: background 0.3s ease, transform 0.2s;
                         }
 
                         .custom-form button {
-                        background: linear-gradient(90deg, #3a7bd5, #00d2ff);
-                        transform: scale(1.02);
+                            background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+                            transform: scale(1.02);
                         }
 
                         .custom-form button {
-                        transform: scale(0.98);
+                            transform: scale(0.98);
                         }
 
                         @media (max-width: 600px) {
-                        .form-wrapper {
-                        padding: 24px;
-                        }
+                            .form-wrapper {
+                                padding: 24px;
+                            }
 
-                        .custom-form h1 {
-                        font-size: 24px;
-                        }
+                            .custom-form h1 {
+                                font-size: 24px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -1003,88 +1025,88 @@
                     <template data-type="css" no-preview>
                         /* Общие стили */
                         body {
-                        margin: 0;
-                        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
-                        background-color: #f9f9fb;
-                        color: #111;
+                            margin: 0;
+                            font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+                            background-color: #f9f9fb;
+                            color: #111;
                         }
 
                         /* Шапка */
                         .site-header {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 18px 60px;
-                        background: #fff;
-                        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-                        position: sticky;
-                        top: 0;
-                        z-index: 1000;
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 18px 60px;
+                            background: #fff;
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+                            position: sticky;
+                            top: 0;
+                            z-index: 1000;
                         }
 
                         /* Логотип */
                         .logo img {
-                        height: 42px;
-                        transition: transform 0.2s ease-in-out;
+                            height: 42px;
+                            transition: transform 0.2s ease-in-out;
                         }
 
                         .logo img:hover {
-                        transform: scale(1.05);
+                            transform: scale(1.05);
                         }
 
                         /* Меню */
                         .main-nav ul {
-                        list-style: none;
-                        display: flex;
-                        gap: 40px;
-                        margin: 0;
-                        padding: 0;
+                            list-style: none;
+                            display: flex;
+                            gap: 40px;
+                            margin: 0;
+                            padding: 0;
                         }
 
                         .main-nav a {
-                        text-decoration: none;
-                        font-weight: 500;
-                        color: #222;
-                        font-size: 16px;
-                        position: relative;
-                        transition: color 0.2s ease;
+                            text-decoration: none;
+                            font-weight: 500;
+                            color: #222;
+                            font-size: 16px;
+                            position: relative;
+                            transition: color 0.2s ease;
                         }
 
                         /* Эффект подчеркивания */
                         .main-nav a::after {
-                        content: "";
-                        position: absolute;
-                        left: 0;
-                        bottom: -6px;
-                        width: 0;
-                        height: 2px;
-                        background: #007bff;
-                        transition: width 0.3s ease;
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            bottom: -6px;
+                            width: 0;
+                            height: 2px;
+                            background: #007bff;
+                            transition: width 0.3s ease;
                         }
 
                         .main-nav a:hover {
-                        color: #007bff;
+                            color: #007bff;
                         }
 
                         .main-nav a:hover::after {
-                        width: 100%;
+                            width: 100%;
                         }
 
                         /* Адаптивность */
                         @media (max-width: 768px) {
-                        .site-header {
-                        flex-direction: column;
-                        align-items: flex-start;
-                        padding: 16px 30px;
-                        }
+                            .site-header {
+                                flex-direction: column;
+                                align-items: flex-start;
+                                padding: 16px 30px;
+                            }
 
-                        .main-nav ul {
-                        flex-direction: column;
-                        gap: 16px;
-                        margin-top: 12px;
-                        }
+                            .main-nav ul {
+                                flex-direction: column;
+                                gap: 16px;
+                                margin-top: 12px;
+                            }
                         }
                     </template>
                 </code-example>
@@ -1267,102 +1289,102 @@
                     </template>
                     <template data-type="css" no-preview>
                         body {
-                        font-family: "Segoe UI", Roboto, sans-serif;
-                        background: #f6f8fa;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        min-height: 100vh;
-                        margin: 0;
+                            font-family: "Segoe UI", Roboto, sans-serif;
+                            background: #f6f8fa;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            min-height: 100vh;
+                            margin: 0;
                         }
 
                         .form-container {
-                        background: #fff;
-                        padding: 2.5rem;
-                        border-radius: 1rem;
-                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-                        width: 100%;
-                        max-width: 500px;
+                            background: #fff;
+                            padding: 2.5rem;
+                            border-radius: 1rem;
+                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                            width: 100%;
+                            max-width: 500px;
                         }
 
                         .form-container h2 {
-                        margin-bottom: 1.5rem;
-                        text-align: center;
-                        font-size: 1.8rem;
-                        color: #222;
+                            margin-bottom: 1.5rem;
+                            text-align: center;
+                            font-size: 1.8rem;
+                            color: #222;
                         }
 
                         .form-group {
-                        margin-bottom: 1.2rem;
-                        display: flex;
-                        flex-direction: column;
+                            margin-bottom: 1.2rem;
+                            display: flex;
+                            flex-direction: column;
                         }
 
                         .form-group label {
-                        margin-bottom: 0.4rem;
-                        font-weight: 600;
-                        color: #444;
-                        font-size: 0.95rem;
+                            margin-bottom: 0.4rem;
+                            font-weight: 600;
+                            color: #444;
+                            font-size: 0.95rem;
                         }
 
                         .form-group input,
                         .form-group textarea {
-                        padding: 0.8rem 1rem;
-                        border: 1px solid #d0d7de;
-                        border-radius: 0.5rem;
-                        font-size: 1rem;
-                        transition: border-color 0.3s, box-shadow 0.3s;
-                        resize: vertical;
+                            padding: 0.8rem 1rem;
+                            border: 1px solid #d0d7de;
+                            border-radius: 0.5rem;
+                            font-size: 1rem;
+                            transition: border-color 0.3s, box-shadow 0.3s;
+                            resize: vertical;
                         }
 
                         .form-group input:focus,
                         .form-group textarea:focus {
-                        border-color: #0077ff;
-                        box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.15);
-                        outline: none;
+                            border-color: #0077ff;
+                            box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.15);
+                            outline: none;
                         }
 
                         /* file input стилизация */
                         .form-group input[type="file"] {
-                        padding: 0.4rem;
-                        border: none;
+                            padding: 0.4rem;
+                            border: none;
                         }
 
                         /* checkbox */
                         .form-check {
-                        display: flex;
-                        align-items: center;
-                        font-size: 0.9rem;
+                            display: flex;
+                            align-items: center;
+                            font-size: 0.9rem;
                         }
 
                         .form-check input {
-                        margin-right: 0.6rem;
-                        width: 18px;
-                        height: 18px;
-                        accent-color: #0077ff;
+                            margin-right: 0.6rem;
+                            width: 18px;
+                            height: 18px;
+                            accent-color: #0077ff;
                         }
 
                         /* кнопка */
                         .submit-btn {
-                        display: block;
-                        width: 100%;
-                        padding: 0.9rem;
-                        background: #0077ff;
-                        border: none;
-                        border-radius: 0.6rem;
-                        color: #fff;
-                        font-size: 1.1rem;
-                        font-weight: 600;
-                        cursor: pointer;
-                        transition: background 0.3s, transform 0.15s;
+                            display: block;
+                            width: 100%;
+                            padding: 0.9rem;
+                            background: #0077ff;
+                            border: none;
+                            border-radius: 0.6rem;
+                            color: #fff;
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: background 0.3s, transform 0.15s;
                         }
 
                         .submit-btn:hover {
-                        background: #005ed1;
+                            background: #005ed1;
                         }
 
                         .submit-btn:active {
-                        transform: scale(0.98);
+                            transform: scale(0.98);
                         }
                     </template>
                 </code-example>
@@ -1657,43 +1679,43 @@
         </section>
 
         <section>
-            <h1>Пресеты</h1>
+            <h1>Темплейты</h1>
         </section>
 
         <!-- WEBSTORM -->
         <section>
             <section>
-                <h1>Пресеты в WebStorm</h1>
+                <h1>Темплейты в WebStorm</h1>
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <p style="text-align: center">Settings > Editor > File and Code Templates</p>
                 <img src="img/preset-webstorm-1.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-2.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-3.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-4.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-5.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <pre class="code-example-one ts size-l fragment" data-fragment-index="1" style="margin-bottom: 1em;">import { FC } from 'react'
 
 export type <mark>${NAME}</mark>Props = {}
@@ -1711,7 +1733,7 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-6.gif" alt="preset" style="max-height: 45vh;">
             </section>
 
@@ -1827,23 +1849,23 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <p style="text-align: center">Settings > Editor > Live Templates</p>
                 <img src="img/preset-webstorm-7.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-8.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-9.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в WebStorm</h2>
+                <h2>Темплейты в WebStorm</h2>
                 <img src="img/preset-webstorm-10.gif" alt="preset" style="max-height: 45vh;">
             </section>
         </section>
@@ -1851,22 +1873,22 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
         <!-- VS CODE -->
         <section>
             <section>
-                <h1>Пресеты в VS Code</h1>
+                <h1>Темплейты в VS Code</h1>
             </section>
 
             <section>
-                <h2>Пресеты в VS Code</h2>
+                <h2>Темплейты в VS Code</h2>
                 <p style="text-align: center">Ctrl/Cmd + Shift + P > Configure User Snippets</p>
                 <img src="img/preset-vscode-1.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в VS Code</h2>
+                <h2>Темплейты в VS Code</h2>
                 <img src="img/preset-vscode-2.png" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в VS Code</h2>
+                <h2>Темплейты в VS Code</h2>
                 <pre class="code-example-one json size-l fragment" data-fragment-index="1" style="margin-bottom: 1em;">{
 	"header": {
 		"prefix": "header",
@@ -1888,16 +1910,16 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
             </section>
 
             <section>
-                <h2>Пресеты в VS Code</h2>
+                <h2>Темплейты в VS Code</h2>
                 <img src="img/preset-vscode-3.gif" alt="preset" style="max-height: 45vh;">
             </section>
 
             <section>
-                <h2>Пресеты в VS Code</h2>
+                <h2>Темплейты в VS Code</h2>
                 <p class="fragment">Поля:</p>
                 <div class="variables-grid fragment">
                     <div class="variable-card">
-                        <code>key</code> - Название пресета. Используется в Insert Snippet, если не задано поле <code>prefix</code>.
+                        <code>key</code> - Название Темплейта. Используется в Insert Snippet, если не задано поле <code>prefix</code>.
                     </div>
 
                     <div class="variable-card">
@@ -1907,7 +1929,7 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
                     </div>
 
                     <div class="variable-card">
-                        <code>body</code> - Содержимое пресета. <br>Можно использовать внутри синтаксис
+                        <code>body</code> - Содержимое Темплейта. <br>Можно использовать внутри синтаксис
                         <code>${n:name}</code>: <code>n</code>&nbsp;-&nbsp;номер заполнителя (переход между ними по
                         нажатию на
                         <code>Tab</code>), <code>name</code>&nbsp;-&nbsp;значение по умолчанию. Заполнители обходятся по
@@ -1917,7 +1939,7 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
                     </div>
 
                     <div class="variable-card">
-                        <code>description</code> - Описание пресета. Отображается перед вставкой кода.
+                        <code>description</code> - Описание Темплейта. Отображается перед вставкой кода.
                     </div>
                 </div>
             </section>
@@ -2637,7 +2659,7 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
             </section>
 
             <section>
-                <h2>CSS 3 - Variables</h2>
+                <h2>Variables</h2>
                 <code-example>
                     <template data-type="html">
                         <p>Hello!</p>
@@ -2661,12 +2683,12 @@ export const Test: FC&lt;TestProps&gt; = ({}) => {
             </section>
 
             <section>
-                <h2>CSS 3 - Variables</h2>
+                <h2>Variables</h2>
                 <img src="img/caniuse.com_css-variables.png" alt="can i use css variables" style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - Nesting</h2>
+                <h2>Nesting</h2>
                 <code-example>
                     <template data-type="html">
                         <span>Hello, <span>World!</span></span>
@@ -2692,12 +2714,12 @@ span span {
             </section>
 
             <section>
-                <h2>CSS 3 - Nesting</h2>
+                <h2>Nesting</h2>
                 <img src="img/caniuse.com_css-nesting.png" alt="can i use css nesting" style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - Nesting selector</h2>
+                <h2>Nesting selector</h2>
                 <code-example>
                     <template data-type="html">
                         <p>Hello, <span>World!</span></p>
@@ -2723,7 +2745,7 @@ p *:hover {
             </section>
 
             <section>
-                <h2>CSS 3 - Nesting selector</h2>
+                <h2>Nesting selector</h2>
                 <code-example>
                     <template data-type="html">
                         <p>Hello, <span>World!</span></p>
@@ -2749,13 +2771,34 @@ p:hover {
             </section>
 
             <section>
-                <h2>CSS 3 - Nesting selector</h2>
+                <h2>Nesting selector</h2>
                 <img src="img/caniuse.com_css-nesting-selector.png" alt="can i use css nesting selector"
                      style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - Math functions
+                <h2>Math functions</h2>
+                <div class="fragment" style="margin-top: 1em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: calc(10vw - (20% + 150px) / 2); }
+                        </template>
+                    </code-example>
+                </div>
+                <div class="fragment" style="margin-top: 1em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: min(10vw, 20%); }
+                        </template>
+                    </code-example>
+                </div>
+                <div class="fragment" style="margin-top: 1em;">
+                    <code-example no-preview>
+                        <template data-type="css">
+                            div { width: max(10vw, 20%); }
+                        </template>
+                    </code-example>
+                </div>
                 <div class="fragment" style="margin-top: 1em;">
                     <code-example no-preview>
                         <template data-type="css">
@@ -2773,18 +2816,18 @@ p:hover {
             </section>
 
             <section>
-                <h2>CSS 3 - calc</h2>
+                <h2>calc</h2>
                 <img src="img/caniuse.calc.png" alt="can i use css calc"
                      style="max-height: 50vh">
             </section>
             <section>
-                <h2>CSS 3 - min, max, clamp</h2>
+                <h2>min, max, clamp</h2>
                 <img src="img/caniuse.math.png" alt="can i use css math"
                      style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <h2>Новые псевдоклассы</h2>
                 <code-example>
                     <template data-type="html">
                         <article>
@@ -2806,7 +2849,7 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <h2>Новые псевдоклассы</h2>
                 <code-example>
                     <template data-type="html">
                         <article>
@@ -2828,13 +2871,13 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <h2>Новые псевдоклассы</h2>
                 <p class="fragment">Специфичность <code>:is</code> - максимальная специфичность аргументов</p>
                 <p class="fragment">Специфичность <code>:where</code> - 0</p>
             </section>
 
             <section>
-                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <h2>Новые псевдоклассы</h2>
                 <code-example fragment>
                     <template data-type="html">
                         <article>
@@ -2858,7 +2901,7 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - Новые псевдоклассы</h2>
+                <h2>Новые псевдоклассы</h2>
                 <code-example>
                     <template data-type="html">
                         <p>
@@ -2875,22 +2918,22 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - <code>:is</code></h2>
+                <h2><code>:is</code></h2>
                 <img src="img/caniuse.is.png" alt="can i use is" style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - <code>:where</code></h2>
+                <h2><code>:where</code></h2>
                 <img src="img/caniuse.where.png" alt="can i use where" style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - <code>:has</code></h2>
+                <h2><code>:has</code></h2>
                 <img src="img/caniuse.has.png" alt="can i use has" style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - <code>@supports</code></h2>
+                <h2><code>@supports</code></h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @supports (display: inline-block) {
@@ -2915,12 +2958,12 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - <code>@supports</code></h2>
+                <h2><code>@supports</code></h2>
                 <img src="img/caniuse.supports.png" alt="can i use supports" style="max-height: 50vh">
             </section>
 
             <section>
-                <h2>CSS 3 - <code>@layer</code></h2>
+                <h2><code>@layer</code></h2>
                 <code-example fragment>
                     <template data-type="html">
                         <span>Click me</span>
@@ -2940,7 +2983,7 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - <code>@layer</code></h2>
+                <h2><code>@layer</code></h2>
                 <code-example fragment>
                     <template data-type="html">
                         <span>Click me</span>
@@ -2960,7 +3003,7 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - <code>@layer</code></h2>
+                <h2><code>@layer</code></h2>
                 <code-example fragment>
                     <template data-type="html">
                         <span>Click me</span>
@@ -2982,7 +3025,7 @@ aside p {
             </section>
 
             <section>
-                <h2>CSS 3 - <code>@layer</code></h2>
+                <h2><code>@layer</code></h2>
                 <img src="img/caniuse.layer.png" alt="can i use layer" style="max-height: 50vh">
             </section>
         </section>
@@ -3016,7 +3059,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Variables</h2>
+                <h2>Variables</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         $primary-color: #3498db;
@@ -3037,7 +3080,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Modules</h2>
+                <h2>Modules</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @use 'base.scss' as base;
@@ -3058,7 +3101,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Nesting</h2>
+                <h2>Nesting</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         div {
@@ -3079,7 +3122,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Nesting selector</h2>
+                <h2>Nesting selector</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         div {
@@ -3100,7 +3143,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Nesting selector</h2>
+                <h2>Nesting selector</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         .list {
@@ -3121,7 +3164,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Nesting</h2>
+                <h2>Nesting</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         .a, .b {
@@ -3145,7 +3188,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Nesting style</h2>
+                <h2>Nesting style</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         p {
@@ -3170,7 +3213,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Nesting style</h2>
+                <h2>Nesting style</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         p {
@@ -3192,7 +3235,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Templates</h2>
+                <h2>Templates</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         %template {
@@ -3229,7 +3272,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Extends</h2>
+                <h2>Extends</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         .button {
@@ -3245,12 +3288,11 @@ aside p {
                 <br>
                 <code-example no-preview class="fragment">
                     <template data-type="css">
-                        .button {
+                        .button, .button--green {
                             padding: 10px;
                         }
 
                         .button--green {
-                            @extend .button;
                             background: green;
                         }
                     </template>
@@ -3258,7 +3300,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - If-else</h2>
+                <h2>If-else</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         $size: 'big';
@@ -3277,7 +3319,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - For loop</h2>
+                <h2>For loop</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @for $i from 1 through 3 {
@@ -3306,7 +3348,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Each loop</h2>
+                <h2>Each loop</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         $colors: red, blue, green;
@@ -3337,7 +3379,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Functions</h2>
+                <h2>Functions</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @function double($n) {
@@ -3360,7 +3402,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Mixins</h2>
+                <h2>Mixins</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @mixin font($family, $size) {
@@ -3385,7 +3427,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - Mixins</h2>
+                <h2>Mixins</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @mixin btn($size, $color) {
@@ -3415,7 +3457,7 @@ aside p {
             </section>
 
             <section>
-                <h2>SASS (SCSS) - modules</h2>
+                <h2>Modules</h2>
                 <code-example no-preview>
                     <template data-type="css">
                         @use "sass:math";
@@ -3615,15 +3657,20 @@ aside p {
                 ## 🐱 Три кота
                 ---
 
+                ![три кота](img/three-cats.png)
+
+                ---
+
                 ## Описание задания
 
                 В этом задании вы создадите **три карточки котов**, применяя **три разных подхода к стилизации**:
 
-                1. **CSS3** — классический подход со новыми свойствами и селекторами.
+                1. **CSS3** — классический подход с новыми свойствами и селекторами.
                 2. **Bootstrap или TailwindCSS** — утилитарный подход с использованием готовых классов.
                 3. **SASS (SCSS)** — использование переменных, вложенности, миксинов и импорта.
 
-                Каждая карточка должна содержать информацию о коте и одинаковую структуру — но отличаться способом стилизации.
+                Каждая карточка должна содержать информацию о коте и одинаковую структуру — но отличаться способом
+                стилизации.
 
                 ---
 
@@ -3642,8 +3689,8 @@ aside p {
 
                 ## ⚙️ Технические требования
 
-                - Разметка должна быть **семантической** (используйте `section`, `article`, `figure` и т.д.).
-                - Карточки должны иметь *примерно* единый визуальный стиль (одинаковые размеры, шрифты, расположение элементов).
+                - Карточки должны иметь *примерно* единый визуальный стиль (одинаковые размеры, шрифты, расположение
+                элементов).
                 - При наведении на кнопку должен быть **hover-эффект**.
                 - Карточки должны отображаться в ряд.
                 - В каждой карточке нужно использовать что-то, что рассказывалось на лекции
@@ -3651,13 +3698,14 @@ aside p {
 
                 ## 🎨 Как сделать интереснее?
 
-                - Подберите цветовую схему, которая отражает характер котов (например, пастельные тона или яркие акценты).
+                - Подберите цветовую схему, которая отражает характер котов (например, пастельные тона или яркие
+                акценты).
                 - Добавьте плавные анимации при наведении.
                 - Можно сделать кнопки с иконками (например, ❤️ и 🐾).
                 - Не бойтесь экспериментировать с современными свойствами CSS!
-            </section>
-            <section>
-                <h1>ФОТО РЕЗУЛЬТАТА ДЗ</h1>
+
+                ---
+                ![пример](img/example.png)
             </section>
         </section>
     </div>
