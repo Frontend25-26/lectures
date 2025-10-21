@@ -63,6 +63,14 @@
               "openDate": "2025-10-11T12:30:00",
               "order": 3,
               "homework": "https://classroom.github.com/a/LMIHTLjy"
+            },
+            {
+              "title": "Прототипы",
+              "link": "/1-sem/js/4-prototype/index.html",
+              "openDate": "2025-10-18T13:00:00",
+              "order": 4,
+              "homeworkDate": "2025-11-04T23:59:59",
+              "homework": "#"
             }
           ]
         }

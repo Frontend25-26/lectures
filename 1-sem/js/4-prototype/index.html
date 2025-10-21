@@ -1,0 +1,2226 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>5. Прототипы</title>
+
+	<link rel="stylesheet" href="/utils/dist/reset.css">
+	<link rel="stylesheet" href="/utils/dist/reveal.css">
+	<link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
+	<link rel="stylesheet" href="./css/custom.css">
+	<link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
+
+</head>
+
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section>
+			<h2>
+				Прототипы <br />
+				1 часть лекции
+			</h2>
+			<br />
+			<p>Целиков Владислав</p>
+		</section>
+		<section>
+			<h3>Глобальный план</h3>
+			<ul>
+				<li>Что такое прототип?</li>
+				<li>
+					Чем друг от друга отличаются?
+					<div>
+						<code style="padding: 15px">{};</code> <code style="padding:15px">Object();</code> <code style="padding: 15px">new Object();</code>
+					</div>
+				</li>
+				<li>
+					Почему плохо менять прототип?
+				</li>
+				<li>
+					В чём разница между прототипами и классами?
+				</li>
+				<li>
+					Зачем могут понядобиться прототипы?
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>План</h3>
+			<h4>Первая половина</h4>
+			<ul style="list-style-type: decimal">
+				<li class="fragment">Что такое прототип?</li>
+				<li class="fragment">Цепочки прототипов</li>
+				<li class="fragment">
+					Внутреннее слово <code>[[Prototype]]</code>
+				</li>
+				<li class="fragment">Способы задания прототипа</li>
+				<li class="fragment">
+					Внутреннее слово <code>[[HomeObject]]</code>
+				</li>
+				<li class="fragment">Ключевое слово <code>super</code></li>
+				<li class="fragment">Методы объекта</li>
+			</ul>
+		</section>
+
+		<section>
+			<p>Объект</p>
+
+			<br />
+			<p class="fragment">Объект - это пара "ключ - значение"</p>
+
+			<br />
+
+			<p class="fragment">
+				Ключ - это строка (имя свойства объекта) Значение - это любой тип
+				данных (строка, число, функция и т.д.)
+			</p>
+		</section>
+		<section>
+			<p>Создание объектов</p>
+
+			<pre>
+            <code data-trim data-line-numbers class="js">
+                {};              						 // литерал объекта
+                new Object();    						 // конструктор объекта
+                Object();                    // ?)
+            </code>
+          </pre>
+		</section>
+
+		<section>
+			<p>Что такое прототип?</p>
+		</section>
+
+		<section>
+			<p>Пример</p>
+
+			<pre class="fragment">
+              <code data-trim data-line-numbers class="js">
+                  let cat = {
+                    name: 'cat',
+                  };
+
+                  let dog = {
+                    name: 'dog',
+                  };
+              </code>
+          </pre>
+
+			<pre class="fragment">
+            <code data-trim data-line-numbers class="js">
+                let cat = {
+                    name: 'cat',
+                    needWater: true,
+                };
+
+                let dog = {
+                    name: 'dog',
+                    needWater: true,
+                };
+            </code>
+          </pre>
+		</section>
+
+		<section>
+			<p>
+				Вынесем общее свойство <code>needWater</code> в отдельный общий
+				объект <code>animal</code>
+			</p>
+
+			<pre>
+            <code data-trim data-line-numbers class="js">
+                let cat = {
+                    name: 'cat',
+                };
+
+                let dog = {
+                    name: 'dog',
+                };
+
+                let animal = {
+                    needWater: true,
+                };
+            </code>
+          </pre>
+		</section>
+
+		<section>
+			<p>
+				Как можно использовать общий объект <code>animal</code> в отдельных
+				объектах <code>cat</code> и <code>dog</code>?
+			</p>
+		</section>
+
+		<section>
+			<p>
+				<code> [[Prototype]] </code>
+			</p>
+		</section>
+
+		<section>
+			<div class="media" style="width: 600px">
+				<img src="/utils/assets/lesson5.1/prototype_schema.png" />
+			</div>
+
+			<p>
+				Когда мы обращаемся к свойству объекта, которого нет, то JavaScript
+				автоматически берет его из прототипа</br>
+				Некого родительского объекта
+			</p>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim class="js">
+                let cat = {
+                    name: 'cat',
+                };
+
+                let dog = {
+                    name: 'dog',
+                };
+
+                let animal = {
+                    needWater: true,
+                };
+
+                // задать прототип для cat и dog {...}
+            </code>
+          </pre>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim class="js" data-line-numbers="1-9|10-12|1-12">
+              let cat = {
+                name: 'cat',
+                [[Prototype]]: ... // (ссылка на animal),
+              };
+
+              let dog = {
+                name: 'dog',
+                [[Prototype]]: ... // (ссылка на animal),
+              };
+
+              console.log(cat.needWater) // true
+              console.log(dog.needWater) // true
+            </code>
+          </pre>
+		</section>
+
+		<section>
+			<p>
+				<span style="font-weight: bold">Прототип</span> - объект, на который
+				указывает ссылка в <code>[[Prototype]]</code>
+			</p>
+		</section>
+
+		<section>
+			<p>Как происходит вызов нужного свойства</p>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim class="js" data-line-numbers="11|6-9|1-4|1-11">
+                let animal = {              // свойство найдено           <==
+                    needWater: true,
+                    [[Prototype]]: ... // (ссылка на базовый прототип),
+                };
+
+                let cat = {                 // свойство не найдено        <==
+                    name: 'cat',
+                    [[Prototype]]: ... // (ссылка на animal),
+                };
+
+                console.log(cat.needWater)  // вывести свойство needWater  <==
+            </code>
+          </pre>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim class="js" data-line-numbers>
+                let animal = {              // свойство найдено           <==
+                    needWater: true,
+                    [[Prototype]]: ... // (ссылка на базовый прототип),
+                };
+
+                let cat = {                 // свойство не найдено        <==
+                    name: 'cat',
+                    [[Prototype]]: ... // (ссылка на animal),
+                };
+
+                console.log(cat.needWater)  // true
+            </code>
+          </pre>
+		</section>
+
+		<section>
+			<p>Цепочки прототипов</p>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim class="js" data-line-numbers="1-15|15|11-14|6-9|1-4|1-15">
+                let animal = {                // свойство найдено          <==
+                    needWater: true,
+                    [[Prototype]]: ... // (ссылка на базовый прототип),
+                };
+
+                let cat = {                   // свойство не найдено       <==
+                    name: 'cat',
+                    [[Prototype]]: ... // (ссылка на animal)
+                };
+
+                let sphynx = {                // свойство не найдено       <==
+                    catHair: false,
+                    [[Prototype]]: ... // (ссылка на cat),
+                };
+                console.log(sphynx.needWater);// вывести свойство needWater <==
+            </code>
+          </pre>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim class="js" data-line-numbers>
+                let animal = {                // свойство найдено          <==
+                    needWater: true,
+                    [[Prototype]]: ... // (ссылка на базовый прототип),
+                };
+
+                let cat = {                   // свойство не найдено         <==
+                    name: 'cat',
+                    [[Prototype]]: ... // (ссылка на animal)
+                };
+
+                let sphynx = {                // свойство не найдено       <==
+                    catHair: false,
+                    [[Prototype]]: ... // (ссылка на cat),
+                };
+                console.log(sphynx.needWater);// true
+            </code>
+          </pre>
+		</section>
+
+		<section>
+			<p>Затенение свойств</p>
+		</section>
+
+		<section style="max-height: 550px">
+          <pre>
+            <code data-trim class="js" data-line-numbers="7-11|1-5|1-11">
+                let cat = {                   // сюда не дойдем         <==
+                    name: 'cat',
+                    catHair: true,
+                    [[Prototype]]: ... // (ссылка на animal),
+                };
+
+                let sphynx = {                // свойство найдено       <==
+                    catHair: false,
+                    [[Prototype]]: ... // (ссылка на cat),
+                };
+                console.log(sphynx.catHair);// вывести свойство catHair <==
+            </code>
+          </pre>
+		</section>
+
+		<section style="max-height: 550px">
+          <pre>
+            <code data-trim class="js" data-line-numbers>
+                let cat = {                   // сюда не дойдем         <==
+                    name: 'cat',
+                    catHair: true,
+                    [[Prototype]]: ... // (ссылка на animal),
+                };
+
+                let sphynx = {                // свойство найдено       <==
+                    catHair: false,
+                    [[Prototype]]: ... // (ссылка на cat),
+                };
+                console.log(sphynx.catHair);// false
+            </code>
+          </pre>
+		</section>
+
+		<section>Почти все в JavaScript это объект</section>
+
+		<section>Почему 🤔</section>
+
+		<section>
+			Любая сущность в JavaScript наследуется от объекта. Все типы данных и
+			структуры, кроме примитивных, являются потомками объекта. Поэтому у
+			всех наследников объекта имеется набор общих методов: toString(),
+			valueOf() и другие.
+		</section>
+
+		<section>
+			<p>Встроенные прототипы</p>
+
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers>
+                    let animal = {
+                        needWater: true,
+                    };
+                </code>
+            </pre>
+
+			<p class="fragment">
+				Прототипом такого объекта становится <code>Object.prototype</code>
+			</p>
+
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers>
+                    let animal = {
+                        needWater: true,
+                        [[Prototype]]: Object,
+                    };
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Встроенные прототипы. Массив</p>
+
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers>
+                    let arr = ['animal'];
+                </code>
+            </pre>
+
+			<p class="fragment">
+				Прототипом такого объекта становится <code>Array.prototype</code>
+			</p>
+
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers>
+                    let arr = {
+                        0: "animal",
+                        length: 1
+                        [[Prototype]]: {
+                            ...,
+                            constructor: Array(),
+                            [[Prototype]]: Object,
+                        },
+                    };
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<img src="/utils/assets/lesson5.1/prototype-chain.webp" />
+			<a style="font-size: 14px; color: grey" href="https://doka.guide/js/objects-objects-everywhere/" target="_blank">https://doka.guide/js/objects-objects-everywhere/</a>
+		</section>
+
+		<section>
+			<code>__proto__</code>
+		</section>
+
+		<section>
+			<code>__proto__(&#128465;)</code> — это ссылка на <code>prototype</code> класса
+			(функции-конструктора), с помощью которой был создан объект. Есть у
+			любого объекта.
+
+			<p class="fragment">
+				При поиске нужного свойства происходит переход по ссылкам
+				<code>__proto__</code>, которые указывают на следующий прототип в
+				цепочке. Если это последний прототип, то
+				<code>__proto__</code> указывает на null.
+			</p>
+		</section>
+
+		<section>
+			<p>
+				Свойство <code>__proto__</code> — исторически обусловленный
+				геттер/сеттер для <code>[[Prototype]]</code>
+			</p>
+
+			<div class="media fragment" style="height: 420px">
+				<img src="/utils/assets/lesson5.1/object_proto.png" />
+			</div>
+
+			<p class="fragment">На что ссылается <code>__proto__</code>?</p>
+		</section>
+
+		<section>
+			<div class="media" style="height: 620px">
+				<img src="/utils/assets/lesson5.1/object_proto_answer.png" />
+				<code class="fragment" style="font-size: 10px">Object.getPrototypeOf({a:1}) === Object.prototype</code>
+			</div>
+
+			<p class="fragment">На что ссылается <code>__proto__</code>?</p>
+		</section>
+
+		<section>
+			<div class="media" style="height: 700px">
+				<img src="/utils/assets/lesson5.1/object_proto_answer2.png" />
+			</div>
+		</section>
+
+		<section>
+			<p>Свойство<code>__proto__</code><a href="https://tc39.es/ecma262/#sec-object.prototype.__proto__" target="_blank">устарело</a>
+			</p>
+
+			<p class="fragment">
+				В современном <code>JavaScript</code> существуют функции
+				<code>Object.getPrototypeOf</code> для получения прототипа и
+				<code>Object.setPrototypeOf</code> для установления прототипа
+			</p>
+
+			<p class="fragment">
+				Но их использовать не стоит <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf" target="_blank">mdn</a>
+				Лучше создавать новые объекты с прототипами </br>
+				<a href="https://mathiasbynens.be/notes/prototypes" target="_blank">сложная статья про интепретатор</a>
+			</p>
+		</section>
+
+		<section>
+			<h3>Почему не стоит менять прототипы</h3>
+			<p>История MooTools</p>
+			<pre class="framwork">
+            <code data-trim class="js" data-line-numbers>
+              Array.prototype.contains = function(item) {
+                return this.indexOf(item) !== -1;
+              };
+            </code>
+          </pre>
+			<p class="fragment">Что может пойти не так</p>
+		</section>
+		<section>
+			<p>А так</p>
+			<pre>
+              <code data-trim class="js" data-line-numbers>
+                Array.prototype.includes = function(item) {
+                  return this.indexOf(item) !== -1;
+                };
+              </code>
+            </pre>
+		</section>
+
+		<section>
+			<h3>А тут что плохого?</h3>
+			<pre>
+            <code data-trim data-line-numbers class="js">
+              Object.prototype._each = function(iterator) {
+                for (let prop in this) {
+                  iterator(this[prop], prop);
+                }
+              };
+            </code>
+          </pre>
+			<pre class="fragment">
+            <code data-trim data-line-numbers class="js">
+              function toQueryString(obj) {
+                const parts = [];
+                for (let key in obj) {
+                  parts.push(`${key}=${obj[key]}`);
+                }
+                return parts.join('&');
+              }
+            </code>
+          </pre>
+			<pre class="fragment">
+            <code data-trim data-line-numbers class="js">
+              const obj = { name: 'John', surname: 'Snow' }
+              console.log(toQueryString(obj)) // :)
+            </code>
+          </pre>
+		</section>
+
+		<section>Современные методы работы с прототипами</section>
+
+		<section>
+			<code>Object.getPrototypeOf(obj)</code> – возвращает свойство
+			<code>[[Prototype]]</code> объекта <code>obj</code>
+		</section>
+
+		<section>
+			<code>Object.setPrototypeOf(obj, proto)</code> – устанавливает
+			свойство <code>[[Prototype]]</code> объекта <code>obj</code> как
+			<code>proto</code>
+		</section>
+
+		<section>Задание и получения прототипа</section>
+
+		<section>
+          <pre>
+                <code data-trim class="js" data-line-numbers="1-12|13-17">
+                    let cat = {
+                        name: 'cat',
+                    };
+
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    // задать прототип для cat и dog {...}
+                    console.log(cat.needWater) // true
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Получаем прототип объекта и задаем прототип</p>
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers="1-2|3-9|11-12|14-15|1-15">
+                    //Object.setPrototypeOf(obj, proto)
+                    //Object.getPrototypeOf(obj)
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = {
+                        name: 'cat',
+                    };
+
+                    Object.setPrototypeOf(cat, animal);
+                    console.log(Object.getPrototypeOf(cat) === animal); // true
+
+                    Object.setPrototypeOf(cat, {});
+                    console.log(Object.getPrototypeOf(cat) === animal); // false
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Создаем объект с заданным прототипом</p>
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers="1|3-5|7|9-11|1-11">
+                    // Object.create(proto, [descriptors])
+
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = Object.create(animal);
+
+                    cat = {
+                        [[Prototype]]: ((ссылка на animal))
+                    }
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Создаем объект без прототипа</p>
+			<pre class="fragment">
+                <code data-trim class="js" data-line-numbers="1-2|4-5|7-8|1-8">
+                    let cat = {};                  // (1)
+                    console.log(cat.toString)      //
+
+                    let cat = Object.create({});   // (2)
+                    console.log(cat.toString)      //
+
+                    let cat = Object.create(null); // (3)
+                    console.log(cat.toString)      //
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Создаем объект без прототипа</p>
+			<pre>
+                <code data-trim class="js" data-line-numbers="1-2|4-5|7-8|1-8">
+                    let cat = {};                  // (1)
+                    console.log(cat.toString)      // function toString()
+
+                    let cat = Object.create({});   // (2)
+                    console.log(cat.toString)      // function toString()
+
+                    let cat = Object.create(null); // (3)
+                    console.log(cat.toString)      // undefined
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<code>Object.create(proto, [descriptors])</code>
+			<p>аргумент дескриптора свойств</p>
+			<p>Предпочтительный способ задания прототипов</p>
+		</section>
+
+
+		<section>
+			<p>Флаги и дескрипторы свойств</p>
+		</section>
+
+		<section style="font-size: 34px">
+			<p>Data descriptor</p>
+			<ul>
+				<li>
+					<code>configurable</code> – если <code>true</code>, свойство можно
+					удалить, а эти атрибуты можно изменять, иначе этого делать нельзя;
+				</li>
+				<li>
+					<code>enumerable</code> – если <code>true</code>, свойство
+					перечисляется в циклах, в противном случае циклы его игнорируют;
+				</li>
+				<li>
+					<code>writable</code> – если <code>true</code>, свойство можно
+					изменить, иначе оно только для чтения;
+				<li><code>value</code> - значение которое лежит в этом поле</li>
+			</ul>
+
+			<p>
+				При создании объекта через <code>Object.create</code> по умолчанию
+				все значения <code>false</code>, если не указать явно true.
+				value будет <code>undefined</code>
+			</p>
+
+			<p>
+				При создании объекта через литерал объекта, значения
+				<code>true</code>
+			</p>
+
+			<p class="fragment">👀</p>
+		</section>
+
+		<section style="font-size: 34px">
+			<p>Accessor descriptor</p>
+			<ul>
+				<li>
+					<code>configurable</code> – если <code>true</code>, свойство можно
+					удалить, а эти атрибуты можно изменять, иначе этого делать нельзя;
+				</li>
+				<li>
+					<code>enumerable</code> – если <code>true</code>, свойство
+					перечисляется в циклах, в противном случае циклы его игнорируют;
+				</li>
+				<li>
+					<code>get</code> – геттер свойства
+				<li><code>set</code> - сеттер свойства </li>
+			</ul>
+
+			<p>
+				При создании объекта через <code>Object.create</code> по умолчанию
+				все значения <code>false</code>, если не указать явно true.
+				getter и setter будут undefined и ставиться стандартные
+			</p>
+
+			<p>
+				При создании объекта через литерал объекта, значения
+				<code>true</code>
+			</p>
+
+			<p class="fragment">👀</p>
+		</section>
+
+		<section>
+			<p>Где могут использоваться</p>
+			<ul>
+				<li>
+					<code>Object.defineProperty(obj, prop, descriptor)</code> задаёт свойство с заданными параметрами
+				</li>
+				<li>
+					<code>Object.defineProperties(obj, descriptors)</code> задаёт свойства с заданными параметрами
+				</li>
+				<li>
+					<code>Object.getOwnPropertyDescriptor(obj, prop)</code> даёт дескриптор для данного поля
+				</li>
+				<li>
+					<code>Object.getOwnPropertyDescriptors(obj)</code> даёт дескрипторы для всех полей объекта
+				</li>
+				<li>
+					<code>Object.create(proto, propertiesObject)</code> создаёт объект с заданными прототипам и десрипторами
+				</li>
+			</ul>
+		</section>
+
+		<section>Как можно получить текущие свойства объекта?</section>
+
+		<section>
+          <pre>
+                <code data-trim data-line-numbers class="js" style="max-height: 500px">
+                    let animal = {
+                        needWater: true,
+                    };
+                    let cat = Object.create(animal, {
+                        name: {
+                            value: 'cat',
+                        },
+                        catHair: {
+                            value: 'cat',
+                        },
+                        voice: {
+                            value: 'meow',
+                            enumerable: true
+                        },
+                    });
+
+                    // ['name', 'catHair', 'voice']
+                    console.log(Object.getOwnPropertyNames(cat));
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			Как можно получить текущие значения дескриптеров свойств объекта?
+		</section>
+
+		<section>
+          <pre>
+                <code data-trim data-line-numbers class="js" style="max-height: 500px">
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = Object.create(animal, {
+                        name: {
+                            value: 'cat',
+                        },
+                        catHair: {
+                            value: 'cat',
+                        },
+                        voice: {
+                            value: 'meow',
+                            enumerable: true
+                        },
+                    });
+
+                    // {name: {…}, catHair: {…}, voice: {…}}
+                    console.log(Object.getOwnPropertyDescriptors(cat));
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<div class="media" style="height: 600px">
+				<img src="/utils/assets/lesson5.1/object_descriptors1.png" />
+			</div>
+		</section>
+
+		<section>
+			<div class="media" style="height: 600px">
+				<img src="/utils/assets/lesson5.1/object_descriptors2.png" />
+			</div>
+		</section>
+
+		<section>
+			<div class="media" style="height: 600px">
+				<img src="/utils/assets/lesson5.1/object_descriptors3.png" />
+			</div>
+		</section>
+
+		<!--        <section>-->
+		<!--          <p>-->
+		<!--            <code>Object.create</code> для продвинутого клонирования объектов-->
+		<!--          </p>-->
+
+		<!--          <pre class="fragment">-->
+		<!--                <code data-trim data-line-numbers>-->
+		<!--                    const obj = { someKey: 'value' };-->
+
+		<!--                    // клон obj c тем же прототипом (с поверхностным копированием свойств)-->
+		<!--                    let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));-->
+		<!--                </code>-->
+		<!--            </pre>-->
+		<!--        </section>-->
+
+		<section>
+			<p>Обращение в родительской реализации <code>super</code></p>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim data-line-numbers="1-3|5-8|10|5-8,12|1-12">
+                const animal = {
+                    getName() { return this.name; }
+                };
+
+                const cat = {
+                    name: 'cat',
+                    voice() { return `Meow, my name is ${super.getName()}` }
+                };
+
+                Object.setPrototypeOf(cat, animal);
+
+                console.log(cat.voice()) // Meow, my name is cat
+            </code>
+          </pre>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim>
+                const animal = {
+                    name: 'animal',
+                    getName() { return this.name; }
+                };
+
+                const cat = {
+                    voice() { return `Meow, my name is ${super.getName()}` }
+                };
+
+                Object.setPrototypeOf(cat, animal);
+
+                console.log(cat.voice()) // что выведет cat.voice()?
+            </code>
+          </pre>
+		</section>
+
+		<section>
+          <pre>
+            <code data-trim>
+                const animal = {
+                    name: 'animal',
+                    getName() { return this.name; }
+                };
+
+                const cat = {
+                    voice() { return `Meow, my name is ${super.getName()}` }
+                };
+
+                Object.setPrototypeOf(cat, animal);
+
+                console.log(cat.voice()) // Meow, my name is animal
+            </code>
+          </pre>
+		</section>
+
+		<section>
+          <pre>
+              <code data-trim data-line-numbers>
+                  const animal = {
+                    name: 'animal',
+                    getName() { return this.name; }
+                  };
+
+                  const cat = {
+                    name: 'cat',
+                    getName() { return `Test` },
+                    voice() { return `Meow, my name is ${super.getName()}` }
+                  };
+
+                  Object.setPrototypeOf(cat, animal);
+
+                  console.log(cat.voice())
+              </code>
+              </pre>
+		</section>
+
+		<section>
+          <pre>
+              <code data-trim data-line-numbers>
+                  const animal = {
+                    name: 'animal',
+                    getName() { return this.name; }
+                  };
+
+                  const cat = {
+                    name: 'cat',
+                    getName() { return `Test` },
+                    voice() { return `Meow, my name is ${super.getName()}` }
+                  };
+
+                  Object.setPrototypeOf(cat, animal);
+
+                  console.log(cat.voice()) // Meow, my name is cat
+              </code>
+              </pre>
+		</section>
+
+		<section>
+			<p>
+				<code>[[HomeObject]]</code>
+			</p>
+		</section>
+
+		<section>
+			<p>
+				<code>[[HomeObject]]</code> - специальное внутреннее свойство для
+				функций.
+			</p>
+
+			<p class="fragment">
+				Когда функция объявлена как метод внутри класса или объекта, её
+				свойство <code>[[HomeObject]]</code> становится равно этому объекту.
+				Затем <code>super</code> использует его, чтобы получить прототип
+				родителя и его методы.
+			</p>
+
+			<p class="fragment">
+				<code>super</code> ссылается на прототип объекта из поля
+				<code>[[HomeObject]]</code>
+			</p>
+		</section>
+
+		<section>
+          <pre>
+                <code data-trim data-line-numbers="1-6|7-14|16|1-16">
+                    let animal = {
+                        name: 'animal',
+                        voice() {  // animal.voice.[[HomeObject]] == animal
+                            console.log(`${this.name} hello`);
+                        }
+                    };
+
+                    let cat = {
+                        __proto__: animal,
+                        name: "cat",
+                        voice() {         // cat.voice.[[HomeObject]] == cat
+                            super.voice();
+                        }
+                    };
+
+                    cat.voice();  // cat hello
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Методы</p>
+		</section>
+
+		<section>
+			<p>
+				<code>hasOwnProperty</code>
+			<p>Для проверки существования свойства</p>
+			</p>
+		</section>
+
+		<section>
+          <pre>
+                <code data-trim data-line-numbers>
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = {
+                        name: "cat",
+                        __proto__: animal,
+                    };
+
+                    console.log(cat.hasOwnProperty(name)); // true
+                    console.log(cat.hasOwnProperty(needWater)); // false
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Перебор свойств</p>
+
+			<p class="fragment">
+				Цикл <code>for..in</code> проходит не только по собственным, но и по
+				унаследованным свойствам объекта
+			</p>
+
+			<pre class="fragment">
+                <code data-trim>
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = {
+                        __proto__: animal,
+                        name: "cat",
+                    };
+
+                    for(let prop in cat) { // name, needWater
+                        console.log(prop);
+                    }
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>
+				<code>hasOwnProperty(key)</code> возвращает <code>true</code>, если
+				у объекта есть собственное, не унаследованное, свойство с именем
+				<code>key</code>
+			</p>
+		</section>
+
+		<section>
+			<p>Перебор свойств</p>
+
+			<p>
+				<code>for..in</code> с условием проверки <code>hasOwnProperty(key)</code>
+			</p>
+
+			<pre>
+                <code data-trim>
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = {
+                        __proto__: animal,
+                        name: "cat",
+                    };
+
+                    for(let prop in cat) { // name
+                        if(cat.hasOwnProperty(prop)) {
+                            console.log(prop);
+                        }
+                    }
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Откуда у объекта взялся метод <code>hasOwnProperty</code>?</p>
+		</section>
+
+		<section>
+			<p>Он берется из <code>Object.prototype.hasOwnProperty</code></p>
+		</section>
+
+		<section>
+			<p>
+				Почему метод <code>hasOwnProperty</code> не был выведен в цикле
+				<code>for...in</code>?
+			</p>
+		</section>
+
+		<section>
+			Оно не перечислимо, внутренний флаг <code>enumerable</code> стоит
+			<code>false</code>, как и у других свойств
+			<code>Object.prototype</code>. Поэтому оно и не появляется в цикле.
+		</section>
+
+		<section>
+			<p>
+				<code>Object.keys(obj)</code> - возвращает только собственные
+				<code>enumerable</code>-свойства
+			</p>
+		</section>
+
+		<section>
+          <pre>
+                <code style="max-height: 700px;" data-trim data-line-numbers="1-18|12-16|12-18|1-18" class="js">
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = Object.create(animal, {
+                        name: {
+                            value: 'cat',
+                        },
+                        catHair: {
+                            value: 'cat',
+                        },
+                        voice: {
+                            value: 'meow',
+                            enumerable: true
+                        },
+                    });
+
+                    console.log(Object.keys(cat)); // что здесь вернет Object.keys?
+                </code>
+            </pre>
+		</section>
+
+		<section>
+          <pre>
+                <code style="max-height: 700px;" data-trim data-line-numbers class="js">
+                    let animal = {
+                        needWater: true,
+                    };
+
+                    let cat = Object.create(animal, {
+                        name: {
+                            value: 'cat',
+                        },
+                        catHair: {
+                            value: 'cat',
+                        },
+                        voice: {
+                            value: 'meow',
+                            enumerable: true
+                        },
+                    });
+
+                    console.log(Object.keys(cat)); // ['voice']
+                </code>
+            </pre>
+		</section>
+
+		<section>
+			<p>Вопросы</p>
+		</section>
+
+		<section>
+			<h3>План</h3>
+			<ul style="list-style-type: decimal">
+				<li class="fragment">Функция-фабрика</li>
+				<li class="fragment">Функция-конструктор</li>
+				<li class="fragment">Класс</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Функции для создания объектов</h3>
+		</section>
+
+		<section>
+			<h3>Функция-фабрика</h3>
+		</section>
+
+		<section>
+			<div>
+				<ul class="p">
+					<li>Функция-фабрика - это простая функция <code class="i">JavaScript</code>, которая всегда создает и возвращает
+						объект</li>
+				</ul>
+				<pre>
+                  <code data-trim data-line-numbers=>
+                    const person = (personName) => {
+                      return {
+                        name: personName,
+                        hi() {
+                          console.log(`Привет, я ${personName}`);
+                        },
+                      }
+                    };
+                    const max = person('Макс');
+                    const piter = person('Петр');
+                  </code>
+                </pre>
+			</div>
+		</section>
+
+		<section>
+			<h4>Когда используется функция-фабрика?</h4>
+		</section>
+
+		<section>
+			<h4>Если нужно построить несколько объектов с похожими типами свойств и методами</h4>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers=>
+                    const max = {
+                      name: 'Макс',
+                      hi() {
+                        console.log(`Привет, я ${this.name}`);
+                      },
+                    }
+
+                    const piter = {
+                      name: 'Петр',
+                      hi() {
+                        console.log(`Привет, я ${this.name}`);
+                      },
+                    }
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<div>
+                    <pre>
+                      <code data-trim data-line-numbers=>
+                        const person = (personName) => {
+                          return {
+                            name: personName,
+                            hi() {
+                              console.log(`Привет, я ${personName}`);
+                            },
+                          }
+                        };
+                        const max = person('Макс');
+                        const piter = person('Петр');
+                      </code>
+                    </pre>
+			</div>
+		</section>
+
+		<section>
+			<h4>Если нужно организовать закрытые данные</h4>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers=>
+                    const piter = {
+                      name: 'Петр',
+                      hi() {
+                        console.log(`Привет, я ${this.name}`);
+                      },
+                    }
+
+                    piter.hi(); // Привет, я Петр
+                    piter.name = 'Вася';
+                    piter.hi(); // Привет, я Вася
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+              <pre>
+                <code data-trim data-line-numbers=|1-14|15-19|>
+                  const person = (personName) => {
+                    let name = personName;
+                    return {
+                      get name() {
+                        return name;
+                      },
+                      setName(newName) {
+                        name = newName;
+                      },
+                      hi() {
+                        console.log(`Привет, я ${this.name}`);
+                      },
+                    }
+                  };
+                  const piter = person('Петр');
+                  piter.hi(); // Привет, я Петр
+                  piter.setName('Вася');
+                  console.log(piter.name); // Вася
+                  piter.hi(); // Привет, я Вася
+                </code>
+              </pre>
+		</section>
+
+		<section>
+			<h4>Чем полезна функция-фабрика? </h4>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li>Уменьшаем дублирование кода</li>
+				<li>Можем лучше организовать свой код</li>
+				<li>Можем создавать объекты одинаковым способом</li>
+				<li>Контролируем доступ к свойствам</li>
+			</ul>
+		</section>
+
+
+		<section>
+			<h3>Функция-конструктор </h3>
+		</section>
+
+		<section>
+              <pre>
+                <code data-trim data-line-numbers=>
+                  function Product(name) {
+                    this.name = name;
+                  }
+                  const book = new Product();
+                </code>
+              </pre>
+		</section>
+
+		<section>
+			<p>Типы конструкторов в <code class="i">JavaScript</code></p>
+			<ul class="p">
+				<li>Встроенные функции-конструкторы</li>
+				<li>Пользовательские функции-конструкторы</li>
+			</ul>
+		</section>
+
+		<section>
+			<h5>Встроенные конструкторы </h5>
+			<div class="description off">
+				<table class="table no-line">
+					<tbody>
+					<tr>
+						<td class="name1"><code class="i">new String()</code></td>
+						<td>Создает новую строку</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Number()</code></td>
+						<td>Создает новое число</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Boolean()</code></td>
+						<td>Создает новое логическое значение</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Array()</code></td>
+						<td>Creates a new <code class="i">JavaScript</code> array</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Object()</code></td>
+						<td>Creates a new <code class="i">JavaScript</code> объект</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Function()</code></td>
+						<td>Создает новую функцию</td>
+					</tr>
+					<tr>
+						<td><code class="i">new RegExp()</code></td>
+						<td>Создает новый объект регулярного выражения</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Date()</code></td>
+						<td>Создает объект даты</td>
+					</tr>
+					<tr>
+						<td><code class="i">new Error()</code></td>
+						<td>Создает новый объект <code class="i">error</code></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section>
+			<h4><b>Функция-конструктор...</b> </h4>
+			<ul class="p">
+				<li>Это особая функция <code class="i">JavaScript</code>.</li>
+				<li class="">Вызывается с помощью клечевого слова <code class="i">new</code>.</li>
+				<li class="">По соглашению имя начинается с заглавной буквы.</li>
+				<li>Не может быть стрелочной функцией.</li>
+				<li class="">Возвращает новый экземпляр, даже если явно ничего не возвращает. </li>
+			</ul>
+			<div class="">
+                    <pre>
+                      <code data-trim data-line-numbers=>
+                        function Product(name) {
+                          this.name = name;
+                        }
+                        const book = new Product();
+                      </code>
+                    </pre>
+			</div>
+		</section>
+
+		<section>
+			<p>Что происходит, когда вызывается функция-конструктор?</p>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li><code class="i">JavaScript</code> создает новый пустой объект внутри функции.</li>
+				<li class="">Новый пустой объект привязывается к ключевому слову <code
+						class="i">this</code>. Вновь созданный объект становится текущим экземпляром, и ключевое
+					слово <code class="i">this</code> ссылается на него.</li>
+				<li>Выполняются команды функции.</li>
+				<li class="">Наконец, функция конструктора автоматически возвращает этот объект в конце.</li>
+			</ul>
+		</section>
+
+		<section>
+			<p>Что произойдет, если функция-конструктор что-то вернет?</p>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                      return 1;
+                    }
+                    const book = new Product('Book')
+                    console.log(book) // ?
+                  </code>
+                  <code class="fragment" data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                      return 1;
+                    }
+                    const book = new Product('Book')
+                    console.log(book) // { name: 'Book' }
+                  </code>
+                </pre>
+			<pre class="fragment">
+                  <code data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                      return 'some string';
+                    }
+                    const book = new Product('Book')
+                    console.log(book) // ?
+                  </code>
+                  <code class="fragment" data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                      return 'some string';
+                    }
+                    const book = new Product('Book')
+                    console.log(book) // { name: 'Book' }
+                  </code>
+					      </pre>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                      return { color: 'blue' };
+                    }
+                    const book = new Product('Book')
+                    console.log(book) // ?
+                  </code>
+                  <code class="fragment" data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                      return { color: 'blue' };
+                    }
+                    const book = new Product('Book')
+                    console.log(book) // { color: 'blue' }
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<p>Прототипное наследование в функции-конструкторе <code class="i">JavaScript</code></p>
+		</section>
+
+		<section>
+			<p>Что, если вам нужно иметь общие свойства у всех экземпляров?</p>
+		</section>
+
+		<section>
+			<p>Способ 1</p>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers=|1-7|9-14|>
+                    function Product(name, price) {
+                      this.name = name
+                      this.price = price
+                      this.description = () => {
+                        return `${this.name} costs ${this.price} dollars`;
+                      }
+                    }
+
+                    const book = new Product('Book', 19)
+                    console.log(book.description()) // Book costs 19 dollars
+
+                    const pen = new Product('Pen', 2)
+                    console.log(pen.description()) // Pen costs 2 dollars
+                    console.log(pen.user) // John
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<p>Способ 2</p>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers=|1-4|6-8|>
+                    function Product(name, price) {
+                      this.name = name
+                      this.price = price
+                    }
+
+                    Product.prototype.description = function () {
+                        return `${this.name} costs ${this.price} dollars`;
+                    }
+
+                    const book = new Product('Book', 19)
+                    console.log(book.description()) // Book costs 19 dollars
+
+                    const pen = new Product('Pen', 2)
+                    console.log(pen.description()) // Pen costs 2 dollars
+                    console.log(pen.user) // John
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<p>Какой из двух способов выбрать?</p>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li>В первом случае все экземпляры получат копию одного и того же метода. Это неэффективный способ управления памятью.</li>
+				<li>Во втором случае метод создается в единственном экземпляре.</li>
+			</ul>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li>Что будет, если определить функцию после создания объекта?</li>
+			</ul>
+			<pre>
+                  <code data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name;
+                    }
+
+                    const book1 = new Product('Приключения воробья');
+
+                    Product.prototype.description = function () {
+                      console.log(`Это ${this.name} `);
+                    }
+
+                    const book2 = new Product('Чудеса');
+
+                    book1.description(); // ?
+                    book2.description(); // ?
+                  </code>
+                  <code class="fragment" data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name;
+                    }
+
+                    const book1 = new Product('Приключения воробья');
+
+                    Product.prototype.description = function () {
+                      console.log(`Это ${this.name} `);
+                    }
+
+                    const book2 = new Product('Чудеса');
+
+                    book1.description(); // Это Приключения воробья
+                    book2.description(); // Это Чудеса
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li>Что будет, если определить функцию для объекта?</li>
+			</ul>
+			<pre>
+                  <code data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                    }
+
+                    const book1 = new Product('Приключения воробья')
+                    const book2 = new Product('Чудеса')
+
+                    book1.read = function () {
+                      console.log(`Читаю "${this.name}"`);
+                    }
+
+                    console.log(book1.read) // ?
+                    console.log(book2.read) // ?
+                  </code>
+                  <code class="fragment" data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                    }
+
+                    const book1 = new Product('Приключения воробья')
+                    const book2 = new Product('Чудеса')
+
+                    book1.read = function () {
+                      console.log(`Читаю "${this.name}"`);
+                    }
+
+                    console.log(book1.read) // ƒ () { console.log(`Читаю "${this.name}"`); }
+                    console.log(book2.read) // undefined
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li>Что будет, если определить функцию для объекта через __proto__?</li>
+			</ul>
+			<pre>
+                  <code data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                    }
+
+                    const book1 = new Product('Приключения воробья')
+                    const book2 = new Product('Чудеса')
+
+                    book1.__proto__.read = function () {
+                      console.log(`Читаю "${this.name}"`);
+                    }
+
+                    book1.read() // ?
+                    book2.read() // ?
+                  </code>
+                  <code class="fragment" data-trim data-line-numbers=>
+                    function Product(name) {
+                      this.name = name
+                    }
+
+                    const book1 = new Product('Приключения воробья')
+                    const book2 = new Product('Чудеса')
+
+                    book1.__proto__.read = function () {
+                      console.log(`Читаю "${this.name}"`);
+                    }
+
+                    book1.read() // Читаю "Приключения воробья"
+                    book2.read() // Читаю "Чудеса"
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<p>Закрытые и открытые свойства в функции-конструкторе</p>
+		</section>
+
+		<section>
+			<ul class=" p">
+				<li>В функции-конструкторе можно создать закрытые и открытые свойства и методы</li>
+			</ul>
+			<pre>
+                  <code data-trim data-line-numbers="|2,8-10,11-13,14-16|3-6|3,8-10,11-13|14-16|18|19|20|21|22|">
+                    function Book(name) {
+                      this.name = name;
+                      const _postfix = '';
+                      function _somePrivateMethod() {
+                        console.log('Вызван внутренний метод');
+                      }
+
+                      this.setPostfix = function(value) {
+                        _postfix = value;
+                      }
+                      this.getFullName = function() {
+                        return  this.name + _postfix;
+                      }
+                      this.callSomethingPrivate = function(value) {
+                        _somePrivateMethod();
+                      }
+                    }
+                    const book = new Book('Прыжок');
+                    book.getFullName(); // 'Прыжок'
+                    book.setPostfix(' в неизвестность');
+                    book.getFullName(); // 'Прыжок в неизвестность'
+                    book.callSomethingPrivate(); // 'Вызван внутренний метод'
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<h3>Про приватные префиксы</h3>
+			<ul>
+				<li>
+					<code>_val</code> - соглашение, что при наличии "_" это приватное поле, хоть его и можно получить
+				</li>
+				<li>
+					<code>#val</code> - настоящие приватные методы es2022+
+				</li>
+				<li>
+					<code>private val</code> - это не синтаксис js, а ts
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<p>Для чего удобно использовать функцию-конструктор?</p>
+			<ul class="fragment">
+				<li>Уменьшаем дублирование кода</li>
+				<li>Можем лучше организовать свой код</li>
+				<li>Можем создавать объекты одинаковым способом</li>
+				<li>Контролируем доступ к свойствам</li>
+				<li>Увеличиваем производительность за счет использования прототипного наследования</li>
+			</ul>
+		</section>
+
+		<section>
+			<p>Различия между функцией-фабрикой и функцией-конструктором в <code class="i">JavaScript</code></p>
+		</section>
+
+		<section>
+			<ul>
+				<li>В отличие от функции-фабрики, название функции-конструктора начинается с заглавной буквы
+				</li>
+				<li class="">Функция-конструктор должна вызываться с помощью оператора <code
+						class="i">new</code></li>
+				<li class="">Функция-фабрика всегда должна явно возвращать объект </li>
+				<li class="">Когда функция-конструктор вызывается с помощью оператора <code
+						class="i">new</code>, <code class="i">JavaScript</code> автоматически создает и
+					возвращает объект.</li>
+				<li class="">Функция-конструктор по умолчанию поддерживает прототипное наследование. Для
+					функции-фабрики вы должны добавить прототипное наследование, используя метод
+					<code class="i">Object.create()</code></li>
+			</ul>
+		</section>
+
+		<!-- //  CLASSES -->
+
+		<section id="class_1" data-auto-animate data-auto-animate-unmatched="fade">
+			<h2>Классы</h2>
+		</section>
+
+		<section>
+			<h5>Базовый синтаксис класса</h5>
+			<pre>
+                    <code  data-trim data-line-numbers="1,8|2-3|4-6|">
+                      class Book {
+                        // методы класса
+                        constructor() { ... }
+                        method1() { ... }
+                        method2() { ... }
+                        method3() { ... }
+                        ...
+                      }
+                    </code>
+                </pre>
+		</section>
+
+		<section>
+			<p>Рассмотрим пример</p>
+			<pre>
+                    <code data-trim data-line-numbers="|1-12|2-5,13|">
+                      class Book {
+                        constructor(name, author) {
+                          this.name = name;
+                          this.author = author;
+                        }
+                        release() {
+                          return `Выпускаем книгу ${this.name}`;
+                        }
+                        open() {
+                          return `Открываем книгу ${this.name}`;
+                        }
+                      }
+                      var book = new Book("Незнайка в цветочном городе", "Носов");
+                    </code>
+                  </pre>
+		</section>
+
+		<section>
+			<p>Что на самом деле делает конструкция <b>class Book {...}</b>?</p>
+			<ul>
+				<li class="">Создаёт функцию с именем <b>Book</b>, которая становится результатом
+					объявления
+					класса (Это та самая, знакомая нам функция-конструктор)</li>
+			</ul>
+			<div class="description off ">
+				<table class="table no-line">
+					<tbody>
+					<tr>
+						<td>
+                            <pre>
+                              <code  data-trim data-line-numbers>
+                                class Book {
+                                  constructor(name, author) {
+                                    this.name = name;
+                                    this.author = author;
+                                  }
+                                }
+                              </code>
+                            </pre>
+						</td>
+						<td>
+                            <pre>
+                              <code  data-trim data-line-numbers>
+                                function Book(bookName, bookAuthor) {
+                                  this.name = bookName;
+                                  this.author = bookAuthor;
+                                }
+                              </code>
+                            </pre>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<ul class="off ">
+				<li class="">Код функции берётся из метода <b>constructor</b> (она будет пустой, если
+					такого метода нет)</li>
+				<li class="">Сохраняет все методы, такие как <b>open</b>, в <b>Book.prototype</b></li>
+			</ul>
+		</section>
+		<!--
+                      <section>
+                          <p>В чем отличие класса от функции-конструктора?</p>
+                      </section>
+
+                      <section>
+                          <ul>
+                              <li class="">Улучшение читаемости кода</li>
+                              <li class="">Флаг <code class="i">enumerable</code> автоматически устанавливается в
+                                  <code class="i">false</code> для всех
+                                  методов в
+                                  <code class="i">prototype</code>. Таким образом все методы становятся неперечислимыми.
+                              </li>
+                              <li class="">Весь код внутри класса автоматически находится в строгом режиме.</li>
+                          </ul>
+                      </section> -->
+
+		<section>
+			<p>Что под капотом?</p>
+			<div class="">
+				<img src="/utils/assets/lesson5/classes21_3.png">
+			</div>
+			<ul class=" p">
+				<li class="">На вид – классы, под капотом – по-прежнему прототипы</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Наследование</h3>
+		</section>
+
+		<section>
+			<div class="">
+                  <pre>
+                    <code data-trim data-line-numbers="|1-13|15-25|27-37|39-43|45-49|">
+                      class Human {
+                        name;
+
+                        constructor(name) {
+                          this.name = name;
+                        }
+                        sleep() {
+                          console.log(`${this.name} спит`)
+                        }
+                        run() {
+                          console.log(`${this.name} бежит`)
+                        }
+                      }
+
+                      class Singer extends Human {
+                        favoriteSong;
+
+                        constructor(name, favoriteSong) {
+                          super(name);
+                          this.favoriteSong = favoriteSong;
+                        }
+                        sing() {
+                          console.log(`${this.name} поет ${this.favoriteSong}`);
+                        }
+                      }
+
+                      class Mathematician extends Human {
+                        favoriteTypesOfTasks;
+
+                        constructor(name, favoriteTypesOfTasks) {
+                          super(name);
+                          this.favoriteTypesOfTasks = favoriteTypesOfTasks;
+                        }
+                        solveTask() {
+                          console.log(`${this.name} решает ${this.favoriteTypesOfTasks}`)
+                        }
+                      }
+
+                      const mathematician = new Mathematician('Василий', 'уравнение');
+
+                      mathematician.run(); // OK
+                      mathematician.sleep();// OK
+                      mathematician.solveTask();// OK
+
+                      const singer = new Singer('Василий', 'Любимая песня');
+
+                      singer.run();// OK
+                      singer.sleep();// OK
+                      singer.sing();// OK
+                    </code>
+                  </pre>
+			</div>
+		</section>
+
+		<section>
+			<p>Что важно помнить про наследование</p>
+			<ul class="p">
+				<li class="">Класс может быть отнаследован от другого класса с помощью ключевого слова <b>extends</b></li>
+				<li class="">Наследование позволяет нам расширять классы, не дублируя код</li>
+				<li class="">В большинстве языков программирования можно наследоваться только от одного класса</li>
+				<li class="">В конструкторе дочернего класса вызываем конструктор родительского с помощью ключевого слова <code class="i">super</code></li>
+			</ul>
+		</section>
+
+		<section>
+			<p>Статические свойства и методы класса</p>
+		</section>
+
+		<section>
+                <pre>
+                  <code data-trim data-line-numbers="|2|4-6|7-9|10-12|14|15|16|17|">
+                    class PrintPublication {
+                      static publishingHouse = 'Ромашка';
+                      static changePublishingHouse(value) {
+                        this.publishingHouse = value;
+                      }
+                      static getPublishingHouse() {
+                        return `Издательство '${this.publishingHouse}'`;
+                      }
+                      constructor() {}
+                      release() {}
+                      open() {}
+                    }
+                    var house = new PrintPublication();
+                    house.changePublishingHouse('Тюльпан') // Error
+                    PrintPublication.changePublishingHouse('Тюльпан') // Ок
+                    PrintPublication.getPublishingHouse() // Издательство 'Тюльпан'
+                  </code>
+                </pre>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li class="">Статические методы и свойства определяются при помощи ключевого слова
+					<b>static</b> и принадлежат классу, а не объекту
+				</li>
+				<li class="">Статические методы используются для функциональности, принадлежащей классу
+					«в
+					целом»</li>
+				<li class="">Статические свойства используются, когда необходимо сохранять данные на
+					уровне
+					класса</li>
+			</ul>
+		</section>
+
+		<section>
+			<p>Наследование статических свойств и методов</p>
+		</section>
+
+		<section>
+			<p>Статические свойства и методы наследуются</p>
+			<div class="">
+                  <pre>
+                    <code  data-trim data-line-numbers="|1-13|14-19|20|21|">
+                      class PrintPublication {
+                        static publishingHouse = "Издательство 'Ромашка'"
+
+                        static changePublishingHouse(value) {
+                          this.publishingHouse = value;
+                        }
+
+                        constructor(name, type) {
+                          this.name = name;
+                          this.type = type;
+                        }
+                        //...
+                      }
+                      class Book extends PrintPublication {
+                        constructor(name, type, author) {
+                          //...
+                        }
+                        //...
+                      }
+                      Book.publishingHouse //"Издательство 'Ромашка'"
+                      Book.changePublishingHouse //function
+                    </code>
+                  </pre>
+			</div>
+		</section>
+
+		<section>
+			<p>Заглянем под капот класса Book</p>
+			<div class="" style="width:500px; margin: auto">
+				<img src="/utils/assets/lesson5/static41.png">
+			</div>
+		</section>
+
+		<section>
+			<p>Изменение статического свойства</p>
+		</section>
+
+		<section>
+			<h5>Рассмотрим пример</h5>
+			<div class="">
+                  <pre>
+                      <code data-trim data-line-numbers="2|3|4">
+                        ...
+                        Book.publishingHouse //"Издательство 'Ромашка'"
+                        Book.changePublishingHouse('Морские глубины');
+                        Book.publishingHouse //'Морские глубины'
+                      </code>
+                    </pre>
+			</div>
+		</section>
+
+		<section>
+			<h5>Какие изменения произошли в цепочке прототипов?</h5>
+			<div class="row" style="width:500px;">
+				<img src="/utils/assets/lesson5/static41.png">
+				<img src="/utils/assets/lesson5/static_change21.png">
+			</div>
+		</section>
+
+		<section>
+			<p>Закрытые свойства класса</p>
+		</section>
+
+		<section>
+			<div>
+                  <pre>
+                    <code data-trim data-line-numbers="|1-17|19-20|">
+                      class CoffeeMaker {
+                        #name;
+
+                        constructor(name) {
+                          this.#name = name;
+                        }
+
+                        #testEngine() {}
+
+                        test() {
+                          console.log(`Ручной запуск тестрования двигателя ${this.#name}`);
+                          this.#testEngine();
+                        }
+                        prepareCoffee(whatCoffee) {
+                          console.log(`Минуточку, ${this.#name} готовит ${whatCoffee}`);
+                        }
+                      }
+
+                      const coffeeMaker = new CoffeeMaker('Philips');
+                      coffeeMaker.prepareCoffee('Американо');
+                    </code>
+                  </pre>
+			</div>
+		</section>
+
+		<section>
+			<p>Синтаксические ограничения для закрытых свойств в js</p>
+			<div class="description">
+				<table class="table no-line">
+					<tbody>
+					<tr>
+						<td>
+                          <pre>
+                            <code data-trim data-line-numbers>
+                              class ClassWithPrivateField {
+                                #privateField;
+
+                                constructor() {
+                                    this.#privateField = 42;
+                                    delete this.#privateField; // Syntax error
+                                    this.#undeclaredField = 444; // Syntax error
+                                  }
+                              }
+
+                              const instance = new ClassWithPrivateField();
+                              instance.#privateField === 42;
+                            </code>
+                          </pre>
+						</td>
+						<td>
+							<ul class="">
+								<li class="">Пространство имен является общим для статических свойств и свойств экземпляра.
+									Исключением является пара <b>getter</b> <b>setter</b></li>
+								<li class="">constructor не может быть закрытым.</li>
+								<li class="">Ссылка на # извне класса является синтаксической ошибкой</li>
+								<li class="">Ссылка на закрытые свойства, которые не были объявлены в теле класса, так
+									же является ошибкой</li>
+								<li class="">Нельзя удалить объявленные закрытые свойства с помощью <b>delete</b></li>
+							</ul>
+						</td>
+					</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section>
+			<p>Закрытые свойства и наследование</p>
+		</section>
+
+		<section>
+			<div class="">
+                  <pre>
+                    <code data-trim data-line-numbers="|1-7|9-11|13-14|">
+                      class Skill {
+                        #canDance = true;
+
+                        get canDance() {
+                          return this.#canDance;
+                        }
+                      }
+
+                      class Person extends Skill {
+                        #canDance = false;
+                      }
+
+                      const girl = new Person();
+                      console.log(girl.canDance); //true
+                    </code>
+                  </pre>
+			</div>
+		</section>
+
+		<section>
+			<ul class="p">
+				<li class="">Закрытые свойства не являются частью прототипической модели наследования,
+					поскольку доступ к ним возможен только внутри тела текущего класса и они не наследуются
+					подклассами</li>
+				<li class="">Закрытые свойства с одинаковым именем в разных классах совершенно разные и не
+					взаимодействуют друг с другом</li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>UseCase зачем нужны прототипы?</h3>
+
+			<p class="fragment" style="font-size: 25px">
+				<strike>Была</strike> Есть такая библиотека <a href="https://jquery.com/" target="_blank">jQuery</a> </br>
+				Kill-фичей был синтаксис
+			<pre  class="fragment">
+                    <code class="js" data-trim>
+                      var hiddenBox = $( "#banner-message" );
+                      $( "#button-container button" ).on( "click", function( event ) {
+                        hiddenBox.show();
+                      });
+                    </code>
+                  </pre>
+			<pre  class="fragment">
+                    <code class="js" data-trim>
+                      return {
+                        show: function() { ... },
+                        hide: function() { ... },
+                        css: function() { ... },
+                        animate: function() { ... },
+                        // etc...
+                      };
+                    </code>
+                  </pre>
+			</p>
+		</section>
+
+		<section>
+			<h3>UseCase зачем нужны прототипы?</h3>
+			<ul style="font-size: 30px">
+				<li>
+					Приходилось бы постоянно возвращать разные объекты с множетсвом методов,
+					что ударило бы по памяти и производительности</li>
+				<li>
+					Так же он был популярен в ES5 (< 2015) и там для для упрощения создания объектов при помощи функций конструкторов был метод стандартный метод
+					create его упрощённая версия:
+					<pre style="font-size: 0.8em;">
+                      <code data-trim class="js">
+                        Object.create = function(prototype) {
+                          var Type = function () {};
+                          Type.prototype = prototype;
+                          return new Type();
+                      };
+                      </code>
+                    </pre>
+				</li>
+				<div>Что позволяет создавать объекты без надобности использовать new и функции конструкторы в целом</div>
+			</ul>
+		</section>
+
+		<section>
+			<p>Вопросы?</p>
+		</section>
+
+		<section>
+			<p>Домашнее задание</p>
+			<a href="https://itmo-frontend-lectures.vercel.app/homeworks.html">https://itmo-frontend-lectures.vercel.app/homeworks.html</a>
+		</section>
+
+		<section>
+			<p>Удачи! &#128512;</p>
+		</section>
+
+	</div>
+</div>
+
+<script src="/utils/dist/reveal.js"></script>
+<script src="/utils/plugin/plugin/zoom/zoom.js"></script>
+<script src="/utils/plugin/plugin/notes/notes.js"></script>
+<script src="/utils/plugin/plugin/search/search.js"></script>
+<script src="/utils/plugin/plugin/markdown/markdown.js"></script>
+<script src="/utils/plugin/plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		controls: true,
+		progress: true,
+		center: true,
+		hash: true,
+		slideNumber: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+	});
+</script>
+</body>
+</html>
