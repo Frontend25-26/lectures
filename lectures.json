@@ -78,6 +78,14 @@
               "order": 4,
               "homeworkDate": "2025-11-04T23:59:59",
               "homework": "https://classroom.github.com/a/nXt0YaC4"
+            },
+            {
+              "title": "Асинхронность part. 1",
+              "link": "/1-sem/html/5-async-1/index.html",
+              "openDate": "2025-10-25T11:00:00",
+              "order": 5,
+              "homeworkDate": "2025-11-12T23:59:59",
+              "homework": "https://classroom.github.com/a/jaep-Wjg"
             }
           ]
         }
