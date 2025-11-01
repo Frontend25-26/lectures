@@ -93,6 +93,14 @@
               "order": 5,
               "homeworkDate": "2025-11-12T23:59:59",
               "homework": "https://classroom.github.com/a/jaep-Wjg"
+            },
+            {
+              "title": "Асинхронность part. 2",
+              "link": "/1-sem/js/6-async-2/index.html",
+              "openDate": "2025-10-25T13:00:00",
+              "order": 6,
+              "homework_text": "Домашнего задания не будет",
+              "homeworkDate": "2025-11-01T23:59:59"
             }
           ]
         }

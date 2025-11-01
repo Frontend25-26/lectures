@@ -1,0 +1,142 @@
+:root {
+    --r-heading-text-transform: normal;
+    --r-heading-font-weight: 500;
+}
+
+.firstRedChar::first-letter {
+  color: red;
+}
+
+.reveal .shaded {
+    color: #888;
+  }
+
+  .reveal .homework {
+    color: #b82122;
+  }
+
+  .reveal ul li {
+    font-size: 0.8em;
+  }
+
+  .reveal ul.description li {
+    font-size: 0.6em;
+  }
+
+  .reveal .description table.table li {
+    font-size: 1em;
+  }
+
+  .reveal ul.p {
+    list-style-type: none;
+  }
+
+  .reveal ul.p  li {
+    margin-bottom: 10px;
+  }
+
+  .reveal table.table {
+    margin-left: 50px;
+    font-size: 0.5em;
+  }
+
+  .reveal table.table td.name {
+    vertical-align: middle;
+  }
+
+  .reveal table.no-line {
+      border-collapse: collapse;
+  }
+
+  .reveal table.no-line th {
+    border-collapse: collapse;
+  }
+
+  .reveal table.no-line td {
+    border-collapse: collapse;
+    border: none;
+    border-bottom: 1px solid rgb(213, 208, 208);
+  }
+
+
+  .reveal .slideBody {
+    padding-top: 10px;
+    height: 450px;
+  }
+
+  .reveal .column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .reveal .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .reveal b {
+    font-weight: bolder;
+  }
+  .reveal .highlighted {
+    font-weight: bolder;
+  }
+  .reveal .notes {
+    display: flex;
+    align-self:flex-start;
+    margin-left: 30px;
+  }
+
+  .reveal code.js {
+    background-color: #f5f0e76b;
+  }
+
+  .reveal .inline {
+    font-size: 0.5em;
+  }
+
+  .reveal pre {
+    font-size: 0.5em;
+  }
+
+  .reveal .quote {
+    font-style: italic;
+    line-height: 1;
+    font-size: 0.9em;
+  }
+
+  .reveal code.i {
+    color: #0e19e6;
+  }
+
+  .reveal .media {
+    margin: 0 auto;
+  }
+
+  .reveal .off {
+    margin-top: 10px;
+  }
+
+  .reveal .contrast .hljs.has-highlights tr:not(.highlight-line) {
+    opacity: 0.3;
+  }
+
+  .reveal table pre {
+    width: 100%;
+    margin: auto;
+    font-size: 0.8em;
+  }
+
+  .reveal table  ul {
+    display: block;
+  }
+
+.reveal .slide-number {
+  font-size: 24px;
+}
+
+.reveal pre code.height_limit_off {
+	max-height: none;
+}
