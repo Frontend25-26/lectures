@@ -100,7 +100,7 @@
               "openDate": "2025-10-25T13:00:00",
               "order": 6,
               "homework_text": "Домашнего задания не будет",
-              "homeworkDate": "2025-11-01T23:59:59"
+              "homeworkDate": "-"
             }
           ]
         }
