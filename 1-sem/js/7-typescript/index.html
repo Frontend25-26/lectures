@@ -1,29 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Typescript</title>
+    <title>TypeScript</title>
 
     <link rel="stylesheet" href="/utils/dist/reset.css">
-    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/dist/reveal.css">
     <link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
     <link rel="stylesheet" href="css/custom.css">
-    <!--    <link rel="stylesheet" href="../../../utils/plugin/plugin/highlight/equilibrium-light.css">-->
+    <style>
+        .text-with-icon {
+            display: flex;
+            gap: 16px;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 
-    <script src="js/metrika.js"></script>
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
+
 </head>
-<style>
-    .text-with-icon {
-        display: flex;
-        gap: 16px;
-        justify-content: space-between;
-        align-items: center;
-    }
-</style>
 <body class="background">
 <div class="reveal">
     <div class="slides">
@@ -61,13 +60,15 @@
         <section>
             <p>Он типизированный!</p>
             <pre class="fragment">
-                <code data-trim class="js">
+                <code data-trim data-line-numbers class="js">
                     function transformToLowerCase(name) {
                         return name.toLowerCase()
                     }
                     transformToLowerCase(1) // JS -> ошибка в рантайме
                 </code>
-                <code data-trim class="ts">
+            </pre>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
                     function transformToLowerCase(name: string) {
                         return name.toLowerCase()
                     }
@@ -234,8 +235,15 @@
             <p class="fragment">Та магия на которую способны типы в TS в Java потребовала бы кодогенерации</p>
         </section>
         <section>
-            <p>Бу, испугались?</p>
-            <img src="img/type-magic.png" alt="example of scary type magic of typescript"/>
+            <p>На что способны типы в TypeScript</p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/0mCsluv5FXA?si=2ga8qyVXQTYOjGiI"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </section>
+        <section>
+            <img src="img/doom_types.jpg" alt="">
+            <a href="https://www.youtube.com/embed/0mCsluv5FXA?si=2ga8qyVXQTYOjGiI">Ссылка на видео</a>
         </section>
         <section>
             <p>Аннотации типов: переменные</p>
@@ -335,8 +343,8 @@
         </section>
         <section>
             <p>Специальные типы</p>
-            <p class="fragment"><code>never</code> - если <code>return</code> никогда не вызовется</p>
             <p class="fragment"><code>any</code> и <code>unknown</code> - когда тип неизвестен</p>
+            <p class="fragment"><code>never</code> - если <code>return</code> никогда не вызовется</p>
             <p class="fragment"><code>object</code> когда точно знаем что не примитив</p>
             <p class="fragment"><code>void</code> - очевидно</p>
         </section>
@@ -493,7 +501,7 @@
                     a = anyObj; //TS2322: Type unknown is not assignable to type object
                 </code>
             </pre>
-            <p>Зачем он нужен если есть <code>unknown</code>?</p>
+            <p class="fragment">Зачем он нужен если есть <code>unknown</code>?</p>
             <p class="fragment">Добавляет несколько методов из <a
                     href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#instance_methods"><code>Object.prototype</code></a>
             </p>
@@ -534,7 +542,7 @@
             <h1>Как TypeScript понимает что один тип совместим с другим?</h1>
         </section>
         <section>
-            <p class="fragment">Немного духоты</p>
+            <p>Немного духоты</p>
             <p class="fragment">Система типов TS - структурная</p>
             <p class="fragment">Ей неважно как вы получили тип и как его назвали</p>
             <p class="fragment">Главное - это набор полей и методов</p>
@@ -576,7 +584,7 @@
             </pre>
         </section>
         <section>
-            <p>Расширяем <code>type Animal1</code>?</p>
+            <p>Расширяем <code>type Animal1</code></p>
             <pre class="fragment">
                 <code data-trim data-line-numbers class="ts">
                     type Animal1 = { name: string; };
@@ -690,9 +698,9 @@
             </ul>
         </section>
         <section>
-            <p class="fragment"><code>using</code>-переменная. Автоочистка ресурсов</p>
+            <p><code>using</code>-переменная. Автоочистка ресурсов</p>
             <p class="fragment">Частично поддерживается в JS(нет в Safari)</p>
-            <p class="fragment">Автоматически дёргает метод при выходе из области видимости</p>
+            <p class="fragment">Переменная, автоматически закрывает ресурс в конце блока</p>
         </section>
         <section>
             <p>Вначале нам нужен ресурс</p>
@@ -1187,38 +1195,70 @@
             </pre>
         </section>
         <section>
-            <p>Pick&lt;T, K extends keyof T&gt;</p>
+            <h5><code class="ts">ReturnType&lt;T extends (...args: any) => any&gt;</code></h5>
+            <p>Вытаскивает из функции возвращаемый тип</p>
             <pre class="fragment">
-                <code data-trim data-wrap data-line-numbers="1-4|6|7-11" class="ts">
-                    interface User {
-                        name: string;
-                        age: number;
-                    }
+                <code data-trim data-wrap data-line-numbers="1-4|1,6-7|1,9-10" class="ts">
+                    // ОСТОРОЖНО! Выдуманный синтаксис!
+                    ReturnType<() => string> === string
 
-                    const pickedUser: Pick&lt;User, 'name'&gt;;
-                    /*    ^^^
-                     * {
-                     *   name: string;
-                     * }
-                     */
+                    ReturnType<(s: string) => void> === void
+
+                    declare function f&lt;R&gt;(): R;
+                    ReturnType&lt;typeof f&gt; === unknown
+
+                    declare function g&lt;R extends object[]&gt;(): R;
+                    ReturnType&lt;typeof g&gt; === object[]
                 </code>
             </pre>
         </section>
         <section>
-            <p>Omit</p>
+            <h5><code class="ts">Parameters&lt;T extends (...args: any) => any&gt;</code></h5>
+            <p>Вытаскивает из функции кортеж параметров</p>
             <pre class="fragment">
-                <code data-trim data-wrap data-line-numbers="1-4|6|7-11" class="ts">
-                    interface User {
-                        name: string;
-                        age: number;
-                    }
+                <code data-trim data-wrap data-line-numbers="1-3|1,5-6" class="ts">
+                    // ОСТОРОЖНО! Выдуманный синтаксис!
+                    Parameters<() => number> === [];
+                    Parameters<(a: string, b: boolean) => number> === [string, boolean];
 
-                    const omittedUser: Omit&lt;User, 'age'&gt;;
-                    /*    ^^^
-                     * {
-                     *   name: string;
-                     * }
-                     */
+                    declare function f&lt;T&gt;(a: T, ...rest: number[]): void;
+                    Parameters&lt;typeof f&gt; === [unknown, ...number[]]
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Как же реализованы <code>Partial</code>, <code>Required</code> и <code>Record</code>?</p>
+            <p class="fragment">Через Index Signatures, Mapped Types и Indexed Access Type</p>
+        </section>
+        <section>
+            <p>Прелюдия к Mapped Types: Index Signatures</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type OptionsFlags = { [key: string]: boolean };
+                    // Вместо OptionsFlags можно было использовать Record
+                    const obj: OptionsFlags = {
+                        hasKey: false,
+                        isAdmin: true,
+                    };
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Indexed Access Type</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // T[K] говорит что вернёт obj[key] где obj: T, key: K
+                    type Person = { age: number; name: string; alive: boolean };
+                    const x: Person["age" | "name"] = ""
+                    x satisfies string | number;
+
+                    const MyArray = [
+                        { name: "Alice", age: 15 },
+                        { name: "Bob", age: 23 },
+                        { name: "Eve", age: 38 },
+                    ];
+                    const y: (typeof MyArray)[number] = MyArray[0];
+                    y satisfies { name: string, age: number }
                 </code>
             </pre>
         </section>
@@ -1253,15 +1293,14 @@
             </pre>
 
             <pre class="fragment">
-                <code data-trim data-line-numbers="1|3-5|4|7-8" class="ts">
+                <code data-trim data-line-numbers class="ts">
+                    function typedObjectKeys&lt;T extends object&gt;(obj: T) {
+                        return Object.keys(obj) as (keyof T)[];
+                    }
+
                     const obj = { a: 1, b: ‘s’};
 
-                    const typedObjectKeys = &lt;T extends object&gt;(obj: T) => {
-                        return Object.keys(obj) as (keyof T)[];
-                    };
-
-                    const keys2 = typedObjectKeys(obj);
-                    //^? keys: ("a" | "b")[]
+                    const keys: ("a" | "b")[] = typedObjectKeys(obj);
                 </code>
             </pre>
         </section>
@@ -1320,49 +1359,12 @@
             </pre>
         </section>
         <section>
-            <p>Как же реализованы <code>Partial</code>, <code>Required</code>, <code>Pick</code> и <code>Record</code>?
-            </p>
-            <p class="fragment">Через Mapped Types и Indexed Access Type</p>
-        </section>
-        <section>
-            <p>Прелюдия к Mapped Types: Index Signatures</p>
-            <pre class="fragment">
-                <code data-trim data-line-numbers class="ts">
-                    type OptionsFlags = { [key: string]: boolean };
-                    // Вместо OptionsFlags можно было использовать Record
-                    const obj: OptionsFlags = {
-                        hasKey: false,
-                        isAdmin: true,
-                    };
-                </code>
-            </pre>
-        </section>
-        <section>
-            <p>Indexed Access Type - конец близок</p>
-            <pre class="fragment">
-                <code data-trim data-line-numbers class="ts">
-                    // T[K] говорит что вернёт obj[key] где obj: T, key: K
-                    type Person = { age: number; name: string; alive: boolean };
-                    const x: Person["age" | "name"] = ""
-                    x satisfies string | number;
-
-                    const MyArray = [
-                        { name: "Alice", age: 15 },
-                        { name: "Bob", age: 23 },
-                        { name: "Eve", age: 38 },
-                    ];
-                    const y: (typeof MyArray)[number] = MyArray[0];
-                    y satisfies { name: string, age: number }
-                </code>
-            </pre>
-        </section>
-        <section>
             <p>Mapped Types - как <code>map</code>, но для пар <code>ключ: тип</code></p>
             <pre class="fragment">
                 <code data-trim data-line-numbers class="ts">
                     // in работает с типом | будто это массив из типов
                     type Record&lt;K extends keyof any, T&gt; = {
-                        [P in K]: T; // Создаёт поле для каждого ключа из K
+                        [P in K]: T; // T может зависеть от P
                     };
                     const x: Record<"foo" | "bar" | "baz", number> =
                         { foo: 0, bar: 0, baz: 0};
@@ -1375,8 +1377,88 @@
             </pre>
         </section>
         <section>
-            <p>Mapped Types - управление модификаторами</p>
+            <p>Mapped Types умеют работать с массивами и кортежами!</p>
+            <pre>
+                <code data-trim data-line-numbers class="ts">
+                    type WrapArr&lt;T extends any[]&gt; = {
+                        [P in keyof T]: Array&lt;T[P]&gt;
+                    }
+
+                    const x: WrapArr&lt;[number, boolean, ...string[]]&gt; =
+                        [[1], [false], [&quot;1&quot;], [&quot;2&quot;], [&quot;3&quot;, &quot;4&quot;]];
+
+                    const y: WrapArr&lt;number[]&gt; = [[1], [1, 2], [1, 2, 3]];
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Mapped Types - разбор по шагам</p>
             <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type IsSensitive&lt;T&gt; = {
+                      [P in keyof T]: T[P] extends { sensitive: true } ? true : false;
+                    };
+
+                    type DBFields = {
+                      id: { type: number, autogenerate: true };
+                      name: { type: string; sensitive: true };
+                    };
+
+                    type SensitiveFields = IsSensitive&lt;DBFields&gt;;
+                    // type SensitiveFields = { id: false, name: true };
+                </code>
+            </pre>
+        </section>
+        <section>
+            <pre>
+                <code data-trim data-line-numbers="1|3-6|8-11|13-18|20-25|27-36|38-41" class="ts">
+                    type SensitiveFields = IsSensitive&lt;DBFields&gt;;
+
+                    type SensitiveFields = {
+                        [P in keyof DBFields]: DBFields[P] extends { sensitive: true }
+                            ? true : false;
+                    };
+
+                    type SensitiveFields = {
+                        [P in "id" | "name"]: DBFields[P] extends { sensitive: true }
+                            ? true : false;
+                    };
+
+                    type SensitiveFields = {
+                        ["id"]: DBFields["id"] extends { sensitive: true }
+                            ? true : false;
+                        ["name"]: DBFields["name"] extends { sensitive: true }
+                            ? true : false;
+                    };
+
+                    type SensitiveFields = {
+                        id: DBFields["id"] extends { sensitive: true }
+                            ? true : false;
+                        name: DBFields["name"] extends { sensitive: true }
+                            ? true : false;
+                    };
+
+                    type SensitiveFields = {
+                        id: {
+                            type: number,
+                            autogenerate: true
+                        } extends { sensitive: true } ? true : false;
+                        name: {
+                            type: string,
+                            sensitive: true
+                        } extends { sensitive: true } ? true : false;
+                    };
+
+                    type SensitiveFields = {
+                        id: false;
+                        name: true;
+                    };
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Mapped Types - управление модификаторами</p>
+            <pre>
                 <code data-trim data-line-numbers class="ts">
                     // Можно добавлять и убирать ? и readonly с помощью + и -
                     type CreateMutable&lt;Type&gt; = {
@@ -1415,8 +1497,8 @@
             </ul>
         </section>
         <section>
-            <p>TypeScript: что по поддержке?</p>
-            <p class="fragment">Рантаймы: Node.js, Bun, Deno умеют запускать .ts файлы напрямую</p>
+            <p>TypeScript: что по runtime поддержке?</p>
+            <p class="fragment">Node.js, Bun, Deno умеют запускать .ts файлы напрямую</p>
             <p class="fragment">НО! Никакого тайпчекинга. Типы просто игнорируются</p>
         </section>
         <section>
@@ -1442,17 +1524,6 @@
                     href="https://kotlinlang.org/docs/js-project-setup.html#generation-of-typescript-declaration-files-d-ts">Kotlin/JS
                 генерирует .d.ts файлы</a></p>
             <p>Интересно попробовать, но ничего супер популярного</p>
-        </section>
-        <section>
-            <p>Что можно добавить</p>
-            <ul>
-                <li>Декораторы</li>
-                <li>Template literal types</li>
-                <li><code>infer</code> и то как на нём можно писать compile time парсеры. Надо дать на это дз. Больше
-                    парсеров богу парсеров
-                </li>
-                <li>Критика TypeScript</li>
-            </ul>
         </section>
         <section>
             <p>Всем спасибо за внимание 🤍</p>
