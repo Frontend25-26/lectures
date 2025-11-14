@@ -48,6 +48,13 @@
               "openDate": "2025-11-01T11:00:00",
               "order": 6,
               "homework": "https://classroom.github.com/a/CxJ6rW11"
+            },
+            {
+              "title": "Layout. Раскладки и сетки",
+              "link": "/1-sem/html/7-layouts/index.html",
+              "openDate": "2025-11-15T11:00:00",
+              "order": 7,
+              "homework": "https://classroom.github.com/a/dAO8D1hc"
             }
           ]
         },
@@ -97,7 +104,7 @@
             {
               "title": "Асинхронность part. 2",
               "link": "/1-sem/js/6-async-2/index.html",
-              "openDate": "2025-10-25T13:00:00",
+              "openDate": "2025-10-25T11:00:00",
               "order": 6,
               "homework_text": "Домашнего задания не будет",
               "homeworkDate": "-"
@@ -105,10 +112,9 @@
             {
               "title": "TypeScript",
               "link": "/1-sem/js/7-typescript/index.html",
-              "openDate": "2025-11-15T09:30:00",
+              "openDate": "2025-11-15T11:00:00",
               "order": 7,
-              "homework": "https://classroom.github.com/a/t1DNkXsE",
-              "homeworkDate": "2025-11-29T29:59:59"
+              "homework": "https://classroom.github.com/a/t1DNkXsE"
             }
           ]
         }
