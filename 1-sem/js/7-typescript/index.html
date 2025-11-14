@@ -1,0 +1,1489 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Typescript</title>
+
+    <link rel="stylesheet" href="/utils/dist/reset.css">
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
+    <link rel="stylesheet" href="css/custom.css">
+    <!--    <link rel="stylesheet" href="../../../utils/plugin/plugin/highlight/equilibrium-light.css">-->
+
+    <script src="js/metrika.js"></script>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
+</head>
+<style>
+    .text-with-icon {
+        display: flex;
+        gap: 16px;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+<body class="background">
+<div class="reveal">
+    <div class="slides">
+        <section data-auto-animate data-auto-animate-unmatched="fade">
+            <img src="img/ts-lettermark-blue.svg" alt=""/>
+            <br/>
+            <p class="firstRedChar">Александр Балбеков</p>
+        </section>
+        <section>
+            <h3>Что мы сегодня узнаем</h3>
+            <ul style="list-style-type: decimal">
+                <li class="fragment">Кто такой этот ваш Typescript?</li>
+                <li class="fragment">Почему он хорош?</li>
+                <li class="fragment">Как понять его типы и не сойти с ума?</li>
+                <li class="fragment">Есть ли в нём что-то КРОМЕ типов?</li>
+                <li class="fragment">Альтернативы</li>
+                <li class="fragment">Где может применяться вся эта красота вне рамок веба?</li>
+            </ul>
+        </section>
+        <section>
+            <p>Typescript это кто?</p>
+            <br/>
+            <p class="fragment">
+                TypeScript - это статически типизированный язык программирования от Microsoft который компилируется в
+                JavaScript. Рождён на свет в 2012-м году
+            </p>
+            <br/>
+            <p class="fragment">
+                Проще говоря - это надмножество JS которое добавляет в язык типы(и не только).
+            </p>
+        </section>
+        <section>
+            <h1>Почему TypeScript это круто?</h1>
+        </section>
+        <section>
+            <p>Он типизированный!</p>
+            <pre class="fragment">
+                <code data-trim class="js">
+                    function transformToLowerCase(name) {
+                        return name.toLowerCase()
+                    }
+                    transformToLowerCase(1) // JS -> ошибка в рантайме
+                </code>
+                <code data-trim class="ts">
+                    function transformToLowerCase(name: string) {
+                        return name.toLowerCase()
+                    }
+                    transformToLowerCase(1) // TS -> ошибка до выполнения кода
+                </code>
+            </pre>
+            <br/>
+            <ul>
+                <li class="fragment">Крутой autocomplete</li>
+                <li class="fragment">Не надо держать в голове всю кодовую базу</li>
+                <li class="fragment">Код самодокументируется</li>
+            </ul>
+        </section>
+        <section>
+            <p>Он типизированный!</p>
+
+            <pre>
+                <code data-trim data-line-numbers class="js">
+                    const age = 12;
+                    age.length; // JS -> будет ошибка в рантайме
+
+                    age.length; // TS -> Property 'length' does not exist on type '12'.
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>3 всадника JS-апокалипсиса</p>
+            <div class="media fragment" style="width: 600px">
+                <img src="img/property-undefined.png" alt=""/>
+            </div>
+
+            <div class="media fragment" style="width: 600px">
+                <img src="img/variable-is-not-a-func.png" alt=""/>
+            </div>
+
+            <div class="media fragment" style="width: 600px">
+                <img src="img/banana-meme.png" alt=""/>
+            </div>
+        </section>
+        <section>
+            <p>Почему типы помогают читать код</p>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="js">
+                    const doSomethingLongAndNotTrivial = (params) => {
+                        const children = getDeepPropertyById(params.parent);
+                        // ...200 строк кода...
+                        return children; // Кто-нибудь ваще помнит что в ней лежало?
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>У TypeScript есть компилятор!</p>
+            <ul>
+                <li class="fragment">Оптимизация кода(в пределах JS) - например замена переменных на <code>var</code>
+                </li>
+                <li class="fragment">Автоматическое переписывание кода под старые стандарты</li>
+                <li class="fragment">Новые языковые фичи не зависят от браузерных вендоров</li>
+            </ul>
+            <pre class="fragment">
+                <code data-trim class="ts">
+                { // tsconfig.json КОНФИГУРАЦИЯ КОМПИЛЯТОРА
+                    "compilerOptions": {
+                        "target": "ES6", // Версия JS в которую будет скомпилирован TS
+                        "allowJs": false, // Компилировать JS файлы вместе с TS
+                        "strict": true, // Включает набор строгих проверок
+                        "outDir": "./dist", // Директория компилируемого кода
+                        "removeComments": true // Убирает комментарии
+                    },
+                    "include": [ // Какие файлы включать в процессе компиляции
+                        "src"
+                    ]
+                }
+            </code>
+            </pre>
+        </section>
+        <section>
+            <p>TypeScript любит JS!</p>
+            <ul>
+                <li class="fragment">(почти) весь код на JavaScript - валидный код на TypeScript</li>
+                <li class="fragment">Даже без типов компилятор может найти кое-какие ошибки</li>
+                <li class="fragment">Можно тайпчекать даже чистые JS файлы - если есть JSDoc</li>
+                <li class="fragment">Куча всего в вебе уже имеет совместимость с TypeScript: фреймворки, библиотеки,
+                    рантаймы
+                </li>
+                <li class="fragment">
+                    TS сотрудничает с авторами JS-стандарта
+                    <code>@Decorators</code>, <code>using</code>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <p>JSDoc - если хочется типов без компиляции</p>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="js">
+                    /**
+                     * Concatenates first and last name
+                     * @param firstName string
+                     * @param lastName string
+                     * @returns string
+                     */
+                    const getFullName = (firstName, lastName) => {
+                        return `${firstName} ${lastName}`;
+                    };
+                </code>
+            </pre>
+            <p class="fragment">TypeScript и IDE их видят.<br/>Пишите документацию!</p>
+        </section>
+        <section>
+            <h3>Превращение в JS 🦄</h3>
+
+            <p class="fragment">В runtime остается только JS код</p>
+            <p class="fragment">В конечном коде нет типов</p>
+            <p class="fragment">TypeScript не может больше чем JavaScript</p>
+            <p class="fragment">Рантаймы не используют типы для оптимизации</p>
+        </section>
+        <section>
+            <h3>TypeScript бессилен если разработчик:</h3>
+
+            <p class="fragment">Неверно проставляет типы(TS можно обмануть)</p>
+            <p class="fragment">Допускает ошибки в бизнес логике</p>
+            <p class="fragment">Вызывает JS код без типов</p>
+        </section>
+        <section>
+            <h3>КАК начать писать на TS</h3>
+
+            <pre class="fragment">
+                <code data-trim class="ts">
+                    npm install typescript // установка
+                    npx tsc // компиляция
+                </code>
+            </pre>
+            <br/>
+            <div class="fragment">
+                А на самом деле - смотрите документацию к вашему фреймворку или системе сборки.
+                <br/>
+                Много кто поддерживает TS из коробки.
+            </div>
+        </section>
+        <section>
+            <h3>ГДЕ начать писать на TS</h3>
+            <div class="fragment text-with-icon">
+                <img src="img/vscode.svg" width="100" height="100" alt=""/>
+                <p>VSCode - всё работает из коробки, плагины не нужны. От авторов языка</p>
+            </div>
+            <div class="fragment text-with-icon">
+                <img src="img/webstorm.svg" width="100" height="100" alt=""/>
+                <p>WebStorm - от Jetbrains, но под капотом используется LSP авторов</p>
+            </div>
+            <p class="fragment">Вердикт - пишите где вам больше нравится</p>
+        </section>
+        <section>
+            <h1>Переходим к языку</h1>
+        </section>
+        <section>
+            <p>База о системе типов TS</p>
+            <ul>
+                <li class="fragment">Фундамент ровно как в JS: примитивы, объекты, и т. д</li>
+                <li class="fragment">Но из-за специфики JS типы обязаны быть ОЧЕНЬ гибкими и умными</li>
+                <li class="fragment">Типы в TS - это практически отдельный язык программирования</li>
+            </ul>
+            <p class="fragment">Та магия на которую способны типы в TS в Java потребовала бы кодогенерации</p>
+        </section>
+        <section>
+            <p>Бу, испугались?</p>
+            <img src="img/type-magic.png" alt="example of scary type magic of typescript"/>
+        </section>
+        <section>
+            <p>Аннотации типов: переменные</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    const str: string = "Hello";
+                    const isValid: boolean = true;
+                    const nums: number[] = [1, 2, 3, 4];
+                    // Можно также писать Array&lt;string&gt; - в TS есть дженерики
+                </code>
+            </pre>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    const undefinedVar: undefined = undefined;
+                    const nullVar: null = null;
+                    const bigIntVar: bigint = 100n;
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Аннотации типов: функции</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    const transformToLowerCase: (name: string) => string =
+                        name => name.toLowerCase();
+
+                    function transformToLowerCase2(name: string): string {
+                        return name.toLowerCase();
+                    }
+                </code>
+            </pre>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // Опциональные аргументы. Работает не только с функциями
+                    function transformToLowerCase2(name?: string): string {
+                        // name: string | undefined
+                        //              ^
+                        //              └ Это что такое?
+                        // Error: 'name' is possibly 'undefined'
+                        return name.toLowerCase();
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Алиасы типов</h3>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type StringArray = string[];
+                    type GetFullName = (firstName: string, lastName: string) => string;
+                    type GetByT&lt;T&gt; = (firstName: T) => string;
+
+                    const strs: StringArray = ['banana', 'apple'];
+                    const getFullName: GetFullName = (firstName, lastName) => {
+                        return `${firstName} ${lastName}`;
+                    };
+                </code>
+            </pre>
+            <p class="fragment">Могут быть рекурсивными!</p>
+        </section>
+        <section>
+            <h3>Объединения</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1|3|5|1-5" class="ts">
+                    type Id = string | number;
+
+                    const uid: Id = '1234aef';
+                    const uid2: Id = 12345;
+                </code>
+            </pre>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-5|2-4" class="ts">
+                    const arr: (string | number)[] = [123, 'banana', 'apple', 456];
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Опционально: Кортежи</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // Массивы и кортежи - это РАЗНЫЕ типы
+                    type StringNumberBooleans = [string, number, ...boolean[]];
+                    type StringBooleansNumber = [string, ...boolean[], number];
+                    type BooleansStringNumber = [...boolean[], string, number];
+
+                    function readButtonInput(
+                        foo: string, ...args: StringNumberBooleans
+                    ) {
+                        const [name, version, ...input] = args;
+                    }
+                </code>
+            </pre>
+            <img class="fragment" src="img/rest-tuples-autocomplete.png" alt=""/>
+        </section>
+        <section>
+            <p>Специальные типы</p>
+            <p class="fragment"><code>never</code> - если <code>return</code> никогда не вызовется</p>
+            <p class="fragment"><code>any</code> и <code>unknown</code> - когда тип неизвестен</p>
+            <p class="fragment"><code>object</code> когда точно знаем что не примитив</p>
+            <p class="fragment"><code>void</code> - очевидно</p>
+        </section>
+        <section>
+            <h3>any vs unknown - "что угодно"</h3>
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers class="ts">
+                    const doThingSafely = (s: unknown) => {
+                        return s.toLowerCase(); // <== ошибка компиляции
+                    };
+
+                    const doThingLikeInScaryJS = (s: any) => {
+                        return s.toLowerCase(); // JS вам судья
+                    };
+                </code>
+            </pre>
+            <p class="fragment"><code>any</code> отключает проверку типов! <code>unknown</code> безопаснее</p>
+        </section>
+        <section>
+            <p><code>never</code> - то что никогда не будет получено</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    function calculate(): never {
+                        throw new Error("Очень жаль, вы проиграли");
+                    }
+                    calculate();
+                    console.log("Меня ведь вызовут?"); // TS понимает что нет, а вы?
+                </code>
+            </pre>
+            <p class="fragment">Работает и с <code>while (true)</code></p>
+            <p class="fragment"><code>never</code> - подтип любого типа</p>
+        </section>
+        <section>
+            <h1>Но как вообще работать с <code>unknown</code>?</h1>
+        </section>
+        <section>
+            <p>Вариант 1 - кастовать</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    let userInput: unknown;
+                    const trimmed = (userInput as string).trim()
+                    const a = 123;
+
+                    a as string; // E: TypeScript ругается на очевидные ошибки
+                    (a as unknown as string).length // unknown может это подавить
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Вариант 2 - сужение типов.</p>
+            <pre>
+                <code data-trim data-line-numbers class="ts">
+                    const x: unknown = undefined;
+                    if (typeof x === 'bigint') {
+                        console.log(x + 1n) // x: bigint
+                    }
+
+                    const a: object = {};
+                    if ("aboba" in a && typeof a.aboba === 'number') {
+                        console.log(a.aboba); // a.aboba : number
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Сужение типов с помощью `instanceof`</p>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    let userInput: unknown;
+
+                    userInput.trim();
+                    //^ userInput is of type unknown.
+                </code>
+            </pre>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    let userInput: unknown;
+
+                    if (userInput instanceof String) {
+                        userInput.trim();
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Сужение типов</p>
+            <p>На самом деле - эвристик множество. Они перечислены в <a
+                    href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html">документации</a></p>
+            <ul>
+                <li class="fragment"><code>if (x)</code> — truthiness</li>
+                <li class="fragment">Control flow based</li>
+                <li class="fragment"><strong>type predicates</strong></li>
+                <li class="fragment"><strong>Assertion Functions</strong></li>
+            </ul>
+            <p class="fragment">TypeScript хорошо знает тонкости JS</p>
+        </section>
+        <section>
+            <p>Тип <code>is</code> - <code>boolean</code> с наворотами</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    function isValid(x: unknown): x is number {
+                        return typeof x === 'number' && x % 2 === 0
+                    } // Поддерживает дженерики
+
+                    const a: unknown = {}
+                    if (isValid(a)) {
+                        // a: number
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Будьте осторожны - TS не проверяет корректность!</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    function isValid(x: unknown): x is string {
+                        if (typeof x !== 'number') return false
+                        console.log("Hello World!")
+                        return true
+                    }
+                    const a: unknown = 123
+                    if (isValid(a)) {
+                        console.log(`${a satisfies string}: ${a.length}`)
+                    }
+                    // Этот код компилируется и a.length === undefined
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Тип <code>asserts</code> - <code>void</code> с наворотами</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    function assert(condition: boolean): asserts condition {
+                        // Тип вида asserts x is number тоже существует
+                        if (!condition) {
+                            throw new Error(`Assertion failed: ${condition}`);
+                        }
+                    }
+                    const a: unknown = 123;
+                    assert(typeof a === 'number');
+                    console.log(a satisfies number);
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Подводка к следующей теме - тип <code>object</code></p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    const anyObj: unknown = {};
+
+                    let a: object;
+                    a = anyObj; //TS2322: Type unknown is not assignable to type object
+                </code>
+            </pre>
+            <p>Зачем он нужен если есть <code>unknown</code>?</p>
+            <p class="fragment">Добавляет несколько методов из <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#instance_methods"><code>Object.prototype</code></a>
+            </p>
+        </section>
+        <section>
+            <p>Примитивы кончились, время объектов</p>
+            <p>За бортом были оставлены</p>
+            <ul class="fragment">
+                <li><code>symbol</code> и <code>unique symbol</code></li>
+                <li><code>String</code>, <code>Number</code>, <code>Boolean</code> и то почему их лучше не использовать
+                </li>
+                <li>И наверное ещё много чего</li>
+                <li>Для лучшего понимания почитайте <a
+                        href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html">Everyday Types</a>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Типы для объектов: Type vs Interface</h3>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type User1 = {
+                        name: string;
+                        age?: number; // number | undefined
+                        hello(a: number): string;
+                    };
+                    interface User2 {
+                        name: string;
+                        age?: number; // number | undefined
+                        hello(a: number): string;
+                    }
+                </code>
+            </pre>
+            <p>А теперь вопрос. Эти типы равны?</p>
+        </section>
+        <section>
+            <h1>Как TypeScript понимает что один тип совместим с другим?</h1>
+        </section>
+        <section>
+            <p class="fragment">Немного духоты</p>
+            <p class="fragment">Система типов TS - структурная</p>
+            <p class="fragment">Ей неважно как вы получили тип и как его назвали</p>
+            <p class="fragment">Главное - это набор полей и методов</p>
+            <p class="fragment"><code>User1</code> и <code>User2</code> совместимы</p>
+        </section>
+        <section>
+            <p>Как расширять типы</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    interface Animal {
+                        name: string;
+                    }
+                    interface Bear extends Animal {
+                        honey: boolean;
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>А как быть с <code>type Animal1</code>?</p>
+            <p class="fragment">Использовать оператор <code>&</code></p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type User = {
+                        name: string;
+                        age: number;
+                    };
+
+                    type SpecialAgent = User & {
+                        secretWord: string;
+                    }
+
+                    const agent: SpecialAgent = {
+                        name: 'James',
+                        age: 40,
+                        secretWord: 'fluggegecheimen',
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Расширяем <code>type Animal1</code>?</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type Animal1 = { name: string; };
+                    type Bear1 = Animal1 & { honey: boolean; };
+                    const x: Bear1 = { name: "", honey: true };
+
+                    x satisfies { name: string, honey: boolean }
+                </code>
+            </pre>
+            <p class="fragment">Но интерфейсы всё-таки лучше</p>
+        </section>
+        <section>
+            <p>Type vs Interface: в чём отличие?</p>
+            <p>Interface умеет в Declaration Merging</p>
+            <pre>
+                <code data-trim data-line-numbers class="ts">
+                    interface Window {
+                        title: string;
+                    }
+                    interface Window {
+                        myNewProp: string;
+                    }
+                </code>
+            </pre>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    interface Window {
+                        title: string;
+                        myNewProp: string;
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Где это может пригодиться</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // Представим что это написано в стандартной библиотеке(global)
+                    interface Window {
+                        title: string;
+                    }
+                </code>
+            </pre>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // НАШ код в НАШЕМ модуле, НЕ стандартная библиотека
+                    declare global { // Объявить что-то в области видимости global
+                        interface Window {
+                            myNewProp: string;
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p><code>Declaration Merging</code> работает много с чем</p>
+            <ul>
+                <li class="fragment"><code>interface</code></li>
+                <li class="fragment"><code>namespace</code> - legacy аналог JS модулей в TS</li>
+                <li class="fragment"><code>[class</code>, <code>function</code>, <code>enum]</code> <code><-></code>
+                    <code>namespace</code></li>
+            </ul>
+            <p class="fragment">Много нюансов. Читайте доку и по возможности не трогайте</p>
+        </section>
+        <section>
+            <h3><code>readonly</code> - модификатор</h3>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type User = {
+                        name: string;
+                        readonly age: number;
+                        isMarried: boolean;
+                    };
+
+                    const arr: readonly string[] = ['apple'];
+                    const arrr: ReadonlyArray&lt;string&gt; = ['apple'];
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Многие типы уже написаны за вас</h3>
+
+            <ul>
+                <li class="fragment">
+                    Методы массивов, объектов, все что уже есть в JS
+                </li>
+                <li class="fragment">
+                    API браузера, nodejs
+                </li>
+                <li class="fragment">
+                    Большинство популярных библиотек
+                </li>
+            </ul>
+        </section>
+        <section>
+            <p>Основы кончились, сделаем перерыв на фичи языка</p>
+            <ul>
+                <li class="fragment">
+                    Классы: protected, private видимость, parameter properties, <code>abstract</code> классы
+                </li>
+                <li class="fragment">
+                    Будущие фичи JavaScript
+                    <ul>
+                        <li class="fragment"><code>using</code> и <code>await using</code> - автозакрытие ресурсов, как
+                            RAII но в JS
+                        </li>
+                        <li class="fragment"><code>@Декораторы</code>(привет python), <code>accessor</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <p class="fragment"><code>using</code>-переменная. Автоочистка ресурсов</p>
+            <p class="fragment">Частично поддерживается в JS(нет в Safari)</p>
+            <p class="fragment">Автоматически дёргает метод при выходе из области видимости</p>
+        </section>
+        <section>
+            <p>Вначале нам нужен ресурс</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    export class Resource implements Disposable, AsyncDisposable {
+                        constructor(readonly x: number) {
+                            console.log(`Ресурс ${this.x} взят!`)
+                        }
+
+                        [Symbol.dispose]() {
+                            console.log(`Ресурс ${this.x} освобождён!`);
+                        }
+
+                        async [Symbol.asyncDispose]() {
+                            console.log(`Ресурс ${this.x} освобождён асинхронно!`);
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    using res1 = new Resource(1);
+                    await using res2 = new Resource(2);
+                    using res3 = new Resource(3);
+                    console.log(`Все ресурсы прочитаны: ${res1.x} ${res2.x} ${res3.x}`)
+                </code>
+            </pre>
+            <pre class="fragment">
+                <code data-trim data-line-numbers>
+                    Ресурс 1 взят!
+                    Ресурс 2 взят!
+                    Ресурс 3 взят!
+                    Все ресурсы прочитаны: 1 2 3
+                    Ресурс 3 освобождён!
+                    Ресурс 2 освобождён асинхронно!
+                    Ресурс 1 освобождён!
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Во что оно компилится</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="js">
+                    const env_1 = { stack: [], error: void 0, hasError: false };
+                    try {
+                        const res1 = __addDisposableResource(env_1, new Resource(1), false);
+                        const res2 = __addDisposableResource(env_1, new Resource(2), true);
+                        const res3 = __addDisposableResource(env_1, new Resource(3), false);
+                        console.log(`Все ресурсы прочитаны: ${res1.x} ${res2.x} ${res3.x}`);
+                    } catch (e_1) {
+                        env_1.error = e_1;
+                        env_1.hasError = true;
+                    } finally {
+                        const result_1 = __disposeResources(env_1);
+                        if (result_1)
+                            await result_1;
+                    }
+                    // __addDisposableResource и __disposeResources занимают ~ 50 строк
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Классы: области видимости - protected</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    class Greeter {
+                        public greet() { console.log("Hello, " + this.getName()); }
+                        protected getName() { return "hi"; }
+                    }
+
+                    class SpecialGreeter extends Greeter {
+                        public howdy() {
+                            // OK to access protected member here
+                            console.log("Howdy, " + this.getName());
+                        }
+                    }
+                    const g = new SpecialGreeter();
+                    g.greet(); // OK
+                    g.getName(); // Ошибка
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Классы: области видимости - private</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    class Base {
+                        private x = 0;
+                    }
+                    class Derived extends Base {
+                        // Class 'Derived' incorrectly extends base class 'Base'.
+                        // Property 'x' is private in type 'Base'
+                        // but not in type 'Derived'.
+                        x = 1;
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Помните: <code>public</code>, <code>protected</code> и <code>private</code> игнорируются рантаймом</p>
+            <p class="fragment">Поддерживается <code>#JavaScript</code> аналог - но с оверхедом на старых стандартах</p>
+        </section>
+        <section>
+            <p>Parameter properties - синтаксический сахар</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    class Params {
+                        readonly x: number;
+                        protected y: number;
+                        private z: number;
+
+                        constructor(x: number, y: number, z: number) {
+                            this.z = z;
+                            this.y = y;
+                            this.x = x;
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Parameter properties - синтаксический сахар</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    class Params {
+                        constructor(
+                            public readonly x: number,
+                            protected y: number,
+                            private z: number
+                        ) {} // Вжух и тело конструктора можно не писать
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Абстрактные классы</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    abstract class Base {
+                        abstract getName(): string;
+                        printName() {
+                            console.log("Hello, " + this.getName());
+                        }
+                    }
+                    class Derived extends Base {
+                        getName() {
+                            return "world";
+                        }
+                    }
+                    new Derived().printName() // Hello, world
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Что осталось за бортом</p>
+            <ul>
+                <li class="fragment"><code>@Декораторы</code>, <code>accessor</code></li>
+                <li class="fragment"><code>import defer</code></li>
+                <li class="fragment">Как настраивать компилятор через tsconfig.json</li>
+            </ul>
+        </section>
+        <section>
+            <p>Поговорим о продвинутых типах</p>
+            <ul>
+                <li class="fragment">Дженерики</li>
+                <li class="fragment">Conditional types</li>
+                <li class="fragment">Index Signatures</li>
+                <li class="fragment">Literal types vs Enum(скорее фича языка чем тип)</li>
+                <li class="fragment">Utility types</li>
+            </ul>
+        </section>
+        <section>
+            <h3>Жизнь без дженериков (((</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-3|5|7" class="ts">
+                    const returnSameThing = (t: unknown) => t;
+
+                    const one: unknown = returnSameThing(1);
+
+                    const randomString: unknown = returnSameThing("random string");
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Жизнь с дженериками )))</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-3|5|7" class="ts">
+                    const returnSameThing = &lt;T&gt;(t: T) => {
+                        return t;
+                    };
+
+                    const one: number = returnSameThing(1);
+
+                    const randomString: string = returnSameThing("random string");
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Ограничения для дженериков</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-3|5|7" class="ts">
+                    const returnSameThing = &lt;T extends string&gt;(t: T) => t;
+
+                    const randomString: string = returnSameThing("random string");
+
+                    const one = returnSameThing(1); //<== ошибка
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Conditional types</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    interface Animal {
+                        live(): void;
+                    }
+                    interface Dog extends Animal {
+                        woof(): void;
+                    }
+
+                    type Example1 = Dog extends Animal ? number : string;
+                    // type Example1 = number
+
+                    type Example2 = RegExp extends Animal ? number : string;
+                    // type Example2 = string
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Маленький и крайне важный нюанс - дистрибутивность</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type ToArray&lt;Type&gt; = Type extends any ? Type[] : never;
+                    // Чему же будет равно ToArray&lt;string | number&gt;?
+                </code>
+            </pre>
+            <p class="fragment">Вы ожидаете <code>(string | number)[]</code></p>
+            <p class="fragment">Но будет <code>string[] | number[]</code></p>
+        </section>
+        <section>
+            <p>Дистрибутивность</p>
+            <p class="fragment">
+                <code>ToArray&lt;string | number&gt;</code> превращается в <code>ToArray&lt;string&gt; | ToArray&lt;number&gt;</code>
+            </p>
+            <p>Так работают многие сложные типы</p>
+            <p><code>|</code> интерпретируют как "массив" типов</p>
+        </section>
+        <section>
+            <p>Где могут понадобиться Conditional Types?</p>
+            <p class="fragment">Сложные сигнатуры функций</p>
+            <p class="fragment">Использование в связке с <code>infer</code></p>
+        </section>
+        <section>
+            <h3>Literal types: Строковые литералы</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-5|4|7-11|12-17|16" class="ts">
+                    type Employee = {
+                        name: string;
+                        age: number;
+                        badgeColor: 'red' | 'white';
+                    };
+
+                    const employee1: Employee = {
+                        name: 'Joe',
+                        age: 20,
+                        badgeColor: 'red';
+                    }
+
+                    const employee2: Employee = {
+                        name: 'Joe',
+                        age: 20,
+                        badgeColor: 'blue'; // <== ошибка
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Literal types: Числовые литералы</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-4|3|6-9|11-14|13" class="ts">
+                    type Employee = {
+                        name: string;
+                        childrenCount: 0 | 1 | 2;
+                    };
+
+                    const employee1: Employee = {
+                        name: 'Joe',
+                        childrenCount: 1,
+                    }
+
+                    const employee2: Employee = {
+                        name: 'Bob',
+                        childrenCount: 3, // <== ошибка
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>as const</h3>
+
+            <pre>
+                <code data-trim data-line-numbers="1-5|7-9|11|12-15" class="ts">
+                    const routes = {
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                    };
+
+                    const goToRoute = (route: '/' | '/trips' | '/profile') => {
+                        //...
+                    };
+
+                    goToRoute(routes.home);
+                    /**
+                     * Argument of type 'string' is not assignable
+                     * to parameter of type '"/" | "/trips" | "/profile"'.
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>as const</h3>
+
+            <pre>
+                <code data-trim class="ts">
+                    const routes = {
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                    };
+
+                    routes.home = 'home'; // Валидная операция
+                </code>
+            </pre>
+
+            <pre class="fragment">
+                <code data-trim class="ts">
+                    const routes = {
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                    } as const; // <= Добавили as const
+
+                    routes.home = 'home'; // Теперь не работает
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>А что на счет Object.freeze</h3>
+
+            <pre>
+                <code data-trim class="ts">
+                    const routes = Object.freeze({
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                        deepProp: {
+                            key: 'home',
+                        },
+                    });
+
+                    routes.deepProp.key = 'hello'; // <= C Object.freeze все работает
+                </code>
+            </pre>
+
+            <pre class="fragment">
+                <code data-trim class="ts">
+                    const routes = {
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                        deepProp: {
+                            key: 'home',
+                        }
+                    } as const;
+
+                    routes.deepProp.key = 'hello'; // <= C `as const` получаем ошибку
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Enum</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-5|7-11|13" class="ts">
+                    enum Size {
+                        s,
+                        m,
+                        l,
+                    }
+
+                    enum Size {
+                        s = 'S',
+                        m = 'M',
+                        l = 'L',
+                    }
+
+                    const buttonSize = Size.l;
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Литералы vs Enum</h3>
+
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-3|1-5|8-11|13-15|17" class="ts">
+                    const formatDate(date: Date, format: 'HH:mm' | 'D MM'): string => {
+                        ...
+                    }
+
+                    formatDate(myDate, 'HH:mm');
+
+
+                    enum DateFormat {
+                        'HH:mm' = 'HH:mm',
+                        'D MM' = 'D MM'
+                    }
+
+                    const formatDate(date: Date, format: DateFormat): string => {
+                        ...
+                    }
+
+                    formatDate(myDate, DateFormat['HH:mm']);
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h1>Время Utility Types!</h1>
+        </section>
+        <section>
+            <p>Partial</p>
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-4|6|7-12" class="ts">
+                    interface User {
+                        name: string;
+                        age: number;
+                    }
+
+                    const partialUser: Partial&lt;User&gt;;
+                    /*    ^^^
+                     * {
+                     *   name?: string;
+                     *   age?: number;
+                     * }
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Required</p>
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-3|6|7-12" class="ts">
+                    interface User {
+                        name?: string;
+                        age: number;
+                    }
+
+                    const requiredUser: Required&lt;User&gt;;
+                    /*    ^^^
+                     * {
+                     *   name: string;
+                     *   age: number;
+                     * }
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p><code>Record&lt;K, V&gt;</code> - произвольное количество полей</p>
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers class="ts">
+                    type CatName = "miffy" | "boris" | "mordred";
+
+                    interface CatInfo {
+                        age: number;
+                        breed: string;
+                    }
+                    const cats: Record&lt;CatName, CatInfo&gt; = {
+                        miffy: { age: 10, breed: "Persian" },
+                        boris: { age: 5, breed: "Maine Coon" },
+                        mordred: { age: 16, breed: "British Shorthair" },
+                    };
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Pick&lt;T, K extends keyof T&gt;</p>
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-4|6|7-11" class="ts">
+                    interface User {
+                        name: string;
+                        age: number;
+                    }
+
+                    const pickedUser: Pick&lt;User, 'name'&gt;;
+                    /*    ^^^
+                     * {
+                     *   name: string;
+                     * }
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Omit</p>
+            <pre class="fragment">
+                <code data-trim data-wrap data-line-numbers="1-4|6|7-11" class="ts">
+                    interface User {
+                        name: string;
+                        age: number;
+                    }
+
+                    const omittedUser: Omit&lt;User, 'age'&gt;;
+                    /*    ^^^
+                     * {
+                     *   name: string;
+                     * }
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>keyof</h3>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers="1-5|7|8-10" class="ts">
+                    const routes = {
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                    } as const;
+
+                    type Route = keyof typeof routes;
+                    /**  ^^
+                     * "home" | "trips" | "profile"
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Когда можно использовать</p>
+
+            <pre>
+                <code data-trim data-line-numbers class="ts">
+                    const obj = { a: 1, b: ‘s’};
+
+                    const keys = Object.keys(obj);
+                    //^? keys: string[]
+                </code>
+            </pre>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers="1|3-5|4|7-8" class="ts">
+                    const obj = { a: 1, b: ‘s’};
+
+                    const typedObjectKeys = &lt;T extends object&gt;(obj: T) => {
+                        return Object.keys(obj) as (keyof T)[];
+                    };
+
+                    const keys2 = typedObjectKeys(obj);
+                    //^? keys: ("a" | "b")[]
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>typeof & keyof Комбо</h3>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers="1-5|7|8-10" class="ts">
+                    const routes = {
+                        home: '/',
+                        trips: '/trips',
+                        profile: '/profile',
+                    } as const;
+
+                    type Route = (typeof routes)[keyof typeof routes];
+                    /**  ^^
+                     * "/" | "/trips" | "/profile"
+                     */
+                </code>
+            </pre>
+
+            <pre class="fragment">
+                <code data-trim class="ts">
+                    const goToRoute = (route: Route) => {
+                        //...
+                    };
+
+                    goToRoute(routes.home);
+                    // В подарок получаем автокомплит из "/" | "/trips" | "/profile"
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Разбор Комбо по шагам</h3>
+
+            <pre class="fragment">
+                <code data-trim data-line-numbers="1|3-7|9|10-12|14|15-17" class="ts">
+                    // type Route получаем с помощью `typeof routes`
+
+                    type Route = {
+                        home: '/';
+                        trips: '/trips';
+                        profile: '/profile';
+                    }
+
+                    type RouteKeys = keyof Route;
+                    /**  ^^
+                     * "home" | "trips" | "profile"
+                     */
+
+                    type RouteValues = Route[keyof Route];
+                    /**  ^^
+                     * "/" | "/trips" | "/profile"
+                     */
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Как же реализованы <code>Partial</code>, <code>Required</code>, <code>Pick</code> и <code>Record</code>?
+            </p>
+            <p class="fragment">Через Mapped Types и Indexed Access Type</p>
+        </section>
+        <section>
+            <p>Прелюдия к Mapped Types: Index Signatures</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type OptionsFlags = { [key: string]: boolean };
+                    // Вместо OptionsFlags можно было использовать Record
+                    const obj: OptionsFlags = {
+                        hasKey: false,
+                        isAdmin: true,
+                    };
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Indexed Access Type - конец близок</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // T[K] говорит что вернёт obj[key] где obj: T, key: K
+                    type Person = { age: number; name: string; alive: boolean };
+                    const x: Person["age" | "name"] = ""
+                    x satisfies string | number;
+
+                    const MyArray = [
+                        { name: "Alice", age: 15 },
+                        { name: "Bob", age: 23 },
+                        { name: "Eve", age: 38 },
+                    ];
+                    const y: (typeof MyArray)[number] = MyArray[0];
+                    y satisfies { name: string, age: number }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Mapped Types - как <code>map</code>, но для пар <code>ключ: тип</code></p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // in работает с типом | будто это массив из типов
+                    type Record&lt;K extends keyof any, T&gt; = {
+                        [P in K]: T; // Создаёт поле для каждого ключа из K
+                    };
+                    const x: Record<"foo" | "bar" | "baz", number> =
+                        { foo: 0, bar: 0, baz: 0};
+                    x satisfies {
+                        foo: number,
+                        bar: number,
+                        baz: number
+                    }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Mapped Types - управление модификаторами</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    // Можно добавлять и убирать ? и readonly с помощью + и -
+                    type CreateMutable&lt;Type&gt; = {
+                        -readonly [Property in keyof Type]: string;
+                    };
+
+                    type LockedAccount = {
+                        readonly id: string;
+                        readonly name: string;
+                    };
+
+                    const x: CreateMutable&lt;LockedAccount&gt; = { id: "", name: "" };
+                    x satisfies { id: string, name: string }
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Наконец-то мы готовы</p>
+            <pre class="fragment">
+                <code data-trim data-line-numbers class="ts">
+                    type Partial&lt;T&gt; = {
+                        [P in keyof T]?: T[P]; // T[P] вычисляется для каждого P
+                    };
+                    type Required&lt;T&gt; = {
+                        [P in keyof T]-?: T[P]; // Поэтому это похоже на цикл
+                    };
+                </code>
+            </pre>
+        </section>
+        <section>
+            <p>Что осталось за рамками</p>
+            <ul class="fragment">
+                <li>Template Literal Types - сделать шаблон и применить к union-у строк</li>
+                <li>Переименовывание полей через as в Mapped Types</li>
+                <li><code>infer</code> - вывод типов</li>
+            </ul>
+        </section>
+        <section>
+            <p>TypeScript: что по поддержке?</p>
+            <p class="fragment">Рантаймы: Node.js, Bun, Deno умеют запускать .ts файлы напрямую</p>
+            <p class="fragment">НО! Никакого тайпчекинга. Типы просто игнорируются</p>
+        </section>
+        <section>
+            <p>Альтернативы TypeScript</p>
+            <p class="fragment"><a href="https://babeljs.io/docs/">Babel</a> - переписывание JS под старые стандарты,
+                поддерживает TS, но
+                без проверки типов</p>
+            <p class="fragment"><a href="https://kotlinlang.org/docs/js-overview.html">Kotlin/JS</a> и <a
+                    href="https://kotlinlang.org/docs/wasm-overview.html#learn-more">Kotlin/WASM</a> - совместимость с
+                JS/TS, Kotlin Multiplatform, абсолютно другой язык и экосистема, со всеми её плюсами(их много) и
+                минусами(они тоже есть)</p>
+        </section>
+        <section>
+            <p>А что если компилировать не в JS?</p>
+            <p class="fragment"><a href="https://github.com/ASDAlexander77/TypeScriptCompiler">Напрямую в LLVM</a>, <a
+                    href="https://github.com/TypeScriptToLua/TypeScriptToLua">Lua</a>, <br/><a
+                    href="https://github.com/roblox-ts/roblox-ts">Luau - для ценителей Roblox</a>, <a
+                    href="https://github.com/andrei-markeev/ts2c">C</a>, <a
+                    href="https://github.com/ASDAlexander77/TypeScript2Cxx">C++</a>, <a
+                    href="https://github.com/johnfn/ts2gd">GDScript</a></p>
+            <p class="fragment">Особенно интересные: <a href="https://hydro-sdk.io/">Flutter</a>, <a
+                    href="https://github.com/microsoft/typescript-go">tsgo</a>, <a
+                    href="https://kotlinlang.org/docs/js-project-setup.html#generation-of-typescript-declaration-files-d-ts">Kotlin/JS
+                генерирует .d.ts файлы</a></p>
+            <p>Интересно попробовать, но ничего супер популярного</p>
+        </section>
+        <section>
+            <p>Что можно добавить</p>
+            <ul>
+                <li>Декораторы</li>
+                <li>Template literal types</li>
+                <li><code>infer</code> и то как на нём можно писать compile time парсеры. Надо дать на это дз. Больше
+                    парсеров богу парсеров
+                </li>
+                <li>Критика TypeScript</li>
+            </ul>
+        </section>
+        <section>
+            <p>Всем спасибо за внимание 🤍</p>
+            <p>И спасибо <span class="firstRedChar">Дмитрий Поздняков</span> за помощь со слайдами</p>
+        </section>
+        <section>
+            <p>Ваши вопросы 🧐</p>
+        </section>
+    </div>
+</div>
+
+<script src="/utils/dist/reveal.js"></script>
+<script src="/utils/plugin/plugin/zoom/zoom.js"></script>
+<script src="/utils/plugin/plugin/notes/notes.js"></script>
+<script src="/utils/plugin/plugin/search/search.js"></script>
+<script src="/utils/plugin/plugin/markdown/markdown.js"></script>
+<script src="/utils/plugin/plugin/highlight/highlight.js"></script>
+<script>
+    // Also available as an ES module, see:
+    // https://revealjs.com/initialization/
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+        slideNumber: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+    });
+
+</script>
+</body>
+</html>

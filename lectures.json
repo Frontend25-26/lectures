@@ -101,6 +101,12 @@
               "order": 6,
               "homework_text": "Домашнего задания не будет",
               "homeworkDate": "-"
+            },
+            {
+              "title": "TypeScript",
+              "link": "/1-sem/js/7-typescript/index.html",
+              "openDate": "2025-11-15T09:30:00",
+              "order": 7
             }
           ]
         }
