@@ -86,6 +86,8 @@
                 coursesContainer.className = 'lecture-grid';
 
                 semester.courses.forEach(course => {
+                    if (new Date(course.openDate) > now && !isVisibleAll) return;
+
                     const courseColumn = document.createElement('div');
                     courseColumn.className = 'lecture-column';
 

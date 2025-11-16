@@ -87,6 +87,10 @@ h2 {
     gap: 2rem;
 }
 
+.lecture-column:last-child:nth-child(odd) {
+    grid-column: span 2;
+}
+
 .lecture-column {
     background: var(--card-bg);
     border-radius: 8px;
@@ -273,6 +277,10 @@ h2 {
 
     .table-header, .table-row {
         grid-template-columns: 40px minmax(0, 2fr) minmax(0, 1fr);
+    }
+
+    .lecture-column:last-child:nth-child(odd) {
+        grid-column: auto;
     }
 }
 

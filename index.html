@@ -66,6 +66,8 @@
         const isVisibleAll = urlParams.get('view_all') === 'true';
 
         semester.courses.forEach(course => {
+            if (!course.openDate || new Date(course.openDate) > now) return;
+
             const column = document.createElement('div');
             column.className = 'lecture-column';
 
