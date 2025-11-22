@@ -14,13 +14,17 @@
 
     <link rel="stylesheet" href="/utils/css/reveal.css">
     <link rel="stylesheet" href="/utils/lib/css/animate.css">
-    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
 
+    <link rel="stylesheet" href="/utils/dist/reset.css" />
+    <link rel="stylesheet" href="/utils/dist/reveal.css" />
+    <link rel="stylesheet" href="/utils/dist/theme/sky.css" id="theme" />
+    <link rel="stylesheet" href="/utils/assets/lesson3.html/styles/index.css" />
+    <link rel="stylesheet" href="custom.css" />
+
     <!-- Printing and PDF exports -->
-    <link rel="stylesheet" href="../2-css/css-custom/custom.css">
     <script>
         <!--
         Yandex.Metrika
@@ -60,12 +64,3773 @@
 </head>
 <body>
 <div class="reveal">
-
     <div class="slides">
+        <section
+                data-auto-animate
+                data-auto-animate-unmatched="fade"
+                style="color: initial"
+        >
+            <h2>
+                Layout <br />
+                Раскладки и сетки
+            </h2>
+            <p><span style="color: red">М</span>ихайлова Юлиана</p>
+        </section>
+
         <section>
-            <p style="text-align: center;">Тут должна была быть презентация лекции, но лектор еще не успел ее
-                опубликовать...</p>
-            <p style="text-align: center;">По всем вопросам вы можете обращаться в чат курса.</p>
+            <h2>План</h2>
+            <ul style="list-style-type: circle">
+                <li class="fragment" style="margin-bottom: 10px">
+                    Что такое раскладки и сетки?
+                </li>
+                <li class="fragment" style="margin-bottom: 10px">
+                    Устаревшие способы раскладки
+                </li>
+                <li class="fragment" style="margin-bottom: 10px">flexbox</li>
+                <li class="fragment" style="margin-bottom: 10px">grid</li>
+                <li class="fragment" style="margin-bottom: 10px">
+                    Как выбрать, какой способ использовать?
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Layout</h2>
+            Раскладка - взаимное расположение основных элементов страницы
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/layout1.png"
+                        style="height: 450px; width: auto; max-width: 100% !important"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://mavink.com/explore/Business-Website-Layout"
+                    >https://mavink.com/explore/Business-Website-Layout</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h2>Grid</h2>
+            Сетка - система непечатаемых линий, разделяющих макет
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/grid1.jpeg"
+                        style="height: 650px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://ru.pinterest.com/pin/360428776414239364/"
+                    >https://ru.pinterest.com/pin/360428776414239364/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>Без сетки</p>
+            <img
+                    class="fragment"
+                    src="/utils/assets/lesson3.html/whtout_grid_1.png"
+                    style="width: 600px"
+            />
+            <figure class="yu-img-wrapper fragment">
+                <img
+                        src="/utils/assets/lesson3.html/without_grid_2.png"
+                        style="width: 600px; margin: 0"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd"
+                    >https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Для организации макетов в дизайне используются сетки</h3>
+
+            <p class="fragment" style="margin: 30px 0">
+                Формирует один стиль, задает правила размещения и выравнивания
+                элементов
+            </p>
+
+            <p class="fragment">Создается визуальный порядок на странице</p>
+
+            <p class="fragment" style="margin: 30px 0">
+                Упрощает работу с макетом, позволяет переиспользовать элементы
+            </p>
+        </section>
+
+        <section>
+            <img src="/utils/assets/lesson3.html/grid.gif" style="height: 500px" />
+        </section>
+
+        <section>
+            <h3>12-колоночная сетка</h3>
+            <p>Колонки — это основные составляющие каждой сетки</p>
+        </section>
+
+        <section>
+            <!--          Почему 12-колоночная сетка считается самой удобной? Потому что она-->
+            <!--          хорошо делится на три, четыре и шесть столбцов, что достаточно гибко и-->
+            <!--          подходит для разных типов контента.-->
+
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/12_columns.jpeg"
+                        style="height: 550px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://blog.skedraw.ru/articles/setki-v-veb-dizajne"
+                    >https://blog.skedraw.ru/articles/setki-v-veb-dizajne</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>6-колоночная сетка</p>
+
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/6_columns.jpeg"
+                        style="height: 550px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://megascripts.ru/kak-ponyat-kakaya-setka-ispolzuetsya-na-sayte"
+                    >https://megascripts.ru/kak-ponyat-kakaya-setka-ispolzuetsya-na-sayte</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>4-колоночная сетка</p>
+
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/4_columns.jpeg"
+                        style="height: 550px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://megascripts.ru/kak-ponyat-kakaya-setka-ispolzuetsya-na-sayte"
+                    >https://megascripts.ru/kak-ponyat-kakaya-setka-ispolzuetsya-na-sayte</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>3-колоночная сетка</p>
+
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/3_columns.jpeg"
+                        style="height: 550px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://megascripts.ru/kak-ponyat-kakaya-setka-ispolzuetsya-na-sayte"
+                    >https://megascripts.ru/kak-ponyat-kakaya-setka-ispolzuetsya-na-sayte</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>Комбинация сеток</p>
+
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/combination_columns.jpeg"
+                        style="height: 550px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://blog.skedraw.ru/articles/setki-v-veb-dizajne"
+                    >https://blog.skedraw.ru/articles/setki-v-veb-dizajne</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>Адаптив</p>
+
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/adaptive.png"
+                        style="height: 550px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://ru.pinterest.com/pin/572731277585770381/"
+                    >https://ru.pinterest.com/pin/572731277585770381/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Пользователи любят сетки</h3>
+
+            <p class="fragment" style="margin: 30px 0">Легко сосредоточиться</p>
+
+            <p class="fragment">Легко читать и искать информацию</p>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <figcaption class="yu-img-caption">
+                    <a target="_blank" href="https://ru.pinterest.com"
+                    >https://ru.pinterest.com</a
+                    >
+                </figcaption>
+                <img
+                        src="/utils/assets/lesson3.html/without_grid.png"
+                        style="height: 800px"
+                />
+            </figure>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <figcaption class="yu-img-caption">
+                    <a target="_blank" href="https://ru.pinterest.com"
+                    >https://ru.pinterest.com</a
+                    >
+                </figcaption>
+                <img
+                        src="/utils/assets/lesson3.html/with_gris.jpeg"
+                        style="height: 700px"
+                />
+            </figure>
+        </section>
+
+        <section>
+            <h3>Расположение элементов на странице и психология</h3>
+
+            <p style="margin: 30px 0; font-size: 30px">
+                Четыре важных принципа гештальга. <br />Гештальг с немецкого
+                означает "образ". Теория группирования и выравнивания была
+                разработана в начале ХХ века гештальт - психологами. Они описали
+                несколько особенностей визуального человеческого восприятия.
+            </p>
+        </section>
+
+        <section>
+            <h3>Близость</h3>
+
+            <p style="font-size: 28px">
+                Располагая элементы рядом один с другим, пользователи ассоциируют их
+                друг с другом. На этом основывается группировка контента и элементов
+                управления в пользовательском интерфейсе. Сгруппированные предметы
+                связаны, разрозненные — нет.
+            </p>
+
+            <figure class="fragment yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/g_1.png"
+                        style="height: 300px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd"
+                    >https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Подобие</h3>
+
+            <p style="font-size: 28px">
+                Предметы, похожие по форме, размеру или цвету, воспринимаются как
+                связанные друг с другом.
+            </p>
+
+            <figure class="fragment yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/g_2.png"
+                        style="height: 300px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd"
+                    >https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Непрерывность</h3>
+
+            <p style="font-size: 28px">
+                Наши глаза естественно следуют за прямыми и кривыми линиями,
+                образованными расположением других элементов.
+            </p>
+
+            <figure class="fragment yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/g_3.png"
+                        style="height: 300px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd"
+                    >https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Смыкание</h3>
+
+            <p style="font-size: 28px">
+                Мозг естественным образом «смыкает» линии, создавая простые
+                замкнутые формы, такие как прямоугольники и окружности, даже если
+                они формально не нарисованы.
+            </p>
+
+            <figure class="fragment yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/g_4.png"
+                        style="height: 300px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd"
+                    >https://www.piter.com/collection/bestsellery-oreilly/product/razrabotka-interfeysov-patterny-proektirovaniya-3-e-izd</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Модульная сетка</h3>
+
+            <div style="font-size: 28px" class="fragment">
+                Это система организации объектов в макете, основанная на колонках,
+                рядах и отступах между ними. Чаще используется в графическом дизайне
+                и полиграфии, то есть там, где пространство ограничено форматом
+                листа
+            </div>
+
+            <figure class="fragment yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/module_grid.png"
+                        style="height: 450px; rotate: 90deg; margin: 0"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://media.contented.ru/opyt/instrukcii/modulnye-setki/"
+                    >https://media.contented.ru/opyt/instrukcii/modulnye-setki/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/module_grid1.webp"
+                        style="height: 600px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://usercpu.ru/modulnye-setki-v-veb-dizaine-chto-takoe-modulnaya-setka-i-dlya-chego-ona/"
+                    >https://usercpu.ru/modulnye-setki-v-veb-dizaine-chto-takoe-modulnaya-setka-i-dlya-chego-ona/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/module_1.jpg" />
+                <figcaption class="yu-img-caption">
+                    <a target="_blank" href="https://ru.pinterest.com"
+                    >https://ru.pinterest.com</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/module_2.jpeg" />
+                <figcaption class="yu-img-caption">
+                    <a target="_blank" href="https://ru.pinterest.com"
+                    >https://ru.pinterest.com</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>А как верстать сетки?</p>
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/mem1.jpeg"
+                        style="height: 500px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://krasivosti.pro/koshki/99017-koshka-za-kompom.html"
+                    >https://krasivosti.pro/koshki/99017-koshka-za-kompom.html</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>Рассмотрим способы задания сетки в html и css</p>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/mem2.jpeg"
+                        style="height: 600px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://krasivoe-foto.ru/photo/где-картинки-динозавров/"
+                    >https://krasivoe-foto.ru/photo/где-картинки-динозавров/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Таблицы</h3>
+            <pre class="yu-pre">
+            <code class="yu-code xml">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td style="width: 33.3%">1</td>
+                      <td style="width: 33.3%">2</td>
+                      <td style="width: 33.3%">3</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </code>
+          </pre>
+        </section>
+
+        <section>
+            <div class="yu-wrapper">
+                <table class="yu-dashed-border" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="yu-dashed-border" style="width: 33%">1</td>
+                        <td class="yu-dashed-border" style="width: 33%">2</td>
+                        <td class="yu-dashed-border" style="width: 33%">3</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <div class="yu-wrapper">
+                <table class="yu-dashed-border" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="yu-dashed-border" style="width: 33%">1</td>
+                        <td class="yu-dashed-border" style="width: 33%">
+                            2
+                            <img
+                                    src="/utils/assets/lesson3.html/ex-table.png"
+                                    style="height: 300px"
+                            />
+                        </td>
+                        <td class="yu-dashed-border" style="width: 33%">3</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <div class="yu-wrapper">
+                <table class="yu-dashed-border" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="yu-dashed-border" style="width: 33%">1</td>
+                        <td class="yu-dashed-border" style="width: 33%">
+                            2
+                            <img
+                                    src="/utils/assets/lesson3.html/ex-table.png"
+                                    style="
+                        height: auto;
+                        width: 500px;
+                        max-width: none !important;
+                      "
+                            />
+                        </td>
+                        <td class="yu-dashed-border" style="width: 33%">3</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+          <pre class="yu-pre" style="width: 1200px">
+            <code class="yu-code xml" style="max-height: none">
+              <div>
+                <table style="width: 100%">
+                  <tbody>
+                    <tr>
+                      <td style="width: 33%;">
+                        1 <img src="cat.png" />
+                      </td>
+                      <td style="width: 33%">2</td>
+                      <td style="width: 33%">3</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 33%">1</td>
+                      <td style="width: 33%">2</td>
+                      <td style="width: 33%">
+                        3
+                        <img src="cat.png" /> </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </code>
+          </pre>
+        </section>
+
+        <section>
+            <div class="yu-wrapper">
+                <table class="yu-dashed-border" style="width: 100%">
+                    <tbody>
+                    <tr style="margin-bottom: 2px">
+                        <td class="yu-dashed-border" style="width: 33%">
+                            1
+                            <img
+                                    src="/utils/assets/lesson3.html/ex-table.png"
+                                    style="height: 200px"
+                            />
+                        </td>
+                        <td class="yu-dashed-border" style="width: 33%">2</td>
+                        <td class="yu-dashed-border" style="width: 33%">3</td>
+                    </tr>
+                    <tr>
+                        <td class="yu-dashed-border" style="width: 33%">4</td>
+                        <td class="yu-dashed-border" style="width: 33%">5</td>
+                        <td class="yu-dashed-border" style="width: 33%">
+                            6
+                            <img
+                                    src="/utils/assets/lesson3.html/ex-table.png"
+                                    style="height: 200px"
+                            />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/teable_ex.jpg" />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="http://web-verstka.ru/uchebnyie-kursyi/uroki-html-i-css/urok-6.-tablichnyij-maket-sajta.html"
+                    >http://web-verstka.ru/uchebnyie-kursyi/uroki-html-i-css/urok-6.-tablichnyij-maket-sajta.html</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Таблицы</h3>
+
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/caniuse_table.png" />
+                <figcaption>
+                    <a target="_blank" href="https://caniuse.com/?search=table"
+                    >https://caniuse.com/?search=table</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Таблицы</h3>
+
+            <p style="font-size: 28px; color: #828282">Итого</p>
+
+            <ul style="list-style: none">
+                <li class="yu-good" style="margin-bottom: 10px">
+                    + колонки выровнены по высоте
+                </li>
+                <li class="yu-good" style="margin-bottom: 10px">
+                    + растягивается при переполнении
+                </li>
+                <li class="yu-bad" style="margin-bottom: 10px">- не семантично</li>
+                <li class="yu-bad" style="margin-bottom: 10px">
+                    - лишняя разметка
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Флоаты</h3>
+
+            <p style="font-size: 28px">
+                <code>float</code> — это свойство, которое позволяет определить по
+                какой стороне будет выравниваться элемент. При этом остальные
+                элементы будут обтекать объект со свойством Float с других его
+                сторон. Используя float можно две стороны выравнивания — с правой
+                стороны (right), либо с левой (left).
+            </p>
+        </section>
+
+        <section>
+            <div>
+                <img
+                        src="/utils/assets/lesson3.html/ex-table.png"
+                        style="height: 100px; margin: 20px"
+                />
+                <p style="text-align: start; font-size: 24px; margin-bottom: 5px">
+                    <code>float</code> — это свойство, которое позволяет определить по
+                    какой стороне будет выравниваться элемент. При этом остальные
+                    элементы будут обтекать объект со свойством Float с других его
+                    сторон. Используя float можно две стороны выравнивания — с правой
+                    стороны (right), либо с левой (left).
+                </p>
+
+                <pre class="yu-pre">
+                <code class="yu-code" style="padding: 0">
+<div>
+  <img src="cat.png"/>
+  <p>
+    <code>float</code> — это свойство, которое позволяет определить по
+    какой стороне будет выравниваться элемент. При этом остальные
+    элементы будут обтекать объект со свойством Float с других его
+    сторон. Используя float можно две стороны выравнивания — с правой
+    стороны (right), либо с левой (left).
+  </p>
+</div>
+                </code>
+              </pre>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <img
+                        src="/utils/assets/lesson3.html/ex-table.png"
+                        style="height: 100px; margin: 20px; float: left"
+                />
+                <p style="text-align: start; font-size: 28px; margin-top: 0">
+                    <code>float</code> — это свойство, которое позволяет определить по
+                    какой стороне будет выравниваться элемент. При этом остальные
+                    элементы будут обтекать объект со свойством Float с других его
+                    сторон. Используя float можно две стороны выравнивания — с правой
+                    стороны (right), либо с левой (left).
+                </p>
+            </div>
+
+            <pre class="yu-pre">
+                <code class="yu-code" style="padding: 0">
+<div>
+  <img src="cat.png" style="float: left" />
+  <p>
+    <code>float</code> — это свойство, которое позволяет определить по
+    какой стороне будет выравниваться элемент. При этом остальные
+    элементы будут обтекать объект со свойством Float с других его
+    сторон. Используя float можно две стороны выравнивания — с правой
+    стороны (right), либо с левой (left).
+  </p>
+</div>
+                </code>
+              </pre>
+        </section>
+
+        <section>
+            <div>
+                <img
+                        src="/utils/assets/lesson3.html/ex-table.png"
+                        style="height: 100px; margin: 20px; float: right"
+                />
+                <p style="text-align: start; font-size: 28px; margin-top: 0">
+                    <code>float</code> — это свойство, которое позволяет определить по
+                    какой стороне будет выравниваться элемент. При этом остальные
+                    элементы будут обтекать объект со свойством Float с других его
+                    сторон. Используя float можно две стороны выравнивания — с правой
+                    стороны (right), либо с левой (left).
+                </p>
+            </div>
+
+            <pre class="yu-pre">
+                <code class="yu-code" style="padding: 0">
+<div>
+  <img src="cat.png" style="float: right" />
+  <p>
+    <code>float</code> — это свойство, которое позволяет определить по
+    какой стороне будет выравниваться элемент. При этом остальные
+    элементы будут обтекать объект со свойством Float с других его
+    сторон. Используя float можно две стороны выравнивания — с правой
+    стороны (right), либо с левой (left).
+  </p>
+</div>
+                </code>
+              </pre>
+        </section>
+
+        <section>
+            <div>
+                <img
+                        src="/utils/assets/lesson3.html/ex-table.png"
+                        style="height: 100px; margin: 20px; float: none"
+                />
+                <p style="text-align: start; font-size: 28px; margin-top: 0">
+                    <code>float</code> — это свойство, которое позволяет определить по
+                    какой стороне будет выравниваться элемент. При этом остальные
+                    элементы будут обтекать объект со свойством Float с других его
+                    сторон. Используя float можно две стороны выравнивания — с правой
+                    стороны (right), либо с левой (left).
+                </p>
+            </div>
+
+            <pre class="yu-pre">
+                <code class="yu-code" style="padding: 0">
+<div>
+  <img src="cat.png" style="float: none" />
+  <p>
+    <code>float</code> — это свойство, которое позволяет определить по
+    какой стороне будет выравниваться элемент. При этом остальные
+    элементы будут обтекать объект со свойством Float с других его
+    сторон. Используя float можно две стороны выравнивания — с правой
+    стороны (right), либо с левой (left).
+  </p>
+</div>
+                </code>
+              </pre>
+        </section>
+
+        <section>
+            <h3>Флоаты</h3>
+
+            <pre class="yu-pre">
+            <code class="yu-code">
+              <div>
+                <div style="width: 33%">1</div>
+                <div style="width: 33%">2</div>
+                <div style="width: 33%">3</div>
+              </div>
+            </code>
+          </pre>
+        </section>
+
+        <section>
+            <div class="yu-wrapper">
+                <div class="yu-solid-border" style="width: 33%">1</div>
+                <div class="yu-solid-border" style="width: 33%">2</div>
+                <div class="yu-solid-border" style="width: 33%">3</div>
+            </div>
+        </section>
+
+        <section>
+          <pre class="yu-pre">
+            <code class="yu-code">
+              <div>
+                <div style="float: left; width: 33%">1</div>
+                <div style="float: left; width: 33%">2</div>
+                <div style="float: left; width: 33%">3</div>
+              </div>
+            </code>
+          </pre>
+        </section>
+
+        <section>
+            <div class="yu-wrapper">
+                <div class="yu-solid-border" style="float: left; width: 33%">1</div>
+                <div class="yu-solid-border" style="float: left; width: 33%">2</div>
+                <div class="yu-solid-border" style="float: left; width: 33%">3</div>
+            </div>
+
+            <p class="fragment yu-paragraph" style="margin-top: 64px">
+                При расположении элементов со свойством float внутри контейнера его
+                размеры схлопываются до 0. Это происходит потому, что элементы со
+                float свойством удаляются из потока документов, поэтому размеры
+                родительского элемента остаются неизвестными (поскольку в нем ничего
+                не содержится).
+            </p>
+
+            <p class="fragment yu-paragraph" style="font-size: 32px">
+                поможет <code>overflow: auto</code> или <br />
+                <code>clear: both</code> на <code>:after</code> родительского блока
+                <br />
+                (<code>clear: both</code> запрещает обтекание элемента с двух
+                сторон)
+            </p>
+        </section>
+
+        <section>
+            <div class="yu-wrapper" style="overflow: auto">
+                <div class="yu-solid-border" style="float: left; width: 33%">1</div>
+                <div class="yu-solid-border" style="float: left; width: 33%">2</div>
+                <div class="yu-solid-border" style="float: left; width: 33%">3</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="yu-wrapper" style="overflow: auto">
+                <div class="yu-solid-border" style="float: left; width: 33%">1</div>
+                <div class="yu-solid-border" style="float: left; width: 33%">
+                    2
+                    <img
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                            style="height: 400px; max-width: none"
+                    />
+                </div>
+                <div class="yu-solid-border" style="float: left; width: 33%">3</div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Флоаты</h3>
+
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/caniuse_float.png" />
+                <figcaption>
+                    <a target="_blank" href="https://caniuse.com/?search=float"
+                    >https://caniuse.com/?search=float/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h3>Флоаты</h3>
+
+            <p style="font-size: 28px; color: #828282">Итого</p>
+
+            <ul style="list-style: none">
+                <li class="yu-good" style="margin-bottom: 10px">
+                    + разметка может быть семантичной
+                </li>
+                <li class="yu-good" style="margin-bottom: 10px">
+                    + можно задать размеры
+                </li>
+                <li class="yu-bad" style="margin-bottom: 10px">
+                    - колонки не подстраиваются по высоте
+                </li>
+                <li class="yu-bad" style="margin-bottom: 10px">
+                    - переполнение не работает
+                </li>
+                <li class="yu-bad" style="margin-bottom: 10px">
+                    - неочевидная работа родительского контейнера
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <img src="/utils/assets/lesson3.html/mem6.png" height="600px" />
+        </section>
+
+        <section>Современные способы раскладки flexbox и grid</section>
+
+        <section>
+            <h3>Flexbox</h3>
+
+            <div style="display: flex; gap: 20px; justify-content: center">
+                <div
+                        style="display: flex; gap: 10px; height: fit-content"
+                        class="yu-wrapper"
+                >
+                    <div style="height: fit-content" class="yu-solid-border-padding">
+                        <img
+                                class="yu-flex-img"
+                                src="/utils/assets/lesson3.html/cat1.png"
+                        />
+                    </div>
+                    <div style="height: fit-content" class="yu-solid-border-padding">
+                        <img
+                                class="yu-flex-img"
+                                src="/utils/assets/lesson3.html/cat2.jpeg"
+                        />
+                    </div>
+                    <div style="height: fit-content" class="yu-solid-border-padding">
+                        <img
+                                class="yu-flex-img"
+                                src="/utils/assets/lesson3.html/cat3.png"
+                        />
+                    </div>
+                </div>
+
+                <div
+                        style="display: flex; gap: 10px; flex-direction: column"
+                        class="yu-wrapper"
+                >
+                    <div class="yu-solid-border-padding">
+                        <img
+                                class="yu-flex-img"
+                                src="/utils/assets/lesson3.html/cat4.png"
+                        />
+                    </div>
+                    <div class="yu-solid-border-padding">
+                        <img
+                                class="yu-flex-img"
+                                src="/utils/assets/lesson3.html/cat5.jpeg"
+                        />
+                    </div>
+                    <div class="yu-solid-border-padding">
+                        <img
+                                class="yu-flex-img"
+                                src="/utils/assets/lesson3.html/cat6.jpeg"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Flex значит «гибкий»
+
+            <p class="fragment">
+                Flex - это вид контейнера, который расширяет элементы, чтобы
+                заполнить доступное свободное пространство, или сжимает их, чтобы
+                предотвратить переполнение.
+            </p>
+
+            <p class="fragment">
+                Чтобы сделать контейнер flex-контейнером нужно задать css-свойства
+                <code>display: flex;</code>
+            </p>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img
+                        src="/utils/assets/lesson3.html/flex-properties.webp"
+                        style="height: 600px"
+                />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://stylishbag.ru/5-kartinki/css-svojstva-kartinok.html"
+                    >https://stylishbag.ru/5-kartinki/css-svojstva-kartinok.html</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/flex-m.png" />
+                <figcaption class="yu-img-caption">
+                    <a
+                            target="_blank"
+                            href="https://itchief.ru/html-and-css/flexbox?__cf_chl_managed_tk__=pmd_a4f59f02cd9b629580e40aad7d9f8900a9a4d6ad-1628799700-0-gqNtZGzNAs2jcnBszQiO"
+                    >https://itchief.ru/html-and-css/flexbox?__cf_chl_managed_tk__=pmd_a4f59f02cd9b629580e40aad7d9f8900a9a4d6ad-1628799700-0-gqNtZGzNAs2jcnBszQiO</a
+                    >
+                </figcaption>
+            </figure>
+
+            <p class="fragment">
+                свойство <code>flex-direction</code> меняет направление главной оси
+            </p>
+        </section>
+
+        <!--                <section>-->
+        <!--                  <div-->
+        <!--                    style="-->
+        <!--                      display: flex;-->
+        <!--                      gap: 10px;-->
+        <!--                      height: 650px;-->
+        <!--                      flex-direction: column;-->
+        <!--                    "-->
+        <!--                    class="yu-wrapper"-->
+        <!--                  >-->
+        <!--                    <div-->
+        <!--                      style="height: fit-content; width: 200px"-->
+        <!--                      class="yu-solid-border-padding"-->
+        <!--                    >-->
+        <!--                      <img-->
+        <!--                        class="yu-flex-img"-->
+        <!--                        src="/utils/assets/lesson3.html/cat1.png"-->
+        <!--                      />-->
+        <!--                    </div>-->
+        <!--                    <div-->
+        <!--                      style="height: fit-content; width: 200px"-->
+        <!--                      class="yu-solid-border-padding"-->
+        <!--                    >-->
+        <!--                      <img-->
+        <!--                        class="yu-flex-img"-->
+        <!--                        src="/utils/assets/lesson3.html/cat2.jpeg"-->
+        <!--                      />-->
+        <!--                    </div>-->
+        <!--                    <div-->
+        <!--                      style="height: fit-content; width: 200px"-->
+        <!--                      class="yu-solid-border-padding"-->
+        <!--                    >-->
+        <!--                      <img-->
+        <!--                        class="yu-flex-img"-->
+        <!--                        src="/utils/assets/lesson3.html/cat3.png"-->
+        <!--                      />-->
+        <!--                    </div>-->
+        <!--                  </div>-->
+        <!--                </section>-->
+
+        <section>
+            <code>flex-direction: row;</code> (по умолчанию)
+            <img src="/utils/assets/lesson3.html/row.png" />
+        </section>
+
+        <section>
+            <code>flex-direction: row-reverse;</code>
+            <img src="/utils/assets/lesson3.html/row-rev.png" />
+        </section>
+
+        <section>
+            <code>flex-direction: column;</code>
+            <img style="height: 600px" src="/utils/assets/lesson3.html/col.png" />
+        </section>
+
+        <section>
+            <code>flex-direction: column-reverse;</code>
+            <img
+                    style="height: 600px"
+                    src="/utils/assets/lesson3.html/col-rev.png"
+            />
+        </section>
+
+        <section>
+            Свойство <code>justify-content</code> управляет выравниванием
+            флекс-элементов вдоль главной оси
+        </section>
+
+        <section>
+            <code>justify-content: flex-start;</code> (по умолчанию)
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 200px;
+              align-items: center;
+              justify-content: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: flex-end;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 200px;
+              align-items: center;
+              justify-content: flex-end;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: center;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 200px;
+              align-items: center;
+              justify-content: center;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: space-around;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 200px;
+              align-items: center;
+              justify-content: space-around;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: space-between;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 200px;
+              align-items: center;
+              justify-content: space-between;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 200px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: flex-start;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 550px;
+              flex-direction: column;
+              width: 150px;
+              align-items: center;
+              justify-content: flex-start;
+              margin: 20px auto;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: flex-end;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 550px;
+              flex-direction: column;
+              width: 150px;
+              align-items: center;
+              justify-content: flex-end;
+              margin: 20px auto;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: center;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 550px;
+              flex-direction: column;
+              width: 150px;
+              align-items: center;
+              justify-content: center;
+              margin: 20px auto;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: space-around;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 550px;
+              flex-direction: column;
+              width: 150px;
+              align-items: center;
+              justify-content: space-around;
+              margin: 20px auto;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>justify-content: space-between;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 550px;
+              flex-direction: column;
+              width: 150px;
+              align-items: center;
+              justify-content: space-between;
+              margin: 20px auto;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                            style="height: 100px !important"
+                    />
+                </div>
+                <div
+                        style="height: fit-content; width: 150px"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                            style="height: 100px !important"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Поиграться с <code> justify-content </code>
+            <a
+                    target="_blank"
+                    href="https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#examples"
+            >https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content#examples</a
+            >
+        </section>
+
+        <section>
+            <img src="/utils/assets/lesson3.html/row.png" />
+        </section>
+
+        <section>
+            Свойство <code>align-items</code> управляет выравниванием
+            флекс-элементов вдоль поперечной оси
+        </section>
+
+        <section>
+            <code>align-items: stretch;</code> (по умолчанию)
+
+            <div
+                    style="display: flex; gap: 10px; height: 500px"
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>align-items: flex-start;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>align-items: flex-end;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-end;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>align-items: center;</code>
+
+            <div
+                    style="display: flex; gap: 10px; height: 500px; align-items: center"
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code>align-self</code> позволяет переопределить у элемента внутри
+            flex-контейнера выравнивание по поперечной оси
+        </section>
+
+        <section>
+            <code style="color: indianred">align-self: center;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="
+                width: 200px;
+                align-self: center;
+                background-color: indianred;
+              "
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code style="color: indianred">align-self: flex-end;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="
+                width: 200px;
+                align-self: flex-end;
+                background-color: indianred;
+              "
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <code style="color: indianred">align-self: stretch;</code>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="
+                width: 200px;
+                align-self: stretch;
+                background-color: indianred;
+              "
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            Поиграться с <code> align-items </code>
+            <a
+                    target="_blank"
+                    href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#result"
+            >https://developer.mozilla.org/en-US/docs/Web/CSS/align-items#result</a
+            >
+        </section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+
+            <p class="fragment" style="font-size: 24px">
+                Во flex-контейнере при переполнении элементы заполняются в том же
+                ряду, но могут выходить за границы. За перенос во flex-контейнере
+                отвечает свойство <code>flex-wrap</code>, и по умолчанию перенос
+                запрещен: <code>flex-wrap: no-wrap</code>
+            </p>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>flex-wrap: wrap;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>flex-wrap: wrap-reverse;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap-reverse;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                При переполнении элементов во flex-контейнере образуются строки. Для
+                управления расстоянием между строк есть свойство
+                <code>align-content</code>. Оно распределяет свободное пространство
+                по поперечной оси между строками флекс-элементов.
+            </p>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>align-content: flex-start;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+              align-content: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>align-content: center;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+              align-content: center;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>align-content: flex-end;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+              align-content: flex-end;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>align-content: space-between;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+              align-content: space-between;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>align-content: space-around;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+              align-content: space-around;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p>Порядок элементов в flex-контейнере.</p>
+            <p class="fragment">
+                При помощи свойства <code>order</code> можно менять порядок
+                отображения флекс-элементов внутри флекс-контейнера.
+            </p>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">order: 0</code> (по умолчанию)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="width: 200px; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">order: 1</code> (следующий по
+                порядку)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="width: 200px; background-color: indianred; order: 1"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred"> { order: 1 } </code>
+                <code style="color: darkgreen"> { order: 2 } </code> (чем больше
+                значение, тем дальше элемент)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="width: 200px; background-color: indianred; order: 1"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; background-color: darkgreen; order: 2"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">order: -1</code> (перед элементами с
+                order по умолчанию)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: 500px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat1.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat2.jpeg"
+                    />
+                </div>
+                <div
+                        style="width: 200px; background-color: indianred; order: -1"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat3.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat4.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat5.jpeg"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/cat6.jpeg"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 28px; margin-bottom: 40px">
+                <code>flex: [flex-grow] [flex-shrink] [flex-basis];</code><br />
+                свойство элемента во flex-контейнере
+            </p>
+
+            <div class="fragment" style="display: flex; gap: 20px">
+                <div
+                        class="yu-border-radius"
+                        style="
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: space-between;
+                background-color: white;
+                font-size: 24px;
+                height: 300px;
+                width: 300px;
+                padding: 10px;
+              "
+                >
+                    <p style="font-size: 32px">flex-grow</p>
+                    <p>Может ли флекс-элемент занимать свободное пространство</p>
+                </div>
+                <div
+                        class="fragment yu-border-radius"
+                        style="
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: space-between;
+                background-color: white;
+                font-size: 24px;
+                height: 300px;
+                width: 300px;
+                padding: 10px;
+              "
+                >
+                    <p style="font-size: 32px">flex-shrink</p>
+                    <p>Как будет сжиматься флекс-элемент если места мало</p>
+                </div>
+                <div
+                        class="fragment yu-border-radius"
+                        style="
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: space-between;
+                background-color: white;
+                font-size: 24px;
+                height: 300px;
+                width: 300px;
+                padding: 10px;
+              "
+                >
+                    <p style="font-size: 32px">flex-basis</p>
+                    <p>Базовый размер флекс-элемента</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code>flex-grow: 0</code> (по умолчанию)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex-grow: 0"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex-grow: 1</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex-grow: 1; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex-grow: 0"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">{flex-grow: 1}</code>
+                <code style="color: darkgreen">{flex-grow: 2}</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex-grow: 1; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex-grow: 2; background-color: darkgreen"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex-shrink</code> (по умолчанию 1)
+                <br />
+                Чем больше значение у этого свойства, тем быстрее элемент будет
+                сжиматься по сравнению с соседями, имеющими меньшее значение.
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex-grow: 0; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex-shrink: 10</code> (элементы
+                сжимаются сильнее остальныx)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; background-color: indianred; flex-shrink: 10"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img-reset"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="
+                width: 200px;
+                flex-grow: 0;
+                background-color: indianred;
+                flex-shrink: 10;
+              "
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img-reset"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img-reset"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img-reset"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img-reset"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex-basis</code> (по умолчанию
+                берется из ширины или высоты)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex-grow: 0; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex-basis: 50%</code> (занимает 50%
+                ширины и 50% высоты)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex-basis: 50%; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="
+                width: 200px;
+                flex-grow: 0;
+                flex-basis: 50%;
+                background-color: indianred;
+              "
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section style="font-size: 36px">
+            Свойство <code>flex</code> позволяет управлять размерами
+            flex-элемента. Шорткат, с помощью которого можно указать значение трёх
+            свойств одновременно: <br />
+            <code>flex: [flex-grow] [flex-shrink] [flex-basis]</code>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex: initial;</code> <br />
+                <code style="color: grey">flex: 0 1 auto;</code> (по умолчанию)
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex: initial; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex-grow: 0"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex: auto;</code> <br />
+                <code style="color: grey">flex: 1 1 auto;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex: auto; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: grey">flex: 0 0 auto;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex: none; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex: 33.3%;</code> <br />
+                <code style="color: grey">flex-basis: 33.3%;</code>
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex: 33.3%; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex: 33.3%; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="width: 200px; flex: 33.3%; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p style="font-size: 24px">
+                <code style="color: indianred">flex: 2 0 50%;</code> <br />
+            </p>
+
+            <div
+                    style="
+              display: flex;
+              gap: 10px;
+              height: fit-content;
+              align-items: flex-start;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div
+                        style="width: 200px; flex: 2 0 50%; background-color: indianred"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div style="width: 200px" class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+            </div>
+        </section>
+
+        <section>
+            FLEXBOX FROGGY
+            <img class="fragment" src="/utils/assets/lesson3.html/froggy.png" />
+            <a
+                    class="fragment"
+                    href="https://flexboxfroggy.com/#ru"
+                    target="_blank"
+            >https://flexboxfroggy.com/#ru</a
+            >
+        </section>
+
+        <section>
+            <h3>Flexbox</h3>
+
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/caniuse_flex.png" />
+                <figcaption>
+                    <a target="_blank" href="https://caniuse.com/?search=flexbox"
+                    >https://caniuse.com/?search=flexbox</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <p>Grid</p>
+            <div
+                    style="
+              display: grid;
+              gap: 10px;
+              height: fit-content;
+              grid-template-columns: 1fr 2fr 1fr;
+            "
+                    class="yu-wrapper yu-solid-border"
+            >
+                <div class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div class="yu-solid-border-padding">
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div
+                        style="grid-row: 1 / span 2; grid-column: 3"
+                        class="yu-solid-border-padding"
+                >
+                    <img
+                            class="yu-flex-img"
+                            src="/utils/assets/lesson3.html/ex-table.png"
+                    />
+                </div>
+                <div></div>
+            </div>
+        </section>
+
+        <section>
+            <p>Grid</p>
+            Grid - это контейнер-сетка, позволяет располагать элементы в двумерной
+            системе.
+            <p></p>
+        </section>
+
+        <section>Задание сетки</section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code class="fragment" style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                </code>
+
+                <code class="fragment" style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template: 300px 150px / 100px 100px 200px;
+  }
+                </code>
+<div class="fragment">
+   или
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-rows: 300px 150px;
+    grid-template-columns: 100px 100px 200px;
+  }
+                </code>
+  </div>
+              </pre>
+                </div>
+                <div
+                        class="yu-grid"
+                        style="
+                grid-template-columns: 100px 100px 200px;
+                grid-template-rows: 300px 150px;
+                width: 400px;
+              "
+                >
+                    <div class="yu-grid-item-red">red</div>
+                    <div class="yu-grid-item-green">green</div>
+                    <div class="yu-grid-item-blue">blue</div>
+                    <div class="yu-grid-item-orange">orange</div>
+                    <div class="yu-grid-item-yellow">yellow</div>
+                    <div class="yu-grid-item-purple">purple</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code class="fragment" style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                  </code>
+<div class="fragment">
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-areas:
+        'red green orange orange'
+        'red blue blue yellow';
+    grid-template-rows: 300px 150px;
+  }
+
+  .red {
+    grid-area: red;
+  }
+
+  ...
+                </code>
+  </div>
+              </pre>
+                </div>
+                <div class="yu-grid-template" style="width: 400px">
+                    <div class="yu-grid-item-red-template">red</div>
+                    <div class="yu-grid-item-green-template">green</div>
+                    <div class="yu-grid-item-blue-template">blue</div>
+                    <div class="yu-grid-item-orange-template">orange</div>
+                    <div class="yu-grid-item-yellow-template">yellow</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                  </code>
+<div>
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-areas:
+        'red green orange orange'
+        'red blue yellow yellow';
+    grid-template-rows: 300px 150px;
+  }
+
+  .red {
+    grid-area: red;
+  }
+
+  ...
+                </code>
+  </div>
+              </pre>
+                </div>
+                <div class="yu-grid-template1" style="width: 400px">
+                    <div class="yu-grid-item-red-template">red</div>
+                    <div class="yu-grid-item-green-template">green</div>
+                    <div class="yu-grid-item-blue-template">blue</div>
+                    <div class="yu-grid-item-orange-template">orange</div>
+                    <div class="yu-grid-item-yellow-template">yellow</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code class="fragment" style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                </code>
+
+                <code class="fragment" style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr 1fr;
+  }
+                </code>
+<div class="fragment">
+   или
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+                </code>
+
+  </div>
+              </pre>
+                    <span class="fragment" style="font-size: 16px">fr - «дробная часть» (the flex fraction)</span>
+                </div>
+                <div
+                        class="yu-grid"
+                        style="
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                width: 400px;
+              "
+                >
+                    <div class="yu-grid-item-red">red</div>
+                    <div class="yu-grid-item-green">green</div>
+                    <div class="yu-grid-item-blue">blue</div>
+                    <div class="yu-grid-item-orange">orange</div>
+                    <div class="yu-grid-item-yellow">yellow</div>
+                    <div class="yu-grid-item-purple">purple</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code class="fragment" style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                </code>
+
+                <code class="fragment" style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template: 1fr 2fr / 1fr 1fr 2fr;
+  }
+                </code>
+<div class="fragment">
+   или
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr 1fr 2fr;
+  }
+                </code>
+  </div>
+              </pre>
+                </div>
+                <div
+                        class="yu-grid"
+                        style="
+                grid-template-columns: 1fr 1fr 2fr;
+                grid-template-rows: 1fr 2fr;
+                width: 400px;
+              "
+                >
+                    <div class="yu-grid-item-red">red</div>
+                    <div class="yu-grid-item-green">green</div>
+                    <div class="yu-grid-item-blue">blue</div>
+                    <div class="yu-grid-item-orange">orange</div>
+                    <div class="yu-grid-item-yellow">yellow</div>
+                    <div class="yu-grid-item-purple">purple</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code class="fragment" style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                </code>
+
+                <code class="fragment" style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+  }
+                </code>
+<div class="fragment">
+   или
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+                </code>
+  </div>
+              </pre>
+                </div>
+                <div
+                        class="yu-grid"
+                        style="
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                width: 400px;
+              "
+                >
+                    <div class="yu-grid-item-red">red</div>
+                    <div class="yu-grid-item-green">green</div>
+                    <div class="yu-grid-item-blue">blue</div>
+                    <div class="yu-grid-item-orange">orange</div>
+                    <div class="yu-grid-item-yellow">yellow</div>
+                    <div class="yu-grid-item-purple">purple</div>
+                </div>
+            </div>
+        </section>
+
+        <section>Gap</section>
+
+        <section>
+            <div
+                    style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: initial;
+              gap: 10px;
+              line-height: 14px;
+            "
+            >
+                <div>
+              <pre style="display: contents">
+                <code class="fragment" style="display: contents;">
+  <div class="grid">
+    <div class="red">red</div>
+    <div class="green">green</div>
+    <div class="blue">blue</div>
+    <div class="orange">orange</div>
+    <div class="yellow">yellow</div>
+    <div class="purple">purple</div>
+  </div>
+                </code>
+
+                <code class="fragment" style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+    gap: 10px;
+  }
+                </code>
+<div class="fragment">
+   или
+
+<code style="display: contents;">
+  .grid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+  }
+                </code>
+  </div>
+              </pre>
+                </div>
+                <div
+                        class="yu-grid"
+                        style="
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                gap: 10px;
+                width: 400px;
+              "
+                >
+                    <div class="yu-grid-item-red">red</div>
+                    <div class="yu-grid-item-green">green</div>
+                    <div class="yu-grid-item-blue">blue</div>
+                    <div class="yu-grid-item-orange">orange</div>
+                    <div class="yu-grid-item-yellow">yellow</div>
+                    <div class="yu-grid-item-purple">purple</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            GRID GARDEN
+            <img
+                    class="fragment"
+                    src="/utils/assets/lesson3.html/grid_garden.png"
+            />
+            <a
+                    class="fragment"
+                    href="https://cssgridgarden.com/#ru"
+                    target="_blank"
+            >https://cssgridgarden.com/#ru</a
+            >
+        </section>
+
+        <section>
+            <h3>Grid</h3>
+
+            <figure class="yu-img-wrapper">
+                <img src="/utils/assets/lesson3.html/caniuse_grid.png" />
+                <figcaption class="yu-img-caption">
+                    <a
+                            style="font-size: 18px"
+                            target="_blank"
+                            href="https://caniuse.com/?search=grid"
+                    >https://caniuse.com/</a
+                    >
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            Что выбрать? Flexbox или Grid?
+
+            <img
+                    class="fragment"
+                    style="height: 600px"
+                    src="/utils/assets/lesson3.html/mem_flexbox_grid.png"
+            />
+        </section>
+
+        <section>
+            <img src="/utils/assets/lesson3.html/flexbox_vs_grid.png" />
+        </section>
+
+        <section>
+            <div
+                    style="
+              height: 100%;
+              width: 100%;
+              display: flex;
+              gap: 20px;
+              justify-content: space-between;
+            "
+                    ;
+            >
+                <div style="height: 100%; width: 47%; flex: 0 0 47%" ;>
+                    <div
+                            style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                  background-color: white;
+                "
+                    >
+                        <div class="yu-grid-item-red">red</div>
+                        <div class="yu-grid-item-green">green</div>
+                        <div class="yu-grid-item-blue">blue</div>
+                        <div class="yu-grid-item-orange">orange</div>
+                        <div class="yu-grid-item-yellow">yellow</div>
+                        <div class="yu-grid-item-purple">purple</div>
+                    </div>
+                    <p>Одна строка или колонка</p>
+                </div>
+                <div
+                        style="
+                height: 100%;
+                width: calc(47% - 10px);
+                flex: 0 0 calc(47% - 10px);
+              "
+                        ;
+                >
+                    <div
+                            class="yu-grid-template"
+                            style="
+                  width: 100% !important;
+                  gap: 10px;
+                  padding: 15px !important;
+                  background-color: white;
+                "
+                    >
+                        <div class="yu-grid-item-red-template">red</div>
+                        <div class="yu-grid-item-green-template">green</div>
+                        <div class="yu-grid-item-blue-template">blue</div>
+                        <div class="yu-grid-item-orange-template">orange</div>
+                        <div class="yu-grid-item-yellow-template">yellow</div>
+                    </div>
+
+                    <p>Сетка</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <img src="/utils/assets/lesson3.html/fl_gr_ex.png" />
+        </section>
+
+        <section>
+            <img src="/utils/assets/lesson3.html/Group%207.png" />
+        </section>
+
+        <section>
+            <p>
+                Когда нам необходимо расположить элементы в ряду или колонке, то
+                удобно использовать <code>Flexbox</code>.
+            </p>
+            <p>
+                Если нужно сверстать сетку, или внутри контейнера передвигать
+                элементы между строками и рядами, то удобно использовать
+                <code>Grid</code>.
+            </p>
+
+            <span style="font-size: 24px">Но это не значит, что нельзя всегда использовать только <code>flexbox</code></span>
+        </section>
+
+        <section>
+            <h2>Вопросы</h2>
+        </section>
+
+        <section>
+            <p>Домашнее задание</p>
+            Требуется сверстать
+            <a
+                    href="https://www.figma.com/file/Ds86pWJF6sWJMR8pTlqdqJ/ИТМО---Вёрстка?type=design&node-id=0-1&mode=design&t=CjK0Jg8twcCIYkXr-0"
+                    target="_blank"
+            >макет</a
+            >
+
+            <div>
+                <a
+                        href="https://disk.yandex.com.am/d/9Sov7HX-7kP0lg"
+                        target="_blank"
+                >Заготовка</a
+                >
+                для верстки
+            </div>
+
+            <div class="fragment" style="margin-top: 50px">
+                <p>На что обратить внимание:</p>
+                <ol>
+                    <li class="fragment">
+                        Задание нужно отправлять в виде прикрепленного html файла (не в
+                        виде отправки текста)
+                    </li>
+                    <li class="fragment">
+                        Нельзя убирать id атрибуты в верстке заготовки (элементы для
+                        скриншотов)
+                    </li>
+                    <li class="fragment">
+                        Время на выполнение без штрафов до: 17&nbsp;октября 23:59:59
+                    </li>
+                </ol>
+            </div>
         </section>
     </div>
 </div>
