@@ -1,143 +1,1041 @@
 <!doctype html>
-<html lang="ru">
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>CSS</title>
+    <title>Название лекции</title>
 
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="stylesheet" href="/utils/dist/reset.css">
+    <link rel="stylesheet" href="/utils/dist/reveal.css">
+    <link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
+    <link rel="stylesheet" href="./css/custom.css">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="/utils/assets/lesson10.1/index.css">
 
-    <link rel="stylesheet" href="/utils/css/reveal.css">
-    <link rel="stylesheet" href="/utils/lib/css/animate.css">
-    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
-
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
-
-    <!-- Printing and PDF exports -->
-    <link rel="stylesheet" href="../2-css/css-custom/custom.css">
-    <script>
-        <!--
-        Yandex.Metrika
-        counter -->
-            (function (m, e, t, r, i, k, a) {
-                m[i] = m[i] || function () {
-                    (m[i].a = m[i].a || []).push(arguments)
-                };
-                m[i].l = 1 * new Date();
-                for (var j = 0; j < document.scripts.length; j++) {
-                    if (document.scripts[j].src === r) {
-                        return;
-                    }
-                }
-                k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-            })
-            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(95067685, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true
-        });
-        <!-- /Yandex.Metrika counter -->
-    </script>
-
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
-    <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
+    <link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
 </head>
+
 <body>
 <div class="reveal">
-
     <div class="slides">
+        <section data-auto-animate data-auto-animate-unmatched="fade" data-background-image="/utils/assets/background.webp">
+            <h2>Документ</h2>
+            <br>
+            <p class="firstRedChar">Александр Ваганов</p>
+        </section>
+
         <section>
-            <p style="text-align: center;">Тут должна была быть презентация лекции, но лектор еще не успел ее
-                опубликовать...</p>
-            <p style="text-align: center;">По всем вопросам вы можете обращаться в чат курса.</p>
+            <h2>Cодержание</h2>
+            <ol class="mediumDescription">
+                <li class="fragment">Про окружение в котором работает наш код.</li>
+                <li class="fragment">Что такое DOM-дерево?</li>
+                <li class="fragment">Навигация по элементам DOM.</li>
+                <li class="fragment">Селекторы элементов – <em>getElement</em>, <em>querySelector</em>.</li>
+                <li class="fragment">Cвойства DOM - узлов, теги, содержимое.</li>
+                <li class="fragment">Аттрибуты и свойства узлов.</li>
+                <li class="fragment">Изменение документа.</li>
+                <li class="fragment">Размеры и прокрутка. Системы координат.</li>
+            </ol>
+        </section>
+
+        <section>
+            <section>
+                <h4>Окружение в котором мы работаем</h4>
+
+                <img src="/utils/assets/lesson10.1/environment.png" alt="" width="600">
+            </section>
+
+            <section>
+                <h4>Window</h4>
+                <p class="mediumDescription">
+                    window – это глобальный объект который представляет собой окно браузера и располагает методами для управления им.
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+								window.close(); // закрыть окно браузера
+								window.location; // получение информации о текущем URL
+								alert(window.innerHeight); // получить высоту окна
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <h4>Document</h4>
+                <p class="mediumDescription">
+                    Каждая веб-страница, которая загружается в браузер, имеет свой собственный объект document.
+                    Интерфейс документа служит точкой входа для получения содержимого веб-страницы всего DOM - дерева, например такие элементы как
+                    <b>body</b> и <b>table</b>, а также обеспечивает функциональность, которая является глобальной для документа, например, для получения URL-адреса страницы или создания новых элементов в документе).
+                </p>
+            </section>
+
+            <section>
+                <h4>Document</h4>
+                <img height="550px" src="/utils/assets/lesson10.1/document.png" alt="">
+            </section>
+
+            <section>
+                <h4>BOM</h4>
+                <p class="mediumDescription">
+                    Объектная модель браузера (Browser Object Model, BOM) – это дополнительные объекты, предоставляемые браузером (окружением), чтобы работать со всем, кроме документа.
+                </p>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td><code class="i">navigator</code></td>
+                        <td>даёт информацию о самом браузере и операционной системе. Например <code>navigator.userAgent</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">location</code></td>
+                        <td>позволяет получить информацию о текущем URL</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">screen</code></td>
+                        <td>предназначен для получения информации об экране, на котором отображается текущее окно браузера. Например <code>screen.orientation</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">frames</code></td>
+                        <td>Коллекция окон в window (дочерних для текущего окна)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">history</code></td>
+                        <td>Предоставляет методы для работы с истории посещений, например history.back()</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">XMLHttpRequest</code></td>
+                        <td>Или кратко XHR - объект позволяющий делать запросы без перезагрузки страницы, как правило использующийся для загрузки данных</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h4>DOM (Document Object Model)</h4>
+                <p class="mediumDescription" style="text-align: center;">
+                    Как всё устроено.
+                </p>
+
+                <img src="/utils/assets/lesson10.1/domtree.jpeg" height="450"/>
+            </section>
+            <section>
+                <h4>Document Object Model</h4>
+                <p class="mediumDescription">
+                    Независящий от платформы и языка программный интерфейс, позволяющий программам и скриптам получить доступ к содержимому HTML, XHTML, XML-документов, а также изменять содержимое, структуру и оформление таких документов.
+                    Изначально в разных браузерах существовали разные DOM модели, но были стандартизированы и сейчас соответствуют W3C cпецификациям.
+                    Мы имеем возможность получать доступ к DOM - Api из JavaScript кода например:
+                </p>
+            </section>
+
+            <section>
+                <h4>Пример простого DOM-дерева</h4>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<html>
+									<head>
+										<title>Привет</title>
+									</head>
+									<body>
+										Меня зовут Алиса!
+									</body>
+								</html>
+								```
+							</textarea>
+                </div>
+
+                <img src="/utils/assets/lesson10.1/domexample1.png" alt="" width="600">
+            </section>
+
+            <section>
+                <h4>Пример более сложного DOM-дерева</h4>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<html>
+									<head>
+										<title>Привет</title>
+									</head>
+									<body>
+										<h1>Меня зовут Алиса!</h1>
+										<!-- Эту строчку не видно в браузере, это комментарий -->
+
+										<p>Я люблю отвечать на вопросы</p>
+										<p>Мне 6 лет</p>
+									</body>
+								</html>
+								```
+							</textarea>
+                </div>
+            </section>
+
+            <section>
+                <h4>Пример более сложного DOM-дерева</h4>
+
+                <img src="/utils/assets/lesson10.1/domexample2.png" alt="" width="600">
+            </section>
+
+            <section>
+                <h3>Основные типы узлов</h3>
+
+                <ol>
+                    <li class="fragment">узлы-элементы – HTML-теги</li>
+                    <li class="fragment">текстовые узлы</li>
+                    <li class="fragment">комментарии</li>
+                </ol>
+            </section>
+
+            <section>
+                <h4>Работа с инспектором</h4>
+                <video data-autoplay src="/utils/assets/lesson10.1/inspector recording.mov"></video>
+            </section>
+
+            <section>
+                <h4>Работа с инспектором и консолью</h4>
+                <video data-autoplay src="/utils/assets/lesson10.1/inspector recording2.mov"></video>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h4>Навигация по DOM-элементам</h4>
+                <p class="mediumDescription" style="text-align: center;">
+                    Путешествие от одного узла к другому!
+                </p>
+
+                <img width="400" src="/utils/assets/lesson10.1/compas.png" />
+            </section>
+
+            <section>
+                <h4>Относительная навигация</h4>
+                <p class="mediumDescription">
+                    Получив необходимый элемент через <code>document</code> мы можем перемещаться в соседнии узлы любом направлении
+                </p>
+
+                <img width="800" src="/utils/assets/lesson10.1/nodesNavigation.png" />
+            </section>
+
+            <section>
+                <h4>Команды для навигации по DOM-нодам</h4>
+                <p class="mediumDescription">
+                    В JS используются следующие команды применяемые к элементу DOM-структуры через точку.
+                </p>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td><code class="i">parentNode</code></td>
+                        <td>Получить родительскую ноду</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">childNodes</code></td>
+                        <td>Все дочерние узлы (включая текстовые). Возвращает коллекцию</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">firstChild</code></td>
+                        <td>Первый дочерний узел</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">lastChild</code></td>
+                        <td>Последний дочерний узел</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">previousSibling</code></td>
+                        <td>Сосед слева</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">nextSibling</code></td>
+                        <td>Сосед справа</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h4>Аналогичные команды но для нод типа "элемент"</h4>
+
+                <img width="800" src="/utils/assets/lesson10.1/nodesNavigationByEl.png" />
+            </section>
+
+            <section>
+                <h4>
+                    Команды для навигации по DOM-нодам типа "элемент".
+                </h4>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td><code class="i">parentElement</code></td>
+                        <td>Получить родительский элемент</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">children</code></td>
+                        <td>Все дочерние элементы. Возвращает коллекцию</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">firstElementChild</code></td>
+                        <td>Первый дочерний элемент</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">lastElementChild</code></td>
+                        <td>Последний дочерний элемент</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">previousElementSibling</code></td>
+                        <td>Соседний элемент слева</td>
+                    </tr>
+                    <tr>
+                        <td><code class="i">nextElementSibling</code></td>
+                        <td>Соседний элемент справа</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h4>Что использовать?</h4>
+
+                <p class="mediumDescription">
+                    Свойство <b>parentNode</b> возвращает родительскую ноду, которая может быть узлом любого типа, включая элементы, текстовые и атрибуты. Если у узла нет родителя, свойство parentNode возвращает значение null.
+                    Свойство же <b>parentElement</b> возвращает родительский элемент указанного узла, который может быть только нодой типа "элемент". Это свойство игнорирует текстовые узлы и другие типы узлов и возвращает null, если узел не имеет родительского элемента.
+                    Хотя оба свойства возвращают ссылку на родительский узел или родительский элемент, важно использовать соответствующее свойство в зависимости от типа ноды, с которой вы работаете.
+                </p>
+            </section>
+
+            <section>
+                <h4>П1римеры разниц коллекций дочерних элементов/нод</h4>
+
+                <div style="display: flex;">
+                    <img styles="margin-right: 15px;" src="/utils/assets/lesson10.1/nodesNodeExample.png" height="200" width="480" alt="">
+                    <img src="/utils/assets/lesson10.1/nodesElExample.png" height="450" alt="">
+                </div>
+            </section>
+        </section>
+
+        <section>
+            <div style="display: flex;">
+                <img width="50%" src="/utils/assets/lesson10.1/nodesNavigation.png" />
+                <img width="50%" src="/utils/assets/lesson10.1/nodesNavigationByEl.png" />
+            </div>
+        </section>
+
+        <section>
+            <section>
+                <h4>Селекторы элементов</h4>
+                <p class="mediumDescription">
+                    Навигация это хорошо, но как получить точку отправления?  В DOM есть для этого дополнительные методы поиска.
+                </p>
+            </section>
+
+            <section>
+                <h4>document.getElementById</h4>
+                <p class="mediumDescription">
+                    Если у элемента присутствует уникальный атрибут <em>id</em> – мы можем получить данный элемент в JS вызовом <em>document.getElementById(id)</em>
+                </p>
+                <p class="mediumDescription" style="display: block; border-left: 4px solid red; text-indent: 20px;">
+                    <em>Значение id должно быть уникально на весь документ</em>
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<div id="cat-container">
+									<img src="cat.jpeg" />
+								</div>
+								```
+							</textarea>
+                </div>
+
+                <div data-markdown>
+							<textarea data-template>
+								```js 
+								// нашли div контейнер с картинкой по идентификатору
+								const catContainerEl = document.getElementById('cat-container');
+
+								// получили ноду типа элемент (img)
+								const catImageEl = catContainerEl.firstElementChild;
+
+								catImageEl.remove(); // удалили изображение
+								```
+							</textarea>
+                </div>
+            </section>
+
+            <section>
+                <h4>document.querySelector</h4>
+                <p class="mediumDescription">
+                    Возвращает <em>первый элемент</em> соответствующий CSS-селектору
+                </p>
+                <p class="mediumDescription" style="display: block; border-left: 4px solid red;">
+                    <em>Можно использовать любого вида CSS селекторы и даже псевдоклассы</em>
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<div class="cat-container">
+									<p>Я люблю кошек. Посмотрите какие у меня есть!</p>
+									<img src="cat1.jpeg" />
+									<img src="cat2.jpeg" />
+								</div>
+								```
+							</textarea>
+                </div>
+
+                <div data-markdown>
+							<textarea data-template>
+								```js 
+								// получили элемент с изображением сразу 
+								const catImageEl = document.querySelector('.cat-container > img');
+
+								catImageEl.remove(); // удалили изображение первой кошки
+								```
+							</textarea>
+                </div>
+            </section>
+
+            <section>
+                <h4>document.querySelectorAll</h4>
+                <p class="mediumDescription">
+                    Принцип работы похож на предыдущий метод, но возвращает коллекцию всех элементов совпавших по CSS-селектору
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<div class="animal">
+									<p>
+										Я люблю и собак. 
+										Однако посмотрите здесь по ошибке затесалась кошка!
+									</p>
+									<img src="dog1.jpeg" />
+									<img src="cat.jpeg" />
+									<img src="dog2.jpeg" />
+								</div>
+								```
+							</textarea>
+                </div>
+
+                <div data-markdown>
+							<textarea data-template>
+								```js 
+								// получили коллекцию элементов с изображением внутри контейнера 
+								const animalImgEls = document.querySelectorAll('.animal > img');
+
+								// удалили изображение кошки по индексу (второй элемент)
+								animalImgEls[1].remove(); 
+								```
+							</textarea>
+                </div>
+            </section>
+
+
+            <section>
+                <h4>getElementsBy*</h4>
+                <p class="mediumDescription">
+                    getElementsByName, getElementsByTagName, getElementsByClassName.
+                </p>
+                <p class="mediumDescription" style="display: block; border-left: 4px solid red; text-indent: 20px; padding-left: 20px;">
+                    <em>Данные методы возвращают <b>ссылки</b> на коллекции которые могут изменяться с течением времени жизни документа, в отличии от метода document.querySelectorAll который возвращает слепок коллекции элементов на момент вызова.</em>
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```js 
+								// получить все изображения на странице 
+								const allImageEls = document.getElementsByTagName('img');
+
+								// заменить все изображения на фотографии собак!
+								for (imgEl of allImageEls) {
+									img.setAttribute('src', 'dog.jpeg')
+								}
+
+								// создать новое изображение
+								const el = document.createElement('img');
+								el.setAttribute('src', 'cat.jpeg');
+
+								document.body.append(el);
+
+								/**
+								 * новый добавленый элемент с кошкой в коллекции потому что мы 
+								 * получили ссылку на коллекцию которая изменяется с течением 
+								 * жизни документа.
+								 */
+								console.log(allImageEls)
+								```
+							</textarea>
+                </div>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h4>Классы DOM - узлов</h4>
+                <p style="font-size: 34px;">
+                    Разберём, что они собой представляют.
+                </p>
+
+                <img src="/utils/assets/lesson10.1/graph.webp" height="350"/>
+            </section>
+
+            <section>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>EventTarget </td>
+                        <td>Абстрактный класс для всех узлов, используется для работы с событиями</td>
+                    </tr>
+                    <tr>
+                        <td>Node</td>
+                        <td>Так же абстрактный класс, обеспечивает навигационные методы изученные в предыдущем разделе parentNode, nextSibling, childNodes и пр.</td>
+                    </tr>
+                    <tr>
+                        <td>Document</td>
+                        <td>Наследуется от HTMLDocument – точка входа в DOM</td>
+                    </tr>
+                    <tr>
+                        <td>CharacterData</td>
+                        <td>Текстовые ноды и ноды комментариев</td>
+                    </tr>
+                    <tr>
+                        <td>Element</td>
+                        <td>Базовый класс для DOM - элементов. Обеспечивает навигационные методы изученные в предыдущем разделе nextElementSibling, children, querySelector</td>
+                    </tr>
+                    <tr>
+                        <td>HTMLElement</td>
+                        <td>Базовый классом для HTML-элементов, от него наследуются уже конкретные – например HTMLInputElement для input HTMLAnchorElement для гиперссылок и т.д.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    Пример для input элемента
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+								– HTMLInputElement
+								– HTMLElement
+								– Element
+								– Node
+								– EventTarget
+								– Object
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    Element.nodeType как способ узнать «тип» DOM-узла.
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+								ELEMENT_NODE
+								ATTRIBUTE_NODE
+								TEXT_NODE
+								CDATA_SECTION_NODE
+								ENTITY_REFERENCE_NODE
+								ENTITY_NODE
+								PROCESSING_INSTRUCTION_NODE
+								COMMENT_NODE
+								DOCUMENT_NODE
+								DOCUMENT_TYPE_NODE
+								DOCUMENT_FRAGMENT_NODE
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    Node.tagName, Node.nodeName как способы узнать «тип» DOM-узла.
+                </p>
+
+                <p class="description">
+
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								/**
+								 * Свойство tagName есть только у элементов Element.
+								 * Свойство nodeName определено для любых узлов Node.
+								 * для элементов оно равно tagName
+								 */
+								document.querySelector('.line-numbers-rows').tagName
+								// 'SPAN'
+								
+								document.querySelector('.line-numbers-rows').nodeName
+								// 'SPAN'
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    innerHTML как способ влиять на документ.
+                </p>
+
+                <p class="description">
+                    Позволяет получить HTML-содержимое элемента в виде строки и перезаписать его!
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								// Все новые изображения и медиа-ресурсы будут перезагружены.
+								// Скрипты запущены не будут.
+								const el = document.querySelector('.content');
+
+								el.innerHTML = 'Привет!';
+							</code>
+						</pre>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<html>
+									<head>
+										<title>Привет</title>
+									</head>
+									<body>
+										<div class="content">
+											Привет
+										</div>
+									</body>
+								</html>
+								```
+							</textarea>
+                </div>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    innerHTML как способ влиять на документ.
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.querySelector('.content');
+
+								el.innerHTML += ', меня зовут Алиса!';
+							</code>
+						</pre>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<html>
+									<head>
+										<title>Привет</title>
+									</head>
+									<body>
+										<div class="content">
+											Привет, меня зовут Алиса!
+										</div>
+									</body>
+								</html>
+								```
+							</textarea>
+                </div>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    nodeValue, data – контент Node узла
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<body>
+									Красивый текст
+									<!-- Комментарий в шаблоне -->
+									<script>
+									 const text = document.body.firstChild;
+								  
+									  const comment = text.nextSibling;
+									  console.log(comment.data); 
+									  // Комментарий в шаблоне
+									</script>
+								  </body>
+								```
+							</textarea>
+                </div>
+            </section>
+
+            <section>
+                <p style="font-size: 34px;">
+                    textContent - безопасный способ изменить текстовый контент внутри узла.
+                    Все специальные символы и теги интерпретируются как текст
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<body>
+									<div class="content">
+										Текстовый контент
+									</div>
+									<script>
+										const contentEl = document.querySelector('content');
+
+										const contentEl.textContent = `<div>Произвольная верстка</div>`
+									</script>
+								  </body>
+								```
+							</textarea>
+                </div>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h4>Атрибуты и свойства</h4>
+                <p style="font-size: 34px;">
+                    Научимся различать эти два понятия, и поймём что и где применимо.
+                </p>
+
+                <img src="/utils/assets/lesson10.1/attributesImage.png" height="350"/>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Для узлов-элементов большинство стандартных HTML-атрибутов автоматически становятся свойствами DOM-объектов.
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<body>
+									<main id="page">
+										content
+									</main>
+								</body>
+								```
+							</textarea>
+                </div>
+                <pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+								document.getElementsByTagName('main')[0].id // page	
+							</code>
+						</pre>
+            </section>
+            <section>
+                <h4>Свойства</h4>
+                <p class="mediumDescription">
+                    Ранее мы уже рассматривали свойства нод nodeType, nodeValue, data – эти свойства узлы DOM-дерева
+                    получают наследуя классы после парсинга HTML
+                </p>
+
+                <p class="mediumDescription">
+                    Примеры стандартных аттрибутов, src, href, style, value и много других (зависит от класса элемента).
+                </p>
+            </section>
+
+            <section>
+                <h4>Методы для работы с аттрибутами</h4>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>elem.hasAttribute </td>
+                        <td>Проверить на наличие (вернёт false или true)</td>
+                    </tr>
+                    <tr>
+                        <td>elem.getAttribute</td>
+                        <td>Вернуть значение аттрибута</td>
+                    </tr>
+                    <tr>
+                        <td>elem.setAttribute(name, value)</td>
+                        <td>Установить значение аттрибута</td>
+                    </tr>
+                    <tr>
+                        <td>elem.removeAttribute(name)</td>
+                        <td>Удалить аттрибут</td>
+                    </tr>
+                    <tr>
+                        <td>elem.attributes</td>
+                        <td>Вернуть список всех аттрибутов элемента</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h4>data-аттрибуты</h4>
+                <p class="mediumDescription">
+                    data-аттрибуты можно получать в javascript через свойство dataset, при этом свойство переводится в camelCase.
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<body>
+									<div data-user-name="Alisa">
+										Привет!
+									</div>
+								</body>
+								```
+							</textarea>
+                </div>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.body.firstElementChild;
+
+								console.log(el.dataset.userName); // Alisa
+							</code>
+						</pre>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h4>Изменение документа</h4>
+                <p class="mediumDescription" style="text-align: center;">
+                    Как создавать новые элементы и изменять уже существующие.
+                </p>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Создание документа, <em>document.createElement</em>
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.createElement('img');
+
+								el.setAttribute('src', 'https://catdomain.com/cat.jpeg');
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Создание документа, <em>document.createTextNode</em>
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.createTextNode('Я текст');
+								const containerEl = document.getElementById('container');
+
+								container.append(el);
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Методы подключения элементов в документ
+                </p>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>el.append </td>
+                        <td>Добавить элемент в конец el</td>
+                    </tr>
+                    <tr>
+                        <td>el.prepend</td>
+                        <td>Добавить элемент в начало el</td>
+                    </tr>
+                    <tr>
+                        <td>el.before</td>
+                        <td>Вставить по соседству - до</td>
+                    </tr>
+                    <tr>
+                        <td>el.after</td>
+                        <td>Вставить по соседству - после</td>
+                    </tr>
+                    <tr>
+                        <td>el.replaceWith</td>
+                        <td>Заменить элемент el - новым элементом</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Удаление узла, <em>el.remove()</em>
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<body>
+									<div class="alisaMessage">
+										Я Алиса.
+									</div>
+								</body>
+								```
+							</textarea>
+                </div>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.querySelector('.alisaMessage');
+
+								el.remove() // узел будет удалён из документа
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Клонирование узлов, <em>el.cloneNode(true)</em>
+                </p>
+
+                <div data-markdown>
+							<textarea data-template>
+								```html 
+								<body>
+									<div class="alisaMessage">
+										Я Алиса.
+										<p>Я люблю общаться</p>
+									</div>
+								</body>
+								```
+							</textarea>
+                </div>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.querySelector('.alisaMessage');
+								const newEl = el.cloneNode(true);
+
+								el.after(newEl) // дубликат сообщения будет добавлен рядом
+							</code>
+						</pre>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Устаревшие методы
+                </p>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>el.appendChild(node)</td>
+                        <td>Добавить node в конец el</td>
+                    </tr>
+                    <tr>
+                        <td>el.insertBefore(node, sibling)</td>
+                        <td>Добавить node перед sibling (дочерняя нода el)</td>
+                    </tr>
+                    <tr>
+                        <td>el.removeChild(node)</td>
+                        <td>Удалить дочернюю ноду из el</td>
+                    </tr>
+                    <tr>
+                        <td>el.replaceChild(newEl, node)</td>
+                        <td>Заменить одну из дочерних нод</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h4>Размеры и прокрутка, cистемы координат</h4>
+                <p class="mediumDescription" style="text-align: center;">
+                    Начинаем ориентироваться в пространстве.
+                </p>
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Относительно окна браузера и относительно документа.
+                </p>
+
+                <img src="/utils/assets/lesson10.1/coordinates.png" alt="">
+            </section>
+
+            <section>
+                <p class="mediumDescription">
+                    Получение координат node-узла <em>elem.getBoundingClientRect()</em>
+                </p>
+
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.querySelector('.element');
+
+								el.getBoundingClientRect() // получить координаты элемента
+
+								/**
+								 * Важно – все координаты относительно окна браузера!
+								 *
+								 * bottom - координата Y нижней границы прямоугольника
+								 * left - координата X левой границы прямоугольника 
+								 * right - координата X правой границы прямоугольника
+								 * top - координата Y верхней границы прямоугольника
+								 * height - высота элемента
+								 * width - ширина элемента
+								 * x - координата x левого-верхнего угла
+								 * y - координата y левого-верхнего угла
+								 */
+							</code>
+						</pre>
+            </section>
+
+
+            <section>
+                <p class="mediumDescription">
+                    Получение координат относительно документа
+                </p>
+
+                <pre class="textLeft">
+							<code data-trim class="js">
+								const el = document.querySelector('.element');
+
+								const coords = el.getBoundingClientRect()
+
+								console.log(coords.left + window.pageXOffset);
+								console.log(coords.top + window.pageYOffset);
+							</code>
+						</pre>
+            </section>
+        </section>
+
+        <section>
+            <h4>Лайфкодинг</h4>
+            <img width="700px" src="/utils/assets/lesson10.1/desktop.jpg" alt="">
+        </section>
+
+        <section>
+            <p>Ссылка на презентацию</p>
+            <br>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" width="256" height="256" viewBox="0 0 4851 4851"><defs><path id="g" fill="#000" d="M0 0h100v100H0z"/><path id="b" fill="#000" d="M0 28.6v42.9C0 87.3 12.8 100 28.6 100h42.9c15.9 0 28.6-12.8 28.6-28.6V28.6C100 12.7 87.2 0 71.4 0H28.6C12.8 0 0 12.8 0 28.6z"/><path id="a" fill="#000" d="M0 0h66c18.778 0 34 15.222 34 34v32c0 18.778-15.222 34-34 34H0V0Z" transform="rotate(-90 50 50)"/><path id="c" fill="#000" d="M0 0h66c18.778 0 34 15.222 34 34v32c0 18.778-15.222 34-34 34H0V0Z" transform="rotate(-180 50 50)"/><path id="d" fill="#000" d="M0 0h66c18.778 0 34 15.222 34 34v32c0 18.778-15.222 34-34 34H0V0Z"/><path id="j" fill="#000" d="M0 0h66c18.778 0 34 15.222 34 34v32c0 18.778-15.222 34-34 34H0V0Z" transform="rotate(90 50 50)"/><path id="i" fill="#000" d="M0 0h100v66c0 18.778-15.222 34-34 34H0V0Z"/><path id="h" fill="#000" d="M0 0h100v66c0 18.778-15.222 34-34 34H0V0Z" transform="rotate(-90 50 50)"/><path id="f" fill="#000" d="M0 0h100v66c0 18.778-15.222 34-34 34H0V0Z" transform="rotate(-180 50 50)"/><path id="k" fill="#000" d="M0 0h100v66c0 18.778-15.222 34-34 34H0V0Z" transform="rotate(90 50 50)"/><path id="e" fill="#000" d="M69.5 98v2H100V69.5h-2C98 85.3 85.2 98 69.5 98z"/><path id="l" fill="#000" d="M600.002 457.33V242.657c0-95.286-12.962-118.535-18.537-124.123-5.588-5.575-28.837-18.537-124.136-18.537H242.671c-95.299 0-118.548 12.962-124.123 18.537-5.575 5.588-18.55 28.837-18.55 124.123V457.33c0 95.299 12.975 118.548 18.55 124.136 5.575 5.562 28.824 18.537 124.123 18.537h214.658c95.299 0 118.548-12.975 124.136-18.537 5.575-5.588 18.537-28.837 18.537-124.136ZM457.329 0C653.34 0 700 46.662 700 242.658V457.33C700 653.34 653.338 700 457.33 700H242.67C46.663 700 0 653.338 0 457.33V242.657C0 46.662 46.662 0 242.67 0h214.66Zm-61.332 200C480.004 200 500 220.008 500 303.99v92.007C500 479.992 480.004 500 395.997 500h-91.994C220.008 500 200 479.992 200 395.997V303.99C200 220.008 220.008 200 304.003 200h91.994Z"/><clipPath id="m"><path d="M0 0h750v750H0z"/></clipPath></defs><rect width="4851" height="4851" fill="#fff" rx="683"/><g transform="translate(397.934 397.934) scale(.84375)"><use xlink:href="#a" transform="translate(776)"/><use xlink:href="#b" transform="translate(970)"/><use xlink:href="#c" transform="translate(1261)"/><use xlink:href="#d" transform="translate(1358)"/><use xlink:href="#c" transform="translate(1746)"/><use xlink:href="#d" transform="translate(1843)"/><use xlink:href="#b" transform="translate(2134)"/><use xlink:href="#b" transform="translate(2328)"/><use xlink:href="#e" transform="translate(2619)"/><use xlink:href="#f" transform="translate(2716)"/><use xlink:href="#g" transform="translate(2813)"/><use xlink:href="#g" transform="translate(2910)"/><use xlink:href="#g" transform="translate(3007)"/><use xlink:href="#g" transform="translate(3104)"/><use xlink:href="#h" transform="translate(3201)"/><use xlink:href="#e" transform="translate(3395)"/><use xlink:href="#a" transform="translate(3492)"/><use xlink:href="#e" transform="translate(3783)"/><use xlink:href="#a" transform="translate(3880)"/><use xlink:href="#g" transform="translate(776 97)"/><use xlink:href="#f" transform="translate(1455 97)"/><use xlink:href="#g" transform="translate(1552 97)"/><use xlink:href="#h" transform="translate(1649 97)"/><use xlink:href="#e" transform="translate(1843 97)"/><use xlink:href="#a" transform="translate(1940 97)"/><use xlink:href="#f" transform="translate(2619 97)"/><use xlink:href="#g" transform="translate(2716 97)"/><use xlink:href="#i" transform="translate(2813 97)"/><use xlink:href="#j" transform="translate(3007 97)"/><use xlink:href="#k" transform="translate(3201 97)"/><use xlink:href="#g" transform="translate(3298 97)"/><use xlink:href="#g" transform="translate(3395 97)"/><use xlink:href="#i" transform="translate(3492 97)"/><use xlink:href="#c" transform="translate(3686 97)"/><use xlink:href="#g" transform="translate(3783 97)"/><use xlink:href="#g" transform="translate(3880 97)"/><use xlink:href="#j" transform="translate(776 194)"/><use xlink:href="#b" transform="translate(1067 194)"/><use xlink:href="#b" transform="translate(1261 194)"/><use xlink:href="#k" transform="translate(1455 194)"/><use xlink:href="#g" transform="translate(1552 194)"/><use xlink:href="#g" transform="translate(1649 194)"/><use xlink:href="#g" transform="translate(1746 194)"/><use xlink:href="#g" transform="translate(1843 194)"/><use xlink:href="#i" transform="translate(1940 194)"/><use xlink:href="#f" transform="translate(2134 194)"/><use xlink:href="#g" transform="translate(2231 194)"/><use xlink:href="#d" transform="translate(2328 194)"/><use xlink:href="#k" transform="translate(2619 194)"/><use xlink:href="#i" transform="translate(2716 194)"/><use xlink:href="#e" transform="translate(2813 194)"/><use xlink:href="#a" transform="translate(2910 194)"/><use xlink:href="#b" transform="translate(3104 194)"/><use xlink:href="#g" transform="translate(3783 194)"/><use xlink:href="#i" transform="translate(3880 194)"/><use xlink:href="#b" transform="translate(970 291)"/><use xlink:href="#a" transform="translate(1164 291)"/><use xlink:href="#a" transform="translate(1358 291)"/><use xlink:href="#g" transform="translate(1649 291)"/><use xlink:href="#g" transform="translate(2134 291)"/><use xlink:href="#g" transform="translate(2231 291)"/><use xlink:href="#e" transform="translate(2328 291)"/><use xlink:href="#f" transform="translate(2425 291)"/><use xlink:href="#h" transform="translate(2522 291)"/><use xlink:href="#c" transform="translate(2813 291)"/><use xlink:href="#g" transform="translate(2910 291)"/><use xlink:href="#e" transform="translate(3104 291)"/><use xlink:href="#f" transform="translate(3201 291)"/><use xlink:href="#g" transform="translate(3298 291)"/><use xlink:href="#g" transform="translate(3395 291)"/><use xlink:href="#g" transform="translate(3492 291)"/><use xlink:href="#h" transform="translate(3589 291)"/><use xlink:href="#j" transform="translate(3783 291)"/><use xlink:href="#b" transform="translate(873 388)"/><use xlink:href="#j" transform="translate(1164 388)"/><use xlink:href="#j" transform="translate(1358 388)"/><use xlink:href="#f" transform="translate(1552 388)"/><use xlink:href="#g" transform="translate(1649 388)"/><use xlink:href="#d" transform="translate(1746 388)"/><use xlink:href="#b" transform="translate(1940 388)"/><use xlink:href="#g" transform="translate(2134 388)"/><use xlink:href="#g" transform="translate(2231 388)"/><use xlink:href="#g" transform="translate(2328 388)"/><use xlink:href="#g" transform="translate(2425 388)"/><use xlink:href="#g" transform="translate(2522 388)"/><use xlink:href="#e" transform="translate(2619 388)"/><use xlink:href="#a" transform="translate(2716 388)"/><use xlink:href="#g" transform="translate(2910 388)"/><use xlink:href="#g" transform="translate(3007 388)"/><use xlink:href="#g" transform="translate(3104 388)"/><use xlink:href="#i" transform="translate(3201 388)"/><use xlink:href="#k" transform="translate(3492 388)"/><use xlink:href="#g" transform="translate(3589 388)"/><use xlink:href="#a" transform="translate(776 485)"/><use xlink:href="#a" transform="translate(970 485)"/><use xlink:href="#g" transform="translate(1552 485)"/><use xlink:href="#g" transform="translate(2134 485)"/><use xlink:href="#g" transform="translate(2522 485)"/><use xlink:href="#g" transform="translate(2619 485)"/><use xlink:href="#g" transform="translate(2716 485)"/><use xlink:href="#g" transform="translate(2910 485)"/><use xlink:href="#g" transform="translate(3104 485)"/><use xlink:href="#f" transform="translate(3298 485)"/><use xlink:href="#d" transform="translate(3395 485)"/><use xlink:href="#k" transform="translate(3589 485)"/><use xlink:href="#h" transform="translate(3686 485)"/><use xlink:href="#g" transform="translate(776 582)"/><use xlink:href="#g" transform="translate(970 582)"/><use xlink:href="#e" transform="translate(1067 582)"/><use xlink:href="#a" transform="translate(1164 582)"/><use xlink:href="#a" transform="translate(1358 582)"/><use xlink:href="#e" transform="translate(1455 582)"/><use xlink:href="#g" transform="translate(1552 582)"/><use xlink:href="#b" transform="translate(1746 582)"/><use xlink:href="#b" transform="translate(1940 582)"/><use xlink:href="#e" transform="translate(2037 582)"/><use xlink:href="#g" transform="translate(2134 582)"/><use xlink:href="#b" transform="translate(2328 582)"/><use xlink:href="#g" transform="translate(2522 582)"/><use xlink:href="#j" transform="translate(2716 582)"/><use xlink:href="#j" transform="translate(2910 582)"/><use xlink:href="#e" transform="translate(3007 582)"/><use xlink:href="#g" transform="translate(3104 582)"/><use xlink:href="#j" transform="translate(3298 582)"/><use xlink:href="#a" transform="translate(3492 582)"/><use xlink:href="#g" transform="translate(3686 582)"/><use xlink:href="#b" transform="translate(3880 582)"/><use xlink:href="#g" transform="translate(776 679)"/><use xlink:href="#k" transform="translate(970 679)"/><use xlink:href="#g" transform="translate(1067 679)"/><use xlink:href="#g" transform="translate(1164 679)"/><use xlink:href="#g" transform="translate(1358 679)"/><use xlink:href="#g" transform="translate(1455 679)"/><use xlink:href="#g" transform="translate(1552 679)"/><use xlink:href="#f" transform="translate(2037 679)"/><use xlink:href="#g" transform="translate(2134 679)"/><use xlink:href="#e" transform="translate(2425 679)"/><use xlink:href="#g" transform="translate(2522 679)"/><use xlink:href="#b" transform="translate(2813 679)"/><use xlink:href="#e" transform="translate(2910 679)"/><use xlink:href="#f" transform="translate(3007 679)"/><use xlink:href="#g" transform="translate(3104 679)"/><use xlink:href="#j" transform="translate(3492 679)"/><use xlink:href="#k" transform="translate(3686 679)"/><use xlink:href="#d" transform="translate(3783 679)"/><use xlink:href="#f" transform="translate(194 776)"/><use xlink:href="#g" transform="translate(291 776)"/><use xlink:href="#h" transform="translate(388 776)"/><use xlink:href="#b" transform="translate(582 776)"/><use xlink:href="#e" transform="translate(679 776)"/><use xlink:href="#g" transform="translate(776 776)"/><use xlink:href="#j" transform="translate(1164 776)"/><use xlink:href="#g" transform="translate(1358 776)"/><use xlink:href="#g" transform="translate(1552 776)"/><use xlink:href="#b" transform="translate(1746 776)"/><use xlink:href="#e" transform="translate(1940 776)"/><use xlink:href="#g" transform="translate(2037 776)"/><use xlink:href="#g" transform="translate(2134 776)"/><use xlink:href="#g" transform="translate(2231 776)"/><use xlink:href="#g" transform="translate(2328 776)"/><use xlink:href="#g" transform="translate(2425 776)"/><use xlink:href="#i" transform="translate(2522 776)"/><use xlink:href="#a" transform="translate(2716 776)"/><use xlink:href="#f" transform="translate(2910 776)"/><use xlink:href="#g" transform="translate(3007 776)"/><use xlink:href="#g" transform="translate(3104 776)"/><use xlink:href="#d" transform="translate(3201 776)"/><use xlink:href="#b" transform="translate(3395 776)"/><use xlink:href="#c" transform="translate(3880 776)"/><use xlink:href="#g" transform="translate(3977 776)"/><use xlink:href="#g" transform="translate(4074 776)"/><use xlink:href="#h" transform="translate(4171 776)"/><use xlink:href="#e" transform="translate(4365 776)"/><use xlink:href="#f" transform="translate(4462 776)"/><use xlink:href="#g" transform="translate(4559 776)"/><use xlink:href="#d" transform="translate(4656 776)"/><use xlink:href="#a" transform="translate(0 873)"/><use xlink:href="#j" transform="translate(194 873)"/><use xlink:href="#j" transform="translate(388 873)"/><use xlink:href="#c" transform="translate(679 873)"/><use xlink:href="#g" transform="translate(776 873)"/><use xlink:href="#g" transform="translate(873 873)"/><use xlink:href="#h" transform="translate(970 873)"/><use xlink:href="#g" transform="translate(1358 873)"/><use xlink:href="#g" transform="translate(1552 873)"/><use xlink:href="#c" transform="translate(1843 873)"/><use xlink:href="#g" transform="translate(1940 873)"/><use xlink:href="#i" transform="translate(2037 873)"/><use xlink:href="#g" transform="translate(2328 873)"/><use xlink:href="#j" transform="translate(2716 873)"/><use xlink:href="#k" transform="translate(2910 873)"/><use xlink:href="#g" transform="translate(3007 873)"/><use xlink:href="#b" transform="translate(3589 873)"/><use xlink:href="#b" transform="translate(3783 873)"/><use xlink:href="#k" transform="translate(4074 873)"/><use xlink:href="#g" transform="translate(4171 873)"/><use xlink:href="#c" transform="translate(4365 873)"/><use xlink:href="#i" transform="translate(4462 873)"/><use xlink:href="#j" transform="translate(0 970)"/><use xlink:href="#b" transform="translate(291 970)"/><use xlink:href="#e" transform="translate(388 970)"/><use xlink:href="#f" transform="translate(485 970)"/><use xlink:href="#d" transform="translate(582 970)"/><use xlink:href="#k" transform="translate(776 970)"/><use xlink:href="#g" transform="translate(873 970)"/><use xlink:href="#g" transform="translate(970 970)"/><use xlink:href="#g" transform="translate(1067 970)"/><use xlink:href="#h" transform="translate(1164 970)"/><use xlink:href="#j" transform="translate(1358 970)"/><use xlink:href="#k" transform="translate(1552 970)"/><use xlink:href="#g" transform="translate(1649 970)"/><use xlink:href="#d" transform="translate(1746 970)"/><use xlink:href="#g" transform="translate(1940 970)"/><use xlink:href="#b" transform="translate(2134 970)"/><use xlink:href="#e" transform="translate(2231 970)"/><use xlink:href="#g" transform="translate(2328 970)"/><use xlink:href="#f" transform="translate(2522 970)"/><use xlink:href="#d" transform="translate(2619 970)"/><use xlink:href="#g" transform="translate(3007 970)"/><use xlink:href="#g" transform="translate(3104 970)"/><use xlink:href="#g" transform="translate(3201 970)"/><use xlink:href="#g" transform="translate(3298 970)"/><use xlink:href="#h" transform="translate(3395 970)"/><use xlink:href="#b" transform="translate(3686 970)"/><use xlink:href="#b" transform="translate(3977 970)"/><use xlink:href="#k" transform="translate(4171 970)"/><use xlink:href="#h" transform="translate(4268 970)"/><use xlink:href="#c" transform="translate(4559 970)"/><use xlink:href="#h" transform="translate(4656 970)"/><use xlink:href="#e" transform="translate(0 1067)"/><use xlink:href="#f" transform="translate(97 1067)"/><use xlink:href="#h" transform="translate(194 1067)"/><use xlink:href="#e" transform="translate(291 1067)"/><use xlink:href="#f" transform="translate(388 1067)"/><use xlink:href="#g" transform="translate(485 1067)"/><use xlink:href="#b" transform="translate(679 1067)"/><use xlink:href="#j" transform="translate(873 1067)"/><use xlink:href="#g" transform="translate(1164 1067)"/><use xlink:href="#b" transform="translate(1455 1067)"/><use xlink:href="#e" transform="translate(1746 1067)"/><use xlink:href="#f" transform="translate(1843 1067)"/><use xlink:href="#g" transform="translate(1940 1067)"/><use xlink:href="#d" transform="translate(2037 1067)"/><use xlink:href="#e" transform="translate(2134 1067)"/><use xlink:href="#f" transform="translate(2231 1067)"/><use xlink:href="#i" transform="translate(2328 1067)"/><use xlink:href="#g" transform="translate(2522 1067)"/><use xlink:href="#b" transform="translate(2716 1067)"/><use xlink:href="#e" transform="translate(2813 1067)"/><use xlink:href="#f" transform="translate(2910 1067)"/><use xlink:href="#g" transform="translate(3007 1067)"/><use xlink:href="#g" transform="translate(3104 1067)"/><use xlink:href="#i" transform="translate(3201 1067)"/><use xlink:href="#j" transform="translate(3395 1067)"/><use xlink:href="#e" transform="translate(3783 1067)"/><use xlink:href="#a" transform="translate(3880 1067)"/><use xlink:href="#j" transform="translate(4268 1067)"/><use xlink:href="#j" transform="translate(4656 1067)"/><use xlink:href="#f" transform="translate(0 1164)"/><use xlink:href="#g" transform="translate(97 1164)"/><use xlink:href="#g" transform="translate(194 1164)"/><use xlink:href="#g" transform="translate(291 1164)"/><use xlink:href="#g" transform="translate(388 1164)"/><use xlink:href="#g" transform="translate(485 1164)"/><use xlink:href="#d" transform="translate(582 1164)"/><use xlink:href="#e" transform="translate(970 1164)"/><use xlink:href="#f" transform="translate(1067 1164)"/><use xlink:href="#g" transform="translate(1164 1164)"/><use xlink:href="#d" transform="translate(1261 1164)"/><use xlink:href="#f" transform="translate(1552 1164)"/><use xlink:href="#g" transform="translate(1649 1164)"/><use xlink:href="#g" transform="translate(1746 1164)"/><use xlink:href="#g" transform="translate(1843 1164)"/><use xlink:href="#g" transform="translate(1940 1164)"/><use xlink:href="#e" transform="translate(2037 1164)"/><use xlink:href="#f" transform="translate(2134 1164)"/><use xlink:href="#g" transform="translate(2231 1164)"/><use xlink:href="#e" transform="translate(2425 1164)"/><use xlink:href="#g" transform="translate(2522 1164)"/><use xlink:href="#h" transform="translate(2619 1164)"/><use xlink:href="#e" transform="translate(2716 1164)"/><use xlink:href="#f" transform="translate(2813 1164)"/><use xlink:href="#g" transform="translate(2910 1164)"/><use xlink:href="#g" transform="translate(3007 1164)"/><use xlink:href="#g" transform="translate(3104 1164)"/><use xlink:href="#b" transform="translate(3298 1164)"/><use xlink:href="#f" transform="translate(3492 1164)"/><use xlink:href="#g" transform="translate(3589 1164)"/><use xlink:href="#g" transform="translate(3686 1164)"/><use xlink:href="#g" transform="translate(3783 1164)"/><use xlink:href="#i" transform="translate(3880 1164)"/><use xlink:href="#a" transform="translate(4074 1164)"/><use xlink:href="#f" transform="translate(4365 1164)"/><use xlink:href="#h" transform="translate(4462 1164)"/><use xlink:href="#k" transform="translate(0 1261)"/><use xlink:href="#i" transform="translate(97 1261)"/><use xlink:href="#j" transform="translate(291 1261)"/><use xlink:href="#g" transform="translate(485 1261)"/><use xlink:href="#f" transform="translate(970 1261)"/><use xlink:href="#g" transform="translate(1067 1261)"/><use xlink:href="#g" transform="translate(1164 1261)"/><use xlink:href="#g" transform="translate(1552 1261)"/><use xlink:href="#i" transform="translate(1649 1261)"/><use xlink:href="#k" transform="translate(1940 1261)"/><use xlink:href="#g" transform="translate(2037 1261)"/><use xlink:href="#g" transform="translate(2134 1261)"/><use xlink:href="#g" transform="translate(2231 1261)"/><use xlink:href="#g" transform="translate(2328 1261)"/><use xlink:href="#g" transform="translate(2425 1261)"/><use xlink:href="#g" transform="translate(2522 1261)"/><use xlink:href="#g" transform="translate(2619 1261)"/><use xlink:href="#g" transform="translate(2716 1261)"/><use xlink:href="#i" transform="translate(2813 1261)"/><use xlink:href="#k" transform="translate(3007 1261)"/><use xlink:href="#g" transform="translate(3104 1261)"/><use xlink:href="#d" transform="translate(3201 1261)"/><use xlink:href="#j" transform="translate(3492 1261)"/><use xlink:href="#g" transform="translate(3783 1261)"/><use xlink:href="#j" transform="translate(4074 1261)"/><use xlink:href="#k" transform="translate(4365 1261)"/><use xlink:href="#i" transform="translate(4462 1261)"/><use xlink:href="#a" transform="translate(194 1358)"/><use xlink:href="#k" transform="translate(485 1358)"/><use xlink:href="#d" transform="translate(582 1358)"/><use xlink:href="#g" transform="translate(970 1358)"/><use xlink:href="#g" transform="translate(1164 1358)"/><use xlink:href="#g" transform="translate(1261 1358)"/><use xlink:href="#h" transform="translate(1358 1358)"/><use xlink:href="#e" transform="translate(1455 1358)"/><use xlink:href="#g" transform="translate(1552 1358)"/><use xlink:href="#e" transform="translate(1746 1358)"/><use xlink:href="#a" transform="translate(1843 1358)"/><use xlink:href="#g" transform="translate(2134 1358)"/><use xlink:href="#g" transform="translate(2231 1358)"/><use xlink:href="#g" transform="translate(2425 1358)"/><use xlink:href="#g" transform="translate(2619 1358)"/><use xlink:href="#e" transform="translate(2813 1358)"/><use xlink:href="#a" transform="translate(2910 1358)"/><use xlink:href="#b" transform="translate(3298 1358)"/><use xlink:href="#f" transform="translate(3589 1358)"/><use xlink:href="#g" transform="translate(3686 1358)"/><use xlink:href="#g" transform="translate(3783 1358)"/><use xlink:href="#h" transform="translate(3880 1358)"/><use xlink:href="#f" transform="translate(4171 1358)"/><use xlink:href="#h" transform="translate(4268 1358)"/><use xlink:href="#c" transform="translate(4559 1358)"/><use xlink:href="#d" transform="translate(4656 1358)"/><use xlink:href="#b" transform="translate(0 1455)"/><use xlink:href="#j" transform="translate(194 1455)"/><use xlink:href="#c" transform="translate(679 1455)"/><use xlink:href="#h" transform="translate(776 1455)"/><use xlink:href="#g" transform="translate(970 1455)"/><use xlink:href="#k" transform="translate(1164 1455)"/><use xlink:href="#g" transform="translate(1261 1455)"/><use xlink:href="#g" transform="translate(1358 1455)"/><use xlink:href="#g" transform="translate(1455 1455)"/><use xlink:href="#g" transform="translate(1552 1455)"/><use xlink:href="#g" transform="translate(1649 1455)"/><use xlink:href="#g" transform="translate(1746 1455)"/><use xlink:href="#g" transform="translate(1843 1455)"/><use xlink:href="#g" transform="translate(1940 1455)"/><use xlink:href="#g" transform="translate(2037 1455)"/><use xlink:href="#g" transform="translate(2134 1455)"/><use xlink:href="#g" transform="translate(2231 1455)"/><use xlink:href="#j" transform="translate(2425 1455)"/><use xlink:href="#g" transform="translate(2619 1455)"/><use xlink:href="#c" transform="translate(2813 1455)"/><use xlink:href="#g" transform="translate(2910 1455)"/><use xlink:href="#g" transform="translate(3007 1455)"/><use xlink:href="#g" transform="translate(3104 1455)"/><use xlink:href="#d" transform="translate(3201 1455)"/><use xlink:href="#b" transform="translate(3395 1455)"/><use xlink:href="#k" transform="translate(3589 1455)"/><use xlink:href="#g" transform="translate(3686 1455)"/><use xlink:href="#g" transform="translate(3783 1455)"/><use xlink:href="#g" transform="translate(3880 1455)"/><use xlink:href="#k" transform="translate(4171 1455)"/><use xlink:href="#i" transform="translate(4268 1455)"/><use xlink:href="#c" transform="translate(291 1552)"/><use xlink:href="#d" transform="translate(388 1552)"/><use xlink:href="#b" transform="translate(582 1552)"/><use xlink:href="#g" transform="translate(776 1552)"/><use xlink:href="#k" transform="translate(970 1552)"/><use xlink:href="#d" transform="translate(1067 1552)"/><use xlink:href="#j" transform="translate(1455 1552)"/><use xlink:href="#k" transform="translate(1649 1552)"/><use xlink:href="#g" transform="translate(1746 1552)"/><use xlink:href="#i" transform="translate(1843 1552)"/><use xlink:href="#g" transform="translate(2037 1552)"/><use xlink:href="#g" transform="translate(2134 1552)"/><use xlink:href="#g" transform="translate(2231 1552)"/><use xlink:href="#h" transform="translate(2328 1552)"/><use xlink:href="#k" transform="translate(2619 1552)"/><use xlink:href="#d" transform="translate(2716 1552)"/><use xlink:href="#k" transform="translate(3007 1552)"/><use xlink:href="#g" transform="translate(3104 1552)"/><use xlink:href="#a" transform="translate(3492 1552)"/><use xlink:href="#k" transform="translate(3783 1552)"/><use xlink:href="#i" transform="translate(3880 1552)"/><use xlink:href="#e" transform="translate(3977 1552)"/><use xlink:href="#a" transform="translate(4074 1552)"/><use xlink:href="#f" transform="translate(4365 1552)"/><use xlink:href="#h" transform="translate(4462 1552)"/><use xlink:href="#b" transform="translate(4656 1552)"/><use xlink:href="#b" transform="translate(97 1649)"/><use xlink:href="#b" transform="translate(485 1649)"/><use xlink:href="#j" transform="translate(776 1649)"/><use xlink:href="#c" transform="translate(1261 1649)"/><use xlink:href="#d" transform="translate(1358 1649)"/><use xlink:href="#g" transform="translate(1746 1649)"/><use xlink:href="#f" transform="translate(1940 1649)"/><use xlink:href="#g" transform="translate(2037 1649)"/><use xlink:href="#g" transform="translate(2134 1649)"/><use xlink:href="#k" transform="translate(2328 1649)"/><use xlink:href="#d" transform="translate(2425 1649)"/><use xlink:href="#a" transform="translate(2813 1649)"/><use xlink:href="#g" transform="translate(3104 1649)"/><use xlink:href="#d" transform="translate(3201 1649)"/><use xlink:href="#e" transform="translate(3395 1649)"/><use xlink:href="#g" transform="translate(3492 1649)"/><use xlink:href="#f" transform="translate(3977 1649)"/><use xlink:href="#i" transform="translate(4074 1649)"/><use xlink:href="#g" transform="translate(4365 1649)"/><use xlink:href="#i" transform="translate(4462 1649)"/><use xlink:href="#a" transform="translate(0 1746)"/><use xlink:href="#c" transform="translate(582 1746)"/><use xlink:href="#h" transform="translate(679 1746)"/><use xlink:href="#e" transform="translate(776 1746)"/><use xlink:href="#f" transform="translate(873 1746)"/><use xlink:href="#d" transform="translate(970 1746)"/><use xlink:href="#a" transform="translate(1164 1746)"/><use xlink:href="#j" transform="translate(1746 1746)"/><use xlink:href="#k" transform="translate(1940 1746)"/><use xlink:href="#g" transform="translate(2037 1746)"/><use xlink:href="#g" transform="translate(2134 1746)"/><use xlink:href="#e" transform="translate(2522 1746)"/><use xlink:href="#a" transform="translate(2619 1746)"/><use xlink:href="#g" transform="translate(2813 1746)"/><use xlink:href="#g" transform="translate(3104 1746)"/><use xlink:href="#e" transform="translate(3298 1746)"/><use xlink:href="#f" transform="translate(3395 1746)"/><use xlink:href="#i" transform="translate(3492 1746)"/><use xlink:href="#j" transform="translate(3977 1746)"/><use xlink:href="#j" transform="translate(4365 1746)"/><use xlink:href="#b" transform="translate(4656 1746)"/><use xlink:href="#g" transform="translate(0 1843)"/><use xlink:href="#b" transform="translate(291 1843)"/><use xlink:href="#k" transform="translate(679 1843)"/><use xlink:href="#g" transform="translate(776 1843)"/><use xlink:href="#g" transform="translate(873 1843)"/><use xlink:href="#j" transform="translate(1164 1843)"/><use xlink:href="#b" transform="translate(1455 1843)"/><use xlink:href="#b" transform="translate(1649 1843)"/><use xlink:href="#k" transform="translate(2134 1843)"/><use xlink:href="#d" transform="translate(2231 1843)"/><use xlink:href="#c" transform="translate(2522 1843)"/><use xlink:href="#i" transform="translate(2619 1843)"/><use xlink:href="#j" transform="translate(2813 1843)"/><use xlink:href="#k" transform="translate(3104 1843)"/><use xlink:href="#g" transform="translate(3201 1843)"/><use xlink:href="#g" transform="translate(3298 1843)"/><use xlink:href="#i" transform="translate(3395 1843)"/><use xlink:href="#e" transform="translate(3492 1843)"/><use xlink:href="#f" transform="translate(3589 1843)"/><use xlink:href="#h" transform="translate(3686 1843)"/><use xlink:href="#a" transform="translate(3880 1843)"/><use xlink:href="#f" transform="translate(4074 1843)"/><use xlink:href="#g" transform="translate(4171 1843)"/><use xlink:href="#d" transform="translate(4268 1843)"/><use xlink:href="#b" transform="translate(4559 1843)"/><use xlink:href="#k" transform="translate(0 1940)"/><use xlink:href="#g" transform="translate(97 1940)"/><use xlink:href="#h" transform="translate(194 1940)"/><use xlink:href="#a" transform="translate(388 1940)"/><use xlink:href="#b" transform="translate(582 1940)"/><use xlink:href="#g" transform="translate(873 1940)"/><use xlink:href="#g" transform="translate(970 1940)"/><use xlink:href="#d" transform="translate(1067 1940)"/><use xlink:href="#b" transform="translate(1552 1940)"/><use xlink:href="#b" transform="translate(1843 1940)"/><use xlink:href="#b" transform="translate(2910 1940)"/><use xlink:href="#c" transform="translate(3492 1940)"/><use xlink:href="#g" transform="translate(3589 1940)"/><use xlink:href="#i" transform="translate(3686 1940)"/><use xlink:href="#j" transform="translate(3880 1940)"/><use xlink:href="#e" transform="translate(3977 1940)"/><use xlink:href="#g" transform="translate(4074 1940)"/><use xlink:href="#i" transform="translate(4171 1940)"/><use xlink:href="#a" transform="translate(4462 1940)"/><use xlink:href="#b" transform="translate(4656 1940)"/><use xlink:href="#g" transform="translate(97 2037)"/><use xlink:href="#g" transform="translate(194 2037)"/><use xlink:href="#g" transform="translate(388 2037)"/><use xlink:href="#e" transform="translate(582 2037)"/><use xlink:href="#a" transform="translate(679 2037)"/><use xlink:href="#e" transform="translate(776 2037)"/><use xlink:href="#g" transform="translate(873 2037)"/><use xlink:href="#c" transform="translate(1358 2037)"/><use xlink:href="#h" transform="translate(1455 2037)"/><use xlink:href="#f" transform="translate(1649 2037)"/><use xlink:href="#d" transform="translate(1746 2037)"/><use xlink:href="#b" transform="translate(2813 2037)"/><use xlink:href="#c" transform="translate(3007 2037)"/><use xlink:href="#h" transform="translate(3104 2037)"/><use xlink:href="#b" transform="translate(3395 2037)"/><use xlink:href="#b" transform="translate(3783 2037)"/><use xlink:href="#e" transform="translate(3880 2037)"/><use xlink:href="#f" transform="translate(3977 2037)"/><use xlink:href="#g" transform="translate(4074 2037)"/><use xlink:href="#j" transform="translate(4462 2037)"/><use xlink:href="#c" transform="translate(0 2134)"/><use xlink:href="#g" transform="translate(97 2134)"/><use xlink:href="#i" transform="translate(194 2134)"/><use xlink:href="#g" transform="translate(388 2134)"/><use xlink:href="#g" transform="translate(485 2134)"/><use xlink:href="#g" transform="translate(582 2134)"/><use xlink:href="#g" transform="translate(679 2134)"/><use xlink:href="#g" transform="translate(776 2134)"/><use xlink:href="#i" transform="translate(873 2134)"/><use xlink:href="#b" transform="translate(1067 2134)"/><use xlink:href="#a" transform="translate(1261 2134)"/><use xlink:href="#g" transform="translate(1455 2134)"/><use xlink:href="#e" transform="translate(1552 2134)"/><use xlink:href="#g" transform="translate(1649 2134)"/><use xlink:href="#b" transform="translate(1843 2134)"/><use xlink:href="#k" transform="translate(3104 2134)"/><use xlink:href="#g" transform="translate(3201 2134)"/><use xlink:href="#h" transform="translate(3298 2134)"/><use xlink:href="#b" transform="translate(3492 2134)"/><use xlink:href="#b" transform="translate(3686 2134)"/><use xlink:href="#e" transform="translate(3783 2134)"/><use xlink:href="#f" transform="translate(3880 2134)"/><use xlink:href="#g" transform="translate(3977 2134)"/><use xlink:href="#g" transform="translate(4074 2134)"/><use xlink:href="#g" transform="translate(4171 2134)"/><use xlink:href="#h" transform="translate(4268 2134)"/><use xlink:href="#f" transform="translate(4559 2134)"/><use xlink:href="#h" transform="translate(4656 2134)"/><use xlink:href="#g" transform="translate(97 2231)"/><use xlink:href="#g" transform="translate(388 2231)"/><use xlink:href="#g" transform="translate(776 2231)"/><use xlink:href="#j" transform="translate(1261 2231)"/><use xlink:href="#k" transform="translate(1455 2231)"/><use xlink:href="#g" transform="translate(1552 2231)"/><use xlink:href="#g" transform="translate(1649 2231)"/><use xlink:href="#h" transform="translate(1746 2231)"/><use xlink:href="#b" transform="translate(2910 2231)"/><use xlink:href="#g" transform="translate(3298 2231)"/><use xlink:href="#d" transform="translate(3395 2231)"/><use xlink:href="#c" transform="translate(3783 2231)"/><use xlink:href="#g" transform="translate(3880 2231)"/><use xlink:href="#g" transform="translate(4268 2231)"/><use xlink:href="#d" transform="translate(4365 2231)"/><use xlink:href="#e" transform="translate(4462 2231)"/><use xlink:href="#g" transform="translate(4559 2231)"/><use xlink:href="#i" transform="translate(4656 2231)"/><use xlink:href="#e" transform="translate(0 2328)"/><use xlink:href="#g" transform="translate(97 2328)"/><use xlink:href="#d" transform="translate(194 2328)"/><use xlink:href="#e" transform="translate(291 2328)"/><use xlink:href="#g" transform="translate(388 2328)"/><use xlink:href="#b" transform="translate(582 2328)"/><use xlink:href="#g" transform="translate(776 2328)"/><use xlink:href="#g" transform="translate(873 2328)"/><use xlink:href="#d" transform="translate(970 2328)"/><use xlink:href="#g" transform="translate(1649 2328)"/><use xlink:href="#g" transform="translate(1746 2328)"/><use xlink:href="#h" transform="translate(1843 2328)"/><use xlink:href="#a" transform="translate(2813 2328)"/><use xlink:href="#c" transform="translate(3007 2328)"/><use xlink:href="#g" transform="translate(3104 2328)"/><use xlink:href="#g" transform="translate(3201 2328)"/><use xlink:href="#i" transform="translate(3298 2328)"/><use xlink:href="#b" transform="translate(3492 2328)"/><use xlink:href="#b" transform="translate(3686 2328)"/><use xlink:href="#g" transform="translate(3880 2328)"/><use xlink:href="#b" transform="translate(4074 2328)"/><use xlink:href="#g" transform="translate(4268 2328)"/><use xlink:href="#c" transform="translate(4462 2328)"/><use xlink:href="#g" transform="translate(4559 2328)"/><use xlink:href="#c" transform="translate(0 2425)"/><use xlink:href="#g" transform="translate(97 2425)"/><use xlink:href="#e" transform="translate(194 2425)"/><use xlink:href="#f" transform="translate(291 2425)"/><use xlink:href="#g" transform="translate(388 2425)"/><use xlink:href="#e" transform="translate(679 2425)"/><use xlink:href="#g" transform="translate(776 2425)"/><use xlink:href="#b" transform="translate(1455 2425)"/><use xlink:href="#j" transform="translate(1649 2425)"/><use xlink:href="#g" transform="translate(1843 2425)"/><use xlink:href="#g" transform="translate(2813 2425)"/><use xlink:href="#d" transform="translate(2910 2425)"/><use xlink:href="#g" transform="translate(3104 2425)"/><use xlink:href="#c" transform="translate(3783 2425)"/><use xlink:href="#g" transform="translate(3880 2425)"/><use xlink:href="#e" transform="translate(4171 2425)"/><use xlink:href="#g" transform="translate(4268 2425)"/><use xlink:href="#d" transform="translate(4365 2425)"/><use xlink:href="#j" transform="translate(4559 2425)"/><use xlink:href="#g" transform="translate(97 2522)"/><use xlink:href="#g" transform="translate(194 2522)"/><use xlink:href="#g" transform="translate(291 2522)"/><use xlink:href="#g" transform="translate(388 2522)"/><use xlink:href="#g" transform="translate(485 2522)"/><use xlink:href="#g" transform="translate(582 2522)"/><use xlink:href="#g" transform="translate(679 2522)"/><use xlink:href="#g" transform="translate(776 2522)"/><use xlink:href="#g" transform="translate(873 2522)"/><use xlink:href="#g" transform="translate(970 2522)"/><use xlink:href="#h" transform="translate(1067 2522)"/><use xlink:href="#b" transform="translate(1261 2522)"/><use xlink:href="#b" transform="translate(1552 2522)"/><use xlink:href="#e" transform="translate(1746 2522)"/><use xlink:href="#g" transform="translate(1843 2522)"/><use xlink:href="#j" transform="translate(2813 2522)"/><use xlink:href="#e" transform="translate(2910 2522)"/><use xlink:href="#f" transform="translate(3007 2522)"/><use xlink:href="#g" transform="translate(3104 2522)"/><use xlink:href="#b" transform="translate(3298 2522)"/><use xlink:href="#c" transform="translate(3492 2522)"/><use xlink:href="#g" transform="translate(3589 2522)"/><use xlink:href="#d" transform="translate(3686 2522)"/><use xlink:href="#k" transform="translate(3880 2522)"/><use xlink:href="#g" transform="translate(3977 2522)"/><use xlink:href="#g" transform="translate(4074 2522)"/><use xlink:href="#g" transform="translate(4171 2522)"/><use xlink:href="#i" transform="translate(4268 2522)"/><use xlink:href="#b" transform="translate(4462 2522)"/><use xlink:href="#e" transform="translate(4559 2522)"/><use xlink:href="#a" transform="translate(4656 2522)"/><use xlink:href="#f" transform="translate(0 2619)"/><use xlink:href="#i" transform="translate(97 2619)"/><use xlink:href="#g" transform="translate(291 2619)"/><use xlink:href="#k" transform="translate(679 2619)"/><use xlink:href="#g" transform="translate(776 2619)"/><use xlink:href="#i" transform="translate(873 2619)"/><use xlink:href="#g" transform="translate(1067 2619)"/><use xlink:href="#b" transform="translate(1358 2619)"/><use xlink:href="#f" transform="translate(1746 2619)"/><use xlink:href="#g" transform="translate(1843 2619)"/><use xlink:href="#e" transform="translate(2813 2619)"/><use xlink:href="#f" transform="translate(2910 2619)"/><use xlink:href="#g" transform="translate(3007 2619)"/><use xlink:href="#i" transform="translate(3104 2619)"/><use xlink:href="#j" transform="translate(3977 2619)"/><use xlink:href="#j" transform="translate(4171 2619)"/><use xlink:href="#c" transform="translate(4559 2619)"/><use xlink:href="#i" transform="translate(4656 2619)"/><use xlink:href="#j" transform="translate(0 2716)"/><use xlink:href="#k" transform="translate(291 2716)"/><use xlink:href="#g" transform="translate(388 2716)"/><use xlink:href="#g" transform="translate(485 2716)"/><use xlink:href="#d" transform="translate(582 2716)"/><use xlink:href="#g" transform="translate(776 2716)"/><use xlink:href="#g" transform="translate(1067 2716)"/><use xlink:href="#g" transform="translate(1746 2716)"/><use xlink:href="#g" transform="translate(1843 2716)"/><use xlink:href="#e" transform="translate(2716 2716)"/><use xlink:href="#f" transform="translate(2813 2716)"/><use xlink:href="#g" transform="translate(2910 2716)"/><use xlink:href="#b" transform="translate(3201 2716)"/><use xlink:href="#f" transform="translate(3395 2716)"/><use xlink:href="#d" transform="translate(3492 2716)"/><use xlink:href="#f" transform="translate(3783 2716)"/><use xlink:href="#h" transform="translate(3880 2716)"/><use xlink:href="#b" transform="translate(4074 2716)"/><use xlink:href="#c" transform="translate(4268 2716)"/><use xlink:href="#g" transform="translate(4365 2716)"/><use xlink:href="#d" transform="translate(4462 2716)"/><use xlink:href="#g" transform="translate(388 2813)"/><use xlink:href="#i" transform="translate(485 2813)"/><use xlink:href="#e" transform="translate(582 2813)"/><use xlink:href="#f" transform="translate(679 2813)"/><use xlink:href="#g" transform="translate(776 2813)"/><use xlink:href="#d" transform="translate(873 2813)"/><use xlink:href="#j" transform="translate(1067 2813)"/><use xlink:href="#k" transform="translate(1746 2813)"/><use xlink:href="#g" transform="translate(1843 2813)"/><use xlink:href="#e" transform="translate(1940 2813)"/><use xlink:href="#f" transform="translate(2037 2813)"/><use xlink:href="#h" transform="translate(2134 2813)"/><use xlink:href="#a" transform="translate(2328 2813)"/><use xlink:href="#c" transform="translate(2716 2813)"/><use xlink:href="#g" transform="translate(2813 2813)"/><use xlink:href="#g" transform="translate(2910 2813)"/><use xlink:href="#g" transform="translate(3007 2813)"/><use xlink:href="#d" transform="translate(3104 2813)"/><use xlink:href="#j" transform="translate(3395 2813)"/><use xlink:href="#e" transform="translate(3686 2813)"/><use xlink:href="#g" transform="translate(3783 2813)"/><use xlink:href="#g" transform="translate(3880 2813)"/><use xlink:href="#b" transform="translate(4171 2813)"/><use xlink:href="#b" transform="translate(4559 2813)"/><use xlink:href="#f" transform="translate(97 2910)"/><use xlink:href="#h" transform="translate(194 2910)"/><use xlink:href="#e" transform="translate(291 2910)"/><use xlink:href="#g" transform="translate(388 2910)"/><use xlink:href="#c" transform="translate(582 2910)"/><use xlink:href="#g" transform="translate(679 2910)"/><use xlink:href="#b" transform="translate(1455 2910)"/><use xlink:href="#g" transform="translate(1843 2910)"/><use xlink:href="#g" transform="translate(1940 2910)"/><use xlink:href="#g" transform="translate(2037 2910)"/><use xlink:href="#i" transform="translate(2134 2910)"/><use xlink:href="#g" transform="translate(2328 2910)"/><use xlink:href="#d" transform="translate(2425 2910)"/><use xlink:href="#b" transform="translate(2619 2910)"/><use xlink:href="#g" transform="translate(3007 2910)"/><use xlink:href="#f" transform="translate(3201 2910)"/><use xlink:href="#d" transform="translate(3298 2910)"/><use xlink:href="#e" transform="translate(3395 2910)"/><use xlink:href="#a" transform="translate(3492 2910)"/><use xlink:href="#c" transform="translate(3686 2910)"/><use xlink:href="#g" transform="translate(3783 2910)"/><use xlink:href="#g" transform="translate(3880 2910)"/><use xlink:href="#b" transform="translate(4074 2910)"/><use xlink:href="#e" transform="translate(4171 2910)"/><use xlink:href="#f" transform="translate(4268 2910)"/><use xlink:href="#d" transform="translate(4365 2910)"/><use xlink:href="#e" transform="translate(4559 2910)"/><use xlink:href="#a" transform="translate(4656 2910)"/><use xlink:href="#k" transform="translate(97 3007)"/><use xlink:href="#g" transform="translate(194 3007)"/><use xlink:href="#g" transform="translate(291 3007)"/><use xlink:href="#g" transform="translate(388 3007)"/><use xlink:href="#d" transform="translate(485 3007)"/><use xlink:href="#k" transform="translate(679 3007)"/><use xlink:href="#g" transform="translate(776 3007)"/><use xlink:href="#d" transform="translate(873 3007)"/><use xlink:href="#b" transform="translate(1164 3007)"/><use xlink:href="#b" transform="translate(1358 3007)"/><use xlink:href="#b" transform="translate(1552 3007)"/><use xlink:href="#e" transform="translate(1746 3007)"/><use xlink:href="#g" transform="translate(1843 3007)"/><use xlink:href="#e" transform="translate(2231 3007)"/><use xlink:href="#g" transform="translate(2328 3007)"/><use xlink:href="#b" transform="translate(2522 3007)"/><use xlink:href="#c" transform="translate(2910 3007)"/><use xlink:href="#i" transform="translate(3007 3007)"/><use xlink:href="#g" transform="translate(3201 3007)"/><use xlink:href="#c" transform="translate(3395 3007)"/><use xlink:href="#g" transform="translate(3492 3007)"/><use xlink:href="#g" transform="translate(3880 3007)"/><use xlink:href="#h" transform="translate(3977 3007)"/><use xlink:href="#f" transform="translate(4171 3007)"/><use xlink:href="#g" transform="translate(4268 3007)"/><use xlink:href="#e" transform="translate(4462 3007)"/><use xlink:href="#f" transform="translate(4559 3007)"/><use xlink:href="#i" transform="translate(4656 3007)"/><use xlink:href="#g" transform="translate(291 3104)"/><use xlink:href="#b" transform="translate(582 3104)"/><use xlink:href="#b" transform="translate(1067 3104)"/><use xlink:href="#c" transform="translate(1746 3104)"/><use xlink:href="#g" transform="translate(1843 3104)"/><use xlink:href="#g" transform="translate(1940 3104)"/><use xlink:href="#h" transform="translate(2037 3104)"/><use xlink:href="#c" transform="translate(2231 3104)"/><use xlink:href="#g" transform="translate(2328 3104)"/><use xlink:href="#b" transform="translate(2813 3104)"/><use xlink:href="#g" transform="translate(3201 3104)"/><use xlink:href="#d" transform="translate(3298 3104)"/><use xlink:href="#g" transform="translate(3492 3104)"/><use xlink:href="#c" transform="translate(3686 3104)"/><use xlink:href="#g" transform="translate(3783 3104)"/><use xlink:href="#g" transform="translate(3880 3104)"/><use xlink:href="#i" transform="translate(3977 3104)"/><use xlink:href="#k" transform="translate(4171 3104)"/><use xlink:href="#g" transform="translate(4268 3104)"/><use xlink:href="#g" transform="translate(4365 3104)"/><use xlink:href="#g" transform="translate(4462 3104)"/><use xlink:href="#g" transform="translate(4559 3104)"/><use xlink:href="#f" transform="translate(0 3201)"/><use xlink:href="#g" transform="translate(97 3201)"/><use xlink:href="#g" transform="translate(194 3201)"/><use xlink:href="#g" transform="translate(291 3201)"/><use xlink:href="#c" transform="translate(679 3201)"/><use xlink:href="#d" transform="translate(776 3201)"/><use xlink:href="#a" transform="translate(1261 3201)"/><use xlink:href="#c" transform="translate(1455 3201)"/><use xlink:href="#d" transform="translate(1552 3201)"/><use xlink:href="#k" transform="translate(1940 3201)"/><use xlink:href="#g" transform="translate(2037 3201)"/><use xlink:href="#d" transform="translate(2134 3201)"/><use xlink:href="#g" transform="translate(2328 3201)"/><use xlink:href="#h" transform="translate(2425 3201)"/><use xlink:href="#a" transform="translate(2619 3201)"/><use xlink:href="#f" transform="translate(2910 3201)"/><use xlink:href="#d" transform="translate(3007 3201)"/><use xlink:href="#j" transform="translate(3201 3201)"/><use xlink:href="#c" transform="translate(3395 3201)"/><use xlink:href="#g" transform="translate(3492 3201)"/><use xlink:href="#g" transform="translate(3783 3201)"/><use xlink:href="#j" transform="translate(4365 3201)"/><use xlink:href="#j" transform="translate(4559 3201)"/><use xlink:href="#g" transform="translate(0 3298)"/><use xlink:href="#k" transform="translate(291 3298)"/><use xlink:href="#h" transform="translate(388 3298)"/><use xlink:href="#b" transform="translate(582 3298)"/><use xlink:href="#a" transform="translate(873 3298)"/><use xlink:href="#a" transform="translate(1067 3298)"/><use xlink:href="#e" transform="translate(1164 3298)"/><use xlink:href="#g" transform="translate(1261 3298)"/><use xlink:href="#j" transform="translate(2037 3298)"/><use xlink:href="#e" transform="translate(2134 3298)"/><use xlink:href="#f" transform="translate(2231 3298)"/><use xlink:href="#g" transform="translate(2328 3298)"/><use xlink:href="#g" transform="translate(2425 3298)"/><use xlink:href="#j" transform="translate(2619 3298)"/><use xlink:href="#e" transform="translate(2813 3298)"/><use xlink:href="#g" transform="translate(2910 3298)"/><use xlink:href="#b" transform="translate(3298 3298)"/><use xlink:href="#j" transform="translate(3492 3298)"/><use xlink:href="#c" transform="translate(3686 3298)"/><use xlink:href="#i" transform="translate(3783 3298)"/><use xlink:href="#c" transform="translate(3977 3298)"/><use xlink:href="#d" transform="translate(4074 3298)"/><use xlink:href="#b" transform="translate(4656 3298)"/><use xlink:href="#g" transform="translate(0 3395)"/><use xlink:href="#b" transform="translate(194 3395)"/><use xlink:href="#k" transform="translate(388 3395)"/><use xlink:href="#h" transform="translate(485 3395)"/><use xlink:href="#j" transform="translate(873 3395)"/><use xlink:href="#k" transform="translate(1067 3395)"/><use xlink:href="#g" transform="translate(1164 3395)"/><use xlink:href="#g" transform="translate(1261 3395)"/><use xlink:href="#g" transform="translate(1358 3395)"/><use xlink:href="#g" transform="translate(1455 3395)"/><use xlink:href="#g" transform="translate(1552 3395)"/><use xlink:href="#d" transform="translate(1649 3395)"/><use xlink:href="#f" transform="translate(1843 3395)"/><use xlink:href="#h" transform="translate(1940 3395)"/><use xlink:href="#c" transform="translate(2134 3395)"/><use xlink:href="#i" transform="translate(2231 3395)"/><use xlink:href="#g" transform="translate(2425 3395)"/><use xlink:href="#c" transform="translate(2813 3395)"/><use xlink:href="#g" transform="translate(2910 3395)"/><use xlink:href="#g" transform="translate(3007 3395)"/><use xlink:href="#d" transform="translate(3104 3395)"/><use xlink:href="#b" transform="translate(3395 3395)"/><use xlink:href="#f" transform="translate(4268 3395)"/><use xlink:href="#d" transform="translate(4365 3395)"/><use xlink:href="#b" transform="translate(4559 3395)"/><use xlink:href="#k" transform="translate(0 3492)"/><use xlink:href="#h" transform="translate(97 3492)"/><use xlink:href="#e" transform="translate(194 3492)"/><use xlink:href="#a" transform="translate(291 3492)"/><use xlink:href="#k" transform="translate(485 3492)"/><use xlink:href="#g" transform="translate(582 3492)"/><use xlink:href="#d" transform="translate(679 3492)"/><use xlink:href="#g" transform="translate(1164 3492)"/><use xlink:href="#g" transform="translate(1261 3492)"/><use xlink:href="#g" transform="translate(1358 3492)"/><use xlink:href="#g" transform="translate(1552 3492)"/><use xlink:href="#g" transform="translate(1843 3492)"/><use xlink:href="#g" transform="translate(1940 3492)"/><use xlink:href="#h" transform="translate(2037 3492)"/><use xlink:href="#e" transform="translate(2231 3492)"/><use xlink:href="#f" transform="translate(2328 3492)"/><use xlink:href="#i" transform="translate(2425 3492)"/><use xlink:href="#b" transform="translate(2716 3492)"/><use xlink:href="#c" transform="translate(3492 3492)"/><use xlink:href="#d" transform="translate(3589 3492)"/><use xlink:href="#c" transform="translate(3783 3492)"/><use xlink:href="#g" transform="translate(3880 3492)"/><use xlink:href="#g" transform="translate(3977 3492)"/><use xlink:href="#d" transform="translate(4074 3492)"/><use xlink:href="#j" transform="translate(4268 3492)"/><use xlink:href="#b" transform="translate(4462 3492)"/><use xlink:href="#b" transform="translate(4656 3492)"/><use xlink:href="#g" transform="translate(97 3589)"/><use xlink:href="#g" transform="translate(194 3589)"/><use xlink:href="#g" transform="translate(291 3589)"/><use xlink:href="#d" transform="translate(388 3589)"/><use xlink:href="#b" transform="translate(873 3589)"/><use xlink:href="#c" transform="translate(1067 3589)"/><use xlink:href="#g" transform="translate(1164 3589)"/><use xlink:href="#g" transform="translate(1261 3589)"/><use xlink:href="#i" transform="translate(1358 3589)"/><use xlink:href="#k" transform="translate(1552 3589)"/><use xlink:href="#h" transform="translate(1649 3589)"/><use xlink:href="#j" transform="translate(1843 3589)"/><use xlink:href="#g" transform="translate(2037 3589)"/><use xlink:href="#c" transform="translate(2231 3589)"/><use xlink:href="#i" transform="translate(2328 3589)"/><use xlink:href="#c" transform="translate(2522 3589)"/><use xlink:href="#h" transform="translate(2619 3589)"/><use xlink:href="#c" transform="translate(2813 3589)"/><use xlink:href="#d" transform="translate(2910 3589)"/><use xlink:href="#c" transform="translate(3104 3589)"/><use xlink:href="#d" transform="translate(3201 3589)"/><use xlink:href="#e" transform="translate(3298 3589)"/><use xlink:href="#a" transform="translate(3395 3589)"/><use xlink:href="#e" transform="translate(4268 3589)"/><use xlink:href="#a" transform="translate(4365 3589)"/><use xlink:href="#e" transform="translate(4462 3589)"/><use xlink:href="#a" transform="translate(4559 3589)"/><use xlink:href="#g" transform="translate(97 3686)"/><use xlink:href="#c" transform="translate(485 3686)"/><use xlink:href="#d" transform="translate(582 3686)"/><use xlink:href="#e" transform="translate(873 3686)"/><use xlink:href="#a" transform="translate(970 3686)"/><use xlink:href="#g" transform="translate(1649 3686)"/><use xlink:href="#g" transform="translate(2037 3686)"/><use xlink:href="#e" transform="translate(2328 3686)"/><use xlink:href="#a" transform="translate(2425 3686)"/><use xlink:href="#k" transform="translate(2619 3686)"/><use xlink:href="#h" transform="translate(2716 3686)"/><use xlink:href="#b" transform="translate(3007 3686)"/><use xlink:href="#f" transform="translate(3298 3686)"/><use xlink:href="#g" transform="translate(3395 3686)"/><use xlink:href="#g" transform="translate(3492 3686)"/><use xlink:href="#g" transform="translate(3589 3686)"/><use xlink:href="#g" transform="translate(3686 3686)"/><use xlink:href="#g" transform="translate(3783 3686)"/><use xlink:href="#g" transform="translate(3880 3686)"/><use xlink:href="#g" transform="translate(3977 3686)"/><use xlink:href="#d" transform="translate(4074 3686)"/><use xlink:href="#c" transform="translate(4268 3686)"/><use xlink:href="#g" transform="translate(4365 3686)"/><use xlink:href="#g" transform="translate(4462 3686)"/><use xlink:href="#g" transform="translate(4559 3686)"/><use xlink:href="#h" transform="translate(4656 3686)"/><use xlink:href="#e" transform="translate(0 3783)"/><use xlink:href="#g" transform="translate(97 3783)"/><use xlink:href="#g" transform="translate(194 3783)"/><use xlink:href="#d" transform="translate(291 3783)"/><use xlink:href="#c" transform="translate(776 3783)"/><use xlink:href="#g" transform="translate(873 3783)"/><use xlink:href="#g" transform="translate(970 3783)"/><use xlink:href="#f" transform="translate(1358 3783)"/><use xlink:href="#g" transform="translate(1455 3783)"/><use xlink:href="#g" transform="translate(1552 3783)"/><use xlink:href="#i" transform="translate(1649 3783)"/><use xlink:href="#k" transform="translate(2037 3783)"/><use xlink:href="#g" transform="translate(2134 3783)"/><use xlink:href="#g" transform="translate(2231 3783)"/><use xlink:href="#g" transform="translate(2328 3783)"/><use xlink:href="#g" transform="translate(2425 3783)"/><use xlink:href="#g" transform="translate(2716 3783)"/><use xlink:href="#a" transform="translate(2910 3783)"/><use xlink:href="#b" transform="translate(3104 3783)"/><use xlink:href="#e" transform="translate(3201 3783)"/><use xlink:href="#g" transform="translate(3298 3783)"/><use xlink:href="#i" transform="translate(3395 3783)"/><use xlink:href="#k" transform="translate(3589 3783)"/><use xlink:href="#g" transform="translate(3686 3783)"/><use xlink:href="#g" transform="translate(4365 3783)"/><use xlink:href="#g" transform="translate(4559 3783)"/><use xlink:href="#g" transform="translate(4656 3783)"/><use xlink:href="#c" transform="translate(0 3880)"/><use xlink:href="#g" transform="translate(97 3880)"/><use xlink:href="#i" transform="translate(194 3880)"/><use xlink:href="#c" transform="translate(582 3880)"/><use xlink:href="#d" transform="translate(679 3880)"/><use xlink:href="#j" transform="translate(970 3880)"/><use xlink:href="#e" transform="translate(1261 3880)"/><use xlink:href="#g" transform="translate(1358 3880)"/><use xlink:href="#i" transform="translate(1455 3880)"/><use xlink:href="#g" transform="translate(2134 3880)"/><use xlink:href="#g" transform="translate(2231 3880)"/><use xlink:href="#g" transform="translate(2328 3880)"/><use xlink:href="#g" transform="translate(2425 3880)"/><use xlink:href="#h" transform="translate(2522 3880)"/><use xlink:href="#j" transform="translate(2716 3880)"/><use xlink:href="#e" transform="translate(2813 3880)"/><use xlink:href="#g" transform="translate(2910 3880)"/><use xlink:href="#c" transform="translate(3201 3880)"/><use xlink:href="#g" transform="translate(3298 3880)"/><use xlink:href="#e" transform="translate(3395 3880)"/><use xlink:href="#a" transform="translate(3492 3880)"/><use xlink:href="#e" transform="translate(3589 3880)"/><use xlink:href="#g" transform="translate(3686 3880)"/><use xlink:href="#g" transform="translate(3783 3880)"/><use xlink:href="#g" transform="translate(3880 3880)"/><use xlink:href="#g" transform="translate(3977 3880)"/><use xlink:href="#g" transform="translate(4074 3880)"/><use xlink:href="#g" transform="translate(4171 3880)"/><use xlink:href="#g" transform="translate(4268 3880)"/><use xlink:href="#g" transform="translate(4365 3880)"/><use xlink:href="#g" transform="translate(4462 3880)"/><use xlink:href="#g" transform="translate(4559 3880)"/><use xlink:href="#i" transform="translate(4656 3880)"/><use xlink:href="#b" transform="translate(776 3977)"/><use xlink:href="#b" transform="translate(1067 3977)"/><use xlink:href="#e" transform="translate(1164 3977)"/><use xlink:href="#f" transform="translate(1261 3977)"/><use xlink:href="#i" transform="translate(1358 3977)"/><use xlink:href="#c" transform="translate(1552 3977)"/><use xlink:href="#h" transform="translate(1649 3977)"/><use xlink:href="#e" transform="translate(1746 3977)"/><use xlink:href="#a" transform="translate(1843 3977)"/><use xlink:href="#e" transform="translate(2037 3977)"/><use xlink:href="#g" transform="translate(2134 3977)"/><use xlink:href="#g" transform="translate(2522 3977)"/><use xlink:href="#h" transform="translate(2619 3977)"/><use xlink:href="#c" transform="translate(2813 3977)"/><use xlink:href="#g" transform="translate(2910 3977)"/><use xlink:href="#g" transform="translate(3007 3977)"/><use xlink:href="#d" transform="translate(3104 3977)"/><use xlink:href="#k" transform="translate(3298 3977)"/><use xlink:href="#g" transform="translate(3395 3977)"/><use xlink:href="#g" transform="translate(3492 3977)"/><use xlink:href="#g" transform="translate(3589 3977)"/><use xlink:href="#i" transform="translate(3686 3977)"/><use xlink:href="#g" transform="translate(3880 3977)"/><use xlink:href="#g" transform="translate(4268 3977)"/><use xlink:href="#g" transform="translate(4559 3977)"/><use xlink:href="#e" transform="translate(873 4074)"/><use xlink:href="#a" transform="translate(970 4074)"/><use xlink:href="#e" transform="translate(1067 4074)"/><use xlink:href="#f" transform="translate(1164 4074)"/><use xlink:href="#i" transform="translate(1261 4074)"/><use xlink:href="#b" transform="translate(1455 4074)"/><use xlink:href="#k" transform="translate(1649 4074)"/><use xlink:href="#g" transform="translate(1746 4074)"/><use xlink:href="#g" transform="translate(1843 4074)"/><use xlink:href="#f" transform="translate(2037 4074)"/><use xlink:href="#g" transform="translate(2134 4074)"/><use xlink:href="#b" transform="translate(2328 4074)"/><use xlink:href="#g" transform="translate(2522 4074)"/><use xlink:href="#g" transform="translate(2619 4074)"/><use xlink:href="#h" transform="translate(2716 4074)"/><use xlink:href="#j" transform="translate(3007 4074)"/><use xlink:href="#b" transform="translate(3201 4074)"/><use xlink:href="#j" transform="translate(3395 4074)"/><use xlink:href="#e" transform="translate(3783 4074)"/><use xlink:href="#g" transform="translate(3880 4074)"/><use xlink:href="#b" transform="translate(4074 4074)"/><use xlink:href="#g" transform="translate(4268 4074)"/><use xlink:href="#d" transform="translate(4365 4074)"/><use xlink:href="#g" transform="translate(4559 4074)"/><use xlink:href="#h" transform="translate(4656 4074)"/><use xlink:href="#e" transform="translate(776 4171)"/><use xlink:href="#f" transform="translate(873 4171)"/><use xlink:href="#g" transform="translate(970 4171)"/><use xlink:href="#g" transform="translate(1067 4171)"/><use xlink:href="#g" transform="translate(1164 4171)"/><use xlink:href="#j" transform="translate(1843 4171)"/><use xlink:href="#k" transform="translate(2037 4171)"/><use xlink:href="#g" transform="translate(2134 4171)"/><use xlink:href="#e" transform="translate(2425 4171)"/><use xlink:href="#g" transform="translate(2522 4171)"/><use xlink:href="#g" transform="translate(2619 4171)"/><use xlink:href="#g" transform="translate(2716 4171)"/><use xlink:href="#h" transform="translate(2813 4171)"/><use xlink:href="#b" transform="translate(3104 4171)"/><use xlink:href="#e" transform="translate(3492 4171)"/><use xlink:href="#f" transform="translate(3589 4171)"/><use xlink:href="#g" transform="translate(3686 4171)"/><use xlink:href="#g" transform="translate(3783 4171)"/><use xlink:href="#g" transform="translate(3880 4171)"/><use xlink:href="#e" transform="translate(4171 4171)"/><use xlink:href="#g" transform="translate(4268 4171)"/><use xlink:href="#e" transform="translate(4462 4171)"/><use xlink:href="#g" transform="translate(4559 4171)"/><use xlink:href="#g" transform="translate(4656 4171)"/><use xlink:href="#f" transform="translate(776 4268)"/><use xlink:href="#g" transform="translate(873 4268)"/><use xlink:href="#g" transform="translate(970 4268)"/><use xlink:href="#g" transform="translate(1067 4268)"/><use xlink:href="#g" transform="translate(1164 4268)"/><use xlink:href="#g" transform="translate(1261 4268)"/><use xlink:href="#d" transform="translate(1358 4268)"/><use xlink:href="#b" transform="translate(1552 4268)"/><use xlink:href="#b" transform="translate(1940 4268)"/><use xlink:href="#k" transform="translate(2134 4268)"/><use xlink:href="#g" transform="translate(2231 4268)"/><use xlink:href="#g" transform="translate(2328 4268)"/><use xlink:href="#g" transform="translate(2425 4268)"/><use xlink:href="#g" transform="translate(2522 4268)"/><use xlink:href="#g" transform="translate(2813 4268)"/><use xlink:href="#a" transform="translate(3007 4268)"/><use xlink:href="#b" transform="translate(3201 4268)"/><use xlink:href="#f" transform="translate(3395 4268)"/><use xlink:href="#g" transform="translate(3492 4268)"/><use xlink:href="#g" transform="translate(3589 4268)"/><use xlink:href="#g" transform="translate(3686 4268)"/><use xlink:href="#g" transform="translate(3783 4268)"/><use xlink:href="#g" transform="translate(3880 4268)"/><use xlink:href="#g" transform="translate(3977 4268)"/><use xlink:href="#g" transform="translate(4074 4268)"/><use xlink:href="#g" transform="translate(4171 4268)"/><use xlink:href="#g" transform="translate(4268 4268)"/><use xlink:href="#c" transform="translate(4462 4268)"/><use xlink:href="#g" transform="translate(4559 4268)"/><use xlink:href="#g" transform="translate(4656 4268)"/><use xlink:href="#g" transform="translate(776 4365)"/><use xlink:href="#i" transform="translate(873 4365)"/><use xlink:href="#g" transform="translate(1067 4365)"/><use xlink:href="#i" transform="translate(1164 4365)"/><use xlink:href="#b" transform="translate(1455 4365)"/><use xlink:href="#e" transform="translate(1649 4365)"/><use xlink:href="#a" transform="translate(1746 4365)"/><use xlink:href="#b" transform="translate(2037 4365)"/><use xlink:href="#k" transform="translate(2231 4365)"/><use xlink:href="#i" transform="translate(2328 4365)"/><use xlink:href="#g" transform="translate(2522 4365)"/><use xlink:href="#j" transform="translate(2813 4365)"/><use xlink:href="#k" transform="translate(3007 4365)"/><use xlink:href="#d" transform="translate(3104 4365)"/><use xlink:href="#e" transform="translate(3298 4365)"/><use xlink:href="#g" transform="translate(3395 4365)"/><use xlink:href="#g" transform="translate(3589 4365)"/><use xlink:href="#k" transform="translate(3783 4365)"/><use xlink:href="#g" transform="translate(3880 4365)"/><use xlink:href="#g" transform="translate(3977 4365)"/><use xlink:href="#k" transform="translate(4268 4365)"/><use xlink:href="#h" transform="translate(4365 4365)"/><use xlink:href="#g" transform="translate(4656 4365)"/><use xlink:href="#j" transform="translate(776 4462)"/><use xlink:href="#j" transform="translate(1067 4462)"/><use xlink:href="#f" transform="translate(1261 4462)"/><use xlink:href="#d" transform="translate(1358 4462)"/><use xlink:href="#e" transform="translate(1552 4462)"/><use xlink:href="#f" transform="translate(1649 4462)"/><use xlink:href="#g" transform="translate(1746 4462)"/><use xlink:href="#h" transform="translate(1843 4462)"/><use xlink:href="#f" transform="translate(2425 4462)"/><use xlink:href="#i" transform="translate(2522 4462)"/><use xlink:href="#c" transform="translate(3201 4462)"/><use xlink:href="#g" transform="translate(3298 4462)"/><use xlink:href="#g" transform="translate(3395 4462)"/><use xlink:href="#k" transform="translate(3589 4462)"/><use xlink:href="#d" transform="translate(3686 4462)"/><use xlink:href="#k" transform="translate(3977 4462)"/><use xlink:href="#g" transform="translate(4074 4462)"/><use xlink:href="#h" transform="translate(4171 4462)"/><use xlink:href="#g" transform="translate(4365 4462)"/><use xlink:href="#g" transform="translate(4462 4462)"/><use xlink:href="#g" transform="translate(4559 4462)"/><use xlink:href="#g" transform="translate(4656 4462)"/><use xlink:href="#e" transform="translate(1164 4559)"/><use xlink:href="#g" transform="translate(1261 4559)"/><use xlink:href="#e" transform="translate(1358 4559)"/><use xlink:href="#f" transform="translate(1455 4559)"/><use xlink:href="#g" transform="translate(1552 4559)"/><use xlink:href="#g" transform="translate(1649 4559)"/><use xlink:href="#j" transform="translate(1843 4559)"/><use xlink:href="#a" transform="translate(2231 4559)"/><use xlink:href="#e" transform="translate(2328 4559)"/><use xlink:href="#g" transform="translate(2425 4559)"/><use xlink:href="#c" transform="translate(2619 4559)"/><use xlink:href="#h" transform="translate(2716 4559)"/><use xlink:href="#b" transform="translate(2910 4559)"/><use xlink:href="#b" transform="translate(3104 4559)"/><use xlink:href="#j" transform="translate(3395 4559)"/><use xlink:href="#b" transform="translate(3783 4559)"/><use xlink:href="#k" transform="translate(4074 4559)"/><use xlink:href="#g" transform="translate(4171 4559)"/><use xlink:href="#j" transform="translate(4365 4559)"/><use xlink:href="#g" transform="translate(4656 4559)"/><use xlink:href="#c" transform="translate(1164 4656)"/><use xlink:href="#g" transform="translate(1261 4656)"/><use xlink:href="#g" transform="translate(1358 4656)"/><use xlink:href="#i" transform="translate(1455 4656)"/><use xlink:href="#j" transform="translate(1649 4656)"/><use xlink:href="#b" transform="translate(2037 4656)"/><use xlink:href="#k" transform="translate(2231 4656)"/><use xlink:href="#g" transform="translate(2328 4656)"/><use xlink:href="#g" transform="translate(2425 4656)"/><use xlink:href="#d" transform="translate(2522 4656)"/><use xlink:href="#k" transform="translate(2716 4656)"/><use xlink:href="#d" transform="translate(2813 4656)"/><use xlink:href="#b" transform="translate(3007 4656)"/><use xlink:href="#c" transform="translate(3201 4656)"/><use xlink:href="#d" transform="translate(3298 4656)"/><use xlink:href="#b" transform="translate(3492 4656)"/><use xlink:href="#b" transform="translate(3977 4656)"/><use xlink:href="#j" transform="translate(4171 4656)"/><use xlink:href="#c" transform="translate(4462 4656)"/><use xlink:href="#g" transform="translate(4559 4656)"/><use xlink:href="#i" transform="translate(4656 4656)"/><use xlink:href="#l" fill-rule="evenodd"/><use xlink:href="#l" fill-rule="evenodd" transform="translate(4032)"/><use xlink:href="#l" fill-rule="evenodd" transform="translate(0 4032)"/><image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAC5VBMVEUAAAAdHR0eHhsdHRoeHhsdHRsdHRseHh4bGxscHBsdHRsbGxshIRkaGhofHxodHRsdHRscHBwdHRodHRsdHRodHRscHBsdHRweHhscHBwcHBsfHxcdHRseHhwdHRweHhsdHRsdHRscHBscHBwgIBgdHRscHBwdHRsdHRobGxsdHR0dHRsdHRsdHRsdHRsgIB5fX12dnZzQ0NDp6en7+/vr6+vY2Ni3t7d3d3U1NTMhIR+AgH/l5eX////9/f2ysrFAQD5ISEba2tmWlpVoaGf29vbBwcAtLSthYWDR0dEmJiRDQ0H39/evr68eHhzS0tFsbGtwcG/j4+IjIyHZ2dl4eHdHR0XExMOKiom0tLNXV1bU1NPc3NuHh4bb29p/f37AwMBtbWtCQkFfX17u7u4fHx3y8vKgoJ+Xl5ZGRkQyMjDx8fGtrax2dnQ0NDKnp6ZXV1W1tbT6+vplZWOTk5Ln5+dWVlROTkyjo6Ls7OyPj445OThaWllSUlErKyk9PTt3d3ZlZWSOjo2YmJZmZmTd3d3CwsGFhYQ8PDqZmZhcXFrNzc2MjIv8/Pw4ODakpKO8vLspKSfz8/JjY2J7e3rq6urX19f+/v6urq7Dw8IvLy34+PhpaWiGhoXe3t6ampldXVu6urnKysk2NjSQkI+hoaBnZ2ZISEfFxcSbm5r19fUpKSglJSPv7+9ycnFPT03Pz89+fn2lpaX5+fnz8/N9fXzg4OBUVFKxsbAzMzG1tbXi4uGNjYy9vbySkpFkZGPo6OiUlJPGxsZAQD9ra2okJCJ0dHPLy8qoqKdxcXAqKiiioqFJSUizs7KpqahQUE5gYF+9vb2VlZSwsK8iIiDr6+rh4eHIyMhBQUCfn562trbw8PBeXlzm5uZNTUs4ODeqqqmBgYA+Pjzk5OOcnJtiYmG/v7/MzMs7Ozlzc3IoKCZubmzV1dV6enlQUE/T09KsrKswMC4sLCqDg4Kbm5leXl06Ojkp08N2AAAALnRSTlMAI3Cu2PCtIjm9/jgfHTro6z9Y+Ff66a+sN7whcW7V8v38q20guzap5xw+qtbu/AyyYAAAAAFiS0dEPdBtUVkAAAAHdElNRQfnCBgKCRc9zg5zAAAAAW9yTlQBz6J3mgAABgtJREFUeNrt3XlcVFUUB/CbAsEkoIEF4r6Ull60BqKRN25YATqEIJmpFQElRcqkpJVglq1C2oYRlFnm0mKmle2b7aumtpftZfv6d7gAw8w7Zy4z79M9h97v33fOvef7eTB85r2ZhxCtOaRL14hIySaREVFdDhWBiY5x6B6t43HEHObH6NZV90yhUqJifR1x8boHCj3de7Q5Dk/QPU04SUhsPR+sHVL2PHhOuh2he5JwE3/g9+RI3XOEn6R9jmSGL7sBiWuGxOgewor0av573hlOiHSkiN66Z7AmfQTXP+l+SRIRukewJn1FP90jWJNI0V/3CNZkgNA9gVWxIdRiQ6jFhlCLDaEWapDUkaOOO96Zln5CxomcIa7RmUZL3GPGsoWMG2/4xjkhlScka6Lhl5NO5gg5xWkEJDuHHyR3kmGSyR5uEFeeYZpTuUHyzR3GlAJmkEIAYkzlBSmCHMZpvCDTQIhT7SWYCuR0EGJMZwU5A4bks4LMgCEzWUFmwZAzWUHOgiFns4KMgiHFrCDngI6SUlaQnDIIcq7aAlQg8jzA4Z7NDFJ+vjnkAsV+MhBZYepIu5AdRM4xcTjnqnYTgrgqAxzei5S7CUFk6Tx3e8f8KvVmShApL/Z9v+tdoH4NhRpEyrmTFx5gFF5yaYcaqUGaf8DGXpaVtai6o230ICHGhlCLDaEWG0It/zNIUT6cGuW9qhaDuRzZoMhCyBL40oBRoepwzYcXuQLZYAk1yJXwGkszOEGugte4uoIR5Bo3uISznBPkWniJSuANO0lIwUJ4ies4QfLhFTJTOUGuh1dYJhlBZsML1NZxgtwAL7BcMoKsuBFe4CZOkJvh/ltcnCC3wv3zJCPIIri9voYTZCXcfptkBGm4HW5v5ARpgrtLChhBPHfA3XdKRpBVSHcxJ8hdcPNqyQhydy3c3PKBGRaQe+DespYPkXKAYBdP1rQUcYDci/Su5QRZB7dmtxYxgNTUw62LOUHWw50b7mMEuf8BuHNOWxl9yINI50ZOkIfgxnSfMvKQcUjjJk6Qh+G+zQ2MICu2wH0rfQupQx5B+tp98oc6JB1ue9TDCPIY0tbUrpI4ZCvc5XycEaRhM9z1RPtS2pCZSNcqRpDSJ+GmTL/vfJKGjESanvKrJQ1ZDve46xhB6mrhnqf9iylDnkF6nmUEcT0Ht+y/t8MF0oi0PB9QTRjyAtxRH/jJKLqQF5GLJyZfWqULQb78ZWxjBMEunpS8xAjyMtKw3qSeLCQbachlBFmL1L9itgFVyKtI/WuMIK9vgMvLTB8QQhSyCSl/w3QDopBCpPxNRpAqpDrPfAOakLeQauDhICQh5V64eFI1I8g0pPhtYAOKkNIpSPE7jCDvIrWzoA0oQrYjteADNQhCsIsn3gZoA4KQHUjpe+AG9CA7dyGl8Lfs6UG2IZW7PYwg7yOVTfAG5CAfIBdP/O7t0IZ8iBR+hGxADZLzMVL4CSMINs+n2PM8qUHyQp2HGOQzpMz9OSPIHqRsO7oBLUj1RKQMf+YMLcgXSNUuF7oBLch4pGoHvgEpyHSkqP5LRpBKpGhdkA0oQcqdSFGwp/ZSgixDaszu7VCFpH6F1HwdbANCkG+QEtN7O1Qh3yIl3wXdgA7kezdS8gMjyASkYstePpCdaUjFguAbkIH8iBQA93ZoQlYjBT8pbEAFUoxcPDF+ZgRZgxyH7u1QhOxFHoRg7FHZgAhkKnLY+IUR5Ffk8AwPH8hG7ISMVtqABuQ35Kj3dz6QP7CLJ1uV1qcB+RP7yVL7Dw8kIBlLkYO71R76TgLyF3ZC1P7Bw38HyW2E83cWEtVnKP+DbBD07WUHIAxiQ6jFhlCLDaEWG0ItNoRabAi12BBqsSHUYkOoRfTXPYE1GSD66R7BmkSKCN0jWJO+Ikr3CNZkoOitewRrMkgMduiewYo4UoSI0T2EFRkihDiqE5wSR3QzpDP8uh+9zyFi43XPEW6GDtsPEXEJuicJLz2PEQeTyFqSkChaEz1U9zShp3sP4ZPYJKavXY5jh4n2Se7FkOIYkiwCk9InafgI3aOpZ8TwgYMGt03/LyBaAqN0wwoyAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIzLTA4LTI0VDEwOjA5OjIxKzAwOjAwuQDMAgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMy0wOC0yNFQxMDowOToyMSswMDowMMhddL4AAAAASUVORK5CYII=" width="750" height="750" clip-path="url(#m)" preserveAspectRatio="xMidYMid slice" style="width:750px;height:750px" transform="translate(2006 2006)"/></g></svg>
         </section>
     </div>
 </div>
 
-<script src="/utils/lib/js/head.min.js"></script>
-<script src="/utils/js/reveal.js"></script>
-<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
-
+<script src="/utils/dist/reveal.js"></script>
+<script src="/utils/plugin/plugin/notes/notes.js"></script>
+<script src="/utils/plugin/plugin/markdown/markdown.js"></script>
+<script src="/utils/plugin/plugin/highlight/highlight.js"></script>
 <script>
-    $('.links a').on('mouseover', function () {
-        var text = $(this).data('content');
-        $('.output-links').text(text);
-
-    });
-    $('.links a').on('blur', function () {
-        $('.output-links').text('');
-
-    });
-
-    Reveal.addEventListener('fragmentshown', function (event) {
-        if (Reveal.isFirstSlide()) {
-            var root = $(event.fragment);
-            console.log(root);
-            setTimeout(function () {
-                $(root).find('h1').addClass('bounceInDown');
-                $(root).find('h4').addClass('bounceInRight');
-                $(root).find('small').eq(0).addClass('bounceInLeft');
-                $(root).find('small').eq(1).addClass('bounceInUp');
-            }, 0);
-        }
-    });
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
     Reveal.initialize({
-        controls: false,
-        progress: true,
-        history: true,
-        center: false,
+        hash: true,
+        slideNumber: true,
 
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-        // Optional reveal.js plugins
-        dependencies: [
-            {
-                src: '/utils/lib/js/classList.js', condition: function () {
-                    return !document.body.classList;
-                }
-            },
-            {
-                src: '/utils/plugin/markdown/marked.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: '/utils/plugin/markdown/markdown.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () {
-                    return !!document.querySelector('pre code');
-                }, callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
-            },
-            {src: '/utils/plugin/zoom-js/zoom.js', async: true},
-            {src: '/utils/plugin/notes/notes.js', async: true}
-        ]
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
     });
-    Reveal.configure({slideNumber: true});
-
 </script>
-<script src="/utils/lib/js/code-example.js"></script>
 </body>
 </html>
