@@ -543,9 +543,13 @@ strong {
 .google-sheet th:first-child,
 .google-sheet td:first-child,
 .google-sheet td:nth-child(2),
-.google-sheet td:nth-child(3),
 .google-sheet th:nth-child(2),
-.google-sheet th:nth-child(3) {
+.google-sheet td:nth-child(3),
+.google-sheet th:nth-child(3),
+.google-sheet td:nth-child(4),
+.google-sheet th:nth-child(4),
+.google-sheet td:nth-child(5),
+.google-sheet th:nth-child(5) {
     border-right-width: 5px;
 }
 
