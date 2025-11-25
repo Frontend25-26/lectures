@@ -16,6 +16,8 @@ class CodeExample extends HTMLElement {
         const showPreview = !this.hasAttribute('no-preview');
         const isFragment = this.hasAttribute('fragment');
 
+        this.innerHTML = '';
+
         const codeContainer = document.createElement('div');
         codeContainer.className = 'code-example';
 
