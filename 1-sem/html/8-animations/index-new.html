@@ -53,12 +53,12 @@
                     </template>
                     <template data-type="css">
                         button {
-                        background-color: red;
-                        color: white;
+                            background-color: red;
+                            color: white;
                         }
 
                         button:hover {
-                        background-color: blue;
+                            background-color: blue;
                         }
                     </template>
                 </code-example>
@@ -69,13 +69,13 @@
                     </template>
                     <template data-type="css">
                         button {
-                        background-color: red;
-                        color: white;
-                        transition: background-color 1s;
+                            background-color: red;
+                            color: white;
+                            transition: background-color 1s;
                         }
 
                         button:hover {
-                        background-color: blue;
+                            background-color: blue;
                         }
                     </template>
                 </code-example>
@@ -88,13 +88,13 @@
                     </template>
                     <template data-type="css">
                         button {
-                        background-color: red;
-                        color: white;
+                            background-color: red;
+                            color: white;
                         }
 
                         button:hover {
-                        background-color: blue;
-                        transition: background-color 2s;
+                            background-color: blue;
+                            transition: background-color 2s;
                         }
                     </template>
                 </code-example>
@@ -204,38 +204,29 @@
                 <transition-timing-function-slide name="ease-out" bezier="0, 0, 0.58, 1"></transition-timing-function-slide>
             </section>
             <section>
-                <transition-timing-function-slide name="ease-in-out" bezier="0.42,0,0.58,1"></transition-timing-function-slide>
+                <transition-timing-function-slide name="ease-in-out" bezier="0.42,0,0.58,1">
+                </transition-timing-function-slide>
             </section>
             <section>
-                <pre class="code-example-one fragment size-l"><code>steps != cubic-bezier(...)</code></pre>
-                <code-example fragment>
-                    <template data-type="html" no-preview>
-                        <div class="animated linear">linear</div>
-                        <div class="animated">steps</div>
-                    </template>
-                    <template data-type="css" no-preview>
-                        * {
-                        box-sizing: border-box;
-                        }
-                        .animated {
-                        transition: width 2s steps(5);
-                        background: fuchsia;
-                        width: 15%;
-                        margin: 10px;
-                        padding: 10px;
-                        border-radius: 10px;
-                        }
-
-                        .linear {
-                        background: cornflowerblue;
-                        transition-timing-function: linear;
-                        }
-
-                        .code-example-result:hover  .animated {
-                        width: 90%;
-                        }
-                    </template>
-                </code-example>
+                <transition-timing-function-slide name="steps" steps="5" step="start">
+                    первый скачок происходит сразу при начале анимации (в момент 0%)
+                </transition-timing-function-slide>
+            </section>
+            <section>
+                <transition-timing-function-slide name="steps" steps="5" step="end">
+                    последний скачок происходит в момент окончания анимации (на 100%)
+                </transition-timing-function-slide>
+            </section>
+            <section>
+                <transition-timing-function-slide name="steps" steps="5" step="middle">
+                    Фактически убирает один шаг из расчёта: анимация удерживает значение в начале и в конце по 1/n части длительности
+                </transition-timing-function-slide>
+            </section>
+            <section>
+                <transition-timing-function-slide name="steps" steps="5" step="both">
+                    Добавляет паузы на обеих границах — и на 0%, и на 100%.
+                    Это эквивалентно добавлению одного дополнительного шага в анимации
+                </transition-timing-function-slide>
             </section>
         </section>
     </div>
@@ -311,6 +302,7 @@
 </script>
 <script src="/utils/lib/js/code-example.js"></script>
 <script src="./js-custom/bezier-graph.js"></script>
+<script src="./js-custom/step-graph.js"></script>
 <script src="./js-custom/transition-timing-function-slide.js"></script>
 </body>
 </html>

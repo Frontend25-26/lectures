@@ -140,7 +140,6 @@ class BezierGraph extends HTMLElement {
         this._width = parseInt(this.getAttribute('width') || '350', 10);
         this._height = parseInt(this.getAttribute('height') || '350', 10);
 
-        console.log("%c 1 --> Line: 143||bezier-graph.js\n this.attributes: ","color:#f0f;", );
         let p1 = this.getAttribute('P1').split(',');
         this._P1 = {x: parseInt(p1[0].trim()), y: parseInt(p1[1].trim())};
         let p2 = this.getAttribute('P2').split(',');
