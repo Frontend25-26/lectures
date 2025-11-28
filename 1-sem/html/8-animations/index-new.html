@@ -1,308 +1,487 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
 
     <title>Анимации</title>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+    />
 
-    <link rel="stylesheet" href="/utils/css/reveal.css">
-    <link rel="stylesheet" href="/utils/lib/css/animate.css">
-    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="../../../utils/css/reveal.css" />
+    <link rel="stylesheet" href="../../../utils/lib/css/animate.css" />
+    <link
+      rel="stylesheet"
+      href="../../../utils/css/theme/night.css"
+      id="theme"
+    />
 
     <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="../../../utils/lib/css/zenburn.css" />
 
     <!-- Printing and PDF exports -->
-    <link rel="stylesheet" href="./css-custom/custom.css">
+    <link rel="stylesheet" href="./css-custom/custom.css" />
+  </head>
 
-</head>
-<body>
-<div class="reveal">
-    <div class="slides">
+  <body>
+    <div class="reveal">
+      <div class="slides">
         <section style="font-size: 50px; height: 100%; width: 100%">
-            <div class="fragment">
-                <h1 class="animated">Анимации</h1>
+          <div class="fragment">
+            <h1 class="animated">Анимации</h1>
 
-                <p style="text-align: center;">Илья Степанов</p>
-            </div>
+            <p style="text-align: center">Илья Степанов</p>
+          </div>
         </section>
 
         <section>
-            <section>
-                <p>Переход – это анимация от одного набора CSS свойств к другому. Для перехода необходимо:</p>
-                <ul>
-                    <li class="fragment">начальный набор свойств (Ex: color: <span style=" color: red">#f00</span>;)
-                    </li>
-                    <li class="fragment">конечный набор свойств (Ex: color: <span style=" color: blue">#00f</span>;)
-                    </li>
-                    <li class="fragment">Свойство transition – описание свойств и характеристик анимации перехода</li>
-                    <li class="fragment">Изменение свойств от начального набора к конечному (Ex: JS, :hover, :focus
-                        etc.)
-                    </li>
-                </ul>
-            </section>
-            <section>
-                <h2>CSS-свойство <code>transition</code></h2>
-                <code-example>
-                    <template data-type="html" no-preview>
-                        <button>Hover me!</button>
-                    </template>
-                    <template data-type="css">
-                        button {
-                            background-color: red;
-                            color: white;
-                        }
+          <section>
+            <p>
+              Переход – это анимация от одного набора CSS свойств к другому. Для
+              перехода необходимо:
+            </p>
+            <ul>
+              <li class="fragment">
+                начальный набор свойств (Ex: color:
+                <span style="color: red">#f00</span>;)
+              </li>
+              <li class="fragment">
+                конечный набор свойств (Ex: color:
+                <span style="color: blue">#00f</span>;)
+              </li>
+              <li class="fragment">
+                Свойство transition – описание свойств и характеристик анимации
+                перехода
+              </li>
+              <li class="fragment">
+                Изменение свойств от начального набора к конечному (Ex: JS,
+                :hover, :focus etc.)
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>CSS-свойство <code>transition</code></h2>
+            <code-example>
+              <template data-type="html" no-preview>
+                <button>Hover me!</button>
+              </template>
+              <template data-type="css">
+                button { background-color: red; color: white; } button:hover {
+                background-color: blue; }
+              </template>
+            </code-example>
+            <br />
+            <code-example class="fragment">
+              <template data-type="html" no-preview>
+                <button>Hover me!</button>
+              </template>
+              <template data-type="css">
+                button { background-color: red; color: white; transition:
+                background-color 1s; } button:hover { background-color: blue; }
+              </template>
+            </code-example>
+          </section>
+          <section>
+            <h2>CSS-свойство <code>transition</code></h2>
+            <code-example fragment>
+              <template data-type="html" no-preview>
+                <button>Hover me!</button>
+              </template>
+              <template data-type="css">
+                button { background-color: red; color: white; } button:hover {
+                background-color: blue; transition: background-color 2s; }
+              </template>
+            </code-example>
+          </section>
+          <section>
+            <h2>CSS-свойство <code>transition</code></h2>
+            <pre
+              class="code-example-one fragment css size-l"
+              style="margin-bottom: 16px"
+            ><code>transition: &lt;property&gt; &lt;duration&gt; &lt;timing-function&gt; &lt;delay&gt;;</code></pre>
+          </section>
+          <section>
+            <h2><code>transition-property</code></h2>
+            <p class="fragment">
+              Устанавливает свойство, значение которого будет отслеживаться для
+              создания эффекта перехода
+            </p>
 
-                        button:hover {
-                            background-color: blue;
-                        }
-                    </template>
-                </code-example>
-                <br>
-                <code-example class="fragment">
-                    <template data-type="html" no-preview>
-                        <button>Hover me!</button>
-                    </template>
-                    <template data-type="css">
-                        button {
-                            background-color: red;
-                            color: white;
-                            transition: background-color 1s;
-                        }
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-property: none;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-property: all;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-property: color;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-property: color, font-size;
+              </template>
+            </code-example>
+          </section>
+          <section>
+            <h2><code>transition-duration</code></h2>
+            <p class="fragment">
+              Определяет продолжительность выполнения анимации
+            </p>
 
-                        button:hover {
-                            background-color: blue;
-                        }
-                    </template>
-                </code-example>
-            </section>
-            <section>
-                <h2>CSS-свойство <code>transition</code></h2>
-                <code-example fragment>
-                    <template data-type="html" no-preview>
-                        <button>Hover me!</button>
-                    </template>
-                    <template data-type="css">
-                        button {
-                            background-color: red;
-                            color: white;
-                        }
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-duration: 0s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-duration: 120ms;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-duration: 6s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-duration: 1s, 15s;
+              </template>
+            </code-example>
+          </section>
+          <section>
+            <h2><code>transition-timing-function</code></h2>
+            <p class="fragment">
+              Устанавливает функциональную зависимость изменения свойства от
+              времени
+            </p>
+            <pre
+              class="code-example-one fragment css"
+            ><code>transition-timing-function: ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end|steps|cubic-bezier</code></pre>
+          </section>
+          <section style="text-align: center">
+            <h2><code>cubic-bezier</code></h2>
+            <div class="fragment">
+              Задаёт функцию изменения свойства в виде кривой Безье
+            </div>
+            <div class="fragment">
+              P = (1−t)<sup style="font-size: 0.6em">2</sup>P<sub
+                style="font-size: 0.6em"
+                >1</sub
+              >
+              + 2(1−t)tP<sub style="font-size: 0.6em">2</sub> + t<sup
+                style="font-size: 0.6em"
+                >2</sup
+              >P<sub style="font-size: 0.6em">3</sub>
+            </div>
+            <div class="fragment">
+              P<sub style="font-size: 0.6em">1</sub> = (x<sub
+                style="font-size: 0.6em"
+                >1</sub
+              >, y<sub style="font-size: 0.6em">1</sub>)
+            </div>
+            <div class="fragment">
+              P<sub style="font-size: 0.6em">2</sub> = (x<sub
+                style="font-size: 0.6em"
+                >2</sub
+              >, y<sub style="font-size: 0.6em">2</sub>)
+            </div>
+            <div class="fragment">
+              P<sub style="font-size: 0.6em">3</sub> = (1, 1)
+            </div>
+            <div class="fragment">t ∈ [0, 1]</div>
+          </section>
+          <section>
+            <h2><code>cubic-bezier</code></h2>
+            <img
+              src="./assets/images/cubic-bezier_points_values.png"
+              style="height: 350px; background-color: #fff"
+            /><br />
+            <pre
+              class="code-example-one fragment css size-l"
+            ><code>transition-timing-function: cubic-bezier(x1, y1, x2, y2)</code></pre>
+            <br />
+            <a href="https://cubic-bezier.com" class="fragment" target="_blank"
+              >Онлайн конструктор</a
+            ><br />
+            <a href="https://easings.net/ru" class="fragment" target="_blank"
+              >Примеры функций</a
+            >
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="linear"
+              bezier="0, 0, 1, 1"
+            ></transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="ease"
+              bezier="0.25, 0.1, 0.25, 1"
+            ></transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="ease-in"
+              bezier="0.42, 0, 1, 1"
+            ></transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="ease-out"
+              bezier="0, 0, 0.58, 1"
+            ></transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="ease-in-out"
+              bezier="0.42,0,0.58,1"
+            >
+            </transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="steps"
+              steps="5"
+              step="start"
+            >
+              первый скачок происходит сразу при начале анимации (в момент 0%)
+            </transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide name="steps" steps="5" step="end">
+              последний скачок происходит в момент окончания анимации (на 100%)
+            </transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="steps"
+              steps="5"
+              step="middle"
+            >
+              Фактически убирает один шаг из расчёта: анимация удерживает
+              значение в начале и в конце по 1/n части длительности
+            </transition-timing-function-slide>
+          </section>
+          <section>
+            <transition-timing-function-slide
+              name="steps"
+              steps="5"
+              step="both"
+            >
+              Добавляет паузы на обеих границах — и на 0%, и на 100%. Это
+              эквивалентно добавлению одного дополнительного шага в анимации
+            </transition-timing-function-slide>
+          </section>
 
-                        button:hover {
-                            background-color: blue;
-                            transition: background-color 2s;
-                        }
-                    </template>
-                </code-example>
-            </section>
-            <section>
-                <h2>CSS-свойство <code>transition</code></h2>
-                <pre class="code-example-one fragment css size-l" style="margin-bottom: 16px"><code>transition: &lt;property&gt; &lt;duration&gt; &lt;timing-function&gt; &lt;delay&gt;;</code></pre>
-            </section>
-            <section>
-                <h2><code>transition-property</code></h2>
-                <p class="fragment">Устанавливает свойство, значение которого будет отслеживаться для создания эффекта
-                    перехода</p>
+          <section>
+            <code-example fragment>
+              <!-- language=html -->
+              <template data-type="html" no-preview>
+                <div class="linear">linear</div>
+                <div class="ease">ease</div>
+                <div class="ease-in">ease-in</div>
+                <div class="ease-out">ease-out</div>
+                <div class="ease-in-out">ease-in-out</div>
+                <div class="step-start">step-start</div>
+                <div class="step-end">step-end</div>
+                <div class="step-none">step-none</div>
+                <div class="step-both">step-both</div>
+              </template>
 
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-property: none;
-                    </template>
-                </code-example>
-                <br>
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-property: all;
-                    </template>
-                </code-example>
-                <br>
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-property: color;
-                    </template>
-                </code-example>
-                <br>
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-property: color, font-size;
-                    </template>
-                </code-example>
-            </section>
-            <section>
-                <h2><code>transition-duration</code></h2>
-                <p class="fragment">Определяет продолжительность выполнения анимации</p>
+              <template data-type="css" no-preview>
+                .code-example-result.code-example-result.code-example-result {
+                overflow: hidden; display: flex; align-items: flex-start; gap:
+                10px; flex-direction: column; } .code-example-result div {
+                position: relative; border: 1px solid black; border-radius: 5px;
+                color: white; width: 10%; height: 2rem; font-size: 1rem;
+                display: flex; align-items: center; justify-content: center;
+                transition-property: margin-left; transition-duration: 10s; /*
+                время анимации по умолчанию */ } /* Цвета и timing-function для
+                каждого класса */ .linear { background-color: #ff595e;
+                transition-timing-function: linear; } .ease { background-color:
+                #ffca3a; transition-timing-function: ease; } .ease-in {
+                background-color: #8ac926; transition-timing-function: ease-in;
+                } .ease-out { background-color: #1982c4;
+                transition-timing-function: ease-out; } .ease-in-out {
+                background-color: #6a4c93; transition-timing-function:
+                ease-in-out; } .step-start { background-color: #f3722c;
+                transition-timing-function: steps(10, start); } .step-end {
+                background-color: #f94144; transition-timing-function: steps(10,
+                end); } .step-none { background-color: #577590;
+                transition-timing-function: steps(10, jump-none); } .step-both {
+                background-color: #43aa8b; transition-timing-function: steps(10,
+                jump-both); } /* Анимация при наведении на внешний блок */
+                .code-example-result:hover div { margin-left: 90%; /* смещение
+                почти до правой границы */ } .code-example-result div::after {
+                content: attr(data-duration); position: absolute; top: -1.5rem;
+                left: 0; font-size: 0.8rem; color: black; opacity: 0;
+                transition: opacity 0.3s; } .code-example-result:hover
+                div::after { opacity: 1; }
+              </template>
+            </code-example>
+          </section>
+          <section>
+            <h2><code>transition-delay</code></h2>
+            <p class="fragment">Определяет задержку до выполнения анимации</p>
 
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-duration: 0s;
-                    </template>
-                </code-example>
-                <br>
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-duration: 120ms;
-                    </template>
-                </code-example>
-                <br>
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-duration: 6s;
-                    </template>
-                </code-example>
-                <br>
-                <code-example no-preview>
-                    <template data-type="css" class="fragment">
-                        transition-duration: 1s, 15s;
-                    </template>
-                </code-example>
-            </section>
-            <section>
-                <h2><code>transition-timing-function</code></h2>
-                <p class="fragment">Устанавливает функциональную зависимость изменения свойства от времени</p>
-                <pre class="code-example-one fragment css"><code>transition-timing-function: ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end|steps|cubic-bezier</code></pre>
-            </section>
-            <section style="text-align: center;">
-                <h2><code>cubic-bezier</code></h2>
-                <div class="fragment">Задаёт функцию изменения свойства в виде кривой Безье</div>
-                <div class="fragment">
-                    P = (1−t)<sup style="font-size: .6em;">2</sup>P<sub style="font-size: .6em;">1</sub> + 2(1−t)tP<sub
-                        style="font-size: .6em;">2</sub> + t<sup style="font-size: .6em;">2</sup>P<sub
-                        style="font-size: .6em;">3</sub>
-                </div>
-                <div class="fragment">P<sub style="font-size: .6em;">1</sub> = (x<sub style="font-size: .6em;">1</sub>,
-                    y<sub style="font-size: .6em;">1</sub>)
-                </div>
-                <div class="fragment">P<sub style="font-size: .6em;">2</sub> = (x<sub style="font-size: .6em;">2</sub>,
-                    y<sub style="font-size: .6em;">2</sub>)
-                </div>
-                <div class="fragment">P<sub style="font-size: .6em;">3</sub> = (1, 1)</div>
-                <div class="fragment">t ∈ [0, 1]</div>
-            </section>
-            <section>
-                <h2><code>cubic-bezier</code></h2>
-                <img src="./assets/images/cubic-bezier_points_values.png"
-                     style="height: 350px; background-color: #fff;"><br>
-                <pre class="code-example-one fragment css size-l"><code>transition-timing-function: cubic-bezier(x1, y1, x2, y2)</code></pre>
-                <br>
-                <a href="https://cubic-bezier.com" class="fragment" target="_blank">Онлайн конструктор</a><br>
-                <a href="https://easings.net/ru" class="fragment" target="_blank">Примеры функций</a>
-            </section>
-            <section>
-                <transition-timing-function-slide name="linear" bezier="0, 0, 1, 1"></transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="ease" bezier="0.25, 0.1, 0.25, 1"></transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="ease-in" bezier="0.42, 0, 1, 1"></transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="ease-out" bezier="0, 0, 0.58, 1"></transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="ease-in-out" bezier="0.42,0,0.58,1">
-                </transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="steps" steps="5" step="start">
-                    первый скачок происходит сразу при начале анимации (в момент 0%)
-                </transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="steps" steps="5" step="end">
-                    последний скачок происходит в момент окончания анимации (на 100%)
-                </transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="steps" steps="5" step="middle">
-                    Фактически убирает один шаг из расчёта: анимация удерживает значение в начале и в конце по 1/n части длительности
-                </transition-timing-function-slide>
-            </section>
-            <section>
-                <transition-timing-function-slide name="steps" steps="5" step="both">
-                    Добавляет паузы на обеих границах — и на 0%, и на 100%.
-                    Это эквивалентно добавлению одного дополнительного шага в анимации
-                </transition-timing-function-slide>
-            </section>
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-delay: 0s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-delay: 120ms;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-delay: 6s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition-delay: 1s, 15s;
+              </template>
+            </code-example>
+          </section>
+          <section>
+            <h2><code>transition</code></h2>
+
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition: margin-right 4s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition: margin-right 4s 1s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition: margin-right 4s easy;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition: margin-right 4s easy 1s;
+              </template>
+            </code-example>
+            <br />
+            <code-example no-preview>
+              <template data-type="css" class="fragment">
+                transition: margin-right 4s, color 1s;
+              </template>
+            </code-example>
+          </section>
         </section>
+        <section>
+          <section>
+            <h2>Трансформации</h2>
+          </section>
+          <section>
+            
+          </section>
+        </section>
+      </div>
     </div>
-</div>
 
-<script src="/utils/lib/js/head.min.js"></script>
-<script src="/utils/js/reveal.js"></script>
-<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../../../utils/lib/js/head.min.js"></script>
+    <script src="../../../utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
 
-<script>
-    $('.links a').on('mouseover', function () {
-        var text = $(this).data('content');
-        $('.output-links').text(text);
+    <script>
+      $(".links a").on("mouseover", function () {
+        var text = $(this).data("content");
+        $(".output-links").text(text);
+      });
+      $(".links a").on("blur", function () {
+        $(".output-links").text("");
+      });
 
-    });
-    $('.links a').on('blur', function () {
-        $('.output-links').text('');
-
-    });
-
-    Reveal.addEventListener('fragmentshown', function (event) {
+      Reveal.addEventListener("fragmentshown", function (event) {
         if (Reveal.isFirstSlide()) {
-            var root = $(event.fragment);
-            console.log(root);
-            setTimeout(function () {
-                $(root).find('h1').addClass('bounceInDown');
-                $(root).find('h4').addClass('bounceInRight');
-                $(root).find('small').eq(0).addClass('bounceInLeft');
-                $(root).find('small').eq(1).addClass('bounceInUp');
-            }, 0);
+          var root = $(event.fragment);
+          console.log(root);
+          setTimeout(function () {
+            $(root).find("h1").addClass("bounceInDown");
+            $(root).find("h4").addClass("bounceInRight");
+            $(root).find("small").eq(0).addClass("bounceInLeft");
+            $(root).find("small").eq(1).addClass("bounceInUp");
+          }, 0);
         }
-    });
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
+      });
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
         controls: false,
         progress: true,
         history: true,
         center: false,
 
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        transition: "slide", // none/fade/slide/convex/concave/zoom
 
         // Optional reveal.js plugins
         dependencies: [
-            {
-                src: '/utils/lib/js/classList.js', condition: function () {
-                    return !document.body.classList;
-                }
+          {
+            src: "/utils/lib/js/classList.js",
+            condition: function () {
+              return !document.body.classList;
             },
-            {
-                src: '/utils/plugin/markdown/marked.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
+          },
+          {
+            src: "/utils/plugin/markdown/marked.js",
+            condition: function () {
+              return !!document.querySelector("[data-markdown]");
             },
-            {
-                src: '/utils/plugin/markdown/markdown.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
+          },
+          {
+            src: "/utils/plugin/markdown/markdown.js",
+            condition: function () {
+              return !!document.querySelector("[data-markdown]");
             },
-            {
-                src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () {
-                    return !!document.querySelector('pre code');
-                }, callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
+          },
+          {
+            src: "/utils/plugin/highlight/highlight.js",
+            async: true,
+            condition: function () {
+              return !!document.querySelector("pre code");
             },
-            {src: '/utils/plugin/zoom-js/zoom.js', async: true},
-            {src: '/utils/plugin/notes/notes.js', async: true}
-        ]
-    });
-    Reveal.configure({slideNumber: true});
-
-</script>
-<script src="/utils/lib/js/code-example.js"></script>
-<script src="./js-custom/bezier-graph.js"></script>
-<script src="./js-custom/step-graph.js"></script>
-<script src="./js-custom/transition-timing-function-slide.js"></script>
-</body>
+            callback: function () {
+              hljs.initHighlightingOnLoad();
+            },
+          },
+          { src: "/utils/plugin/zoom-js/zoom.js", async: true },
+          { src: "/utils/plugin/notes/notes.js", async: true },
+        ],
+      });
+      Reveal.configure({ slideNumber: true });
+    </script>
+    <script src="../../../utils/lib/js/code-example.js"></script>
+    <script src="./js-custom/bezier-graph.js"></script>
+    <script src="./js-custom/step-graph.js"></script>
+    <script src="./js-custom/transition-timing-function-slide.js"></script>
+  </body>
 </html>

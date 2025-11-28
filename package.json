@@ -1,0 +1,26 @@
+{
+  "name": "lectures",
+  "version": "1.0.0",
+  "description": "Этот репозиторий содержит материалы курса по фронтенд-разработке для студентов ИТМО. Здесь собраны **лекции, домашние задания, квизы и результаты**, которые автоматически отображаются на сайте курса.",
+  "main": "index.js",
+  "scripts": {
+    "fmt-templates": "node utils/format‑templates.js \"src/**/*.html\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frontend25-26/lectures.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Frontend25-26/lectures/issues"
+  },
+  "homepage": "https://github.com/Frontend25-26/lectures#readme",
+  "dependencies": {
+    "cheerio": "^1.1.2",
+    "glob": "^11.0.3",
+    "prettier": "^2.8.8"
+  }
+}
