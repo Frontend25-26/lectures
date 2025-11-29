@@ -72,9 +72,15 @@
                         <button>Hover me!</button>
                     </template>
                     <template data-type="css">
-                        button { background-color: red; color: white; } button:hover {
-                        background-color: blue; }
-                    </template>
+                        button {
+                          background-color: red;
+                          color: white;
+                        }
+
+                        button:hover {
+                          background-color: blue;
+                        }
+                        </template>
                 </code-example>
                 <br/>
                 <code-example class="fragment">
@@ -82,9 +88,16 @@
                         <button>Hover me!</button>
                     </template>
                     <template data-type="css">
-                        button { background-color: red; color: white; transition:
-                        background-color 1s; } button:hover { background-color: blue; }
-                    </template>
+                        button {
+                          background-color: red;
+                          color: white;
+                          transition: background-color 1s;
+                        }
+
+                        button:hover {
+                          background-color: blue;
+                        }
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -94,9 +107,16 @@
                         <button>Hover me!</button>
                     </template>
                     <template data-type="css">
-                        button { background-color: red; color: white; } button:hover {
-                        background-color: blue; transition: background-color 2s; }
-                    </template>
+                        button {
+                          background-color: red;
+                          color: white;
+                        }
+                        
+                        button:hover {
+                          background-color: blue;
+                          transition: background-color 2s;
+                        }
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -309,34 +329,82 @@
 
                     <template data-type="css" no-preview>
                         .code-example-result.code-example-result.code-example-result {
-                        overflow: hidden; display: flex; align-items: flex-start; gap:
-                        10px; flex-direction: column; } .code-example-result div {
-                        position: relative; border: 1px solid black; border-radius: 5px;
-                        color: white; width: 10%; height: 2rem; font-size: 1rem;
-                        display: flex; align-items: center; justify-content: center;
-                        transition-property: margin-left; transition-duration: 10s; /*
-                        время анимации по умолчанию */ } /* Цвета и timing-function для
-                        каждого класса */ .linear { background-color: #ff595e;
-                        transition-timing-function: linear; } .ease { background-color:
-                        #ffca3a; transition-timing-function: ease; } .ease-in {
-                        background-color: #8ac926; transition-timing-function: ease-in;
-                        } .ease-out { background-color: #1982c4;
-                        transition-timing-function: ease-out; } .ease-in-out {
-                        background-color: #6a4c93; transition-timing-function:
-                        ease-in-out; } .step-start { background-color: #f3722c;
-                        transition-timing-function: steps(10, start); } .step-end {
-                        background-color: #f94144; transition-timing-function: steps(10,
-                        end); } .step-none { background-color: #577590;
-                        transition-timing-function: steps(10, jump-none); } .step-both {
-                        background-color: #43aa8b; transition-timing-function: steps(10,
-                        jump-both); } /* Анимация при наведении на внешний блок */
-                        .code-example-result:hover div { margin-left: 90%; /* смещение
-                        почти до правой границы */ } .code-example-result div::after {
-                        content: attr(data-duration); position: absolute; top: -1.5rem;
-                        left: 0; font-size: 0.8rem; color: black; opacity: 0;
-                        transition: opacity 0.3s; } .code-example-result:hover
-                        div::after { opacity: 1; }
-                    </template>
+                          overflow: hidden;
+                          display: flex;
+                          align-items: flex-start;
+                          gap: 10px;
+                          flex-direction: column;
+                        }
+                        .code-example-result div {
+                          position: relative;
+                          border: 1px solid black;
+                          border-radius: 5px;
+                          color: white;
+                          width: 10%;
+                          height: 2rem;
+                          font-size: 1rem;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          transition-property: margin-left;
+                          transition-duration: 10s; /*
+                        время анимации по умолчанию */
+                        } /* Цвета и timing-function для
+                        каждого класса */
+                        .linear {
+                          background-color: #ff595e;
+                          transition-timing-function: linear;
+                        }
+                        .ease {
+                          background-color: #ffca3a;
+                          transition-timing-function: ease;
+                        }
+                        .ease-in {
+                          background-color: #8ac926;
+                          transition-timing-function: ease-in;
+                        }
+                        .ease-out {
+                          background-color: #1982c4;
+                          transition-timing-function: ease-out;
+                        }
+                        .ease-in-out {
+                          background-color: #6a4c93;
+                          transition-timing-function: ease-in-out;
+                        }
+                        .step-start {
+                          background-color: #f3722c;
+                          transition-timing-function: steps(10, start);
+                        }
+                        .step-end {
+                          background-color: #f94144;
+                          transition-timing-function: steps(10, end);
+                        }
+                        .step-none {
+                          background-color: #577590;
+                          transition-timing-function: steps(10, jump-none);
+                        }
+                        .step-both {
+                          background-color: #43aa8b;
+                          transition-timing-function: steps(10, jump-both);
+                        } /* Анимация при наведении на внешний блок */
+                        .code-example-result:hover div {
+                          margin-left: 90%; /* смещение
+                        почти до правой границы */
+                        }
+                        .code-example-result div::after {
+                          content: attr(data-duration);
+                          position: absolute;
+                          top: -1.5rem;
+                          left: 0;
+                          font-size: 0.8rem;
+                          color: black;
+                          opacity: 0;
+                          transition: opacity 0.3s;
+                        }
+                        .code-example-result:hover div::after {
+                          opacity: 1;
+                        }
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1085,19 +1153,19 @@
                     </template>
                     <template data-type="css">
                         .box:hover {
-                        animation: show;
-                        animation-duration: 2s;
+                          animation: show;
+                          animation-duration: 2s;
                         }
-
+                        
                         @keyframes show {
-                        from {
-                        opacity: 0;
+                          from {
+                            opacity: 0;
+                          }
+                          to {
+                            opacity: 1;
+                          }
                         }
-                        to {
-                        opacity: 1;
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1111,19 +1179,19 @@
                     </template>
                     <template data-type="css">
                         .box {
-                        opacity: 0;
+                          opacity: 0;
                         }
                         .box:hover {
-                        animation: show;
-                        animation-duration: 2s;
+                          animation: show;
+                          animation-duration: 2s;
                         }
-
+                        
                         @keyframes show {
-                        to {
-                        opacity: 1;
+                          to {
+                            opacity: 1;
+                          }
                         }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
 
@@ -1140,21 +1208,25 @@
                         </div>
                     </template>
                     <template data-type="css">
-                        .box1:hover { animation-name: blink;
-                        animation-duration: 1s;
+                        .box1:hover {
+                          animation-name: blink;
+                          animation-duration: 1s;
                         }
-                        .box2:hover { animation-name: blink;
-                        animation-duration: 5s;
+
+                        .box2:hover {
+                          animation-name: blink;
+                          animation-duration: 5s;
                         }
+
                         @keyframes blink {
-                        from {
-                        background-color: blue;
+                          from {
+                            background-color: blue;
+                          }
+                          to {
+                            background-color: green;
+                          }
                         }
-                        to {
-                        background-color: green;
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1167,21 +1239,23 @@
                         </div>
                     </template>
                     <template data-type="css">
-                        .box:hover { animation-name: blink;
-                        animation-duration: 2s;
+                        .box:hover {
+                          animation-name: blink;
+                          animation-duration: 2s;
                         }
+
                         @keyframes blink {
-                        from {
-                        background-color: blue;
+                          from {
+                            background-color: blue;
+                          }
+                          50% {
+                            background-color: red;
+                          }
+                          to {
+                            background-color: green;
+                          }
                         }
-                        50% {
-                        background-color: red;
-                        }
-                        to {
-                        background-color: green;
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1194,17 +1268,29 @@
                         </div>
                     </template>
                     <template data-type="css">
-                        .box:hover { animation-name: blink;
-                        animation-duration: 3s;
+                        .box:hover {
+                          animation-name: blink;
+                          animation-duration: 3s;
                         }
+
                         @keyframes blink {
-                        0% { background-color: blue; }
-                        25% { background-color: green; }
-                        50% { background-color: red; }
-                        75% { background-color: yellow; }
-                        100% { background-color: grey; }
+                          0% {
+                            background-color: blue;
+                          }
+                          25% {
+                            background-color: green;
+                          }
+                          50% {
+                            background-color: red;
+                          }
+                          75% {
+                            background-color: yellow;
+                          }
+                          100% {
+                            background-color: grey;
+                          }
                         }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1217,21 +1303,25 @@
                         </div>
                     </template>
                     <template data-type="css">
-                        .box:hover { animation-name: blink;
-                        animation-duration: 10s;
+                        .box:hover {
+                          animation-name: blink;
+                          animation-duration: 10s;
                         }
+
                         @keyframes blink {
-                        0%, 50% {
-                        background-color: blue;
+                          0%,
+                          50% {
+                            background-color: blue;
+                          }
+                          25%,
+                          75% {
+                            background-color: green;
+                          }
+                          100% {
+                            background-color: grey;
+                          }
                         }
-                        25%, 75% {
-                        background-color: green;
-                        }
-                        100% {
-                        background-color: grey;
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1244,21 +1334,24 @@
                         </div>
                     </template>
                     <template data-type="css">
-                        .box:hover { animation-name: blink;
-                        animation-duration: 4s;
+                        .box:hover {
+                          animation-name: blink;
+                          animation-duration: 4s;
                         }
+
                         @keyframes blink {
-                        0% {
-                        background-color: blue;
+                          0% {
+                            background-color: blue;
+                          }
+                          25%,
+                          75% {
+                            background-color: green;
+                          }
+                          100% {
+                            background-color: grey;
+                          }
                         }
-                        25%, 75% {
-                        background-color: green;
-                        }
-                        100% {
-                        background-color: grey;
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1271,21 +1364,25 @@
                         </div>
                     </template>
                     <template data-type="css">
-                        .box:hover { animation-name: show;
-                        animation-duration: 2s;
+                        .box:hover {
+                          animation-name: show;
+                          animation-duration: 2s;
                         }
+
                         @keyframes show {
-                        0% {
-                        opacity: 0;
-                        background-color: blue;
+                          0% {
+                            opacity: 0;
+                            background-color: blue;
+                          }
+                          50% {
+                            background-color: green;
+                          }
+                          100% {
+                            opacity: 1;
+                            background-color: red;
+                          }
                         }
-                        50% { background-color: green; }
-                        100% {
-                        opacity: 1;
-                        background-color: red;
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1300,19 +1397,21 @@
                     </template>
                     <template data-type="css">
                         .box:hover {
-                        animation-name: move;
-                        animation-duration: 2s;
-                        animation-delay: 1s;
+                          animation-name: move;
+                          animation-duration: 2s;
+                          animation-delay: 1s;
                         }
+
                         @keyframes move {
-                        25%, 75% {
-                        transform: translateX(100%);
+                          25%,
+                          75% {
+                            transform: translateX(100%);
+                          }
+                          100% {
+                            transform: translateX(200%);
+                          }
                         }
-                        100% {
-                        transform: translateX(200%);
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1327,24 +1426,31 @@
                     </template>
                     <template data-type="css">
                         .box:hover {
-                        animation-name: move;
-                        animation-duration: 8s;
-                        animation-timing-function: cubic-bezier(.51, -0.61, .63, 1.71);
+                          animation-name: move;
+                          animation-duration: 8s;
+                          animation-timing-function: cubic-bezier(0.51, -0.61, 0.63, 1.71);
                         }
+
                         @keyframes move {
-                        0% { transform: translate(0, 0); }
-                        25% {
-                        transform: translate(100%, 0);
-                        animation-timing-function: linear;
+                          0% {
+                            transform: translate(0, 0);
+                          }
+                          25% {
+                            transform: translate(100%, 0);
+                            animation-timing-function: linear;
+                          }
+                          50% {
+                            transform: translate(100%, 200%);
+                          }
+                          75% {
+                            transform: translate(0, 200%);
+                            animation-timing-function: linear;
+                          }
+                          100% {
+                            transform: translate(0, 0);
+                          }
                         }
-                        50% { transform: translate(100%, 200%); }
-                        75% {
-                        transform: translate(0, 200%);
-                        animation-timing-function: linear;
-                        }
-                        100% { transform: translate(0, 0); }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1359,24 +1465,31 @@
                     </template>
                     <template data-type="css" no-preview>
                         .box:hover {
-                        animation-name: move;
-                        animation-duration: 8s;
-                        animation-timing-function: cubic-bezier(.51, -0.61, .63, 1.71);
+                          animation-name: move;
+                          animation-duration: 8s;
+                          animation-timing-function: cubic-bezier(0.51, -0.61, 0.63, 1.71);
                         }
+
                         @keyframes move {
-                        0% { transform: translate(0, 0); }
-                        25% {
-                        transform: translate(100%, 0);
-                        animation-timing-function: linear;
+                          0% {
+                            transform: translate(0, 0);
+                          }
+                          25% {
+                            transform: translate(100%, 0);
+                            animation-timing-function: linear;
+                          }
+                          50% {
+                            transform: translate(100%, 200%);
+                          }
+                          75% {
+                            transform: translate(0, 200%);
+                            animation-timing-function: linear;
+                          }
+                          100% {
+                            transform: translate(0, 0);
+                          }
                         }
-                        50% { transform: translate(100%, 200%); }
-                        75% {
-                        transform: translate(0, 200%);
-                        animation-timing-function: linear;
-                        }
-                        100% { transform: translate(0, 0); }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
 
@@ -1397,19 +1510,20 @@
                     </template>
                     <template data-type="css">
                         .circle:hover {
-                        animation-name: zoom;
-                        animation-duration: 1s;
-                        animation-iteration-count: 3;
+                          animation-name: zoom;
+                          animation-duration: 1s;
+                          animation-iteration-count: 3;
                         }
+
                         @keyframes zoom {
-                        0% {
-                        transform: scale(1);
+                          0% {
+                            transform: scale(1);
+                          }
+                          100% {
+                            transform: scale(2);
+                          }
                         }
-                        100% {
-                        transform: scale(2);
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1435,18 +1549,18 @@
                     </template>
                     <template data-type="css">
                         .box:hover {
-                        animation: show;
-                        animation-duration: 1s;
-                        animation-iteration-count: 3;
-                        animation-direction: alternate;
+                          animation: show;
+                          animation-duration: 1s;
+                          animation-iteration-count: 3;
+                          animation-direction: alternate;
                         }
-
+                        
                         @keyframes show {
-                        to {
-                        transform: translateX(100px);
+                          to {
+                            transform: translateX(100px);
+                          }
                         }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
 
@@ -1489,21 +1603,21 @@
                     </template>
                     <template data-type="css">
                         .box:hover {
-                        animation: show;
-                        animation-duration: 2s;
-                        animation-iteration-count: 3;
-                        animation-fill-mode: forwards;
+                          animation: show;
+                          animation-duration: 2s;
+                          animation-iteration-count: 3;
+                          animation-fill-mode: forwards;
                         }
-
+                        
                         @keyframes show {
-                        from {
-                        transform: scale(1.2);
+                          from {
+                            transform: scale(1.2);
+                          }
+                          to {
+                            transform: scale(2);
+                          }
                         }
-                        to {
-                        transform: scale(2);
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
             <section>
@@ -1605,22 +1719,18 @@
                     </template>
                     <template data-type="css">
                         .circle.run img {
-                        animation: spin 4s linear infinite;
+                          animation: spin 4s linear infinite;
                         }
-
+                        
                         @keyframes spin {
-                        0% {
-                        transform: rotate(0turn)
-                        translateY(-150px)
-                        rotate(1turn);
+                          0% {
+                            transform: rotate(0turn) translateY(-150px) rotate(1turn);
+                          }
+                          100% {
+                            transform: rotate(1turn) translateY(-150px) rotate(0turn);
+                          }
                         }
-                        100% {
-                        transform: rotate(1turn)
-                        translateY(-150px)
-                        rotate(0turn);
-                        }
-                        }
-                    </template>
+                        </template>
                 </code-example>
             </section>
         </section>
