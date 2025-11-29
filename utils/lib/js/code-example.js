@@ -52,6 +52,7 @@ class CodeExample extends HTMLElement {
         if (showPreview) {
             const previewHost = document.createElement('div');
             previewHost.className = `${ isFragment ? 'fragment' : '' }`;
+            previewHost.classList.add(...this.classList);
 
             const shadow = previewHost.attachShadow({ mode: 'open' });
             shadow.innerHTML = `
@@ -64,6 +65,7 @@ class CodeExample extends HTMLElement {
             padding: 5px;
             margin-top: 16px;
             overflow: scroll;
+            height: inherit;
           }
           ${ css }
         </style>

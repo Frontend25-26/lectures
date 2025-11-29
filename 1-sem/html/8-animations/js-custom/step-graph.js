@@ -55,7 +55,6 @@ class StepGraph extends HTMLElement {
     }
 
     connectedCallback() {
-        this._ctx = this._canvas.getContext('2d');
         this._resizeCanvas();
         window.addEventListener('resize', this._onResize);
         this._draw();
@@ -83,6 +82,7 @@ class StepGraph extends HTMLElement {
         this._canvas.style.height = h + 'px';
         this._canvas.width = Math.round(w * this._dpr);
         this._canvas.height = Math.round(h * this._dpr);
+        this._ctx = this._canvas.getContext('2d');
         this._ctx.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
     }
 
