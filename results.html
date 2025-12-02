@@ -137,7 +137,7 @@
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdwAUPmsHPzSQubV2GGdWpYJFSFTb8H_z8zK6dhW7sm394vUeyT_cjKJgj8ahVN2AHjtW4hgq9Eojr/pub?gid=805688068&single=true&output=csv",
         };
 
-        Object.entries(coursesMap).map((url, id) => {
+        Object.entries(coursesMap).map(([id, url]) => {
           const container = document.getElementById(id);
           renderGoogleSheet(url, container);
         });
