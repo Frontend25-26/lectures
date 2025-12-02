@@ -51,25 +51,9 @@
             });
 
             // Находим индекс столбца с процентами
-            const percentColumnIndex = headers.findIndex((h) =>
-              h.includes("% баллов")
+            const sumColumnIndex = headers.findIndex((h) =>
+              h.includes("Сумма баллов")
             );
-
-            // Если есть столбец с процентами, вычисляем min и max значения
-            let minPercent = 0;
-            let maxPercent = 100;
-
-            if (percentColumnIndex !== -1) {
-              const percentValues = data.map((row) => {
-                const percentStr = row[headers[percentColumnIndex]];
-                return (
-                  parseFloat(percentStr.replace("%", "").replace(",", ".")) || 0
-                );
-              });
-
-              minPercent = Math.min(...percentValues);
-              maxPercent = Math.max(...percentValues);
-            }
 
             // Создаем HTML таблицу
             if (!container) {
@@ -99,18 +83,10 @@
                 td.textContent = rowData[header];
 
                 // Применяем градиент к столбцу с процентами
-                if (index === percentColumnIndex) {
-                  const percentStr = rowData[header];
-                  const percentValue =
-                    parseFloat(percentStr.replace("%", "").replace(",", ".")) ||
-                    0;
-
-                  // Нормализуем значение от 0 до 1
-                  const normalized =
-                    (percentValue - minPercent) /
-                    (maxPercent - minPercent || 1);
-
-                  // Вычисляем цвет в HSL (Hue от 0 (красный) до 120 (зеленый))
+                if (index === sumColumnIndex) {
+                  const val = parseInt(rowData[header]);
+                  const normalized = Math.min(1, val/60)
+                  
                   const hue = normalized * 120;
                   td.style.color = `hsl(${hue}, 100%, 85%)`;
                   td.style.fontWeight = "bold";
