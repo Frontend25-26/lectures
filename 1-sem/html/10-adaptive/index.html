@@ -1,10 +1,13 @@
-<!doctype html>
+ <!doctype html>
 <html lang="ru">
 
 <head>
     <meta charset="utf-8">
 
-    <title>CSS</title>
+    <title>Вёрстка под мобилки, Flutter и другие особенности</title>
+
+    <meta name="description" content="Лекция по фронтенду: мобильная вёрстка, Flutter, UX, адаптивность">
+    <meta name="author" content="Имя Фамилия">
 
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -12,69 +15,927 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-    <link rel="stylesheet" href="/utils/css/reveal.css">
-    <link rel="stylesheet" href="/utils/lib/css/animate.css">
-    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="utils/css/reveal.css">
+    <link rel="stylesheet" href="utils/lib/css/animate.css">
+    <link rel="stylesheet" href="utils/lib/css/magic.min.css">
+    <link rel="stylesheet" href="utils/css/theme/night-2.css" id="theme">
 
     <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="utils/lib/css/zenburn.css">
 
     <!-- Printing and PDF exports -->
-    <link rel="stylesheet" href="../2-css/css-custom/custom.css">
-    <script>
-        <!--
-        Yandex.Metrika
-        counter -->
-            (function (m, e, t, r, i, k, a) {
-                m[i] = m[i] || function () {
-                    (m[i].a = m[i].a || []).push(arguments)
-                };
-                m[i].l = 1 * new Date();
-                for (var j = 0; j < document.scripts.length; j++) {
-                    if (document.scripts[j].src === r) {
-                        return;
-                    }
-                }
-                k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-            })
-            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(95067685, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true
-        });
-        <!-- /Yandex.Metrika counter -->
-    </script>
+    <link rel="stylesheet" href="utils/css-custom/custom.css">
 
     <script>
         var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        link.href = window.location.search.match(/print-pdf/gi)
+            ? 'utils/css/print/pdf.css'
+            : 'utils/css/print/paper.css';
         document.getElementsByTagName('head')[0].appendChild(link);
     </script>
-    <script type="text/javascript"
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
 </head>
+
 <body>
 <div class="reveal">
-
     <div class="slides">
-        <section>
-            <p style="text-align: center;">Тут должна была быть презентация лекции, но лектор еще не успел ее
-                опубликовать...</p>
-            <p style="text-align: center;">По всем вопросам вы можете обращаться в чат курса.</p>
+
+        <!-- TITLE SLIDE -->
+        <section style="font-size: 70px;">
+            <div class="fragment">
+                <h2 class="animated">Вёрстка под мобилки</h2>
+<!--                <h4 class="animated">Flutter и другие особенности</h4>-->
+
+                <p style="text-align: center;">
+                    <small class="animated">designed by Алёна Шинкарева</small><br>
+                </p>
+            </div>
         </section>
+
+        <!-- История адаптивной верстки -->
+        <section>
+            <h2>История адаптивной вёрстки</h2>
+            <ul>
+                <li class="fragment">Этап 1: мобильные версии сайтов (2007+)</li>
+<!--                <li class="fragment">Этап 2: «резиновая» вёрстка</li>-->
+<!--                <li class="fragment">Этап 3: полноценная адаптивная вёрстка</li>-->
+            </ul>
+        </section>
+
+        <!-- -->
+        <section>
+            <h2>Этап 1: мобильные версии сайтов (2007+)</h2>
+            <ul class="fragment">
+                <li>Отдельный сайт для телефонов</li>
+                <li>Полная переработка интерфейса</li>
+                <li>Дорого и сложно в поддержке</li>
+            </ul>
+        </section>
+
+        <section>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <!-- Левая картинка -->
+                <div style="text-align: center;">
+                    <img src="utils/img/vk_iphone.PNG"
+                         style="width: 280px; border-radius: 10px; background: #fff;">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Мобильная версия сакта ВК - m.vk.ru/itmoru
+                    </p>
+                </div>
+
+                <!-- Правая картинка -->
+                <div style="text-align: center;">
+                    <img src="utils/img/vk_mac.png"
+                         style="width: 600px; border-radius: 10px; background: #fff; margin-top: 25%">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Десктопная версия сакта ВК - vk.ru/itmoru
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <div style="text-align: center;">
+                    <img src="utils/img/problems_1.jpeg"
+                         style="width: 100%; border-radius: 10px; background: #fff; margin-top: 5%">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Так выглядит неадаптивный сайт: его отображение одинаково и на компьютере, и на телефоне.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>История адаптивной вёрстки</h2>
+            <ul>
+                <li >Этап 1: мобильные версии сайтов (2007+)</li>
+                <li class="fragment">Этап 2: «резиновая» вёрстка</li>
+<!--                <li class="fragment">Этап 3: полноценная адаптивная вёрстка</li>-->
+            </ul>
+        </section>
+
+        <!-- Этап 2: «резиновая» вёрстка -->
+        <section>
+            <h2>Этап 2: резиновая вёрстка</h2>
+            <ul class="fragment">
+                <li>Проценты вместо фиксированных пикселей</li>
+                <li>Меняется ширина, но не структура макета</li>
+                <li>Подходит только для простых сайтов</li>
+            </ul>
+        </section>
+
+        <section>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <div style="text-align: center;">
+                    <img src="utils/img/резиновая.webp"
+                         style="width: 100%; border-radius: 10px; background: #fff; margin-top: 5%">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Так выглядит «резиновый» сайт: ширина карточек меняется по мере сужения экрана, но порядок их расположения сохраняется.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>История адаптивной вёрстки</h2>
+            <ul>
+                <li>Этап 1: мобильные версии сайтов (2007+)</li>
+                <li>Этап 2: «резиновая» вёрстка</li>
+                <li class="fragment">Этап 3: полноценная адаптивная вёрстка</li>
+            </ul>
+        </section>
+
+        <!-- Этап 3: полноценная адаптивная вёрстка -->
+        <section>
+            <h2>Этап 3: адаптивный дизайн</h2>
+            <ul class="fragment">
+                <li>Несколько макетов под разные устройства</li>
+                <li>Гибкие сетки, брейкпоинты</li>
+                <li>Современный стандарт разработки</li>
+            </ul>
+        </section>
+
+        <section>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <div style="text-align: center;">
+                    <img src="utils/img/адаптивная.webp"
+                         style="width: 85%; border-radius: 10px; background: #fff;">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Так выглядит адаптивный сайт портала «Арзамас» — есть версия для компьютера, планшета и телефона. Всё это — три разных макета.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Почему мобильная верстка важна -->
+        <section>
+            <aside class="notes">Объяснить, почему мобилки — основной трафик.</aside>
+            <h2>Почему мобильная вёрстка важна?</h2>
+            <ul>
+                <li class="fragment">Мобильный трафик > 60%</li>
+<!--                <li class="fragment">Маленькие экраны, высокая плотность пикселей</li>-->
+<!--                <li class="fragment">Ограничения по производительности и сети</li>-->
+<!--                <li class="fragment">Другой UX и сценарии использования</li>-->
+            </ul>
+        </section>
+
+        <section>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <div style="text-align: center;">
+                    <img src="utils/img/25-dolya-mobilok.png"
+                         style="width: 100%; border-radius: 10px; background: #fff;">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Доля мобильного интернета в веб-трафике.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <aside class="notes">Объяснить, почему мобилки — основной трафик.</aside>
+            <h2>Почему мобильная вёрстка важна?</h2>
+            <ul class="fragment">
+                <li>Мобильный трафик > 60%</li>
+                <li>Маленькие экраны, высокая плотность пикселей</li>
+                <li>Ограничения по производительности и сети</li>
+                <li>Другой UX и сценарии использования</li>
+            </ul>
+        </section>
+
+        <!-- Принципы адаптивного дизайна: Введение -->
+        <section>
+            <h2>Принципы адаптивного дизайна</h2>
+            <p class="fragment">В адаптивной вёрстке выделяют несколько ключевых принципов, которые помогают сделать сайт удобным на всех устройствах.</p>
+        </section>
+
+        <!-- Принцип 1: Дублирование контента -->
+        <section>
+            <h2>1. Контент дублируется</h2>
+            <ul class="fragment">
+                <li>Вся информация десктопной версии доступна на мобильной</li>
+                <li>Не заставляем пользователя искать данные на компьютере</li>
+                <li>Дизайнер переносит весь контент, ничего не удаляя</li>
+                <li><b>Контент — это смысл сайта. Его нельзя «обрезать» для телефона</b></li>
+            </ul>
+        </section>
+
+        <!-- Принцип 2: Сохранение дизайна -->
+        <section>
+            <h2>2. Дизайн не меняется</h2>
+            <ul class="fragment">
+                <li>Шрифты, цвета, логотипы одинаковы на всех устройствах</li>
+                <li>Пользователь узнаёт сайт, независимо от устройства</li>
+                <li><b>Адаптивность не должна разрушать визуальную идентичность</b></li>
+            </ul>
+        </section>
+
+        <!-- Принцип 3: Иерархия элементов -->
+        <section>
+            <h2>3. Сохраняется иерархия</h2>
+            <ul class="fragment">
+                <li>Порядок блоков должен соответствовать целям сайта</li>
+                <li>Пример: «товар — описание и цена — заказ» для интернет-магазина</li>
+                <li>Нельзя менять логику для мобильной версии</li>
+                <li><b>Мобильная версия может выглядеть иначе, но идея сервиса и приоритеты должны сохраниться</b></li>
+            </ul>
+        </section>
+
+        <!-- Принцип 4: Размер кликабельных элементов -->
+        <section>
+            <h2>4. Высота и ширина кнопок</h2>
+            <ul class="fragment">
+                <li>Кнопки и интерактивные элементы — не меньше 44–48 px</li>
+                <li>На десктопе — мышь, на телефоне — палец</li>
+                <li>Если меньше — сложно попасть по элементу</li>
+                <li><b>UX мобильного сайта начинается с удобства нажатия.</b></li>
+
+            </ul>
+        </section>
+
+        <!-- Принцип 5: Сохранение функционала -->
+        <section>
+            <h2>5. Функционал десктопа повторяется</h2>
+            <ul class="fragment">
+                <li><b>Функционал повторяется, даже если он сложный</b></li>
+
+            </ul>
+        </section>
+
+        <!-- Принцип 6: Колонки и сетка -->
+        <section>
+            <h2>6. Число колонок уменьшается</h2>
+            <ul class="fragment">
+                <li>Десктоп: 12 колонок, мобильный экран: 1–4, планшет: 6–8</li>
+                <li>Компактное вертикальное расположение карточек</li>
+                <li>Горизонтальный скролл для второстепенных элементов</li>
+
+            </ul>
+        </section>
+
+        <!-- Подходы к вёрстке -->
+        <section>
+            <h2>Подходы к адаптивной вёрстке</h2>
+            <ul class="fragment">
+                <li>Mobile‑first — сначала для мобильных, потом для больших экранов</li>
+                <li>Desktop‑first — сначала для десктопа, потом адаптация под мобайл</li>
+            </ul>
+        </section>
+
+        <section>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <div style="text-align: center;">
+                    <img src="utils/img/25-dolya-mobilok.png"
+                         style="width: 100%; border-radius: 10px; background: #fff;">
+                    <p style="margin-top: 10px; font-size: 1.4rem; color: #ccc;">
+                        Доля мобильного интернета в веб-трафике.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mobile‑first: что это и зачем -->
+        <section>
+            <h2>Mobile‑first</h2>
+            <ul class="fragment">
+                <li>Базовая вёрстка — под маленький экран</li>
+                <li>Упор на минимализм, скорость, удобство на телефоне</li>
+                <li>Приоритетность основного контента (не заставляйте пользователя доскролливать до контента, ради которого он зашёл)</li>
+                <li>Хорош для сайтов с большим мобильным трафиком</li>
+            </ul>
+        </section>
+
+        <!-- Desktop‑first: что это -->
+        <section>
+            <h2>Desktop‑first</h2>
+            <ul class="fragment">
+                <li>Базовая вёрстка — для больших экранов</li>
+                <li>Удобен, если основной трафик — с ПК, или интерфейс сложный</li>
+                <li>Но может быть избыточным при просмотре с телефона</li>
+            </ul>
+        </section>
+
+        <!-- Пример -->
+        <section>
+            <h2>Пример</h2>
+            <h3 class="fragment">Адаптивный блок навигации:</h3>
+            <ul class="fragment">
+                <li>На планшетах и десктопе располагается горизонтально</li>
+                <li>На мобильных устройствах располагается вертикально</li>
+            </ul>
+            <h3 class="fragment">Договоримся, что:</h3>
+            <ul class="fragment">
+                <li>мобильные устройства: ширина экрана меньше 640 пикселей</li>
+                <li>планшеты: от 640 до 1024 пикселей</li>
+                <li>десктопные устройства: больше 1024 пикселей</li>
+            </ul>
+        </section>
+
+        <!-- Mobile-first: код + визуализация -->
+        <section>
+            <h2>Пример: Mobile‑first</h2>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <!-- Слева: CSS -->
+                <div style="height: 80%; text-align: left;">
+      <pre class="css" style="font-size: 0.8rem;"><code>/* стили для мобильной версии */
+.burger-icon {
+  cursor: pointer;
+}
+
+.navbar__links_list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* стили для планшетной и десктопной версий */
+@media (width >= 640px) {
+  .burger-icon {
+    display: none;
+  }
+
+  .navbar__links_list {
+    flex-direction: row;
+    margin: 0;
+  }
+}
+
+/* дополнительные стили для десктопа */
+@media (width >= 1024px) {}</code></pre>
+                </div>
+
+                <!-- Справа: визуализация -->
+                <div style="width: 45%; text-align: center; margin-top: 5%">
+                    <div style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; background: #f9f9f9;">
+                        <div class="navbar__links_list" style="display: flex; flex-direction: column; gap: 25px; background: #e0f7fa; padding: 16px;">
+                            <div class="burger-icon" style="cursor: pointer; background: #80deea; padding: 8px;">☰</div>
+                            <a href="#">Ссылка 1</a>
+                            <a href="#">Ссылка 2</a>
+                            <a href="#">Ссылка 3</a>
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 1.2rem; color: #666;">Вид на мобильном устройстве</p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Desktop-first: код + визуализация -->
+        <section>
+            <h2>Пример: Desktop‑first</h2>
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: flex-start;">
+
+                <!-- Слева: CSS -->
+                <div style="width: 45%; text-align: left;">
+      <pre class="css" style="font-size: 0.8rem;"><code>/* стили для десктопной версии */
+.burger-icon {
+  display: none;
+}
+
+.navbar__links_list {
+  display: flex;
+  gap: 25px;
+}
+
+/* дополнительные стили для планшета */
+@media (width < 1024px) {}
+
+/* стили для мобильной версии */
+@media (width < 640px) {
+  .burger-icon {
+    display: initial;
+    cursor: pointer;
+  }
+
+  .navbar__links_list {
+    flex-direction: column;
+  }
+}</code></pre>
+                </div>
+
+                <!-- Справа: визуализация -->
+                <div style="width: 45%; text-align: center; margin-top: 5%">
+                    <div style="border: 1px solid #ccc; padding: 16px; border-radius: 8px; background: #f9f9f9;">
+                        <div class="navbar__links_list" style="display: flex; gap: 25px; background: #ffe0b2; padding: 16px;">
+                            <a href="#">Ссылка 1</a>
+                            <a href="#">Ссылка 2</a>
+                            <a href="#">Ссылка 3</a>
+                            <div class="burger-icon" style="display: none; background: #ffcc80; padding: 8px;">☰</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 1.2rem; color: #666;">Вид на десктопе</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>CSS для адаптивной вёрстки</h2>
+            <p>Теперь разберём, как на практике кодируется адаптивный дизайн.</p>
+        </section>
+
+        <section>
+            <h2>Медиазапросы</h2>
+            <p>Медиазапросы позволяют менять стили под разные устройства и размеры экранов.</p>
+        </section>
+
+        <section>
+            <h2>Синтаксис @media</h2>
+            <ul class="fragment">
+                <li>Используется правило <code>@media</code></li>
+                <li>Условия соединяются через <code>not</code>, <code>and</code>, <code>or</code></li>
+                <li>Можно проверять:</li>
+                <ul>
+                    <li>ширину и высоту (<code>width</code>, <code>height</code>)</li>
+                    <li>соотношение сторон (<code>aspect-ratio</code>)</li>
+                    <li>ориентацию (<code>orientation: portrait / landscape</code>)</li>
+                    <li>разрешение экрана (<code>resolution</code>)</li>
+                </ul>
+            </ul>
+        </section>
+
+        <!-- Слайд 1 — width и height -->
+        <section>
+            <h2>Медиазапросы и свойства</h2>
+            <h3>width и height</h3>
+            <a href="https://frontend-lec-mobilki-examples.vercel.app/demo-width/demo-width.html">Пример</a>
+            <pre class="css fragment" style="font-size: 1.5rem;"><code>.box {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 10px;
+    background: red;
+    color: white;
+    border-radius: 12px;
+    border: 4px dashed white;
+}
+
+@media (min-width: 400px) {
+    .box {
+        background: orange;
+    }
+}
+
+@media (min-width: 800px) {
+    .box {
+        background: green;
+    }
+}
+  </code></pre>
+        </section>
+
+        <!-- Слайд 2 — aspect-ratio -->
+        <section>
+            <h2>Медиазапросы и свойства</h2>
+            <h3>aspect-ratio</h3>
+            <a href="https://frontend-lec-mobilki-examples.vercel.app/demo-aspect/demo-aspect.html">Пример</a>
+            <pre class="css fragment" style="font-size: 1.5rem;"><code>body {
+  margin: 30px;
+  background: black;
+}
+
+.box {
+  width: 80vw;
+  aspect-ratio: 16 / 9;
+  background: pink;
+  border-radius: 20px;
+  border: 4px solid white;
+}
+
+  </code></pre>
+        </section>
+
+
+        <!-- Слайд 4=3 — orientation -->
+        <section>
+            <h2>Медиазапросы и свойства</h2>
+            <h3>orientation</h3>
+            <a href="https://frontend-lec-mobilki-examples.vercel.app/demo-orientation/demo-orientation.html">Пример</a>
+            <pre class="css fragment" style="font-size: 1.5rem;"><code>.layout {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (orientation: portrait) {
+  .layout { flex-direction: column; }
+}
+
+@media (orientation: landscape) {
+  .layout { flex-direction: row; }
+}
+  </code></pre>
+        </section>
+
+<!--        Слайд 4 — resolution-->
+        <section>
+            <h2>Медиазапросы и свойства</h2>
+            <h3>resolution</h3>
+            <p>Можно подбирать стили и изображения в зависимости от плотности пикселей (DPI / dppx).</p>
+            <pre class="css fragment" style="font-size: 1.5rem;"><code>/* Retina / высокое разрешение */
+@media (min-resolution: 2dppx) {
+  .logo {
+    background-image: url('hong@2x.png');
+  }
+}
+
+/* Обычное разрешение */
+@media (max-resolution: 1.99dppx) {
+  .logo {
+    background-image: url('hong.png');
+  }
+}
+  </code></pre>
+        </section>
+
+        <section>
+            <img src="utils/img/retina-cover.jpg"
+                 style="width: 100%; border-radius: 10px; background: #fff; margin-top: 5%">
+        </section>
+
+        <section>
+            <h2>Брейкпоинт (breakpoint)</h2>
+            <ul class="fragment">
+                <li>Брейкпоинт — это точка, при которой стили сайта меняются под новый размер экрана</li>
+                <li>Используется в медиазапросах как минимальная или максимальная ширина</li>
+                <li>Выбор брейкпоинтов зависит от макета и устройства, а не от стандартных размеров</li>
+                <li class="fragment">Пример:
+                    <pre style="font-size:1.2rem;"><code>.container {
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}</code></pre>
+                Какой тут брейкпоинт?</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Единицы для медиазапросов</h2>
+            <ul>
+                <li class="fragment">Для <code>width</code> и <code>height</code> — px, em, rem, %, vh, vw</li>
+                <li class="fragment">Для <code>resolution</code> — dpi, dpcm, dppx</li>
+                <li class="fragment"><code>aspect-ratio</code> позволяет задавать соотношение сторон блока</li>
+                <li class="fragment">Пример: <code>@media (min-width: 480px) and (max-width: 1024px)</code></li>
+            </ul>
+        </section>
+
+<!--        <section>-->
+<!--            <h2>Сложный медиазапрос</h2>-->
+<!--            <a href="https://frontend-lec-mobilki-examples.vercel.app/demo-combined/demo-combined.html">Пример</a>-->
+<!--        </section>-->
+
+        <section>
+            <h2>Mobile-first в коде</h2>
+            <ul>
+                <li class="fragment">Базовые стили пишем для мобильного устройства
+                    <pre style="font-size:1.5rem;"><code>.container {
+  padding: 16px;
+}
+</code></pre></li>
+                <li class="fragment">Дальше используем медиазапросы для планшета и десктопа
+                    <pre style="font-size:1.5rem;"><code>@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+}</code></pre></li>
+            </ul>
+        </section>
+
+
+
+
+
+        <!-- VIEWPORT -->
+        <section>
+            <h2>Viewport</h2>
+            <h4>Что это и зачем</h4>
+            <pre class="css fragment" style="font-size:1rem; width: 110%"><code>
+<!-- Настройка viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  </code></pre>
+            <ul class="fragment">
+                <li>width=device-width — ширина под ширину устройства</li>
+                <li>initial-scale=1 — масштабирование по умолчанию</li>
+                <li>maximum-scale=1 — запрещает масштабирование выше 1</li>
+                <li>user-scalable=no — отключает масштабирование пользователем</li>
+            </ul>
+        </section>
+
+        <section>
+            <div style="display:flex; gap:30px; margin-top: 6rem">
+                <div >
+                    <p>Без корректного viewport</p>
+                    <img src="utils/gif/no_viewport.gif" alt="Без viewport" style="width:100%;">
+                </div>
+                <div>
+                    <p>С корректным viewport</p>
+                    <img src="utils/gif/with_viewport.gif" alt="С viewport" style="width:100%;">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Адаптивная вёрстка: Flexbox</h2>
+            <a href="https://frontend-lec-mobilki-examples.vercel.app/flex/flex.html">Пример</a>
+            <pre class="css fragment" style="font-size:1rem; width: 110%"><code>.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.item {
+    flex: 1 1 200px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+  </code></pre>
+        </section>
+
+
+        <section>
+            <h2>Адаптивная вёрстка: CSS Grid</h2>
+            <a href="https://frontend-lec-mobilki-examples.vercel.app/grid/grid.html">Пример</a>
+            <pre class="css fragment" style="font-size:1rem; width: 110%"><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+.grid div {
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+  </code></pre>
+        </section>
+
+
+<!--        <section>-->
+<!--            <h2>Responsive images</h2>-->
+<!--        </section>-->
+
+
+<!--        <section>-->
+<!--            <h2>Clamp / min / max</h2>-->
+<!--            <pre class="css" style="font-size:0.8rem;"><code>-->
+<!--h1 {-->
+<!--  font-size: clamp(1.5rem, 2vw + 1rem, 3rem);-->
+<!--}-->
+<!--p {-->
+<!--  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.5rem);-->
+<!--}-->
+<!--    </code></pre>-->
+
+<!--            <input type="range" min="300" max="1200" value="600" id="clampWidthSlider" style="margin-bottom:10px;">-->
+<!--            <label for="clampWidthSlider">ширина контейнера</label>-->
+
+<!--            <div id="clampWrapper" style="background:#f0f0f0;padding:20px;width:600px;transition:width 0.3s;">-->
+<!--                <h1 style="margin:0; color: black">Заголовок</h1>-->
+<!--                <p style="margin:0; color: black">-->
+<!--                    Этот текст масштабируется вместе с шириной контейнера. Минимум и максимум задаются через clamp().-->
+<!--                </p>-->
+<!--            </div>-->
+
+<!--            <script>-->
+<!--                const clampSlider = document.getElementById('clampWidthSlider');-->
+<!--                const clampWrapper = document.getElementById('clampWrapper');-->
+
+<!--                clampSlider.addEventListener('input', () => {-->
+<!--                    clampWrapper.style.width = clampSlider.value + 'px';-->
+<!--                });-->
+<!--            </script>-->
+<!--        </section>-->
+
+        <section>
+            <h2 class="fragment">Что такое Flutter?</h2>
+            <ul class="fragment">
+                <li>Фреймворк для разработки мобильных, веб и десктоп приложений</li>
+                <li>Разрабатывается Google</li>
+                <li>Единый код для Android, iOS, веб и десктоп</li>
+                <li>Основан на языке Dart</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Что такое Dart?</h2>
+            <ul class="fragment">
+                <li>Язык, разработанный Google</li>
+                <li>Строгая типизация, но удобный синтаксис</li>
+                <li>Оптимизирован под работу с UI</li>
+                <li>Похож на JavaScript / Java / Swift</li>
+            </ul>
+            <pre class="dart fragment" style="font-size:0.8rem;"><code>
+void main() {
+  // Объявление переменных
+  String name = "Alex";
+  int age = 20;
+  double score = 4.7;
+
+  // Условие
+  if (age >= 18) {
+    print("$name взрослый");
+  } else {
+    print("$name несовершеннолетний");
+  }
+
+  // Цикл
+  for (int n in numbers) {
+    print("Число: $n");
+  }
+
+  // Функция
+  String greet(String person) {
+    return "Привет, $person!";
+  }
+
+  print(greet(name));
+}
+  </code></pre>
+        </section>
+
+        <section>
+            <h2>Что такое виджеты?</h2>
+            <ul class="fragment">
+                <li>В Flutter всё — это виджет</li>
+                <li>Кнопка — виджет</li>
+                <li>Текст — виджет</li>
+                <li>Даже отступы и контейнеры — тоже виджеты</li>
+                <li>UI создаётся композицией виджетов</li>
+            </ul>
+            <pre class="dart fragment" style="font-size:1rem;"><code>
+Widget build(BuildContext context) {
+  return Column(
+    children: [
+      Text('Привет!'),
+      Icon(Icons.star),
+      SizedBox(height: 20),
+      ElevatedButton(onPressed: () {}, child: Text('Кнопка'))
+    ],
+  );
+}
+  </code></pre>
+        </section>
+
+
+
+        <section>
+            <h2>StatelessWidget</h2>
+
+            <p>Не меняется во время работы приложения.</p>
+            <div class=" fragment" style="padding:20px;border:1px solid #ccc;width:500px; margin-left: 250px">
+                <p id="statelessText">Привет!</p>
+            </div>
+            <pre class="dart fragment" style="font-size:1.5rem;"><code>
+class Hello extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text('Привет!');
+  }
+}
+  </code></pre>
+        </section>
+
+
+
+
+        <section>
+            <h2>StatefulWidget</h2>
+
+            <p>Виджет с изменяемым состоянием.</p>
+
+            <div class="fragment" style="padding:20px; border:1px solid #ccc; width:200px; margin-left: 35%">
+                <p id="counterValue">Счётчик: 0</p>
+                <button id="counterBtn">+ Добавить</button>
+            </div>
+
+            <script>
+                let counter = 0;
+                document.getElementById("counterBtn").onclick = () => {
+                  counter++;
+                  document.getElementById("counterValue").textContent =
+                    "Счётчик: " + counter;
+                };
+            </script>
+            <pre class="dart fragment" style="font-size:0.8rem;"><code>
+class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State< Counter> {
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('Счётчик: $count'),
+        ElevatedButton(
+          onPressed: () => setState(() => count++),
+          child: Text('Добавить'),
+        )
+      ],
+    );
+  }
+}
+</code></pre>
+
+        </section>
+
+        <section>
+            <h2>Как Flutter рендерит UI</h2>
+
+            <div style="display: flex; align-items: flex-start; justify-content: space-around; flex-wrap: nowrap; margin-top: 20px; overflow-x:auto;">
+                <!-- Widget Tree -->
+                <div class="fragment" data-fragment-index="1" style="text-align: center; min-width: 150px;">
+                    <img src="utils/img/widgetstree.jpg" style="width:500px; display:block; margin-bottom:10px; margin-top: 60px;">
+                    <span style="font-size: 1.2rem">Создаёт Widget Tree</span>
+                </div>
+
+                <!-- Element Tree -->
+                <div class="fragment" data-fragment-index="2" style="text-align: center; min-width: 150px;">
+                    <img src="utils/img/elementree.jpg" style="width:500px; display:block; margin-bottom:10px; margin-top: 60px;">
+                    <span style="font-size: 1.2rem">Преобразует в Element Tree</span>
+                </div>
+
+                <!-- Render Tree -->
+                <div class="fragment" data-fragment-index="3" style="text-align: center; min-width: 150px;">
+                    <img src="utils/img/rendertree.jpg" style="width:500px; display:block; margin-bottom:10px; margin-top: 60px;">
+                    <span style="font-size: 1.2rem">Преобразует в Render Tree</span>
+                </div>
+
+                <!-- Skia -->
+                <div class="fragment" data-fragment-index="4" style="text-align: center; min-width: 150px; margin-top: 20%">
+                    <span style="font-size:1.2rem; font-weight:bold;">Отрисовывает через Skia</span>
+                </div>
+            </div>
+        </section>
+
+        <section data-background-color="black">
+            <h2>Подведем итоги:</Подвед></h2>
+            <ul class="fragment">
+                <li>Адаптивная вёрстка — про сайты и HTML/CSS</li>
+                <li>Flutter — про приложения, всё рисует сам</li>
+                <li>Вёрстка подстраивается под экран → в браузере</li>
+                <li>Flutter строит UI из виджетов → в своём движке</li>
+                <li>Обе технологии нужны, но для разных задач</li>
+            </ul>
+            <h3 class="fragment" style="margin-top: 10%">Спасибо за внимание! <3</h3>
+        </section>
+
+
+
+
+
+
     </div>
 </div>
+</body>
+</html>
 
-<script src="/utils/lib/js/head.min.js"></script>
-<script src="/utils/js/reveal.js"></script>
+
+<script src="utils/lib/js/head.min.js"></script>
+<script src="utils/js/reveal.js"></script>
 <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    <!-- Yandex.Metrika counter -->
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(95067685, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+    <!-- /Yandex.Metrika counter -->
+</script>
+
+<!--<script src="../lib/js/jquery1.1.js"></script>-->
 
 <script>
+
     $('.links a').on('mouseover', function () {
         var text = $(this).data('content');
         $('.output-links').text(text);
@@ -85,18 +946,18 @@
 
     });
 
-    Reveal.addEventListener('fragmentshown', function (event) {
+    Reveal.addEventListener( 'fragmentshown', function( event ) {
         if (Reveal.isFirstSlide()) {
             var root = $(event.fragment);
             console.log(root);
             setTimeout(function () {
-                $(root).find('h1').addClass('bounceInDown');
-                $(root).find('h4').addClass('bounceInRight');
+                $(root).find('h2').addClass('bounceInDown');
+                $(root).find( 'h4').addClass('bounceInRight');
                 $(root).find('small').eq(0).addClass('bounceInLeft');
                 $(root).find('small').eq(1).addClass('bounceInUp');
             }, 0);
         }
-    });
+    } );
     // Full list of configuration options available at:
     // https://github.com/hakimel/reveal.js#configuration
     Reveal.initialize({
@@ -105,39 +966,39 @@
         history: true,
         center: false,
 
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
 
         // Optional reveal.js plugins
         dependencies: [
             {
-                src: '/utils/lib/js/classList.js', condition: function () {
-                    return !document.body.classList;
-                }
+                src: 'utils/lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
             },
             {
-                src: '/utils/plugin/markdown/marked.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
+                src: 'utils/plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
             },
             {
-                src: '/utils/plugin/markdown/markdown.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
+                src: 'utils/plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
             },
             {
-                src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () {
-                    return !!document.querySelector('pre code');
-                }, callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
+                src: 'utils/plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
             },
-            {src: '/utils/plugin/zoom-js/zoom.js', async: true},
-            {src: '/utils/plugin/notes/notes.js', async: true}
+            { src: 'utils/plugin/zoom-js/zoom.js', async: true },
+            { src: 'utils/plugin/notes/notes.js', async: true }
         ]
     });
-    Reveal.configure({slideNumber: true});
+    Reveal.configure({ slideNumber: true });
 
 </script>
-<script src="/utils/lib/js/code-example.js"></script>
+
 </body>
 </html>
