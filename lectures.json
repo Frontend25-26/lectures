@@ -76,6 +76,12 @@
               "openDate": "2025-12-06T10:00:00",
               "order": 10,
               "homework": "https://classroom.github.com/a/7pdzLKL-"
+            },
+            {
+              "title": "Из макета в вёрстку",
+              "link": "https://docs.google.com/presentation/d/1WTzHSteHC4ClHTXNOXc89FdNB0ns8R7x/edit?usp=sharing&ouid=116395440625977529687&rtpof=true&sd=true",
+              "openDate": "2025-12-06T11:30:00",
+              "order": 11
             }
           ]
         },
