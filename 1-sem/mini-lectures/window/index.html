@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Windows</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+    />
+
+    <link rel="stylesheet" href="/utils/css/reveal.css" />
+    <link rel="stylesheet" href="/utils/lib/css/animate.css" />
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme" />
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css" />
+    <link rel="stylesheet" href="./css-custom/custom.css" />
+    <script
+      type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section style="font-size: 50px; height: 100%; width: 100%">
+          <div class="fragment">
+            <h1 class="animated">Windows</h1>
+            <p style="text-align: center">Илья Степанов</p>
+          </div>
+        </section>
+        <section>
+          <section>
+            <h2>Не тот windows</h2>
+            <div class="images">
+              <img src="./assets/windows.webp" />
+              <img src="./assets/window.jpg" class="fragment" />
+            </div>
+          </section>
+          <section>
+            <h2>А вот этот windows</h2>
+            <img src="./assets/safari-window.webp" style="max-height: 50vh" />
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Создание нового окна</h2>
+            <code-example no-preview>
+              <template data-type="js">
+                window.open( url, target, features );
+              </template>
+            </code-example>
+            <p class="fragment">url - ссылка на открываемый ресурс</p>
+            <p class="fragment">
+              target - имя контекста. Если контекста с таким именем нет, то
+              открывается новое окно. (Можно использовать ключевые слова
+              аттрибута target у &lt;a&gt;)
+            </p>
+            <p class="fragment">
+              features - Строка, содержащая список параметров окна, разделенных
+              запятыми, в формате name=value.
+            </p>
+          </section>
+          <section>
+            <pre class="js size-l"><code>window.open();</code></pre>
+            <div class="flex">
+              <button data-id="1" class="button">click me!</button>
+              <script>
+                document
+                  .querySelector('[data-id="1"]')
+                  .addEventListener("click", () => {
+                    window.open();
+                  });
+              </script>
+            </div>
+
+            <pre
+              class="js size-l fragment"
+              data-fragment-index="2"
+            ><code>window.open('https://itmo.ru');</code></pre>
+            <div class="flex fragment" data-fragment-index="2">
+              <button data-id="2" class="button">click me!</button>
+              <script>
+                document
+                  .querySelector('[data-id="2"]')
+                  .addEventListener("click", () => {
+                    window.open("https://itmo.ru");
+                  });
+              </script>
+            </div>
+
+            <pre
+              class="js size-l fragment"
+              data-fragment-index="4"
+            ><code>for (let i = 0; i &lt; 100; i++) {
+  window.open("https://itmo.ru");
+}</code></pre>
+            <div class="flex fragment" data-fragment-index="4">
+              <a href="./demo.html" target="_top"
+                ><button data-id="4" class="button">don`t click me!</button></a
+              >
+            </div>
+          </section>
+          <section>
+            <h2>Почему не сработало?</h2>
+            <p class="fragment">Всплывающее окно блокируется в том случае, если вызов window.open произошёл не в результате действия посетителя</p>
+            <p>Исключения: </p>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+
+    <script>
+      $(".links a").on("mouseover", function () {
+        var text = $(this).data("content");
+        $(".output-links").text(text);
+      });
+      $(".links a").on("blur", function () {
+        $(".output-links").text("");
+      });
+
+      Reveal.addEventListener("fragmentshown", function (event) {
+        if (Reveal.isFirstSlide()) {
+          var root = $(event.fragment);
+          console.log(root);
+          setTimeout(function () {
+            $(root).find("h1").addClass("bounceInDown");
+            $(root).find("h4").addClass("bounceInRight");
+            $(root).find("small").eq(0).addClass("bounceInLeft");
+            $(root).find("small").eq(1).addClass("bounceInUp");
+          }, 0);
+        }
+      });
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: "slide", // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          {
+            src: "/utils/lib/js/classList.js",
+            condition: function () {
+              return !document.body.classList;
+            },
+          },
+          {
+            src: "/utils/plugin/markdown/marked.js",
+            condition: function () {
+              return !!document.querySelector("[data-markdown]");
+            },
+          },
+          {
+            src: "/utils/plugin/markdown/markdown.js",
+            condition: function () {
+              return !!document.querySelector("[data-markdown]");
+            },
+          },
+          {
+            src: "/utils/plugin/highlight/highlight.js",
+            async: true,
+            condition: function () {
+              return !!document.querySelector("pre code");
+            },
+            callback: function () {
+              hljs.initHighlightingOnLoad();
+            },
+          },
+          { src: "/utils/plugin/zoom-js/zoom.js", async: true },
+          { src: "/utils/plugin/notes/notes.js", async: true },
+        ],
+      });
+      Reveal.configure({ slideNumber: true });
+    </script>
+    <script src="/utils/lib/js/code-example.js"></script>
+  </body>
+</html>

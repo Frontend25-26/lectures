@@ -169,6 +169,71 @@
               "order": 2
             }
           ]
+        },
+        {
+          "name": "Доклады",
+          "lectures": [
+            {
+              "title": "Секретный доклад",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 1
+            },
+            {
+              "title": "CSS-переменные",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 2
+            },
+            {
+              "title": "Proxy/signals",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 3
+            },
+            {
+              "title": "Как верстали в 90-е",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 4
+            },
+            {
+              "title": "Как работают конструкторы сайтов",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 5
+            },
+            {
+              "title": "Инструменты веб-аналитики",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 6
+            },
+            {
+              "title": "Что общего у cпидранов Марио и вёрстки",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 7
+            },
+            {
+              "title": "Графика и её форматы",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 8
+            },
+            {
+              "title": "REST, GraphQL и GRPC",
+              "link": "",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 9
+            },
+            {
+              "title": "Новые окна",
+              "link": "/1-sem/mini-lectures/window/index.html",
+              "openDate": "2025-12-13T10:00:00",
+              "order": 10
+            }
+          ]
         }
       ]
     }

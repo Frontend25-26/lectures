@@ -4,7 +4,8 @@
   "description": "Этот репозиторий содержит материалы курса по фронтенд-разработке для студентов ИТМО. Здесь собраны **лекции, домашние задания, квизы и результаты**, которые автоматически отображаются на сайте курса.",
   "main": "index.js",
   "scripts": {
-    "format": "node utils/format‑templates.js"
+    "format": "node utils/format‑templates.js",
+    "dev": "vite"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,8 @@
   "dependencies": {
     "glob": "^11.0.3",
     "prettier": "^2.8.8"
+  },
+  "devDependencies": {
+    "vite": "^7.2.6"
   }
 }
