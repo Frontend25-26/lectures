@@ -38,12 +38,12 @@
 
             // Парсим CSV
             const rows = csvData.split("\n");
-            const headers = rows[0].split(",");
+            const headers = rows[0].split(",").map((item) => item.trim());
             const data = rows.slice(1).map((row) => {
               // Обрабатываем строки с учетом возможных запятых внутри кавычек
               const values = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
               return headers.reduce((obj, header, i) => {
-                obj[header.trim()] = values[i]
+                obj[header] = values[i]
                   ? values[i].trim().replace(/"/g, "")
                   : "";
                 return obj;
@@ -85,7 +85,7 @@
                 // Применяем градиент к столбцу с процентами
                 if (index === sumColumnIndex) {
                   const val = parseInt(rowData[header]);
-                  const normalized = Math.min(1, val/60)
+                  const normalized = Math.min(1, val/70)
                   
                   const hue = normalized * 120;
                   td.style.color = `hsl(${hue}, 100%, 85%)`;
