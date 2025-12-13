@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>С viewport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f0f0f0;
+          margin: 0;
+          padding: 0;
+        }
+        header {
+          background-color: #007acc;
+          color: white;
+          padding: 20px;
+          text-align: center;
+        }
+        .container {
+          max-width: 800px;
+          margin: 20px auto;
+          background-color: white;
+          padding: 20px;
+        }
+        .card {
+          background-color: #e0e0e0;
+          padding: 20px;
+          margin-bottom: 20px;
+        }
+        /* Пример адаптивной ширины карточек */
+        @media (max-width: 600px) {
+          .card {
+            padding: 10px;
+          }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Сайт с viewport</h1>
+</header>
+<div class="container">
+    <div class="card">Карточка 1</div>
+    <div class="card">Карточка 2</div>
+    <div class="card">Карточка 3</div>
+</div>
+</body>
+</html>

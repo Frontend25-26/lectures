@@ -1,0 +1,408 @@
+ <!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Лекция по фронтенду: CSS‑переменные</title>
+
+    <meta name="description" content="Лекция по фронтенду: CSS‑переменные">
+    <meta name="author" content="Алёна Шинкарева">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="utils/css/reveal.css">
+    <link rel="stylesheet" href="utils/lib/css/animate.css">
+    <link rel="stylesheet" href="utils/lib/css/magic.min.css">
+    <link rel="stylesheet" href="utils/css/theme/night-2.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="utils/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="utils/css-custom/custom.css">
+
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi)
+            ? 'utils/css/print/pdf.css'
+            : 'utils/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+
+<div class="reveal"><div class="slides">
+
+
+    <!-- TITLE SLIDE -->
+    <section style="font-size: 50px;">
+        <div class="fragment">
+            <h2 class="animated" style="margin-top: 5%;" >CSS‑переменные</h2>
+
+            <p style="text-align: center; margin-top: 20%;">
+                <small class="animated">Алёна Шинкарева</small><br>
+            </p>
+        </div>
+    </section>
+
+
+    <section>
+        <h3>Что такое CSS‑переменные?</h3>
+        <p>Хранение значений в одном месте + переиспользование по всему проекту</p>
+        <pre><code class="fragment">:root {
+--primary-color: #3498db;
+--font-size-heading: 2rem;
+--spacing-unit: 8px;
+}
+</code></pre>
+        <br>
+        <pre><code class="fragment">.button {
+background-color: var(--primary-color);
+padding: calc(var(--spacing-unit) * 2);
+font-size: var(--font-size-heading);
+}
+</code></pre>
+    </section>
+
+    <section>
+        <h3>Базовые правила:</h3>
+        <br>
+        <ul style="margin-bottom: 3%">
+            <li>Имена регистрозависимы (--color и --Color — разные переменные)</li>
+            <li>Можно использовать дефисы и подчеркивания для разделения слов</li>
+            <li>Следует избегать зарезервированных слов CSS</li>
+            <li>Лучше использовать семантические имена, отражающие назначение переменной</li>
+        </ul>
+        <pre><code class="language-css">    Плохо:                     Хорошо:
+
+--big: 24px;          --color-primary: #0a66ff;
+--c: #ff0000;         --color-danger: #ff0000;
+--bg: #fff;           --layout-bg: #ffffff;
+</code></pre>
+    </section>
+
+        <section>
+            <h3>Глобальные и локальные значения</h3>
+            <p>Глобальные — в :root,</p>
+            <pre><code class="language-css">:root {
+  --bg: #fff;
+  --text: #111;
+}
+.card {
+  background: var(--bg);
+  color: var(--text);
+}
+</code></pre>
+            <p>а локальные — внутри компонента</p>
+            <pre><code class="language-css">.card.dark {
+  --bg: #222;
+  --text: #eee;
+}</code></pre>
+            <a href="https://examples-custom-prop-lec.vercel.app/%20cards/cards.html">Пример</a>
+
+        </section>
+
+        <section>
+            <h3>Наследование переменных</h3>
+            <p>Элементы автоматически наследуют значения родителей</p>
+            <pre><code class="language-css">body {
+--text-color: #333;
+}
+
+/* Все элементы внутри body получат доступ к --text-color */
+p {
+color: var(--text-color);
+}
+</code></pre>
+        </section>
+
+<!--    <section>-->
+<!--        <h3>Наследование переменных</h3>-->
+<!--        <br>-->
+<!--        <pre><code class="language-css">.card-primary {-->
+<!--&#45;&#45;card-accent: blue;-->
+<!--}-->
+
+<!--.card-warning {-->
+<!--&#45;&#45;card-accent: orange;-->
+<!--}-->
+
+<!--.card-title {-->
+<!--color: var(&#45;&#45;card-accent);-->
+<!--}-->
+<!--</code></pre>-->
+<!--    </section>-->
+
+    <section>
+        <h3>Реализация темной темы</h3>
+        <div style="display: flex; gap: 2rem;">
+            <pre style="flex: 1;"><code class="language-css" style="font-size:1.2rem">:root {
+  --bg-color: white;
+  --text-color: blue;
+  --heading-color: red;
+  --link-color: green;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: black;
+    --text-color: white;
+    --heading-color: pink;
+    --link-color: yellow;
+  }
+}
+</code></pre>
+            <pre style="flex: 1;"><code class="language-css" style="font-size:1.2rem">body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: sans-serif;
+  padding: 2rem;
+}
+
+h1 {
+  color: var(--heading-color);
+}
+
+a {
+  color: var(--link-color);
+}
+</code></pre>
+        </div>
+
+        <a href="https://examples-custom-prop-lec.vercel.app/css/css-ex.html">Пример</a>
+    </section>
+
+    <section>
+        <h3>Реализация темной темы</h3>
+        <pre><code class="language-js" style="font-size:1.1rem">function applyTheme(dark) {
+      document.documentElement.style.setProperty('--bg-color', dark ? 'black' : 'white');
+      document.documentElement.style.setProperty('--text-color', dark ? 'pink' : 'blue');
+    }
+applyTheme(true);
+</code></pre>
+        <br>
+        <pre><code class="language-css" style="font-size:1.1rem">:root {
+body {
+background-color: var(--bg-color);
+color: var(--text-color, #0066cc); // можно задать значение по умолчанию
+}</code></pre>
+        <a href="https://examples-custom-prop-lec.vercel.app/js/js-ex.html">Пример</a>
+
+    </section>
+
+    <section>
+        <h3>Создание модульных компонентов с вариациями</h3>
+        <div style="display: flex; gap: 2rem;">
+            <pre style="flex: 1;"><code class="language-css" style="font-size:1.2rem">.button {
+  --button-bg: #3498db;
+  --button-text: white;
+  --button-padding: 20px 50px;
+  --button-radius: 4px;
+}
+</code></pre>
+            <pre style="flex: 1;"><code class="language-css" style="font-size:1.2rem">.button-primary {
+  --button-bg: #3498db;
+}
+.button-danger {
+  --button-bg: #e74c3c;
+}
+.button-rounded {
+  --button-radius: 50px;
+}
+.button-large {
+  --button-padding: 50px 100px;
+}
+</code></pre>
+        </div>
+
+        <div class="fragment">
+            <pre><code style="font-size:1.2rem"><button class="button button-primary">Стандартная кнопка</button>
+<button class="button button-danger button-rounded">Круглая "опасная" кнопка</button></code></pre>
+
+            <div class="buttons-container" style="margin-left: 25%">
+                <button class="button button-primary">Стандартная кнопка</button>
+                <button class="button button-danger button-rounded">Круглая "опасная" кнопка</button>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <h3>Рекомендации по улучшению кода</h3>
+
+        <ul>
+            <li>
+                Избегайте излишней вложенности переменных
+                <pre><code class="language-css">/* Плохо */
+:root {
+  --primary-color: var(--main-color);
+}
+
+/* Лучше */
+:root {
+  --primary-color: #3498db;
+}</code></pre>
+            </li>
+            <li>
+                Размещайте часто используемые переменные на уровне :root
+                <pre><code class="language-css">:root {
+  --text-color: #333;
+  --bg-color: #fff;
+  --primary-color: #3498db;
+}</code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Рекомендации по улучшению кода</h3>
+
+        <ul>
+            <li>
+                Локализуйте переменные до нужной области применения
+                <pre><code class="language-css">.card {
+  --card-bg: #ccc;
+}
+.card.sale {
+  --card-bg: #e74c3c;
+}</code></pre>
+            </li>
+            <li>
+                Используйте осмысленные имена
+                <pre><code class="language-css">/* Плохо */
+--blue: #3498db;
+--big: 24px;
+
+/* Лучше */
+--color-primary: #3498db;
+--font-size-lg: 24px;</code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Рекомендации по улучшению кода</h3>
+
+        <ul>
+            <li>
+                Структурируйте переменные с помощью префиксов и группировки
+                <pre><code class="language-css">:root {
+  /* Цвета */
+  --color-primary: #3498db;
+  --color-danger: #e74c3c;
+
+  /* Размеры */
+  --space-sm: 8px;
+  --space-md: 16px;
+}</code></pre>
+            </li>
+        </ul>
+    </section>
+
+    <section data-background-color="black">
+        <h2 style="margin-top: 10%">Спасибо за внимание! <3</h2>
+    </section>
+
+</div></div>
+
+
+
+
+
+<script src="utils/lib/js/head.min.js"></script>
+<script src="utils/js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    <!-- Yandex.Metrika counter -->
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(95067685, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+    <!-- /Yandex.Metrika counter -->
+</script>
+
+<!--<script src="../lib/js/jquery1.1.js"></script>-->
+
+<script>
+
+    $('.links a').on('mouseover', function () {
+        var text = $(this).data('content');
+        $('.output-links').text(text);
+
+    });
+    $('.links a').on('blur', function () {
+        $('.output-links').text('');
+
+    });
+
+    Reveal.addEventListener( 'fragmentshown', function( event ) {
+        if (Reveal.isFirstSlide()) {
+            var root = $(event.fragment);
+            console.log(root);
+            setTimeout(function () {
+                $(root).find('h2').addClass('bounceInDown');
+                $(root).find( 'h4').addClass('bounceInRight');
+                $(root).find('small').eq(0).addClass('bounceInLeft');
+                $(root).find('small').eq(1).addClass('bounceInUp');
+            }, 0);
+        }
+    } );
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'utils/lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'utils/plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'utils/plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'utils/plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            { src: 'utils/plugin/zoom-js/zoom.js', async: true },
+            { src: 'utils/plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+
+</script>
+
+</body>
+</html>
