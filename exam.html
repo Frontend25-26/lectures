@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITMOxFrontEnd 2025-2026 - Экзамен</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+        <nav class="main-menu">
+          <ul>
+            <li><a href="/index.html">Лекции</a></li>
+            <li><a href="/homeworks.html">Домашние задания</a></li>
+            <li><a href="/results.html">Результаты</a></li>
+            <li><a href="#" class="active">Экзамен</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="rules-section">
+        <!-- ===== Основной заголовок секции ===== -->
+        <h2>Правила экзамена</h2>
+
+        <h3>Допуск</h3>
+        <ul>
+          <li>Сданы все обязательные домашние задания</li>
+        </ul>
+
+        <h3>Зачёт</h3>
+        <ul>
+          <li>
+            При получении допуска автоматически ставится зачёт (оценка в БаРС
+            будет Е)
+          </li>
+          <li>Зачёт не дает право прохода на второй семестр</li>
+        </ul>
+
+        <h3>Экзамены</h3>
+        <ol class="steps">
+          <li>
+            Будет два экзамена: по вёрстке (21 января) и по JavaScript (23
+            января)
+          </li>
+          <li>Билет на экзамене состоит из теории и практики</li>
+          <li>Экзаменатор ставит два балла: за теорию и за практику</li>
+          <li>Итоговый балл — среднее с округлением вверх</li>
+          <li>
+            Исключение: если студент получил два по теории или практике —
+            экзамен не сдан
+          </li>
+        </ol>
+
+        <h3>Автоматы</h3>
+        <ul>
+          <li>
+            Студенты, набравшие 70 баллов за домашние задания и доп.активности, не сдают
+            практику
+          </li>
+          <li>Студенты, набравшие 15 баллов за квизы, не сдают теорию</li>
+        </ul>
+        <!-- ===== Примечание (по желанию) ===== -->
+        <p class="note no-margin-left">
+          Несамостоятельные выполнения заданий экзамена влекут за собой удаление с экзамена. 
+        </p>
+      </section>
+
+      <div class="accordion">
+        <section class="accordion-item">
+          <h2
+            class="accordion-header"
+            id="heading-1"
+            tabindex="0"
+            role="button"
+            aria-controls="panel-1"
+            aria-expanded="false"
+          >
+            Верстка
+          </h2>
+
+          <div
+            class="accordion-panel"
+            id="panel-1"
+            role="region"
+            aria-labelledby="heading-1"
+          >
+            <details class="inner-details">
+              <summary class="inner-summary">Теоретические вопросы</summary>
+              <div class="inner-content">
+                <ol dir="auto">
+                  <li>HTML. Элементы. Валидация</li>
+                  <li>Семантика в верстке.</li>
+                  <li>
+                    CSS-селекторы, CSS-правила. Способы подключения CSS на
+                    страницу.
+                  </li>
+                  <li>
+                    Селекторы идентификаторов и классов. Селекторы атрибутов.
+                    Комбинированные селекторы. Единицы измерения.
+                  </li>
+                  <li>Специфичность. Наследование в CSS.</li>
+                  <li>Псевдоклассы и псевдоэлементы.</li>
+                  <li>display: block. Расчет геометрии.</li>
+                  <li>
+                    display: block. Процентные значения. Схлапывание отступов.
+                  </li>
+                  <li>
+                    display: inline, inline-block и другие типы dispaly. Расчет
+                    геометрии.
+                  </li>
+                  <li>
+                    Способы ускорения верстки - bootstrap, tailwind, css3.
+                  </li>
+                  <li>Препроцессоры и постпроцессоры CSS.</li>
+                  <li>Виды позиционирования.</li>
+                  <li>
+                    Плавающая разметка. Свойство float. Очистка потока. Новый
+                    блочный контекст форматирования.
+                  </li>
+                  <li>
+                    Контекст наложения. Способы создания. Свойство z-index.
+                  </li>
+                  <li>Составные части браузера.</li>
+                  <li>
+                    Отрисовка страницы в браузере - DOM, CSSOM, Render Tree,
+                    layout, paint, composite, visual.
+                  </li>
+                  <li>Способы создания колоночной разметки. Плюсы/минусы.</li>
+                  <li>Спецификация Flexbox.</li>
+                  <li>Спецификация Grid.</li>
+                  <li>
+                    Свободный вопрос про дизайн - расскажите любую тему из
+                    лекций про дизайн.
+                  </li>
+                  <li>
+                    Анимация с помощью свойств transition и animation. Различия
+                    и преимущества.
+                  </li>
+                  <li>
+                    Свойство transform. Варианты преобразований, значения и
+                    способы их задания.
+                  </li>
+                  <li>Из макета в вёрстку - этапы работы.</li>
+                  <li>
+                    Особенности верстки под мобильные устройства. Разновидности
+                    макетов, задание стилей для разных размеров экранов.
+                  </li>
+                </ol>
+              </div>
+            </details>
+
+            <details class="inner-details">
+              <summary class="inner-summary">Практические задания</summary>
+              <div class="inner-content">Появятся на экзамене</div>
+            </details>
+
+            <details class="inner-details">
+              <summary class="inner-summary">Результаты</summary>
+              <div class="inner-content">
+                <div data-table-type="html" class="google-sheet"></div>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="accordion-item">
+          <h2
+            class="accordion-header"
+            id="heading-2"
+            tabindex="0"
+            role="button"
+            aria-controls="panel-2"
+            aria-expanded="false"
+          >
+            JavaScript
+          </h2>
+
+          <div
+            class="accordion-panel"
+            id="panel-2"
+            role="region"
+            aria-labelledby="heading-1"
+          >
+            <details class="inner-details">
+              <summary class="inner-summary">Теоретические вопросы</summary>
+              <div class="inner-content">
+                <ol dir="auto">
+                  <li>
+                    Типы данных. Определение типа данных. Истинность и ложность.
+                  </li>
+                  <li>
+                    Типы данных. Примитивы и объекты. Передача по ссылке и по
+                    значению. Мутирующие и не мутирующие методы.
+                  </li>
+                  <li>
+                    Массивы. Создание массива. Манипуляции с элементами массива.
+                    Способы обхода массива.
+                  </li>
+                  <li>
+                    Symbol, глобальные символы, системные символы,
+                    преобразование объектов в примитивы.
+                  </li>
+                  <li>
+                    Структуры данных Set, Map, WeakSet, WeakMap. Методы работы с
+                    коллекциями, сборка мусора.
+                  </li>
+                  <li>
+                    Функции. Способы декларации и их отличия. Значения
+                    аргументов по умолчанию. Переменное количество аргументов.
+                    Именованные аргументы.
+                  </li>
+                  <li>Функции. Область видимости, всплытие и замыкания.</li>
+                  <li>
+                    Контекст исполнения. Значение this на разных участках кода.
+                  </li>
+                  <li>Контекст исполнения. Управление контекстом.</li>
+                  <li>
+                    Прототипы. Определение и предназначение. Методы для
+                    получения и установки прототипа для объекта. Прототипы по
+                    умолчанию. Ключевое слово super в контексте методов объекта.
+                  </li>
+                  <li>
+                    Свойства полей объекта. Способы создания полей объекта.
+                    Эффект затенения. Способы создания поля со свойствами.
+                    Свойства writable, configurable и enumerable. Способы
+                    перечисления собственных и несобственных полей.
+                    Setter/Getter. Глобальное запечатывание объекта.
+                  </li>
+                  <li>
+                    Конструирование объектов. Конструирование объектов с помощью
+                    функций-фабрик. Методы create и assign. Конструирование
+                    объектов с помощью функций-конструкторов.
+                  </li>
+                  <li>
+                    Классы. Разница между функциями-конструкторами и классами.
+                    Типы методов в классах. Наследование и ключевое слово super
+                    в контексте классов. Способы инспектирования связей между
+                    объектами, прототипами и классами.
+                  </li>
+                  <li>
+                    Асинхронность. Стек вызовов, очередь событий, EventLoop.
+                    Системные таймеры, особенности работы.
+                  </li>
+                  <li>
+                    Асинхронность. Стек вызовов, очередь событий, EventLoop.
+                    Синхронный и асинхронный подход к работе с файлами.
+                  </li>
+                  <li>
+                    Асинхронность. Способы организации асинхронного кода.
+                    Callback. Достоинства и недостатки.
+                  </li>
+                  <li>
+                    Асинхронность. Способы организации асинхронного кода.
+                    Promise, цепочки промисов. Достоинства и недостатки.
+                  </li>
+                  <li>
+                    Асинхронность. Способы организации асинхронного кода. async
+                    await. Достоинства и недостатки.
+                  </li>
+                  <li>
+                    Работа с DOM. Типы узлов в DOM; аттрибуты узлов для
+                    навигации по братьям, детям, родителям. Методы поиска узлов
+                    в DOM; работа с атрибутами и классами.
+                  </li>
+                  <li>
+                    Работа с DOM. Методы модификации DOM-дерева; добавление и
+                    удаление событий. Захват и всплытие события. Паттерны работы
+                    с событиями.
+                  </li>
+                  <li>
+                    Typescript. Дать определение. В чем разница между JavaScript
+                    и TypeScript. Основные типы TypeScript.
+                  </li>
+                  <li>
+                    Typescript. Что такое Enum и как его использовать. Типизация
+                    примитивных типов данных, массивов, кортежей, объектов, Set,
+                    Map
+                  </li>
+                  <li>
+                    Typescript. Interface &amp; Type. Типы: any, unknown, never.
+                    Объединения. Пересечения.
+                  </li>
+                  <li>
+                    Typescript. Дженерики. Вспомогательные утилиты TS.
+                    Необязательные параметры. Параметры на чтение.
+                  </li>
+                  <li>
+                    Typescript. Приведение типов. Как получить типы, содержащие
+                    все ключи объекта и все значения ключей объекта. Типизация
+                    функций. Перегрузка функций.
+                  </li>
+                </ol>
+              </div>
+            </details>
+
+            <details class="inner-details">
+              <summary class="inner-summary">Практические задания</summary>
+              <div class="inner-content">Появятся на экзамене</div>
+            </details>
+
+            <details class="inner-details">
+              <summary class="inner-summary">Результаты</summary>
+              <div class="inner-content">
+                <div data-table-type="js" class="google-sheet"></div>
+              </div>
+            </details>
+          </div>
+        </section>
+      </div>
+
+      <script>
+        const headers = document.querySelectorAll(".accordion-header");
+
+        headers.forEach((header) => {
+          header.addEventListener("click", togglePanel);
+          header.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              togglePanel.call(header);
+            }
+          });
+        });
+
+        function togglePanel() {
+          const expanded = this.getAttribute("aria-expanded") === "true";
+          const panelId = this.getAttribute("aria-controls");
+          const panel = document.getElementById(panelId);
+
+          // закрываем все остальные
+          document
+            .querySelectorAll(".accordion-panel")
+            .forEach((p) => p.classList.remove("open"));
+          document
+            .querySelectorAll(".accordion-header")
+            .forEach((h) => h.setAttribute("aria-expanded", "false"));
+
+          if (!expanded) {
+            this.setAttribute("aria-expanded", "true");
+            panel.classList.add("open");
+          }
+        }
+
+        async function renderGoogleSheet(url, container) {
+          const tableIndexes = {
+            hw: 1,
+            quiz: 3,
+            sum: 4,
+            markLetter: 6,
+          };
+
+          try {
+            // Получаем данные
+            const response = await fetch(url);
+            const csvData = await response.text();
+
+            // Парсим CSV
+            const rows = csvData.split("\n");
+            const headers = rows[0].split(",").map((item) => item.trim());
+            const data = rows.slice(1).map((row) => {
+              // Обрабатываем строки с учетом возможных запятых внутри кавычек
+              const values = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+              return headers.reduce((obj, header, i) => {
+                obj[header] = values[i]
+                  ? values[i].trim().replace(/"/g, "")
+                  : "";
+                return obj;
+              }, {});
+            });
+
+            // Создаем HTML таблицу
+            if (!container) {
+              console.error(`Контейнер не найден`);
+              return;
+            }
+
+            const table = document.createElement("table");
+
+            // Создаем заголовок таблицы
+            const thead = document.createElement("thead");
+            const headerRow = document.createElement("tr");
+            headers.forEach((header) => {
+              const th = document.createElement("th");
+              th.textContent = header;
+              headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Создаем тело таблицы
+            const tbody = document.createElement("tbody");
+            data.forEach((rowData) => {
+              const row = document.createElement("tr");
+              headers.forEach((header, index) => {
+                const td = document.createElement("td");
+                td.textContent = rowData[header];
+
+                if (index === tableIndexes.hw) {
+                  const val = parseInt(rowData[header]);
+                  if (val > 0) {
+                    td.style.color = `#ff6b6b`;
+                  } else {
+                    td.style.color = `#6bff6b`;
+                  }
+                }
+
+                if (index === tableIndexes.quiz) {
+                  const val = parseInt(rowData[header]);
+                  if (val >= 15) {
+                    td.style.color = `#6bff6b`;
+                    td.style.fontWeight = "bold";
+                  }
+                }
+
+                if (index === tableIndexes.sum) {
+                  const val = parseInt(rowData[header]);
+                  if (val >= 70) {
+                    td.style.color = `#6bff6b`;
+                    td.style.fontWeight = "bold";
+                  }
+                }
+
+                if (index === tableIndexes.mark) {
+                  td.style.fontWeight = "bold";
+                }
+
+                if (index === tableIndexes.markLetter) {
+                  const val = rowData[header];
+                  td.style.fontWeight = "bold";
+
+                  switch (val) {
+                    case "A":
+                      td.style.color = `#006400`;
+                      td.style.backgroundColor = "#e6f9e6";
+                      break;
+                    case "B":
+                      td.style.color = `#008080`;
+                      td.style.backgroundColor = "#e6f9f9";
+                      break;
+                    case "C":
+                      td.style.color = `#000080`;
+                      td.style.backgroundColor = "#e6f2ff";
+                      break;
+                    case "D":
+                      td.style.color = `#ff8c00`;
+                      td.style.backgroundColor = "#fff8e6";
+                      break;
+                    case "E":
+                      td.style.color = `#ff4500`;
+                      td.style.backgroundColor = "#fff0e6";
+                      break;
+                    case "FX":
+                      td.style.color = `#8b0000`;
+                      td.style.backgroundColor = "#ffe6e6";
+                      break;
+                    case "Зач":
+                      td.style.color = `#8b4513`;
+                      td.style.backgroundColor = "#f5f5dc";
+                      break;
+                  }
+                }
+
+                row.appendChild(td);
+              });
+              tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            // Очищаем контейнер и добавляем таблицу
+            container.innerHTML = "";
+            container.appendChild(table);
+          } catch (error) {
+            console.error("Ошибка при загрузке или рендеринге таблицы:", error);
+          }
+        }
+
+        const linksMap = {
+          html: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdwAUPmsHPzSQubV2GGdWpYJFSFTb8H_z8zK6dhW7sm394vUeyT_cjKJgj8ahVN2AHjtW4hgq9Eojr/pub?gid=1396882425&single=true&output=csv",
+          js: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdwAUPmsHPzSQubV2GGdWpYJFSFTb8H_z8zK6dhW7sm394vUeyT_cjKJgj8ahVN2AHjtW4hgq9Eojr/pub?gid=1589986370&single=true&output=csv",
+        };
+
+        document.querySelectorAll("[data-table-type]").forEach((container) => {
+          const link = linksMap[container.dataset.tableType];
+
+          renderGoogleSheet(link, container);
+        });
+      </script>
+    </div>
+  </body>
+</html>

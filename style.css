@@ -347,6 +347,8 @@ h3 {
   margin-bottom: 0.8rem;
   padding-left: 2.2rem;
   list-style-type: none;
+  line-height: 1.8rem;
+  font-size: 1rem;
 }
 
 .steps li:before {
@@ -559,4 +561,97 @@ strong {
 
 .google-sheet tr:hover td {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- ACCORDION ---------- */
+.accordion {
+  max-width: 1200px;
+  margin: 0 auto 3rem;
+}
+
+/* Основной заголовок «раздела» */
+.accordion-header {
+  background: var(--card-bg);
+  color: var(--accent);
+  padding: 1rem 1.2rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.accordion-header:hover,
+.accordion-header:focus {
+  background: var(--hover-bg);
+  outline: none;
+  transform: translateX(4px);
+}
+
+/* Поворот стрелки */
+.accordion-header .icon {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.accordion-header[aria-expanded="true"] .icon {
+  transform: rotate(90deg);
+}
+
+.accordion-panel {
+  overflow: hidden;
+  background: var(--bg);
+  border-radius: 0 8px 8px 0;
+  transition: max-height .3s ease;
+}
+
+/* ---------- Внутренние детали ---------- */
+.inner-details {
+  margin: 0.8rem 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+}
+.inner-summary {
+  background: var(--primary);
+  color: var(--bg);
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  font-weight: 500;
+  transition: background .2s ease;
+}
+.inner-summary:hover {
+  background: var(--secondary);
+}
+.inner-content {
+  padding: 0.8rem 1rem;
+  line-height: 1.5;
+}
+
+/* Стилизация <code> внутри аккордеона (уже есть в вашем файле, но усилим) */
+.accordion code {
+  background: rgba(255,255,255,.12);
+  color: var(--accent);
+}
+
+/* Адаптивность – слегка уменьшаем отступы на маленьких экранах */
+@media (max-width: 560px) {
+  .accordion-header {
+    font-size: 1.2rem;
+    padding: 0.8rem 1rem;
+  }
+  .inner-summary {
+    font-size: 0.95rem;
+  }
+}
+
+.accordion-item {
+  padding-bottom: 2rem;
+}
+
+.no-margin-left {
+  margin-left: 0;
 }
