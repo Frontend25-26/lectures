@@ -20,8 +20,7 @@
         </nav>
     </header>
 
-    <h2 class="js-semester-name semester-name">Загрузка...</h2>
-    <div class="lecture-grid js-courses-container">
+    <div class="js-semesters-container">
         <div class="loading">Идёт загрузка лекций...</div>
     </div>
 </div>
@@ -45,82 +44,96 @@
     });
 
     function renderLectures(data) {
+        const root = document.querySelector('.js-semesters-container');
+
         if (!data.semesters || data.semesters.length === 0) {
-            document.querySelector('.js-courses-container').innerHTML =
-                '<div class="error">Нет данных о семестрах</div>';
+            root.innerHTML = '<div class="error">Нет данных о семестрах</div>';
             return;
         }
 
-        const semester = data.semesters[0];
-        document.querySelector('.js-semester-name').textContent = semester.name;
-
-        const container = document.querySelector('.js-courses-container');
-        container.innerHTML = '';
-
-        if (!semester.courses || semester.courses.length === 0) {
-            container.innerHTML = '<div class="error">Нет доступных курсов</div>';
-            return;
-        }
+        root.innerHTML = '';
 
         const now = new Date();
         const urlParams = new URLSearchParams(window.location.search);
         const isVisibleAll = urlParams.get('view_all') === 'true';
 
-        semester.courses.forEach(course => {
-            if (new Date(course.openDate) > now && !isVisibleAll) return;
+        data.semesters.forEach(semester => {
+            const semesterSection = document.createElement('div');
+            semesterSection.className = 'semester-section';
 
-            const column = document.createElement('div');
-            column.className = 'lecture-column';
+            const semesterTitle = document.createElement('h2');
+            semesterTitle.className = 'semester-name';
+            semesterTitle.textContent = semester.name;
+            semesterSection.appendChild(semesterTitle);
 
-            const title = document.createElement('h3');
-            title.textContent = course.name;
-            column.appendChild(title);
+            const coursesGrid = document.createElement('div');
+            coursesGrid.className = 'lecture-grid';
 
-            const list = document.createElement('ul');
-            list.className = 'lecture-list';
-
-            if (!course.lectures || course.lectures.length === 0) {
-                const item = document.createElement('li');
-                item.textContent = 'Лекции пока не добавлены';
-                item.style.color = 'var(--disabled)';
-                list.appendChild(item);
+            if (!semester.courses || semester.courses.length === 0) {
+                const msg = document.createElement('div');
+                msg.className = 'error';
+                msg.textContent = 'Нет доступных курсов';
+                coursesGrid.appendChild(msg);
             } else {
-                course.lectures
-                    .sort((a, b) => (a.order || 0) - (b.order || 0))
-                    .forEach(lecture => {
+                semester.courses.forEach(course => {
+                    if (new Date(course.openDate) > now && !isVisibleAll) return;
+
+                    const column = document.createElement('div');
+                    column.className = 'lecture-column';
+
+                    const title = document.createElement('h3');
+                    title.textContent = course.name;
+                    column.appendChild(title);
+
+                    const list = document.createElement('ul');
+                    list.className = 'lecture-list';
+
+                    if (!course.lectures || course.lectures.length === 0) {
                         const item = document.createElement('li');
-                        const lectureDate = lecture.openDate ? new Date(lecture.openDate) : null;
-                        const isAvailable = lectureDate && lectureDate <= now;
+                        item.textContent = 'Лекции пока не добавлены';
+                        item.style.color = 'var(--disabled)';
+                        list.appendChild(item);
+                    } else {
+                        course.lectures
+                            .sort((a, b) => (a.order || 0) - (b.order || 0))
+                            .forEach(lecture => {
+                                const item = document.createElement('li');
+                                const lectureDate = lecture.openDate ? new Date(lecture.openDate) : null;
+                                const isAvailable = lectureDate && lectureDate <= now;
 
-                        const link = document.createElement('a');
-                        link.href = lecture.link;
+                                const link = document.createElement('a');
+                                link.href = lecture.link;
 
-                        const badge = document.createElement('span');
-                        badge.className = 'badge';
-                        badge.textContent = lecture.order || '?';
+                                const badge = document.createElement('span');
+                                badge.className = 'badge';
+                                badge.textContent = lecture.order || '?';
 
-                        const titleText = document.createTextNode(lecture.title || 'Без названия');
+                                const titleText = document.createTextNode(lecture.title || 'Без названия');
 
-                        link.appendChild(badge);
-                        link.appendChild(titleText);
+                                link.appendChild(badge);
+                                link.appendChild(titleText);
 
-                        if (lectureDate) {
-                            const dateSpan = document.createElement('span');
-                            dateSpan.className = 'lecture-date';
-                            dateSpan.textContent = ` (${ formatDate(lectureDate) })`;
-                            link.appendChild(dateSpan);
-                        }
+                                if (lectureDate) {
+                                    const dateSpan = document.createElement('span');
+                                    dateSpan.className = 'lecture-date';
+                                    dateSpan.textContent = ` (${ formatDate(lectureDate) })`;
+                                    link.appendChild(dateSpan);
+                                }
 
-                        if (isAvailable || isVisibleAll) {
-                            item.appendChild(link);
-                            list.appendChild(item);
-                        }
+                                if (isAvailable || isVisibleAll) {
+                                    item.appendChild(link);
+                                    list.appendChild(item);
+                                }
+                            });
+                    }
 
-                    });
+                    column.appendChild(list);
+                    coursesGrid.appendChild(column);
+                });
             }
 
-            column.appendChild(list);
-            container.appendChild(column);
+            semesterSection.appendChild(coursesGrid);
+            root.appendChild(semesterSection);
         });
     }
 

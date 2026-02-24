@@ -1,0 +1,1238 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+
+    <title>React. Введение</title>
+
+    <meta name="description" content="Лекция #1 по курсу «JavaScript». Архитектуры фронтенда и введение в React">
+    <meta name="author" content="Илья Степанов">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <!-- ===== НАЗВАНИЕ ЛЕКЦИИ ===== -->
+        <section style="font-size: 70px; height: 100%; width: 100%">
+            <div class="fragment">
+                <h1 class="animated" style="font-size: 2em;">React</h1>
+                <p style="text-align: center; font-size: 0.7em;">Введение в библиотеку</p>
+                <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+            </div>
+        </section>
+
+        <!-- ===== ЧАСТЬ 1: АРХИТЕКТУРЫ ===== -->
+        <section data-background-image="img/architecture-bg.jpg">
+            <h1 style="text-shadow: #000 3px 2px 2px;">Архитектуры фронтенда</h1>
+        </section>
+
+        <!-- MPA -->
+        <section>
+            <section>
+                <h2>MPA</h2>
+                <p>Multi-Page Application</p>
+            </section>
+
+            <section>
+                <h2>MPA - как это работает?</h2>
+                <div class="arch-flow">
+                    <div class="arch-box highlight">Браузер<br><small>URL запрос</small></div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">Сервер<br><small>Маршрутизация</small></div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">БД / API</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">Сервер<br><small>Рендеринг HTML</small></div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box highlight">Браузер<br><small>Готовая страница</small></div>
+                </div>
+                <p class="fragment" style="margin-top: 1em; font-size: 0.75em;">
+                    Каждый переход - новый HTTP-запрос и полная перезагрузка страницы
+                </p>
+            </section>
+
+            <section>
+                <h2>MPA</h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Простая архитектура - всё на сервере</li>
+                    <li class="plus fragment">SEO из коробки - сервер отдаёт готовый HTML</li>
+                    <li class="plus fragment">Работает без JavaScript</li>
+                    <li class="plus fragment">Быстрая первая загрузка страницы</li>
+                    <br>
+                    <li class="minus fragment">Полная перезагрузка при каждом переходе</li>
+                    <li class="minus fragment">Нельзя управлять фокусом и делать анимированные переходы</li>
+                    <li class="minus fragment">Плохой UX при частых действиях пользователя</li>
+                    <li class="minus fragment">Сложно реализовать богатый интерактивный интерфейс</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>MPA - примеры</h2>
+                <p class="fragment">Wikipedia, большинство CMS-сайтов (WordPress), интернет-магазины 2000-х</p>
+                <p class="fragment" style="margin-top: 1em; color: #ffd54f;">
+                    Хотелось: добавить интерактивности <strong>без перезагрузки страницы</strong>
+                </p>
+            </section>
+        </section>
+
+        <!-- PEMPA -->
+        <section>
+            <section>
+                <h2>PEMPA</h2>
+                <p>Progressively Enhanced Multi-Page Application</p>
+            </section>
+
+            <section>
+                <h2>PEMPA - идея</h2>
+                <p>Берём MPA и добавляем JavaScript поверх него</p>
+                <div class="arch-flow fragment" style="margin-top: 1em;">
+                    <div class="arch-box">MPA-основа</div>
+                    <div class="arch-arrow">+</div>
+                    <div class="arch-box highlight">JavaScript<br><small>AJAX / fetch</small></div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box">Частичное<br>обновление DOM</div>
+                </div>
+                <p class="fragment" style="font-size: 0.75em; margin-top: 1em;">
+                    Приложение работает без JS, но <em>улучшается</em> при его наличии
+                </p>
+            </section>
+
+            <section>
+                <h2>PEMPA</h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Нет полной перезагрузки страницы - используем fetch</li>
+                    <li class="plus fragment">Работает без JavaScript (progressive enhancement)</li>
+                    <li class="plus fragment">Плавные переходы и управление фокусом</li>
+                    <br>
+                    <li class="minus fragment">Логика рендеринга дублируется: на сервере и на клиенте</li>
+                    <li class="minus fragment">Сложная синхронизация состояния между клиентом и сервером</li>
+                    <li class="minus fragment">Гонки запросов (race conditions) при множественных fetch</li>
+                    <li class="minus fragment">Тесная связь между API-роутами и клиентским кодом</li>
+                    <li class="minus fragment">Нет централизованного хранилища - состояние разбросано по коду</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Проблема дублирования</h2>
+                <div class="compare">
+                    <div class="compare-block">
+                        <h3>Сервер</h3>
+                        <pre class="fragment" style="font-size: 0.5em;"><code class="html">&lt;!-- PHP / Jinja / etc --&gt;
+&lt;ul&gt;
+  {% for item in items %}
+    &lt;li&gt;{{ item.name }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;</code></pre>
+                    </div>
+                    <div class="compare-block">
+                        <h3>Клиент (JS)</h3>
+                        <pre class="fragment" style="font-size: 0.5em;"><code class="javascript">// Та же логика, только на JS
+items.forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = item.name;
+  ul.appendChild(li);
+});</code></pre>
+                    </div>
+                </div>
+                <p class="fragment" style="color: #ffd54f; margin-top: 0.8em;">
+                    Хотелось: <strong>один код рендеринга</strong> для всего
+                </p>
+            </section>
+        </section>
+
+        <!-- SPA -->
+        <section>
+            <section>
+                <h2>SPA</h2>
+                <p>Single Page Application</p>
+            </section>
+
+            <section>
+                <h2>SPA - решение</h2>
+                <p>Убираем серверный рендеринг совсем - весь UI на клиенте</p>
+                <div class="arch-flow fragment" style="margin-top: 1em;">
+                    <div class="arch-box">CDN</div>
+                    <div class="arch-arrow">→</div>
+                    <div class="arch-box highlight">Браузер<br><small>Весь UI-код</small></div>
+                    <div class="arch-arrow">⇄</div>
+                    <div class="arch-box">REST API<br><small>только данные</small></div>
+                </div>
+                <p class="fragment" style="font-size: 0.75em; margin-top: 1em;">
+                    Сервер отдаёт пустой <code>index.html</code>, дальше всё делает JavaScript
+                </p>
+            </section>
+
+            <section>
+                <h2>SPA</h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Нет дублирования - один код рендеринга на клиенте</li>
+                    <li class="plus fragment">Богатый интерактивный интерфейс</li>
+                    <li class="plus fragment">Разделение: фронтенд и бэкенд независимы</li>
+                    <li class="plus fragment">Быстрые переходы после первой загрузки</li>
+                    <br>
+                    <li class="minus fragment">Огромный JS-бандл - медленная первая загрузка</li>
+                    <li class="minus fragment">Водопады запросов: <code>HTML → app.js → page.js → fetch(данные)</code></li>
+                    <li class="minus fragment">Тяжело на слабых устройствах - весь рендеринг на CPU клиента</li>
+                    <li class="minus fragment">Сложное управление состоянием (30–50% кода типичного SPA)</li>
+                    <li class="minus fragment">SEO проблемы - поисковики видят пустой HTML</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Водопад зависимостей</h2>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">0 мс</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Браузер получает пустой <code>index.html</code></span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">+200 мс</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Загружается и выполняется <code>app.js</code> (роутер, библиотеки)</span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">+400 мс</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Определяется текущий роут, загружается <code>page.js</code></span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">+600 мс</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Компонент монтируется, запрашивает данные через <code>fetch</code></span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">+800 мс</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Пользователь наконец видит контент</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Эволюция архитектур</h2>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">MPA</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Сервер рендерит всё. Просто, но нет интерактивности</span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">PEMPA</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">MPA + AJAX. Интерактивность есть, но дублирование кода</span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">SPA</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Весь рендеринг на клиенте. Мощно, но медленный старт и сложное состояние</span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">SSR / RSC</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Возврат к серверному рендерингу + гидратация. Лучшее из обоих миров</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ===== ЧАСТЬ 3: ЧТО ТАКОЕ REACT ===== -->
+        <section data-background-image="img/react-bg.jpg">
+            <h1 style="text-shadow: #000 3px 2px 2px;">React</h1>
+        </section>
+
+        <section>
+            <section>
+                <h2>Что такое React?</h2>
+                <p class="fragment">JavaScript-библиотека для создания пользовательских интерфейсов</p>
+                <p class="fragment" style="font-size: 0.8em; color: #ffd54f;">
+                    Не фреймворк - только UI-слой
+                </p>
+                <ul class="fragment" style="margin-top: 1em;">
+                    <li>Создан в Facebook в 2013 году</li>
+                    <li class="fragment">Open source, MIT лицензия</li>
+                    <li class="fragment">Используется в Facebook, Instagram, Netflix, Airbnb, Twitter...</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Ключевая идея</h2>
+                <pre class="size-l code-example-one"><code class="javascript">UI = f(state)</code></pre>
+                <p class="fragment" style="margin-top: 1em;">
+                    Интерфейс - это функция от состояния.<br>
+                    Изменилось состояние → React сам обновит DOM.
+                </p>
+                <div class="compare fragment" style="margin-top: 1em;">
+                    <div class="compare-block">
+                        <h3>Императивно (DOM)</h3>
+                        <pre style="font-size: 0.5em;"><code class="javascript">// Вы сами говорите КАК менять
+const el = document.getElementById('count');
+el.textContent = count + 1;</code></pre>
+                    </div>
+                    <div class="compare-block">
+                        <h3>Декларативно (React)</h3>
+                        <pre style="font-size: 0.5em;"><code class="javascript">// Вы описываете ЧТО должно быть
+function Counter() {
+  return &lt;p&gt;{count}&lt;/p&gt;;
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ===== create-react-app ===== -->
+        <section>
+            <section>
+                <h2>Создание проекта</h2>
+                <p class="fragment"><code>create-react-app</code> - официальный инструмент для старта</p>
+                <pre class="fragment"><code class="bash">npx create-react-app my-app
+cd my-app
+npm start</code></pre>
+                <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.6);">
+                    Сегодня чаще используют Vite или Next.js, но CRA проще для знакомства
+                </p>
+            </section>
+
+            <section>
+                <h2>Структура файлов CRA</h2>
+                <pre class="code-example-one" style="font-size: 0.55em;"><code>my-app/
+├── public/
+│   └── index.html        ← единственный HTML-файл
+├── src/
+│   ├── index.js          ← точка входа, монтирует React в DOM
+│   ├── App.js            ← корневой компонент
+│   ├── App.css
+│   └── index.css
+├── package.json
+└── node_modules/</code></pre>
+            </section>
+
+            <section>
+                <h2>public/index.html</h2>
+                <pre class="size-l code-example-one"><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- React монтируется сюда --&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                <p class="fragment" style="font-size: 0.8em;">
+                    Это тот самый «пустой HTML» архитектуры SPA
+                </p>
+            </section>
+        </section>
+
+        <!-- ===== index.js ===== -->
+        <section>
+            <section>
+                <h2>index.js - точка входа</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root')
+);
+
+root.render(&lt;App /&gt;);</code></pre>
+                <p class="fragment" style="font-size: 0.8em;">
+                    <code>ReactDOM.createRoot</code> - создаём корень React-дерева<br>
+                    <code>root.render()</code> - запускаем рендеринг
+                </p>
+            </section>
+        </section>
+
+        <!-- ===== React Element ===== -->
+        <section>
+            <section>
+                <h2>Какие бывают React-элементы?</h2>
+                <p class="fragment">React оперирует виртуальными элементами - описаниями того, что должно быть в DOM</p>
+            </section>
+
+            <section>
+                <h2>React Element DOM</h2>
+                <p>Соответствует HTML-тегу - попадает в реальный DOM</p>
+                <pre class="size-l code-example-one fragment"><code class="javascript">// JSX
+const element = &lt;h1 className="title"&gt;Привет!&lt;/h1&gt;;
+
+// Что на самом деле создаёт React
+const element = React.createElement(
+  'h1',
+  { className: 'title' },
+  'Привет!'
+);</code></pre>
+                <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.7);">
+                    Маленькая буква → DOM-элемент: <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;h1&gt;</code>...
+                </p>
+            </section>
+
+            <section>
+                <h2>React Element Component</h2>
+                <p>Ссылка на компонент - React вызовет его и получит DOM-элементы</p>
+                <pre class="size-l code-example-one fragment"><code class="javascript">// Компонент - функция, возвращающая JSX
+function Title() {
+  return &lt;h1 className="title"&gt;Привет!&lt;/h1&gt;;
+}
+
+// Использование - большая буква!
+const element = &lt;Title&gt;&lt;/Title&gt;;</code></pre>
+                <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.7);">
+                    <strong>Большая буква</strong> → компонент. Это обязательное соглашение!
+                </p>
+            </section>
+
+            <section>
+                <h2>Виртуальный DOM</h2>
+                <p class="fragment" style="font-size: 0.85em;">
+                    React-элементы складываются в <strong>виртуальное DOM-дерево</strong> - лёгкое JS-представление реального DOM
+                </p>
+                <div class="compare fragment" style="margin-top: 0.8em;">
+                    <div class="compare-block">
+                        <h3>Virtual DOM</h3>
+                        <pre style="font-size: 0.45em;"><code class="javascript">// Просто объект в памяти
+{
+  type: 'div',
+  props: { className: 'app' },
+  children: [
+    { type: 'h1', props: {}, children: ['Привет'] },
+    { type: Title, props: {} }
+  ]
+}</code></pre>
+                    </div>
+                    <div class="compare-block">
+                        <h3>Real DOM</h3>
+                        <pre style="font-size: 0.45em;"><code class="html">&lt;!-- В браузере --&gt;
+&lt;div class="app"&gt;
+  &lt;h1&gt;Привет&lt;/h1&gt;
+  &lt;h2 class="title"&gt;Заголовок&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Как работает Virtual DOM</h2>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">1. Рендер</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">React вызывает компоненты и строит новое виртуальное дерево</span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">2. Diffing</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Сравнивает новое дерево со старым, находит минимальный набор изменений</span>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <span class="timeline-label">3. Commit</span>
+                        <span class="timeline-arrow">→</span>
+                        <span class="timeline-desc">Применяет только реальные изменения в браузерный DOM</span>
+                    </div>
+                </div>
+                <p class="fragment" style="margin-top: 0.8em; font-size: 0.8em; color: #ffd54f;">
+                    Манипуляции с реальным DOM дороги. Virtual DOM позволяет делать их минимально
+                </p>
+            </section>
+        </section>
+
+        <!-- ===== JSX ===== -->
+        <section>
+            <section>
+                <h2>JSX</h2>
+                <p class="fragment">JavaScript XML - расширение синтаксиса JS</p>
+                <p class="fragment" style="font-size: 0.8em;">
+                    Позволяет писать HTML-подобную разметку прямо в JavaScript-файле
+                </p>
+            </section>
+
+            <section>
+                <h2>JSX - правила</h2>
+                <pre class="size-l code-example-one"><code class="javascript">function Card() {
+  const name = 'Мурзик';
+  const isActive = true;
+
+  return (
+    // 1. Один корневой элемент
+    &lt;div className="card"&gt;
+      {/* 2. Выражения JS в {} */}
+      &lt;p&gt;{2 + 2}&lt;/p&gt;
+
+      {/* 3. Комментарии так */}
+      &lt;h2&gt;{name}&lt;/h2&gt;
+
+      {/* 4. class → className */}
+      &lt;h3 className="abv"&gt;title h3&lt;/h3&gt;
+      
+      {/* 5. Условный рендеринг */}
+      {isActive &amp;&amp; &lt;span&gt;Активен&lt;/span&gt;}
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>JSX - все теги должны быть закрыты</h2>
+                <p class="fragment" style="font-size: 0.8em;">
+                    В HTML некоторые теги можно не закрывать. В JSX - нельзя.
+                </p>
+                <div class="compare fragment" style="margin-top: 0.8em;">
+                    <div class="compare-block">
+                        <h3>HTML (можно)</h3>
+                        <pre style="font-size: 0.5em;"><code class="html">&lt;img src="cat.png"&gt;
+&lt;input type="text"&gt;
+&lt;br&gt;
+&lt;hr&gt;</code></pre>
+                    </div>
+                    <div class="compare-block">
+                        <h3>JSX (обязательно)</h3>
+                        <pre style="font-size: 0.5em;"><code class="javascript">&lt;img src="cat.png" /&gt;
+&lt;input type="text" /&gt;
+&lt;br /&gt;
+&lt;hr /&gt;</code></pre>
+                    </div>
+                </div>
+                <p class="fragment" style="margin-top: 0.8em; font-size: 0.8em;">
+                    Теги без содержимого закрываются через <code>/&gt;</code> - самозакрывающий синтаксис
+                </p>
+                <pre class="size-l code-example-one fragment"><code class="javascript">// Компонент тоже можно записать самозакрывающим тегом
+&lt;StudentList /&gt;          // ✅ короткая форма
+&lt;StudentList&gt;&lt;/StudentList&gt; // ✅ длинная форма
+</code></pre>
+            </section>
+
+            <section>
+                <h2>JSX → JS</h2>
+                <p style="font-size: 0.8em;">Babel компилирует JSX в обычный JavaScript:</p>
+                <div class="compare">
+                    <div class="compare-block">
+                        <h3>JSX (пишем)</h3>
+                        <pre style="font-size: 0.5em;"><code class="javascript">const el = (
+  &lt;div className="box"&gt;
+    &lt;p&gt;Текст&lt;/p&gt;
+  &lt;/div&gt;
+);</code></pre>
+                    </div>
+                    <div class="compare-block">
+                        <h3>JS (получаем)</h3>
+                        <pre style="font-size: 0.5em;"><code class="javascript">const el = React.createElement(
+  'div',
+  { className: 'box' },
+  React.createElement(
+    'p', null, 'Текст'
+  )
+);</code></pre>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- ===== App.js ===== -->
+        <section>
+            <section>
+                <h2>App.js - корневой компонент</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import React from 'react';
+import Header from './components/Header';
+import StudentList from './components/StudentList';
+import './App.css';
+
+function App() {
+  return (
+    &lt;div className="app"&gt;
+      &lt;Header title="Список студентов" /&gt;
+      &lt;StudentList /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+                <p class="fragment" style="font-size: 0.8em;">
+                    Приложение - это дерево компонентов. <code>App</code> - корень этого дерева.
+                </p>
+            </section>
+        </section>
+
+        <!-- ===== КОМПОНЕНТЫ ===== -->
+        <section>
+            <section>
+                <h2>Компоненты</h2>
+                <p class="fragment">Строительные блоки React-приложения</p>
+                <p class="fragment" style="font-size: 0.8em;">
+                    Каждый компонент - независимая переиспользуемая часть UI
+                </p>
+            </section>
+
+            <section>
+                <h2>Props - аргументы компонента</h2>
+                <p class="fragment" style="font-size: 0.8em;">Props (properties) - способ передать данные от родителя к дочернему компоненту</p>
+                <pre class="size-l code-example-one fragment"><code class="javascript">// Передаём props как атрибуты JSX
+&lt;Header title="Список студентов" count={42} /&gt;
+
+// Принимаем как аргумент функции
+function Header({ title, count }) {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{title}&lt;/h1&gt;
+      &lt;span&gt;{count} студентов&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                <ul class="fragment" style="margin-top: 0.8em; font-size: 0.85em;">
+                    <li>Props <strong>только для чтения</strong> - компонент не должен их менять</li>
+                    <li class="fragment">Данные текут <strong>сверху вниз</strong> (от родителя к детям)</li>
+                    <li class="fragment">Можно передать что угодно: строки, числа, функции, другие компоненты</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Классовый компонент</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import React, { Component } from 'react';
+
+class Welcome extends Component {
+  render() {
+    return (
+      &lt;h1&gt;Привет, {this.props.name}!&lt;/h1&gt;
+    );
+  }
+}</code></pre>
+                <ul class="fragment" style="margin-top: 0.8em;">
+                    <li>Наследует <code>React.Component</code></li>
+                    <li>Обязательный метод <code>render()</code></li>
+                    <li>Props доступны через <code>this.props</code></li>
+                    <li>State через <code>this.state</code> и <code>this.setState()</code></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Функциональный компонент</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// С ключевым словом function
+function Welcome({ name }) {
+  return &lt;h1&gt;Привет, {name}!&lt;/h1&gt;;
+}
+
+// Стрелочная функция
+const Welcome = ({ name }) =&gt; (
+  &lt;h1&gt;Привет, {name}!&lt;/h1&gt;
+);</code></pre>
+                <ul class="fragment" style="margin-top: 0.8em;">
+                    <li>Просто функция, возвращающая JSX</li>
+                    <li>Props - аргумент функции (деструктуризация)</li>
+                    <li>Возвращает <code>ReactElement | null</code></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Классовый VS Функциональный</h2>
+                <div class="compare">
+                    <div class="compare-block">
+                        <h3>Классовый</h3>
+                        <ul>
+                            <li class="fragment">Много бойлерплейта</li>
+                            <li class="fragment">Сложнее читать</li>
+                            <li class="fragment">Методы жизненного цикла</li>
+                            <li class="fragment">Проблемы с <code>this</code></li>
+                            <li class="fragment" style="color: rgba(255,255,255,0.4);">Устаревший стиль</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block">
+                        <h3>Функциональный</h3>
+                        <ul>
+                            <li class="fragment">Лаконичный код</li>
+                            <li class="fragment">Легче читать и тестировать</li>
+                            <li class="fragment">Хуки вместо lifecycle</li>
+                            <li class="fragment">Нет проблем с <code>this</code></li>
+                            <li class="fragment" style="color: #4caf50;">Рекомендуется</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Создание компонентов</h2>
+                <p style="font-size: 0.8em;">Разбиваем UI на независимые компоненты:</p>
+                <pre class="code-example-one" style="font-size: 0.55em;"><code>src/
+├── App.js
+└── components/
+    ├── Header.jsx
+    ├── StudentList.jsx
+    └── StudentItem.jsx</code></pre>
+
+                <pre class="size-l code-example-one fragment" style="margin-top: 0.5em;"><code class="javascript">// components/StudentItem.jsx
+function StudentItem({ name, grade }) {
+  return (
+    &lt;div className="student-item"&gt;
+      &lt;span className="name"&gt;{name}&lt;/span&gt;
+      &lt;span className="grade"&gt;{grade}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default StudentItem;</code></pre>
+            </section>
+        </section>
+
+        <!-- ===== СТИЛИ И КЛАССЫ ===== -->
+        <section>
+            <section>
+                <h2>Стили и классы в React</h2>
+            </section>
+
+            <section>
+                <h2>className вместо class</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// ❌ Так не работает
+&lt;div class="card"&gt;...&lt;/div&gt;
+
+// ✅ Правильно
+&lt;div className="card"&gt;...&lt;/div&gt;</code></pre>
+                <p class="fragment" style="font-size: 0.8em;">
+                    <code>class</code> - зарезервированное слово в JS, поэтому используем <code>className</code>
+                </p>
+            </section>
+
+            <section>
+                <h2>Способы задавать стили</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// 1. CSS-файл (обычный подход)
+import './StudentItem.css';
+&lt;div className="student-item"&gt;...&lt;/div&gt;
+
+// 2. Inline-стили (объект, camelCase)
+&lt;div style={{ color: 'red', fontSize: '16px' }}&gt;
+  ...
+&lt;/div&gt;
+
+// 3. Динамические классы
+const cls = isActive ? 'item item--active' : 'item';
+&lt;div className={cls}&gt;...&lt;/div&gt;</code></pre>
+            </section>
+
+            <section>
+                <h2>CSS Modules</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// StudentItem.module.css
+.card { border: 1px solid #ccc; }
+.card--active { border-color: blue; }
+
+// StudentItem.jsx
+import styles from './StudentItem.module.css';
+
+function StudentItem({ isActive }) {
+  return (
+    &lt;div className={`${styles.card} ${
+      isActive ? styles['card--active'] : ''
+    }`}&gt;
+      ...
+    &lt;/div&gt;
+  );
+}</code></pre>
+                <p class="fragment" style="font-size: 0.75em;">
+                    CSS Modules изолируют стили - имена классов уникальны глобально
+                </p>
+            </section>
+        </section>
+
+        <!-- ===== ОТРИСОВКА МАССИВА ===== -->
+        <section>
+            <section>
+                <h2>Отрисовка массива</h2>
+                <p class="fragment">React умеет рендерить массивы JSX-элементов</p>
+            </section>
+
+            <section>
+                <h2>Метод .map()</h2>
+                <pre class="size-l code-example-one"><code class="javascript">const students = [
+  { id: 1, name: 'Аня', grade: 5 },
+  { id: 2, name: 'Боря', grade: 4 },
+  { id: 3, name: 'Вася', grade: 3 },
+];
+
+function StudentList() {
+  return (
+    &lt;ul&gt;
+      {students.map(student =&gt; (
+        &lt;div key={student.id}&gt;
+          {student.name}
+          &lt;Mark grade={student.grade} /&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Зачем нужен key?</h2>
+                <p class="fragment" style="font-size: 0.8em;">
+                    <code>key</code> помогает React понять, какой элемент изменился, добавился или удалился
+                </p>
+                <ul class="opinion" style="margin-top: 0.8em;">
+                    <li class="minus fragment">❌ Не использовать индекс массива - при переупорядочивании будут баги</li>
+                    <li class="minus fragment">❌ Не генерировать ключ на лету: <code>key={Math.random()}</code> - перемонтирует компонент каждый раз</li>
+                    <li class="plus fragment">✅ Использовать стабильный уникальный идентификатор: <code>key={student.id}</code></li>
+                </ul>
+            </section>
+        </section>
+
+        <!-- ===== ХУКИ ===== -->
+        <section data-background-image="img/hooks-bg.jpg">
+            <h1 style="text-shadow: #000 3px 2px 2px;">Хуки</h1>
+        </section>
+
+        <section>
+            <section>
+                <h2>Что такое хуки?</h2>
+                <p class="fragment">
+                    Функции, с помощью которых можно «подцепиться» к состоянию и жизненному циклу React из функциональных компонентов
+                </p>
+                <ul style="margin-top: 0.8em;">
+                    <li class="fragment">Работают <strong>только</strong> в функциональных компонентах</li>
+                    <li class="fragment">Имена начинаются с <code>use</code></li>
+                    <li class="fragment">Нельзя вызывать внутри условий и циклов</li>
+                    <li class="fragment">Всегда вызываются в одном и том же порядке</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>useState</h2>
+                <p style="font-size: 0.8em;">Добавляет переменную состояния к компоненту</p>
+                <pre class="size-l code-example-one"><code class="javascript">import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  //     ^значение  ^сеттер   ^начальное значение
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Счётчик: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+        +1
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>useEffect</h2>
+                <p style="font-size: 0.8em;">Синхронизирует компонент с внешней системой (API, таймеры, подписки)</p>
+                <pre class="size-l code-example-one"><code class="javascript">import { useState, useEffect } from 'react';
+
+function StudentList() {
+  const [students, setStudents] = useState([]);
+
+  useEffect(() =&gt; {
+    // Запускается после каждого рендера
+    fetch('/api/students')
+      .then(r =&gt; r.json())
+      .then(data =&gt; setStudents(data));
+  }, []); // [] = только при монтировании
+
+  return &lt;ul&gt;{/* ... */}&lt;/ul&gt;;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>useEffect - зависимости</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// Запускается при каждом рендере
+useEffect(() =&gt; { ... });
+
+// Запускается один раз при монтировании
+useEffect(() =&gt; { ... }, []);
+
+// Запускается при изменении userId
+useEffect(() =&gt; {
+  fetch(`/api/users/${userId}`);
+}, [userId]);
+
+// С очисткой (таймеры, подписки)
+useEffect(() =&gt; {
+  const timer = setInterval(() =&gt; {}, 1000);
+  return () =&gt; clearInterval(timer); // cleanup
+}, []);</code></pre>
+            </section>
+
+            <section>
+                <h2>useRef</h2>
+                <p style="font-size: 0.8em;">Ссылка на значение или DOM-элемент, не вызывающая ре-рендер</p>
+                <pre class="size-l code-example-one"><code class="javascript">import { useRef } from 'react';
+
+function InputFocus() {
+  const inputRef = useRef(null);
+
+  function handleClick() {
+    // Прямой доступ к DOM-элементу
+    inputRef.current.focus();
+  }
+
+  return (
+    &lt;&gt;
+      &lt;input ref={inputRef} /&gt;
+      &lt;button onClick={handleClick}&gt;Фокус&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>useCallback и useMemo</h2>
+                <p style="font-size: 0.75em;">Кэшируют функцию/значение между рендерами</p>
+                <pre class="size-l code-example-one"><code class="javascript">import { useCallback, useMemo } from 'react';
+
+function App({ items }) {
+  // Кэшируем функцию - не создаётся заново
+  const handleClick = useCallback(() =&gt; {
+    console.log('clicked');
+  }, []); // пересоздать только при изменении зависимостей
+
+  // Кэшируем тяжёлое вычисление
+  const total = useMemo(() =&gt; {
+    return items.reduce((sum, item) =&gt; sum + item.price, 0);
+  }, [items]); // пересчитать только при изменении items
+
+  return &lt;div&gt;Итого: {total}&lt;/div&gt;;
+}</code></pre>
+            </section>
+        </section>
+
+        <!-- ===== КАСТОМНЫЕ ХУКИ ===== -->
+        <section>
+            <section>
+                <h2>Кастомные хуки</h2>
+                <p class="fragment">Позволяют выделить и переиспользовать общую логику компонентов</p>
+                <p class="fragment" style="font-size: 0.8em;">
+                    Кастомный хук - это просто функция, имя которой начинается с <code>use</code>
+                </p>
+            </section>
+
+            <section>
+                <h2>Пример: useFetch</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// hooks/useFetch.js
+import { useState, useEffect } from 'react';
+
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    fetch(url)
+      .then(r =&gt; r.json())
+      .then(data =&gt; { setData(data); setLoading(false); })
+      .catch(err =&gt; { setError(err); setLoading(false); });
+  }, [url]);
+
+  return { data, loading, error };
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Использование useFetch</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import useFetch from './hooks/useFetch';
+
+function StudentList() {
+  const {
+    data: students,
+    loading,
+    error
+  } = useFetch('/api/students');
+
+  if (loading) return &lt;p&gt;Загрузка...&lt;/p&gt;;
+  if (error) return &lt;p&gt;Ошибка!&lt;/p&gt;;
+
+  return (
+    &lt;ul&gt;
+      {students.map(s =&gt; (
+        &lt;StudentItem key={s.id} {...s} /&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+            </section>
+        </section>
+
+        <!-- ===== FRAGMENT ===== -->
+        <section>
+            <section>
+                <h2>Fragment</h2>
+                <p class="fragment">Что делать, если нужно вернуть несколько элементов без обёртки?</p>
+            </section>
+
+            <section>
+                <h2>Проблема</h2>
+                <pre class="size-l code-example-one"><code class="javascript">// ❌ Нельзя - два корневых элемента
+function App() {
+  return (
+    &lt;h1&gt;Заголовок&lt;/h1&gt;
+    &lt;p&gt;Текст&lt;/p&gt;
+  );
+}
+
+// ❌ Лишний div в DOM
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Заголовок&lt;/h1&gt;
+      &lt;p&gt;Текст&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Решение: Fragment</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import { Fragment } from 'react';
+
+// Длинная форма
+function App() {
+  return (
+    &lt;Fragment&gt;
+      &lt;h1&gt;Заголовок&lt;/h1&gt;
+      &lt;p&gt;Текст&lt;/p&gt;
+    &lt;/Fragment&gt;
+  );
+}
+
+// Короткая форма (используется чаще)
+function App() {
+  return (
+    &lt;&gt;
+      &lt;h1&gt;Заголовок&lt;/h1&gt;
+      &lt;p&gt;Текст&lt;/p&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+                <p class="fragment" style="font-size: 0.8em;">Fragment не добавляет лишних узлов в DOM</p>
+            </section>
+
+            <section>
+                <h2>Fragment с key</h2>
+                <p style="font-size: 0.8em;">При рендере списка фрагментов нужен <code>key</code> - используем длинную форму:</p>
+                <pre class="size-l code-example-one"><code class="javascript">function DescriptionList({ items }) {
+  return (
+    &lt;dl&gt;
+      {items.map(item =&gt; (
+        &lt;Fragment key={item.id}&gt;
+          &lt;dt&gt;{item.term}&lt;/dt&gt;
+          &lt;dd&gt;{item.description}&lt;/dd&gt;
+        &lt;/Fragment&gt;
+      ))}
+    &lt;/dl&gt;
+  );
+}</code></pre>
+            </section>
+        </section>
+
+        <!-- ===== TYPESCRIPT ===== -->
+        <section data-background-image="img/react-bg.jpg">
+            <h1 style="text-shadow: #000 3px 2px 2px;">TypeScript в React</h1>
+        </section>
+
+        <section>
+            <section>
+                <h2>Зачем TypeScript?</h2>
+                <p class="fragment" style="font-size: 0.85em;">TypeScript добавляет статическую типизацию в JavaScript</p>
+                <ul style="margin-top: 0.8em;">
+                    <li class="fragment">IDE подсказывает props и их типы автоматически</li>
+                    <li class="fragment">Ошибки находятся на этапе компиляции, не в браузере</li>
+                    <li class="fragment">Код проще читать и рефакторить</li>
+                    <li class="fragment">Стандарт де-факто в коммерческих React-проектах</li>
+                </ul>
+                <p class="fragment" style="margin-top: 0.8em; font-size: 0.75em; color: rgba(255,255,255,0.6);">
+                    Создать проект: <code>npm create vite@latest my-app -- --template react-ts</code>
+                </p>
+            </section>
+
+            <section>
+                <h2>Типизация компонента — вариант 1</h2>
+                <p style="font-size: 0.75em;">Тип описывается отдельно, стрелочная функция с типизированными props</p>
+                <pre class="size-l code-example-one"><code class="javascript">type StudentItemProps = {
+  name: string;
+  grade: number;
+  isActive?: boolean; // ? = необязательный prop
+};
+
+const StudentItem = ({ name, grade, isActive = false }: StudentItemProps) =&gt; {
+  return (
+    &lt;div className={isActive ? 'item item--active' : 'item'}&gt;
+      &lt;span&gt;{name}&lt;/span&gt;
+      &lt;span&gt;{grade}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </section>
+
+            <section>
+                <h2>Типизация компонента — вариант 2</h2>
+                <p style="font-size: 0.75em;"><code>React.FC</code> — специальный тип для функционального компонента</p>
+                <pre class="size-l code-example-one"><code class="javascript">import { FC } from 'react';
+
+type StudentItemProps = {
+  name: string;
+  grade: number;
+  isActive?: boolean;
+};
+
+const StudentItem: FC&lt;StudentItemProps&gt; = ({ name, grade, isActive = false }) =&gt; {
+  return (
+    &lt;div className={isActive ? 'item item--active' : 'item'}&gt;
+      &lt;span&gt;{name}&lt;/span&gt;
+      &lt;span&gt;{grade}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+                <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.7);">
+                    <code>FC&lt;Props&gt;</code> явно указывает, что функция — React-компонент.<br>
+                    Минус: запрещает возвращать <code>undefined</code>, только <code>JSX | null</code>
+                </p>
+            </section>
+
+            <section>
+                <h2>Типизация useState</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import { useState } from 'react';
+
+type Student = {
+  id: number;
+  name: string;
+  grade: number;
+};
+
+function StudentList() {
+  // Явно указываем тип массива
+  const [students, setStudents] = useState&lt;Student[]&gt;([]);
+
+  // Тип выводится автоматически: boolean
+  const [loading, setLoading] = useState(false);
+
+  return &lt;ul&gt;{/* ... */}&lt;/ul&gt;;
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Типизация событий</h2>
+                <pre class="size-l code-example-one"><code class="javascript">import { FormEvent, ChangeEvent, HTMLInputElement, HTMLFormElement } from 'react';
+
+function SearchInput() {
+  function handleChange(e: ChangeEvent&lt;HTMLInputElement&gt;) {
+    console.log(e.target.value);
+  }
+
+  function handleSubmit(e: FormEvent&lt;HTMLFormElement&gt;) {
+    e.preventDefault();
+    // ...
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input onChange={handleChange} /&gt;
+      &lt;button type="submit"&gt;Найти&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+            </section>
+        </section>
+
+        <!-- ===== ИТОГИ ===== -->
+        <section>
+            <section>
+                <h2>Итоги</h2>
+                <ul>
+                    <li class="fragment"><strong>React</strong> - UI-библиотека, UI = f(state)</li>
+                    <li class="fragment"><strong>JSX</strong> - синтаксический сахар над <code>React.createElement</code></li>
+                    <li class="fragment"><strong>Компонент</strong> - функция, возвращающая JSX. Используйте функциональные компоненты.</li>
+                    <li class="fragment">При рендере списков указывайте <strong>key</strong> - всегда стабильный уникальный ID</li>
+                    <li class="fragment"><strong>Хуки</strong>: <code>useState</code>, <code>useEffect</code>, <code>useRef</code>, <code>useCallback</code>, <code>useMemo</code></li>
+                    <li class="fragment"><strong>Кастомные хуки</strong> - переиспользование логики</li>
+                    <li class="fragment"><strong>Fragment</strong> - обёртка без лишних DOM-узлов</li>
+                    <li class="fragment"><strong>TypeScript</strong> - типизация props, state и событий</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Полезные ссылки</h2>
+                <ul>
+                    <li><a href="https://react.dev" target="_blank">react.dev</a> - официальная документация</li>
+                    <li><a href="https://react.dev/learn" target="_blank">react.dev/learn</a> - интерактивный курс</li>
+                    <li><a href="https://web.dev/explore/react?hl=ru" target="_blank">web.dev/explore/react</a> - гайды по React от Google</li>
+                    <li><a href="https://www.patterns.dev/" target="_blank">patterns.dev</a> - паттерны React</li>
+                    <li><a href="https://bookmate.ru/books/LlcjwvGM" target="_blank">«React быстро»</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=5LH5M5wvz34" target="_blank">Лекция ШРИ 2023 React</a></li>
+                </ul>
+            </section>
+        </section>
+    </div>
+</div>
+<script src="/utils/lib/js/head.min.js"></script>
+<script src="/utils/js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script src="/utils/lib/js/code-example.js"></script>
+<script>
+    Reveal.addEventListener('fragmentshown', function (event) {
+        if (Reveal.isFirstSlide()) {
+            var root = $(event.fragment);
+            setTimeout(function () {
+                $(root).find('h1').addClass('bounceInDown');
+            }, 0);
+        }
+    });
+
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: false,
+
+        transition: 'slide',
+
+        dependencies: [
+            {
+                src: '/utils/lib/js/classList.js', condition: function () {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: '/utils/plugin/markdown/marked.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: '/utils/plugin/markdown/markdown.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () {
+                    return !!document.querySelector('pre code');
+                }, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+            { src: '/utils/plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+</script>
+</body>
+</html>
