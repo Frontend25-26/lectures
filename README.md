@@ -1,61 +1,68 @@
-# 📘 Курс “Фронтенд-разработка” (ИТМО 2025–2026)
+# Курс "Фронтенд-разработка" (ИТМО 2025–2026)
 
-Этот репозиторий содержит материалы курса по фронтенд-разработке для студентов ИТМО.
+Материалы курса по фронтенд-разработке для студентов ИТМО.
 Здесь собраны **лекции, домашние задания, квизы и результаты**, которые автоматически отображаются на сайте курса.
+
+Сайт — статический, деплоится на Vercel. Никакого билда не требуется.
 
 ---
 
-## 🗂 Структура проекта
+## Структура проекта
 
 ```
 /
-├── 1-sem/                # Материалы первого семестра
-│   ├── html/             # Блок "Верстка"
-│   │   ├── 1-html/
-│   │   ├── 2-css/
-│   │   └── ...
-│   └── js/               # Блок "JavaScript"
-│       ├── 1-types-1/
-│       ├── 2-types-2/
-│       └── ...
-│
 ├── index.html            # Главная страница курса
 ├── homeworks.html        # Страница со всеми ДЗ
 ├── results.html          # Страница с результатами студентов
+├── exam.html             # Экзаменационная страница
 ├── style.css             # Основные стили
-├── utils/                # Вспомогательные скрипты
-├── lectures.json         # JSON-файл с расписанием лекций и ДЗ
-└── README.md             # Этот файл
+├── utils/                # Reveal.js + вспомогательные скрипты
+│
+├── 1-sem/                # Первый семестр
+│   ├── lectures.json     # Данные лекций первого семестра
+│   ├── html/             # Блок "Верстка"
+│   │   ├── ...
+│   ├── js/               # Блок "JavaScript"
+│   │   ├── ...
+│   ├── design/           # Блок "Дизайн"
+│   │   ├── ...
+│   └── mini-lectures/    # Доклады
+│       ├── ...
+│
+└── 2-sem/                # Второй семестр
+    ├── lectures.json     # Данные лекций второго семестра
+    ├── mini-lectures.json
+    ├── mini-lectures.html
+    ├── hackathons.html
+    ├── modern/           # Блок "Современный Frontend"
+    │   └── ...
+    └── infra/            # Блок "Инфраструктура"
+        └── ...
 ```
 
 ---
 
-## 📄 Файл `lectures.json`
+## Файл `lectures.json`
 
-Файл `lectures.json` — это основной источник данных для сайта курса.
-Он содержит структуру семестров, курсов, лекций и домашних заданий.
-Сайт автоматически отображает только те лекции, у которых уже наступила дата открытия (`openDate`).
+Каждый семестр имеет свой файл `lectures.json` (`1-sem/lectures.json`, `2-sem/lectures.json`).
+Это основной источник данных — страницы читают его в рантайме и рендерят контент.
+Лекция появляется на сайте автоматически, когда наступает её `openDate`.
 
-### Пример структуры
+### Структура файла
 
 ```json
 {
-  "semesters": [
+  "courses": [
     {
-      "name": "Первый семестр",
-      "courses": [
+      "name": "Верстка",
+      "lectures": [
         {
-          "name": "Верстка",
-          "lectures": [
-            {
-              "title": "Основы HTML",
-              "link": "/1-sem/html/1-html/index.html",
-              "openDate": "2025-09-27T10:00:00",
-              "order": 1,
-              "homework": "https://classroom.github.com/a/PtV9F7qh",
-              "homeworkDate": "2025-10-12T23:59:59"
-            }
-          ]
+          "title": "Основы HTML",
+          "link": "/1-sem/html/1-html/index.html",
+          "openDate": "2025-09-27T10:00:00",
+          "order": 1,
+          "homework": "https://classroom.github.com/a/PtV9F7qh",
+          "homeworkDate": "2025-10-12T23:59:59"
         }
       ]
     }
@@ -63,84 +70,54 @@
 }
 ```
 
----
+### Поля лекции
 
-## 📘 Описание структуры `lectures.json`
-
-Файл начинается с массива `semesters`.
-Каждый семестр описывается объектом с полем `name` (например, “Первый семестр”) и массивом `courses`.
-
-### Курсы
-
-Внутри `courses` лежат объекты, каждый из которых описывает один учебный блок — например, **“Верстка”** или **“JavaScript”**.
-У каждого курса есть поле `name` (название) и массив `lectures`.
-
-### Лекции
-
-Каждая лекция описывается объектом со следующими полями:
-
-* **title** — название лекции (например: `"Основы CSS"`).
-* **link** — путь к HTML-файлу с лекцией (например: `"/1-sem/html/2-css/index.html"`).
-* **openDate** — дата и время, когда лекция станет доступна на сайте. Используется формат ISO (`YYYY-MM-DDTHH:mm:ss`).
-* **order** — порядковый номер, определяющий, в каком порядке лекции отображаются.
-* **homework** — ссылка на домашнее задание. Обычно это ссылка на GitHub Classroom или квиз.
-* **homeworkDate** — дедлайн сдачи ДЗ (необязательное поле) (по умолчанию - две недели после публикации лекции).
-* **homework_text** — текст вместо ссылки на ДЗ (например: “Квиз на лекции”). Используется, если вместо GitHub Classroom дается квиз или устное задание.
+| Поле | Обязательное | Описание |
+|---|---|---|
+| `title` | да | Название лекции |
+| `link` | да | Путь к HTML-файлу или внешняя ссылка |
+| `openDate` | да | Дата и время открытия (ISO: `YYYY-MM-DDTHH:mm:ss`) |
+| `order` | да | Порядковый номер для сортировки |
+| `homework` | нет | Ссылка на GitHub Classroom или квиз |
+| `homeworkDate` | нет | Дедлайн ДЗ (по умолчанию — две недели после лекции) |
+| `homework_text` | нет | Текст вместо ссылки на ДЗ (для квизов и устных заданий) |
 
 ---
 
-## 🚀 Как добавить лекцию и домашнее задание
+## Как добавить лекцию
 
-### 1. Новая лекция без ДЗ
+### Лекция без ДЗ
 
-1. Создай папку с новой лекцией, например:
-   `/1-sem/js/5-arrays/index.html`
-2. Добавь в нее HTML-файл с содержимым лекции.
-3. В `lectures.json` найди нужный курс (например, `"JavaScript"`) и добавь новый объект в массив `lectures`:
+1. Создай папку с HTML-файлом лекции, например `1-sem/js/5-async-1/index.html`.
+2. В `1-sem/lectures.json` найди нужный курс и добавь объект в массив `lectures`:
 
-   ```json
-   {
-     "title": "Массивы",
-     "link": "/1-sem/js/5-arrays/index.html",
-     "openDate": "2025-10-25T12:30:00",
-     "order": 5
-   }
-   ```
-4. Сохрани изменения — лекция появится на сайте автоматически, когда наступит указанная дата `openDate`.
+```json
+{
+  "title": "Асинхронность part. 1",
+  "link": "/1-sem/js/5-async-1/index.html",
+  "openDate": "2025-10-25T13:00:00",
+  "order": 5
+}
+```
 
----
+### Лекция с домашним заданием (GitHub Classroom)
 
-### 2. Лекция с домашним заданием
+```json
+{
+  "title": "DOM и события",
+  "link": "/1-sem/js/8-document/index.html",
+  "openDate": "2025-11-22T11:00:00",
+  "order": 8,
+  "homework": "https://classroom.github.com/a/a1b2c3d4",
+  "homeworkDate": "2025-12-08T23:59:59"
+}
+```
 
-1. Добавь новую лекцию, как указано выше.
-2. Добавь поля для домашнего задания:
+После этого домашка появится на странице `homeworks.html` с кнопкой перехода на GitHub Classroom.
 
-   ```json
-   {
-     "title": "DOM и события",
-     "link": "/1-sem/js/6-dom/index.html",
-     "openDate": "2025-11-01T12:30:00",
-     "order": 6,
-     "homework": "https://classroom.github.com/a/a1b2c3d4",
-     "homeworkDate": "2025-11-15T23:59:59"
-   }
-   ```
-3. После этого домашка появится на странице `homeworks.html` с кнопкой перехода на GitHub Classroom.
+### Лекция с квизом или устным заданием
 
----
-
-### 3. Обновление дедлайна или ссылки на ДЗ
-
-1. Найди нужную лекцию в `lectures.json`.
-2. Измени значение `homework` (если поменялась ссылка) или `homeworkDate` (если продлился дедлайн).
-3. Сохрани изменения и закоммить — обновления автоматически появятся на сайте.
-
----
-
-### 4. Лекция с квизом или устным заданием
-
-Если вместо GitHub Classroom используется квиз, добавь поле `homework_text`.
-Пример:
+Если вместо GitHub Classroom используется квиз, заполни `homework_text` (текст-описание) и `homework` (ссылка на квиз):
 
 ```json
 {
@@ -154,39 +131,121 @@
 }
 ```
 
----
+### Обновление дедлайна или ссылки на ДЗ
 
-### 5. Проверка после изменений
+Найди лекцию в `lectures.json` и измени `homework` (ссылка) или `homeworkDate` (дедлайн).
 
-После редактирования `lectures.json`:
+### Добавление нового курса в семестр
 
-1. Открой `index.html` — убедись, что лекция появилась.
-2. Перейди на `homeworks.html` — проверь, что домашка и дедлайн отображаются.
-3. Если указана будущая дата `openDate`, лекция станет видна автоматически, когда время наступит.
-
----
-
-## 💡 Полезные советы
-
-* Не меняй порядок вручную — для этого есть поле `order`.
-* Не удаляй старые лекции — они остаются в архиве.
-* Даты всегда пиши в ISO-формате: `YYYY-MM-DDTHH:mm:ss`.
-* Чтобы добавить новый семестр, просто добавь новый объект в массив `semesters`, например:
+Добавь объект в массив `courses`:
 
 ```json
 {
-  "name": "Второй семестр",
-  "courses": [ ... ]
+  "name": "Название курса",
+  "lectures": [ ... ]
 }
 ```
 
 ---
 
-## 🧠 Если что-то не работает
+## Как создать лекцию (презентацию)
 
-Если после добавления лекции она не отображается — проверь:
+Каждая лекция — самостоятельный HTML-файл на базе reveal.js.
 
-* что JSON корректен (нет лишних запятых или пропущенных кавычек);
-* что дата `openDate` уже наступила;
-* что правильно указан путь к лекции (`link`);
-* что есть поле `order` (оно влияет на порядок сортировки).
+### Структура папки лекции
+
+```
+lectures/<sem>/<course>/<N-topic>/
+├── index.html          ← презентация на reveal.js
+├── css-custom/
+│   ├── custom.css      ← шрифты + компоненты слайдов
+│   └── fonts/          ← Textbook + Yandex Sans Display (.woff/.ttf)
+└── img/                ← изображения для слайдов
+```
+
+**Быстрый старт:** скопируй `css-custom/` из любой существующей лекции — папка с шрифтами идентична во всех лекциях.
+
+### Шаблон `index.html`
+
+```html
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Название лекции</title>
+    <meta name="author" content="Имя лектора">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet'; link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+    <!-- слайды -->
+</div></div>
+<script src="/utils/lib/js/head.min.js"></script>
+<script src="/utils/js/reveal.js"></script>
+<script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+<script src="/utils/lib/js/code-example.js"></script>
+<script>
+    Reveal.initialize({
+        controls: false, progress: true, history: true, center: false,
+        transition: 'slide',
+        dependencies: [
+            { src: '/utils/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '/utils/plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+            { src: '/utils/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+            { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector('pre code'); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+            { src: '/utils/plugin/notes/notes.js', async: true }
+        ]
+    });
+    Reveal.configure({ slideNumber: true });
+</script>
+</body>
+</html>
+```
+
+### Типы слайдов
+
+| Тип | Шаблон |
+|---|---|
+| Раздел на фоне | `<section data-background-image="img/bg.jpg"><h1 style="text-shadow: #000 3px 2px 2px;">Текст</h1></section>` |
+| Плюсы/минусы | `<ul class="opinion"><li class="plus fragment">...</li><li class="minus fragment">...</li></ul>` |
+| Сравнение двух подходов | `.compare` > `.compare-block` (2-column grid) |
+| Простой код | `<pre class="[html\|css\|javascript] size-l code-example-one"><code>...</code></pre>` |
+| HTML + CSS вместе | `<code-example [fragment] [no-preview]><template data-type="html">...</template><template data-type="css">...</template></code-example>` |
+| Грид инструментов | `.tools-list` > `.tool-block` |
+| Временная шкала | `.timeline` > `.timeline-item` > `.timeline-label` + `.timeline-arrow` + `.timeline-desc` |
+| Схема архитектуры | `.arch-flow` > `.arch-box[.highlight]` + `.arch-arrow` |
+| Слайды в формате MD | `<section data-markdown data-separator="---"><script type="text/template">...markdown...</script></section>` |
+
+CSS-компоненты (`custom.css`): `.opinion`, `.compare`/`.compare-block`, `.tools-list`/`.tool-block`, `.timeline`/`.timeline-item`, `.arch-flow`/`.arch-box`, `.wrapper`, `.iframe-container`.
+
+---
+
+## Команды
+
+```bash
+# Форматировать CSS внутри <template data-type="css"> в HTML-файлах
+npm run format
+```
+
+---
+
+## Полезные советы
+
+- Не меняй порядок лекций вручную — для этого есть поле `order`.
+- Не удаляй старые лекции — они остаются в архиве.
+- Даты всегда пиши в ISO-формате: `YYYY-MM-DDTHH:mm:ss`.
+- Если лекция не появляется — проверь: корректность JSON (лишние запятые, кавычки), наступила ли дата `openDate`, правильный ли путь в `link`, есть ли поле `order`.
