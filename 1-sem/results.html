@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITMOxFrontEnd 2025-2026 — Результаты</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+        <nav class="main-menu">
+          <ul>
+            <li><a href="/">На главную</a></li>
+            <li><a href="/1-sem/">Лекции</a></li>
+            <li><a href="/1-sem/homeworks.html">Домашние задания</a></li>
+            <li><a href="/1-sem/results.html" class="active">Результаты</a></li>
+            <li><a href="/1-sem/exam.html">Экзамен</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <h2>HTML+CSS</h2>
+      <div id="semesters-container-html" class="google-sheet">
+        <!-- Сюда будет вставлено содержимое из JSON -->
+      </div>
+
+      <h2>JavaScript</h2>
+      <div id="semesters-container-js" class="google-sheet">
+        <!-- Сюда будет вставлено содержимое из JSON -->
+      </div>
+
+      <script>
+        async function renderGoogleSheet(url, container) {
+          try {
+            const response = await fetch(url);
+            const csvData = await response.text();
+
+            const rows = csvData.split("\n");
+            const headers = rows[0].split(",").map((item) => item.trim());
+            const data = rows.slice(1).map((row) => {
+              const values = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+              return headers.reduce((obj, header, i) => {
+                obj[header] = values[i]
+                  ? values[i].trim().replace(/"/g, "")
+                  : "";
+                return obj;
+              }, {});
+            });
+
+            const sumColumnIndex = headers.findIndex((h) =>
+              h.includes("Сумма баллов")
+            );
+
+            if (!container) {
+              console.error(`Контейнер не найден`);
+              return;
+            }
+
+            const table = document.createElement("table");
+
+            const thead = document.createElement("thead");
+            const headerRow = document.createElement("tr");
+            headers.forEach((header) => {
+              const th = document.createElement("th");
+              th.textContent = header;
+              headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+            data.forEach((rowData) => {
+              const row = document.createElement("tr");
+              headers.forEach((header, index) => {
+                const td = document.createElement("td");
+                td.textContent = rowData[header];
+
+                if (index === sumColumnIndex) {
+                  const val = parseInt(rowData[header]);
+                  const normalized = Math.min(1, val/70)
+
+                  const hue = normalized * 120;
+                  td.style.color = `hsl(${hue}, 100%, 85%)`;
+                  td.style.fontWeight = "bold";
+                }
+
+                row.appendChild(td);
+              });
+              tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            container.innerHTML = "";
+            container.appendChild(table);
+          } catch (error) {
+            console.error("Ошибка при загрузке или рендеринге таблицы:", error);
+          }
+        }
+
+        const coursesMap = {
+          "semesters-container-html":
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdwAUPmsHPzSQubV2GGdWpYJFSFTb8H_z8zK6dhW7sm394vUeyT_cjKJgj8ahVN2AHjtW4hgq9Eojr/pub?gid=1663977470&single=true&output=csv",
+          "semesters-container-js":
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdwAUPmsHPzSQubV2GGdWpYJFSFTb8H_z8zK6dhW7sm394vUeyT_cjKJgj8ahVN2AHjtW4hgq9Eojr/pub?gid=805688068&single=true&output=csv",
+        };
+
+        Object.entries(coursesMap).map(([id, url]) => {
+          const container = document.getElementById(id);
+          renderGoogleSheet(url, container);
+        });
+      </script>
+    </div>
+  </body>
+</html>

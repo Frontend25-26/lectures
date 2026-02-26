@@ -126,7 +126,7 @@ h2 {
   background-color: var(--hover-bg);
 }
 
-.lecture-list a {
+.lecture-link, .lecture-list a {
   color: var(--primary);
   text-decoration: none;
   transition: all 0.2s ease;
@@ -136,7 +136,7 @@ h2 {
   border-radius: 4px;
 }
 
-.lecture-list a:hover {
+.lecture-link:hover, .lecture-list a:hover {
   color: var(--accent);
   transform: translateX(5px);
   background-color: rgba(255, 146, 43, 0.1);
@@ -500,7 +500,7 @@ strong {
 }
 
 @media (max-width: 450px) {
-  .lecture-list a {
+  .lecture-link {
     flex-direction: column;
     gap: 0.5rem;
   }
@@ -654,4 +654,50 @@ strong {
 
 .no-margin-left {
   margin-left: 0;
+}
+
+/* ---------- HUB ---------- */
+.hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.hub-card {
+  display: block;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 2rem;
+  text-decoration: none;
+  color: var(--text);
+  border-top: 3px solid var(--primary);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.hub-card h2 {
+  color: var(--primary);
+  margin-top: 0;
+}
+
+.hub-card p {
+  color: var(--disabled);
+}
+
+.hub-card ul {
+  color: var(--disabled);
+  padding-left: 1.2rem;
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .hub-grid {
+    grid-template-columns: 1fr;
+  }
 }

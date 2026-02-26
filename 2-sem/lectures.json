@@ -1,0 +1,16 @@
+{
+  "courses": [
+    {
+      "name": "Современный Frontend",
+      "openDate": "2026-02-24T18:30:00",
+      "lectures": [
+        {
+          "title": "React",
+          "link": "/2-sem/modern/1-react/index.html",
+          "openDate": "2026-02-24T18:30:00",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}

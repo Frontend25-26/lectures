@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITMOxFrontEnd 2025-2026 — Второй семестр</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="/">На главную</a></li>
+                <li><a href="/2-sem/" class="active">Лекции</a></li>
+                <li><a href="/2-sem/mini-lectures.html">Мини-доклады</a></li>
+                <li><a href="/2-sem/hackathons.html">Хакатоны</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="js-semesters-container">
+        <div class="loading">Идёт загрузка лекций...</div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('lectures.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка сети');
+                return response.json();
+            })
+            .then(data => {
+                renderLectures(data);
+            })
+            .catch(error => {
+                console.error('Ошибка загрузки данных:', error);
+                document.querySelector('.js-semesters-container').innerHTML =
+                    '<div class="error">Пожалуйста, попробуйте позже</div>';
+            });
+    });
+
+    function renderLectures(data) {
+        const root = document.querySelector('.js-semesters-container');
+
+        if (!data.courses || data.courses.length === 0) {
+            root.innerHTML = '<div class="error">Нет данных о курсах</div>';
+            return;
+        }
+
+        root.innerHTML = '';
+
+        const now = new Date();
+        const urlParams = new URLSearchParams(window.location.search);
+        const isVisibleAll = urlParams.get('view_all') === 'true';
+
+        const coursesGrid = document.createElement('div');
+        coursesGrid.className = 'lecture-grid';
+
+        data.courses.forEach(course => {
+            if (course.openDate && new Date(course.openDate) > now && !isVisibleAll) return;
+
+            const column = document.createElement('div');
+            column.className = 'lecture-column';
+
+            const title = document.createElement('h3');
+            title.textContent = course.name;
+            column.appendChild(title);
+
+            const list = document.createElement('ul');
+            list.className = 'lecture-list';
+
+            if (!course.lectures || course.lectures.length === 0) {
+                const item = document.createElement('li');
+                item.textContent = 'Лекции пока не добавлены';
+                item.style.color = 'var(--disabled)';
+                list.appendChild(item);
+            } else {
+                course.lectures
+                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                    .forEach(lecture => {
+                        const item = document.createElement('li');
+                        const lectureDate = lecture.openDate ? new Date(lecture.openDate) : null;
+                        const isAvailable = lectureDate && lectureDate <= now;
+
+                        const link = document.createElement('a');
+                        link.href = lecture.link;
+
+                        const badge = document.createElement('span');
+                        badge.className = 'badge';
+                        badge.textContent = lecture.order || '?';
+
+                        const titleText = document.createTextNode(lecture.title || 'Без названия');
+
+                        link.appendChild(badge);
+                        link.appendChild(titleText);
+
+                        if (lectureDate) {
+                            const dateSpan = document.createElement('span');
+                            dateSpan.className = 'lecture-date';
+                            dateSpan.textContent = ` (${ formatDate(lectureDate) })`;
+                            link.appendChild(dateSpan);
+                        }
+
+                        if (isAvailable || isVisibleAll) {
+                            item.appendChild(link);
+                            list.appendChild(item);
+                        }
+                    });
+            }
+
+            column.appendChild(list);
+            coursesGrid.appendChild(column);
+        });
+
+        root.appendChild(coursesGrid);
+    }
+
+    function formatDate(date) {
+        return date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+{
+  "mini_lectures": [
+    {
+      "date": "2026-02-28T00:00:00",
+      "title": "Фреймворки",
+      "presenter": {
+        "name": "Влад Целиков",
+        "telegram": "@mgvts"
+      },
+      "subtopics": [
+        {
+          "title": "Vue.js",
+          "student": {
+            "name": "Ноздреватых Роман",
+            "telegram": "@MEOWA1sha"
+          },
+          "link": ""
+        },
+        {
+          "title": "Svelte",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Solid.js",
+          "student": {
+            "name": "Каймакова Анастасия",
+            "telegram": "@purr_meoow"
+          },
+          "link": ""
+        },
+        {
+          "title": "rx.js",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "NextJS",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-03-17T00:00:00",
+      "title": "Сборка приложения",
+      "presenter": {
+        "name": "Илья Степанов",
+        "telegram": "@ilyahtml"
+      },
+      "subtopics": [
+        {
+          "title": "Webpack",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Gulp",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Vite",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Rollup и esbuild",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-03-24T00:00:00",
+      "title": "SSR/SSG",
+      "presenter": {
+        "name": "Артем Швецов",
+        "telegram": "@ArtyomShvetsov"
+      },
+      "subtopics": [
+        {
+          "title": "Мини-лекция 1 по теме «SSR/SSG»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 2 по теме «SSR/SSG»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 3 по теме «SSR/SSG»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 4 по теме «SSR/SSG»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-04-07T00:00:00",
+      "title": "Безопасность в вебе",
+      "presenter": {
+        "name": "Максим Альжанов",
+        "telegram": "@irdkwmnsb"
+      },
+      "subtopics": [
+        {
+          "title": "Мини-лекция 1 по теме «Безопасность в вебе»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 2 по теме «Безопасность в вебе»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 3 по теме «Безопасность в вебе»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 4 по теме «Безопасность в вебе»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-04-14T00:00:00",
+      "title": "Куки, localStorage, разные Web APIs",
+      "presenter": {
+        "name": "",
+        "telegram": ""
+      },
+      "subtopics": [
+        {
+          "title": "Мини-лекция 1 по теме «Куки, localStorage, разные Web APIs»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 2 по теме «Куки, localStorage, разные Web APIs»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 3 по теме «Куки, localStorage, разные Web APIs»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 4 по теме «Куки, localStorage, разные Web APIs»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-04-21T00:00:00",
+      "title": "Современные формы, formik",
+      "presenter": {
+        "name": "",
+        "telegram": ""
+      },
+      "subtopics": [
+        {
+          "title": "Мини-лекция 1 по теме «Современные формы, formik»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 2 по теме «Современные формы, formik»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 3 по теме «Современные формы, formik»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 4 по теме «Современные формы, formik»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    },
+    {
+      "date": "2026-05-05T00:00:00",
+      "title": "Локализация и Accessibility",
+      "presenter": {
+        "name": "Катя Рязанова",
+        "telegram": "@anbtrfl"
+      },
+      "subtopics": [
+        {
+          "title": "Мини-лекция 1 по теме «Локализация и Accessibility»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Мини-лекция 2 по теме «Локализация и Accessibility»",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        }
+      ]
+    }
+  ]
+}

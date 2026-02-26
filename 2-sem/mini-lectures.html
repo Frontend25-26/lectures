@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITMOxFrontEnd 2025-2026 — Мини-доклады</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* ── Карточка ── */
+        .ml-card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 0 0 0.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ── Мета: дата + докладчик ── */
+        .ml-meta {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 0.4rem 1rem;
+            font-size: 0.82rem;
+            color: var(--disabled);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .ml-meta-date {
+            color: var(--accent);
+        }
+
+        .ml-meta-date,
+        .ml-meta-presenter {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .ml-presenter-link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .ml-presenter-link:hover {
+            text-decoration: underline;
+        }
+        .ml-presenter-name {
+            color: var(--disabled);
+        }
+
+        /* ── Список подтем ── */
+        .ml-subtopic-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .ml-subtopic-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.55rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+
+        .ml-subtopic-item:hover {
+            background: var(--hover-bg);
+            border-color: var(--border);
+        }
+
+        /* ── Порядковый номер ── */
+        .ml-index {
+            flex-shrink: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: var(--bg);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 0.1rem;
+        }
+
+        /* ── Тело подтемы ── */
+        .ml-subtopic-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            min-width: 0;
+        }
+
+        .ml-topic-title {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .ml-topic-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .ml-topic-link:hover {
+            text-decoration: underline;
+        }
+
+        .ml-link-icon {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .ml-topic-text {
+            color: var(--text);
+        }
+
+        /* ── Студент ── */
+        .ml-student {
+            font-size: 0.8rem;
+        }
+
+        .ml-student-link {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        .ml-student-link:hover {
+            text-decoration: underline;
+        }
+
+        .ml-student-name {
+            color: var(--disabled);
+        }
+
+        .ml-student-empty {
+            color: var(--disabled);
+            font-style: italic;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="/">На главную</a></li>
+                <li><a href="/2-sem/">Лекции</a></li>
+                <li><a href="/2-sem/mini-lectures.html" class="active">Мини-доклады</a></li>
+                <li><a href="/2-sem/hackathons.html">Хакатоны</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="mini-lectures-container">
+        <div class="loading">Идёт загрузка докладов...</div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('mini-lectures.json')
+            .then(response => {
+                if (!response.ok) throw new Error('Ошибка сети');
+                return response.json();
+            })
+            .then(data => {
+                renderMiniLectures(data);
+            })
+            .catch(error => {
+                console.error('Ошибка загрузки данных:', error);
+                document.getElementById('mini-lectures-container').innerHTML =
+                    '<div class="error">Пожалуйста, попробуйте позже</div>';
+            });
+    });
+
+    function renderMiniLectures(data) {
+        const container = document.getElementById('mini-lectures-container');
+
+        if (!data.mini_lectures || data.mini_lectures.length === 0) {
+            container.innerHTML = `
+                <section class="rules-section">
+                    <h2>Мини-доклады студентов</h2>
+                    <p style="text-align: center; color: var(--disabled);">
+                        Материалы появятся после проведения докладов.
+                    </p>
+                </section>`;
+            return;
+        }
+
+        container.innerHTML = '';
+
+        const grid = document.createElement('div');
+        grid.className = 'lecture-grid';
+
+        data.mini_lectures.forEach(lecture => {
+            const card = document.createElement('div');
+            card.className = 'lecture-column';
+
+            const dateStr = lecture.date
+                ? new Date(lecture.date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
+                : '';
+
+            const presenterName = lecture.presenter.name;
+            const presenterTg = lecture.presenter.telegram;
+            const presenterHTML = presenterName
+                ? (presenterTg
+                    ? `<a href="https://t.me/${presenterTg.replace('@', '')}" target="_blank" class="ml-presenter-link">${presenterName}</a>`
+                    : `<span class="ml-presenter-name">${presenterName}</span>`)
+                : '';
+
+            const header = document.createElement('h3');
+            header.className = 'ml-card-title';
+            header.innerHTML = lecture.title;
+            card.appendChild(header);
+
+            const meta = document.createElement('div');
+            meta.className = 'ml-meta';
+            const metaParts = [];
+            if (dateStr) metaParts.push(`<span class="ml-meta-date">${dateStr}</span>`);
+            if (presenterHTML) metaParts.push(`<span class="ml-meta-presenter">Ответственный: ${presenterHTML}</span>`);
+            meta.innerHTML = metaParts.join('');
+            card.appendChild(meta);
+
+            if (lecture.subtopics && lecture.subtopics.length > 0) {
+                const list = document.createElement('ul');
+                list.className = 'ml-subtopic-list';
+
+                lecture.subtopics.forEach((subtopic, index) => {
+                    const item = document.createElement('li');
+                    item.className = 'ml-subtopic-item';
+
+                    const studentName = subtopic.student.name;
+                    const studentTg = subtopic.student.telegram;
+                    const studentHTML = studentName
+                        ? (studentTg
+                            ? `<a href="https://t.me/${studentTg.replace('@', '')}" target="_blank" class="ml-student-link">${studentName}</a>`
+                            : `<span class="ml-student-name">${studentName}</span>`)
+                        : `<span class="ml-student-empty">студент не назначен</span>`;
+
+                    const titleHTML = subtopic.link
+                        ? `<a href="${subtopic.link}" target="_blank" class="ml-topic-link">${subtopic.title}</a>`
+                        : `<span class="ml-topic-text">${subtopic.title}</span>`;
+
+                    item.innerHTML = `
+                        <span class="ml-index">${index + 1}</span>
+                        <div class="ml-subtopic-body">
+                            <div class="ml-topic-title">${titleHTML}</div>
+                            <div class="ml-student">${studentHTML}</div>
+                        </div>`;
+
+                    list.appendChild(item);
+                });
+
+                card.appendChild(list);
+            }
+
+            grid.appendChild(card);
+        });
+
+        container.appendChild(grid);
+    }
+</script>
+</body>
+</html>
