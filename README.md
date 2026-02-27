@@ -158,12 +158,15 @@
 lectures/<sem>/<course>/<N-topic>/
 ├── index.html          ← презентация на reveal.js
 ├── css-custom/
-│   ├── custom.css      ← шрифты + компоненты слайдов
-│   └── fonts/          ← Textbook + Yandex Sans Display (.woff/.ttf)
+│   └── custom.css      ← стили, специфичные для этой лекции
 └── img/                ← изображения для слайдов
 ```
 
-**Быстрый старт:** скопируй `css-custom/` из любой существующей лекции — папка с шрифтами идентична во всех лекциях.
+**Быстрый старт:** создай пустой `css-custom/custom.css` и подключи два CSS в `index.html` (порядок важен):
+1. `/utils/css/custom-base.css` — общие шрифты и компоненты слайдов
+2. `css-custom/custom.css` — стили, специфичные для этой лекции
+
+Папка `css-custom/fonts/` больше не нужна — шрифты раздаются из `/utils/fonts/`.
 
 ### Шаблон `index.html`
 
@@ -181,6 +184,7 @@ lectures/<sem>/<course>/<N-topic>/
     <link rel="stylesheet" href="/utils/lib/css/animate.css">
     <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
     <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
     <link rel="stylesheet" href="css-custom/custom.css">
     <script>
         var link = document.createElement('link');
@@ -230,7 +234,9 @@ lectures/<sem>/<course>/<N-topic>/
 | Схема архитектуры | `.arch-flow` > `.arch-box[.highlight]` + `.arch-arrow` |
 | Слайды в формате MD | `<section data-markdown data-separator="---"><script type="text/template">...markdown...</script></section>` |
 
-CSS-компоненты (`custom.css`): `.opinion`, `.compare`/`.compare-block`, `.tools-list`/`.tool-block`, `.timeline`/`.timeline-item`, `.arch-flow`/`.arch-box`, `.wrapper`, `.iframe-container`.
+Общие компоненты доступны из `/utils/css/custom-base.css` автоматически: `.opinion`, `.compare`/`.compare-block`, `.tools-list`/`.tool-block`, `.timeline`/`.timeline-item`, `.arch-flow`/`.arch-box`, `.wrapper`, `.iframe-container`.
+
+`css-custom/custom.css` — только для стилей, уникальных для данной лекции.
 
 ---
 
