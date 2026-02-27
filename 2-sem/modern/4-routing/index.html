@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Роутинг и навигация в SPA</title>
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 2em;">Routing</h1>
+                    <p style="text-align: center; font-size: 0.7em;">навигация в SPA</p>
+                    <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+                </div>
+            </section>
+
+            <section>
+                <h1>Как работает SPA</h1>
+            </section>
+
+            <section>
+                <h2>MPA vs SPA</h2>
+                <div class="compare">
+                    <div class="compare-block">
+                        <h3>MPA</h3>
+                        <ul>
+                            <li class="fragment">Каждый переход = HTTP-запрос</li>
+                            <li class="fragment">Сервер возвращает новый HTML</li>
+                            <li class="fragment">Страница перезагружается полностью</li>
+                            <li class="fragment">Видна белая вспышка</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block">
+                        <h3>SPA</h3>
+                        <ul>
+                            <li class="fragment">HTML загружается один раз</li>
+                            <li class="fragment">JS меняет DOM на месте</li>
+                            <li class="fragment">Данные - через API (JSON)</li>
+                            <li class="fragment">Мгновенные переходы</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Что нужно для SPA-переходов</h2>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">Перехватить клик</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Не делать переход, остановить дефолтное поведение ссылки</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">Обновить URL</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Поменять адрес в строке браузера без перезагрузки - History API</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">Обновить UI</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Показать нужный компонент / экран, загрузить данные</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">Обработать «назад»</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Как-то отследить навигацию браузера и обновить UI</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 0. Заголовок -->
+            <section data-background-image="img/bg.jpg">
+                <h1 style="text-shadow: #000 3px 2px 2px;">History API</h1>
+            </section>
+
+            <!-- 1. Введение: стек истории -->
+            <section>
+                <h2>История браузера - это стек</h2>
+                <p style="font-size: 0.78em; margin-bottom: 0.5em;">
+                    Каждый переход добавляет запись. Браузер помнит позицию «указателя» в стеке.
+                </p>
+                <pre class="javascript size-l code-example-one fragment"><code>// Примерная структура стека после нескольких переходов:
+[
+  { url: '/home',       state: null },
+  { url: '/products',   state: null },
+  { url: '/products/42',state: { id: 42 } },  // ← текущая
+]
+
+// До HTML5: JS не мог менять URL без перезагрузки страницы
+// History API даёт полный контроль над этим стеком
+console.log(window.history); // объект History
+</code></pre>
+                <div class="compare" style="font-size: 0.78em; margin-top: 0.6em;">
+                    <div class="compare-block fragment">
+                        <h3>Свойства</h3>
+                        <ul>
+                            <li><code>length</code></li>
+                            <li><code>state</code></li>
+                            <li><code>scrollRestoration</code></li>
+                        </ul>
+                    </div>
+                    <div class="compare-block fragment">
+                        <h3>Методы</h3>
+                        <ul>
+                            <li><code>back()</code> / <code>forward()</code></li>
+                            <li><code>go(n)</code></li>
+                            <li><code>pushState()</code> / <code>replaceState()</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. history.length -->
+            <section>
+                <h2><code>history.length</code></h2>
+                <p style="font-size: 0.78em; margin-bottom: 0.5em;">
+                    Количество записей в стеке истории текущей сессии.
+                </p>
+                <pre class="javascript size-l code-example-one"><code>// Открыли браузер —> перешли на /about —> перешли на /contact
+
+console.log(history.length); // 3
+</code></pre><br>
+                <pre class="javascript size-l code-example-one fragment"><code>// Нажали «Назад» - length не изменился,
+// но указатель сдвинулся на одну позицию назад
+console.log(history.length); // всё ещё 3
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                    Максимальное значение зависит от браузера. Записи разных вкладок не смешиваются.
+                </p>
+            </section>
+
+            <!-- 4. history.back и history.forward -->
+            <section>
+                <h2><code>history.back()</code> и <code>history.forward()</code></h2>
+                <pre class="javascript size-l code-example-one"><code>// Эквивалент кнопок браузера &lt;— и —&gt;
+history.back();    // сдвинуть указатель на −1
+history.forward(); // сдвинуть указатель на +1
+</code></pre>
+                <div class="compare fragment" style="margin-top: 0.6em; font-size: 0.78em;">
+                    <div class="compare-block">
+                        <h3>back()</h3>
+                        <ul>
+                            <li>Переходит на предыдущую запись</li>
+                            <li>Ничего не делает, если уже в начале стека</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block">
+                        <h3>forward()</h3>
+                        <ul>
+                            <li>Переходит на следующую запись</li>
+                            <li>Ничего не делает, если уже в конце стека</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                    Оба метода асинхронны
+                </p>
+            </section>
+
+            <!-- 5. history.go(n) -->
+            <section>
+                <h2><code>history.go(n)</code></h2>
+                <p style="font-size: 0.78em; margin-bottom: 0.5em;">
+                    Прыжок на произвольное количество шагов в любую сторону.
+                </p>
+                <pre class="javascript size-l code-example-one"><code>history.go(-1); // то же, что back()
+history.go(+1); // то же, что forward()
+
+history.go(-3); // прыжок на 3 записи назад
+history.go(2);  // прыжок на 2 записи вперёд
+
+history.go(0);  // перезагрузка текущей страницы
+history.go();   // тоже перезагрузка (аргумент по умолчанию 0)
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                    Если n выходит за пределы стека - вызов игнорируется без ошибки
+                </p>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                    Так же асинхронна
+                </p>
+            </section>
+
+            <!-- 6. pushState и replaceState -->
+            <section>
+                <h2><code>pushState</code> и <code>replaceState</code></h2>
+                <pre class="javascript size-l code-example-one"><code>history.pushState(state, unused, url)
+history.replaceState(state, unused, url)
+</code></pre>
+                <p class="fragment">state - Объект состояния = любой сериализуемый объект. <br>
+                    <span style="font-size: 0.72em; opacity: 0.8;" class="fragment">[Ограничение - 640 тысяч символов на
+                        сериализованное представление (Firefox)]</span>
+                </p>
+                <p class="fragment">unused - <a href="https://github.com/whatwg/html/issues/2174">This parameter exists
+                        for historical reasons</a></p>
+                <p class="fragment">url - URL-адрес новой записи в истории. Данный параметр не является обязательным;
+                    если он не указан, будет использоваться URL текущего документа</p>
+            </section>
+            <section>
+                <h2><code>pushState</code> и <code>replaceState</code></h2>
+                <pre class="javascript size-l code-example-one"><code>// PUSH - добавляет новую запись в стек
+history.pushState({ id: 42 }, '', '/products/42');
+
+// REPLACE - заменяет текущую запись
+history.replaceState({ sort: 'price' }, '', '/products?sort=price');
+</code></pre>
+                <div class="compare" style="margin-top: 0.6em; font-size: 0.78em;">
+                    <div class="compare-block fragment">
+                        <h3>Когда push?</h3>
+                        <ul>
+                            <li>Переход на новую страницу</li>
+                            <li>Открытие карточки товара</li>
+                            <li>Любой «осмысленный» переход</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block fragment">
+                        <h3>Когда replace?</h3>
+                        <ul>
+                            <li>Редирект (логин —> дашборд)</li>
+                            <li>Фильтры / сортировка в URL</li>
+                            <li>Исправление URL без смысла «назад»</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. history.state -->
+            <section>
+                <h2><code>history.state</code></h2>
+                <p style="font-size: 0.78em; margin-bottom: 0.5em;">
+                    Данные, прикреплённые к текущей записи стека. Сохраняются при перезагрузке страницы.
+                </p>
+                <pre class="javascript size-l code-example-one"><code>// Читаем state текущей записи
+console.log(history.state); // null - если не задавали
+
+// После pushState state становится доступен
+history.pushState({ page: 'catalog', filters: ['sale'] }, '', '/catalog');
+console.log(history.state); // { page: 'catalog', filters: ['sale'] }
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                    Сериализуется через structured clone - объекты и массивы ок, функции и DOM-узлы - нет
+                </p>
+            </section>
+
+            <!-- 8. scrollRestoration -->
+            <section>
+                <h2><code>history.scrollRestoration</code></h2>
+                <p style="font-size: 0.78em; margin-bottom: 0.5em;">
+                    Управляет тем, восстанавливает ли браузер позицию прокрутки при навигации назад/вперёд.
+                </p>
+                <pre class="javascript size-l code-example-one"><code>// Два возможных значения:
+history.scrollRestoration = 'auto';   // по умолчанию - браузер сам скроллит
+history.scrollRestoration = 'manual'; // SPA берёт управление на себя
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                    Для SPA почти всегда нужен <code>'manual'</code> - иначе браузер скроллит не туда
+                </p>
+            </section>
+
+            <!-- 9. popstate -->
+            <section>
+                <h2>Событие <code>popstate</code></h2>
+                <pre class="javascript size-l code-example-one"><code>// Срабатывает при переходе назад / вперёд (back, forward, go)
+// НЕ срабатывает при pushState / replaceState
+window.addEventListener('popstate', (event) => {
+    console.log('Новый URL:', location.pathname);
+    console.log('State записи:', event.state);
+    renderPage(location.pathname);
+});
+</code></pre>
+                <ul style="font-size: 0.75em; margin-top: 0.5em;">
+                    <li class="fragment">Срабатывает только на навигацию по стеку (кнопки браузера или
+                        <code>go/back/forward</code> после выполнения)
+                    </li>
+                    <li class="fragment">При <code>pushState</code> / <code>replaceState</code> - не срабатывает, UI
+                        обновляем сами</li>
+                    <li class="fragment"><code>event.state</code> - объект, который был передан в <code>pushState</code>
+                        для этой записи</li>
+                </ul>
+            </section>
+
+            <!-- 10. Реализация SPA -->
+            <section>
+                <h2>SPA-роутинг через History API</h2>
+                <pre class="javascript size-l code-example-one"><code>// 1. Перехватываем клики по внутренним ссылкам
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href.startsWith('/')) return; // внешняя ссылка - пропускаем
+
+    e.preventDefault();
+    history.pushState({}, '', href); // меняем URL без перезагрузки
+    renderPage(href);                // обновляем UI
+});
+
+// 2. Реагируем на «Назад» / «Вперёд»
+window.addEventListener('popstate', () => {
+    renderPage(location.pathname);
+});
+
+// 3. Инициализируем текущий маршрут
+renderPage(location.pathname);
+</code></pre>
+                <p class="fragment" style="font-size: 0.7em; opacity: 0.75; margin-top: 0.4em;">
+                    Именно это делают библиотеки роутинга - только надёжнее и с реактивностью фреймворка
+                </p>
+            </section>
+
+            <section>
+                <h1>React Router</h1>
+            </section>
+
+            <section>
+                <h2>Базовая настройка</h2>
+                <pre class="javascript size-l code-example-one"><code>import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+function App() {
+    return (
+        &lt;BrowserRouter&gt;
+            &lt;Routes&gt;
+                &lt;Route path="/" element={&lt;HomePage /&gt;} /&gt;
+                &lt;Route path="/products" element={&lt;ProductsPage /&gt;} /&gt;
+                &lt;Route path="/products/:id" element={&lt;ProductPage /&gt;} /&gt;
+                &lt;Route path="*" element={&lt;NotFound /&gt;} /&gt;
+            &lt;/Routes&gt;
+        &lt;/BrowserRouter&gt;
+    );
+}
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                    <code>BrowserRouter</code> подписывается на History API.
+                    <code>Routes</code> выбирает первый совпавший маршрут и рендерит его компонент.
+                </p>
+            </section>
+
+            <section>
+                <h2>Навигация в компонентах</h2>
+                <pre class="javascript size-l code-example-one"><code>import { Link, NavLink, useNavigate } from 'react-router-dom';
+
+// Link - SPA-переход без перезагрузки (вместо &lt;a&gt;)
+&lt;Link to="/products"&gt;Каталог&lt;/Link&gt;
+
+// NavLink - автоматически получает класс active
+&lt;NavLink to="/cart"
+    className={({ isActive }) => isActive ? 'active' : ''}&gt;
+    Корзина
+&lt;/NavLink&gt;
+
+// useNavigate - программный переход
+function LoginPage() {
+    const navigate = useNavigate();
+
+    const onLogin = async () => {
+        await login();
+        navigate('/dashboard', { replace: true }); // replace: редирект
+    };
+}
+</code></pre>
+            </section>
+
+            <section>
+                <h2>Чтение URL в компонентах</h2>
+                <pre class="javascript size-l code-example-one"><code>import { useParams, useSearchParams } from 'react-router-dom';
+
+// Динамический сегмент: /products/:id
+function ProductPage() {
+    const { id } = useParams(); // '42'
+}
+
+// Query string: /products?category=shoes&sort=price
+function ProductsPage() {
+    const [params, setParams] = useSearchParams();
+    const category = params.get('category'); // 'shoes'
+
+    // Фильтр - replace, чтобы не засорять историю
+    const handleSort = (sort) => setParams(
+        { ...Object.fromEntries(params), sort },
+        { replace: true }
+    );
+}
+</code></pre>
+            </section>
+
+            <section>
+                <h2>Вложенные маршруты и Outlet</h2>
+                <pre class="javascript size-l code-example-one"><code>&lt;Routes&gt;
+    &lt;Route path="/dashboard" element={&lt;DashboardLayout /&gt;}&gt;
+        &lt;Route index element={&lt;Overview /&gt;} /&gt;
+        &lt;Route path="stats" element={&lt;Stats /&gt;} /&gt;
+        &lt;Route path="settings" element={&lt;Settings /&gt;} /&gt;
+    &lt;/Route&gt;
+&lt;/Routes&gt;
+
+function DashboardLayout() {
+    return (
+        &lt;div className="layout"&gt;
+            &lt;Sidebar /&gt;
+            &lt;main&gt;
+                &lt;Outlet /&gt; {/* контент дочернего маршрута */}
+            &lt;/main&gt;
+        &lt;/div&gt;
+    );
+}
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                    Лейаут монтируется один раз - при переходах пересоздаётся только <code>&lt;Outlet&gt;</code>
+                </p>
+            </section>
+
+            <section>
+                <h1>Vue Router</h1>
+            </section>
+
+            <section>
+                <h2>Настройка в Vue</h2>
+                <pre class="javascript size-l code-example-one"><code>import { createRouter, createWebHistory } from 'vue-router';
+
+const router = createRouter({
+    history: createWebHistory(), // History API
+    routes: [
+        { path: '/',             component: HomePage },
+        { path: '/products',     component: ProductsPage },
+        { path: '/products/:id', component: ProductPage },
+        { path: '/:pathMatch(.*)*', component: NotFound },
+    ],
+});
+
+// main.js
+app.use(router);
+</code></pre>
+                <div class="compare fragment" style="font-size: 0.75em; margin-top: 0.5em;">
+                    <div class="compare-block">
+                        <h3>createWebHistory</h3>
+                        <ul>
+                            <li>History API, чистые URL</li>
+                            <li>Нужен fallback на сервере</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block">
+                        <h3>createWebHashHistory</h3>
+                        <ul>
+                            <li>Hash-роутинг (#/path)</li>
+                            <li>Работает без настройки сервера</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Навигация в Vue</h2>
+                <pre class="html size-l code-example-one"><code>&lt;!-- router-link - аналог Link в React Router --&gt;
+&lt;router-link to="/products"&gt;Каталог&lt;/router-link&gt;
+
+&lt;!-- active-class автоматически на совпавшем маршруте --&gt;
+&lt;router-link to="/cart" active-class="active"&gt;Корзина&lt;/router-link&gt;
+
+&lt;!-- Место рендера текущего компонента --&gt;
+&lt;router-view /&gt;
+</code></pre><br>
+                <pre class="javascript size-l code-example-one fragment"><code>import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
+const route  = useRoute();
+
+router.push('/dashboard');                            // push
+router.replace('/dashboard');                         // replace
+router.push({ name: 'product', params: { id: 42 } }); // именованный маршрут
+
+const id = route.params.id;    // динамический сегмент
+const q  = route.query.search; // query string
+</code></pre>
+            </section>
+
+            <section>
+                <h2>React Router vs Vue Router</h2>
+                <div class="compare" style="font-size: 0.72em;">
+                    <div class="compare-block">
+                        <h3>React Router</h3>
+                        <ul>
+                            <li><code>&lt;Link to="…"&gt;</code></li>
+                            <li><code>useNavigate()</code></li>
+                            <li><code>useParams()</code></li>
+                            <li><code>useSearchParams()</code></li>
+                            <li><code>&lt;Outlet /&gt;</code> - вложенные маршруты</li>
+                            <li>Маршруты в JSX или объектах</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block">
+                        <h3>Vue Router</h3>
+                        <ul>
+                            <li><code>&lt;router-link to="…"&gt;</code></li>
+                            <li><code>useRouter().push()</code></li>
+                            <li><code>useRoute().params</code></li>
+                            <li><code>useRoute().query</code></li>
+                            <li><code>&lt;router-view /&gt;</code> - вложенные маршруты</li>
+                            <li>Маршруты всегда в объектах</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.75; margin-top: 0.6em;">
+                    Концепции одинаковые - разный синтаксис. Знаешь одно - быстро освоишь другое.
+                </p>
+            </section>
+
+            <section>
+                <h1>Next.js</h1>
+            </section>
+
+            <!-- Pages Router -->
+            <section>
+                <h2>Pages Router <span style="font-size: 0.6em; opacity: 0.7;">(до Next.js 13)</span></h2>
+                <p style="font-size: 0.75em; margin-bottom: 0.4em;">Классический роутинг через папку
+                    <code>pages/</code>. Каждый файл - отдельный маршрут.</p>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">pages/index.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>/</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">pages/about.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>/about</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">pages/products/[id].tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>/products/139</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">pages/products/[...slug].tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>/products/iphone</code>,
+                            <br><code>/products/phone/iphone/iphone-15-pro</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">pages/_app.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Глобальный лейаут и провайдеры для всего приложения</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">pages/api/users.ts</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">API-эндпоинт <code>/api/users</code></div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Pages Router - получение данных</h2>
+                <pre class="javascript size-l code-example-one"><code>// pages/products/[id].tsx
+import { useRouter } from 'next/router'
+ 
+export default function Page() {
+  const router = useRouter()
+  return <p>ProductID: {router.query.id}</p>
+}
+</code></pre><br><pre class="javascript size-l code-example-one fragment"><code>// pages/products/[...slug].tsx
+import { useRouter } from 'next/router'
+ 
+export default function Page() {
+  const router = useRouter()
+  return <p>ProductSlug: {router.query.slug}</p>
+}
+</code></pre>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">/products/a</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>{slug: ['a']}</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">/products/a/b</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>{slug: ['a', 'b']}</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">/products/a/b/c</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc"><code>{slug: ['a', 'b', 'c']}</code></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- App Router -->
+            <section>
+                <h2>App Router <span style="font-size: 0.6em; opacity: 0.7;">(Next.js 13+)</span></h2>
+                <p style="font-size: 0.75em; margin-bottom: 0.4em;">Новый роутинг через папку <code>app/</code>. React
+                    Server Components по умолчанию.</p>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/page.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Страница маршрута <code>/</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/catalog/page.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Страница маршрута <code>/catalog</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/catalog/[id]/page.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Страница маршрута <code>/catalog/:id</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/catalog/[...slug]/page.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Страница маршрута <code>/catalog/*</code></div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/layout.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Персистентный лейаут, не пересоздаётся при переходах</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/loading.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Автоматический Suspense-скелетон при загрузке</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/error.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Error Boundary для маршрута</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">app/(shop)/layout.tsx</div>
+                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-desc">Route Group - лейаут для группы, URL не меняется</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>App Router - получение данных</h2>
+                <pre class="javascript size-l code-example-one"><code>// app/products/[id]/page.tsx
+// Server Component - запросы прямо в компоненте
+export default async function ProductPage({ params }) {
+    return &lt;div&gt;{params.id}&lt;/div&gt;;
+}
+</code></pre>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                    Server Components не попадают в JS-бандл клиента - меньше кода в браузере
+                </p>
+            </section>
+
+            <!-- API Routes -->
+            <section>
+                <h2>API Routes</h2>
+                <p style="font-size: 0.75em; margin-bottom: 0.4em;">Next.js позволяет писать серверные эндпоинты прямо в
+                    проекте - без отдельного бэкенда.</p>
+                <div class="compare" style="font-size: 0.72em;">
+                    <div class="compare-block fragment">
+                        <h3>Pages Router</h3>
+                        <pre class="javascript size-s code-example-one"><code>// pages/api/users.ts
+export default function handler(req, res) {
+    if (req.method === 'GET') {
+        res.json([{ id: 1, name: 'Alice' }]);
+    } else {
+        res.status(405).end();
+    }
+}</code></pre>
+                    </div>
+                    <div class="compare-block fragment">
+                        <h3>App Router (Route Handlers)</h3>
+                        <pre class="javascript size-s code-example-one"><code>// app/api/users/route.ts
+export async function GET() {
+    return Response.json([{ id: 1, name: 'Alice' }]);
+}
+
+export async function POST(req) {
+    const body = await req.json();
+    return Response.json({ created: body });
+}</code></pre>
+                    </div>
+                </div>
+                <ul style="font-size: 0.72em; margin-top: 0.5em;">
+                    <li class="fragment">Имя файла в App Router - <code>route.ts</code> (не <code>page.tsx</code>)</li>
+                    <li class="fragment">Экспортируем функции с именами HTTP-методов: <code>GET</code>,
+                        <code>POST</code>, <code>PUT</code>, <code>DELETE</code></li>
+                    <li class="fragment">Удобно для BFF (Backend For Frontend) и прокси к внешним API</li>
+                </ul>
+            </section>
+
+            <!-- Сравнение -->
+            <section>
+                <h2>Pages Router vs App Router</h2>
+                <div class="compare" style="font-size: 0.68em;">
+                    <div class="compare-block">
+                        <h3>Pages Router</h3>
+                        <ul>
+                            <li class="fragment"><code>pages/</code> - папка маршрутов</li>
+                            <li class="fragment"><code>_app.tsx</code> - глобальный лейаут</li>
+                            <li class="fragment"><code>router.query</code></li>
+                            <li class="fragment">Все компоненты - клиентские по умолчанию</li>
+                            <li class="fragment">Простая модель данных</li>
+                            <li class="fragment">Стабильный, хорошо задокументирован</li>
+                        </ul>
+                    </div>
+                    <div class="compare-block">
+                        <h3>App Router</h3>
+                        <ul>
+                            <li class="fragment"><code>app/</code> - папка маршрутов</li>
+                            <li class="fragment"><code>layout.tsx</code> - персистентный лейаут</li>
+                            <li class="fragment"><code>params</code></li>
+                            <li class="fragment">Меньше JS на клиенте</li>
+                            <li class="fragment">Сложнее граница Server/Client</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                    App Router - будущее Next.js. Pages Router поддерживается, но новые фичи только в App Router.
+                </p>
+            </section>
+
+            <section>
+                <h2>Link и useRouter в Next.js</h2>
+                <pre class="javascript size-l code-example-one"><code>import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+// Link - SPA-переход, prefetch по умолчанию
+&lt;Link href="/products"&gt;Каталог&lt;/Link&gt;
+&lt;Link href={`/products/${id}`}&gt;Товар&lt;/Link&gt;
+
+// Программная навигация
+function LoginPage() {
+    const router = useRouter();
+
+    const onLogin = async () => {
+        await login();
+        router.push('/dashboard');    // push
+        router.replace('/dashboard'); // replace
+        router.back();                // назад
+    };
+}
+</code></pre>
+            </section>
+
+            <section>
+                <h2>Зачем Next.js для роутинга?</h2>
+                <ul class="opinion">
+                    <li class="plus fragment">Нет ручной конфигурации - структура папок говорит за себя</li>
+                    <li class="plus fragment">layout.tsx: общий UI для группы страниц без дублирования</li>
+                    <li class="plus fragment">SSR/SSG из коробки (спойлер следующей лекции)</li>
+                    <li class="plus fragment">Prefetch ссылок - переходы мгновенные</li>
+                    <li class="minus fragment">Привязка к Next.js - не переносимо на другой стек</li>
+                    <li class="minus fragment">App Router усложняет границу Server / Client компонентов</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Итоги</h2>
+                <ul style="font-size: 0.78em;">
+                    <li class="fragment">SPA-переход = перехватить клик + <code>pushState</code> + обновить UI + слушать
+                        <code>popstate</code>
+                    </li>
+                    <li class="fragment"><strong>push</strong> - осмысленный переход, нужна запись в истории</li>
+                    <li class="fragment"><strong>replace</strong> - редирект, фильтры в URL, «техническая» смена адреса
+                    </li>
+                    <li class="fragment">React Router и Vue Router - одни концепции, разный синтаксис</li>
+                    <li class="fragment">Next.js - файловый роутинг «из коробки» + SSR для React</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/utils/lib/js/code-example.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false, progress: true, history: true, center: false,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+        Reveal.configure({ slideNumber: true });
+    </script>
+</body>
+
+</html>

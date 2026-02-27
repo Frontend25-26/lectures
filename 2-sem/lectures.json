@@ -9,6 +9,12 @@
           "link": "/2-sem/modern/1-react/index.html",
           "openDate": "2026-02-24T18:30:00",
           "order": 1
+        },
+        {
+          "title": "Роутинг и навигация в SPA",
+          "link": "/2-sem/modern/4-routing/index.html",
+          "openDate": "2026-03-24T18:30:00",
+          "order": 3
         }
       ]
     }
