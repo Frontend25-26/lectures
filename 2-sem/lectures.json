@@ -11,10 +11,35 @@
           "order": 1
         },
         {
+          "title": "Управление состоянием приложения",
+          "link": "/2-sem/modern/3-states/index.html",
+          "openDate": "2026-03-10T18:30:00",
+          "order": 2
+        },
+        {
           "title": "Роутинг и навигация в SPA",
           "link": "/2-sem/modern/4-routing/index.html",
           "openDate": "2026-03-24T18:30:00",
           "order": 3
+        }
+      ]
+    },
+    
+    {
+      "name": "Инфраструктура",
+      "openDate": "2026-02-03T18:30:00",
+      "lectures": [
+        {
+          "title": "Архитектура",
+          "link": "/2-sem/infra/1-arch/index.html",
+          "openDate": "2026-03-03T18:30:00",
+          "order": 1
+        },
+        {
+          "title": "Роутинг и навигация в SPA",
+          "link": "/2-sem/infra/2-infra/index.html",
+          "openDate": "2026-03-10T18:30:00",
+          "order": 2
         }
       ]
     }

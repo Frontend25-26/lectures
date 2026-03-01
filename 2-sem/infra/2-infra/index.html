@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Инфраструктура</title>
+
+    <meta name="description" content="Лекция по инфраструктуре фронтенд-разработки">
+    <meta name="author" content="Гриша Фокин">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 1.8em;">Инфраструктура</h1>
+                    <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+                </div>
+            </section>
+
+            <section>
+                <section data-background-image="img/bg-intro.jpg">
+                    <h1 style="text-shadow: #000 3px 2px 2px;">Введение</h1>
+                </section>
+
+                <section>
+                    <p>Инфраструктура - комплекс взаимосвязанных обслуживающих структур или объектов, составляющих и
+                        обеспечивающих основу функционирования системы</p>
+                    <p style="font-size: 0.4em; margin-top: 1em;">
+                        <a
+                            href="https://ru.wikipedia.org/wiki/Инфраструктура">https://ru.wikipedia.org/wiki/Инфраструктура</a>
+                    </p>
+                    <p class="fragment">Инфраструктура - набор инструментов, которые позволяют нам доставлять наше
+                        приложение
+                        пользователям, проверять его, организовывать совместную разработку</p>
+                </section>
+
+                <section>
+                    <h3>Аналогия: квартира</h3>
+                    <img src="img/house.png" style="background: #fff; height: 60vh" />
+                </section>
+
+                <section>
+                    <h3>Из чего состоит инфраструктура</h3>
+                    <ul>
+                        <li class="fragment">Серверы (nginx, Docker)</li>
+                        <li class="fragment">VCS - система контроля версий (Git)</li>
+                        <li class="fragment">CI/CD (GitHub Actions, GitLab CI/CD, Jenkins)</li>
+                        <li class="fragment">Средства локальной разработки (скрипты, линтеры)</li>
+                    </ul>
+                </section>
+            </section>
+
+
+            <section>
+                <section data-background-image="img/bg-pr.jpg">
+                    <h1 style="text-shadow: #000 3px 2px 2px;">Флоу разработки: Pull Request</h1>
+                </section>
+
+                <section>
+                    <h3>Как мы работаем над фичей</h3>
+                    <ul>
+                        <li class="fragment">Отводим ветку для разработки новой фичи</li>
+                        <li class="fragment">Вносим изменения, делаем коммиты</li>
+                        <li class="fragment">Создаём Pull Request (PR) - запрос на добавление изменений в основной код
+                        </li>
+                        <li class="fragment">Проходим code review и CI-проверки</li>
+                        <li class="fragment">Мёрджим в основную ветку</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Conventional Commits</h3>
+                    <pre class="javascript size-l code-example-one"><code>fix:      исправление бага
+feat:     новая функциональность
+build:    изменения системы сборки
+chore:    обновление зависимостей
+ci:       изменение CI/CD конфигурации
+docs:     только документация
+style:    форматирование, без логики
+refactor: рефакторинг без новых фич
+perf:     улучшение производительности
+test:     добавление тестов</code></pre>
+                    <p style="font-size: 0.4em; margin-top: 0.5em;">
+                        <a href="https://www.conventionalcommits.org/en/v1.0.0/">Спецификация
+                            conventionalcommits.org</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Пример коммита</h3>
+                    <pre class="javascript size-l code-example-one"><code>feat: create base page and serve it
+
+fix: resolve login form validation bug
+
+ci: add eslint check to PR pipeline</code></pre>
+                </section>
+
+                <section>
+                    <h3>Зачем нужен code review?</h3>
+                    <ul class="opinion">
+                        <li class="plus fragment">Находим баги до попадания в прод</li>
+                        <li class="plus fragment">Передаём знания о кодовой базе</li>
+                        <li class="plus fragment">Повышаем качество архитектурных решений</li>
+                        <li class="minus fragment">Замедляет процесс разработки</li>
+                        <li class="minus fragment">Требует культуры конструктивной критики</li>
+                    </ul>
+                </section>
+            </section>
+
+
+            <section>
+                <section data-background-image="img/bg-docker.jpg">
+                    <h1 style="text-shadow: #000 3px 2px 2px;">Docker</h1>
+                </section>
+
+                <section>
+                    <p>Docker - программное обеспечение для автоматизации развёртывания и управления приложениями в
+                        средах с поддержкой контейнеризации</p>
+                    <p class="fragment" style="margin-top: 1em;">Docker позволяет упаковывать приложение со всеми
+                        зависимостями и легко запускать его на разных машинах</p>
+                </section>
+
+                <section>
+                    <h3>Ключевые понятия</h3>
+                    <div class="compare">
+                        <div class="compare-block">
+                            <p><strong>Образ (Image)</strong></p>
+                            <p>Шаблон - исполняемый пакет со всем необходимым: кодом, средой выполнения, библиотеками,
+                                переменными окружения</p>
+                            <p style="font-size: 0.7em; margin-top: 0.5em; color: #aaa;">Как рецепт блюда</p>
+                        </div>
+                        <div class="compare-block">
+                            <p><strong>Контейнер (Container)</strong></p>
+                            <p>Запущенный экземпляр образа - изолированная среда, в которой работает приложение</p>
+                            <p style="font-size: 0.7em; margin-top: 0.5em; color: #aaa;">Как готовое блюдо из рецепта
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>Docker Registry &amp; Hub</h3>
+                    <p><strong>Docker Registry</strong> представляет собой удалённую платформу, используемую для
+                        хранения образов Docker</p>
+                    <p class="fragment"><strong>Docker Hub</strong> - самый крупный реестр образов Docker, используется
+                        по
+                        умолчанию</p>
+                    <p class="fragment" style="margin-top: 1em; font-size: 0.8em; color: #aaa;">Аналог: npm registry для
+                        JS-пакетов</p>
+                </section>
+
+                <section>
+                    <h3>Основные команды CLI</h3>
+                    <pre class="javascript size-l code-example-one"><code data-line-numbers="1|2|3|4">docker build . -t my-app:1.0.0      # Собрать образ
+docker run -p 3000:3000 my-app:1.0.0 # Запустить контейнер
+docker ps                             # Список запущенных контейнеров
+docker stop {CONTAINER_ID}            # Остановить контейнер</code></pre>
+                </section>
+
+                <section>
+                    <h3>Ключевые инструкции Dockerfile</h3>
+                    <ul style="font-size: 0.75em;">
+                        <li class="fragment"><code>FROM</code> - базовый родительский образ</li>
+                        <li class="fragment"><code>ENV</code> - постоянные переменные среды</li>
+                        <li class="fragment"><code>RUN</code> - выполнить команду и создать слой образа</li>
+                        <li class="fragment"><code>COPY</code> - скопировать файлы в контейнер</li>
+                        <li class="fragment"><code>WORKDIR</code> - рабочая директория</li>
+                        <li class="fragment"><code>EXPOSE</code> - открыть порт</li>
+                        <li class="fragment"><code>CMD</code> - команда запуска контейнера</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Dockerfile - рецепт образа</h3>
+                    <pre class="javascript size-l code-example-one"><code data-line-numbers="1|2|3|4|5|6|7">FROM node:20-alpine        # Базовый образ
+WORKDIR /app               # Рабочая директория
+COPY package*.json ./      # Копируем манифест
+RUN npm ci                 # Устанавливаем зависимости
+COPY . .                   # Копируем исходники
+RUN npm run build          # Собираем приложение
+CMD ["node", "server.js"]  # Команда запуска</code></pre>
+                </section>
+
+                <section>
+                    <h3>Зачем Docker фронтенду?</h3>
+                    <ul class="opinion">
+                        <li class="plus fragment">«Работает на моей машине» —> работает везде</li>
+                        <li class="plus fragment">Единая среда для dev, CI и prod</li>
+                        <li class="plus fragment">Лёгкое горизонтальное масштабирование</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Docker Compose</h3>
+                    <p class="fragment">Один контейнер — один процесс. Но реальное приложение состоит из нескольких
+                        сервисов</p>
+                    <ul>
+                        <li class="fragment">frontend (nginx)</li>
+                        <li class="fragment">backend (Node.js / Python)</li>
+                        <li class="fragment">база данных (PostgreSQL)</li>
+                    </ul>
+                    <p class="fragment"><strong>Docker Compose</strong> — инструмент для запуска группы контейнеров
+                        одной командой</p>
+                </section>
+
+                <section>
+                    <h3>docker-compose.yml</h3>
+                    <pre class="yaml size-l"><code>services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://db/app
+
+  db:
+    image: postgres:16
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:</code></pre>
+                </section>
+
+                <section>
+                    <h3>Основные команды</h3>
+                    <ul>
+                        <li class="fragment"><code>docker compose up</code> — поднять все сервисы</li>
+                        <li class="fragment"><code>docker compose up --build</code> — пересобрать образы и запустить
+                        </li>
+                        <li class="fragment"><code>docker compose down</code> — остановить и удалить контейнеры</li>
+                        <li class="fragment"><code>docker compose logs -f</code> — следить за логами в реальном времени
+                        </li>
+                    </ul>
+                </section>
+            </section>
+
+            <section>
+                <section data-background-image="img/bg-npm.jpg">
+                    <h1 style="text-shadow: #000 3px 2px 2px;">npm: скрипты и версионирование</h1>
+                </section>
+
+                <section>
+                    <h3>npm-скрипты</h3>
+                    <pre class="javascript size-l code-example-one"><code>{
+  "scripts": {
+    "start": "node .",
+    "dev": "vite",
+    "build": "vite build",
+    "test": "jest",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit"
+  }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h3>Семантическое версионирование</h3>
+                    <p style="font-size: 1.4em; letter-spacing: 0.1em; margin: 0.5em 0;">
+                        <strong>MAJOR.MINOR.PATCH</strong>
+                    </p>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><strong>PATCH</strong> - исправление бага, обратно совместимо
+                            <code>1.0.1</code>
+                        </li>
+                        <li class="fragment"><strong>MINOR</strong> - новая функциональность, обратно совместимо
+                            <code>1.1.0</code>
+                        </li>
+                        <li class="fragment"><strong>MAJOR</strong> - breaking change, несовместимо <code>2.0.0</code>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Bump версии через npm</h3>
+                    <pre class="javascript size-l code-example-one"><code>npm version patch   # 1.0.0 —> 1.0.1
+npm version minor   # 1.0.0 —> 1.1.0
+npm version major   # 1.0.0 —> 2.0.0</code></pre>
+                    <p class="fragment" style="margin-top: 0.7em; font-size: 0.8em;">Автоматически создаёт git-тег и
+                        коммит</p>
+                </section>
+
+                <section>
+                    <h3>Хуки версионирования</h3>
+                    <pre class="javascript size-l code-example-one"><code>{
+  "scripts": {
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags"
+  }
+}</code></pre>
+                    <p class="fragment" style="margin-top: 0.7em; font-size: 0.8em; color: #aaa;">Выполняются
+                        автоматически до, во время и после <code>npm version</code></p>
+                </section>
+            </section>
+
+
+            <section>
+                <section data-background-image="img/bg-release.jpg">
+                    <h1 style="text-shadow: #000 3px 2px 2px;">Флоу разработки: Release</h1>
+                </section>
+
+                <section>
+                    <img src="img/ci_release_1.png" />
+                </section>
+
+                <section>
+                    <h3>Виды окружений</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-label">Stand</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Проверка отдельного изменения</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-label">Testing</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Проверка набора последних изменений</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-label">Prestable</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Проверка с продовыми данными</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-label">Production</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Финальная версия для пользователей</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <img src="img/environments.png" />
+                </section>
+            </section>
+
+
+            <section>
+                <section data-background-image="img/bg-cicd.jpg">
+                    <h1 style="text-shadow: #000 3px 2px 2px;">CI/CD</h1>
+                </section>
+
+                <section>
+                    <p><strong>Continuous Integration</strong> - автоматическая проверка каждого изменения кода</p>
+                    <p class="fragment" style="margin-top: 0.7em;"><strong>Continuous Delivery</strong> -
+                        автоматизированная выкладка проверенного кода</p>
+                </section>
+
+                <section>
+                    <h3>Инструменты</h3>
+                    <ul class="fragment">
+                        <li>GitHub Actions</li>
+                        <li>GitLab CI/CD</li>
+                        <li>Jenkins</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Что умеет CI/CD</h3>
+                    <ul>
+                        <li class="fragment">Сборка приложения</li>
+                        <li class="fragment">Запуск тестов</li>
+                        <li class="fragment">Проверка линтерами (eslint, stylelint)</li>
+                        <li class="fragment">Деплой на окружение</li>
+                        <li class="fragment">Уведомления в чаты</li>
+                        <li class="fragment">...</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Виды тестирования в CI</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-label">Lint</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">eslint, stylelint - статический анализ</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-label">Unit</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Изолированное тестирование функций и компонентов</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-label">Screenshot</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Сравнение визуального вывода компонентов</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-label">e2e</div>
+                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-desc">Сценарии в реальном браузере (Playwright, Cypress)</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>GitHub Actions: пример воркфлоу</h3>
+                    <pre class="javascript size-l code-example-one"><code>name: CI
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build</code></pre>
+                </section>
+
+                <section>
+                    <h3>GitLab CI: тот же пайплайн</h3>
+                    <pre class="yaml size-l code-example-one"><code># .gitlab-ci.yml
+image: node:20
+
+stages:
+  - check
+
+cache:
+  paths:
+    - node_modules/
+
+check:
+  stage: check
+  script:
+    - npm ci
+    - npm run lint
+    - npm test
+    - npm run build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"</code></pre>
+                </section>
+
+                <section>
+                    <h3>Jenkins: тот же пайплайн</h3>
+                    <pre class="javascript size-l code-example-one"><code>// Jenkinsfile
+pipeline {
+  agent { docker { image 'node:20' } }
+
+  stages {
+    stage('Install') {
+      steps { sh 'npm ci' }
+    }
+    stage('Lint') {
+      steps { sh 'npm run lint' }
+    }
+    stage('Test') {
+      steps { sh 'npm test' }
+    }
+    stage('Build') {
+      steps { sh 'npm run build' }
+    }
+  }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h3>Сравнение CI-инструментов</h3>
+                    <table style="font-size: 0.7em; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>GitHub Actions</th>
+                                <th>GitLab CI</th>
+                                <th>Jenkins</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Хостинг</strong></td>
+                                <td>Облако (GitHub)</td>
+                                <td>Облако / self-hosted</td>
+                                <td>Только self-hosted</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Конфиг</strong></td>
+                                <td>YAML в <code>.github/</code></td>
+                                <td>YAML <code>.gitlab-ci.yml</code></td>
+                                <td><code>Jenkinsfile</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Порог входа</strong></td>
+                                <td>Низкий</td>
+                                <td>Низкий</td>
+                                <td>Высокий</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Экосистема</strong></td>
+                                <td>Marketplace actions</td>
+                                <td>Встроенные шаблоны</td>
+                                <td>1000+ плагинов</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Бесплатно</strong></td>
+                                <td>2000 мин/мес</td>
+                                <td>400 мин/мес</td>
+                                <td>Бесплатно (свой сервер)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Когда выбрать</strong></td>
+                                <td>Проект на GitHub</td>
+                                <td>Проект на GitLab</td>
+                                <td>Сложная корпоративная инфраструктура</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+
+            <section>
+                <h2>Итог</h2>
+                <ul>
+                    <li class="fragment">Инфраструктура - основа доставки кода пользователям</li>
+                    <li class="fragment">PR + code review = контроль качества изменений</li>
+                    <li class="fragment">Docker = воспроизводимая среда запуска</li>
+                    <li class="fragment">CI/CD = автоматическая проверка и деплой</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/utils/lib/js/code-example.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false, progress: true, history: true, center: false,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+        Reveal.configure({ slideNumber: true });
+    </script>
+</body>
+
+</html>
