@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>NodeJS</title>
+
+		<link rel="stylesheet" href="/utils/dist/reset.css">
+		<link rel="stylesheet" href="/utils/dist/reveal.css">
+		<link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
+		<link rel="stylesheet" href="/utils/css/custom.css">
+		<link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
+
+		<script src="/utils/js/metrika.js"></script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-auto-animate data-auto-animate-unmatched="fade" data-background-image="/utils/assets/background.webp">
+					<h2>NodeJS</h2>
+					<br>
+					<p><span style="color:red">Г</span>риша Фокин</p>
+				</section>
+
+				<section id="introduction">
+					<section>
+						<h2>Введение</h2>
+					</section>
+
+					<section>
+						<p>Node.js® is an open-source, cross-platform JavaScript runtime environment</p>
+
+						<a 
+							href="https://nodejs.org/en/learn/getting-started/introduction-to-nodejs"
+							style="font-size: .3em;"
+						> 
+						https://nodejs.org/en/learn/getting-started/introduction-to-nodejs
+						</a>
+					</section>
+	
+					<section>
+						<p>Node.js - кроссплатформенная среда выполнения JavaScript - дает возможность запускать JavaScript не только в браузере, но и на сервере (ПК, микроконтроллере и т.д)</p>
+					</section>
+	
+					<section>
+						<p>Особенности</p>
+						<ul class="">
+							<li >Простота</li>
+							<li >Скорость</li>
+							<li >Кроссплатформенность</li>
+							<li >C++ bindings</li>
+							<li >V8</li>
+							<li >npm</li>
+						</ul>
+					</section>
+	
+					<section>
+						<div class="media" style="width: 1000px">
+							<img src="/utils/assets/lesson26.nodejs/a0kvhopli0zldhsiw2ew.png" />
+						</div>
+					</section>
+	
+					<section>
+						<h2>JavaScript Engines</h2>
+						<ul class="">
+							<li ><b>V8</b> - Chromium (Yandex Browser, Chrome, Edge)</li>
+							<li ><b>SpiderMonkey</b> - Firefox</li>
+							<li ><b>Nitro</b> - Safari</li>
+							<li ><b>Chakra</b> - Edge (в настоящее время тоже V8)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Установка</h3>
+						<a href="https://nodejs.org/en/download">https://nodejs.org/en/download</a>
+					</section>
+
+					<section>
+						<h3>Версионирование</h3>
+						<div class="media" style="width: 600px">
+							<img src="/utils/assets/lesson26.nodejs/verisons.png" />
+						</div>
+						<a 
+							href="https://nodejs.org/en/about/previous-releases#looking-for-latest-release-of-a-version-branch"
+							style="font-size: .3em;"
+						> 
+							https://nodejs.org/en/about/previous-releases#looking-for-latest-release-of-a-version-branch
+						</a>
+						
+					</section>
+
+					<section>
+						<h3>Node Version Manager</h3>
+						<a href="https://github.com/nvm-sh/nvm">https://github.com/nvm-sh/nvm</a>
+					</section>
+				</section>
+
+				<section id="command-line">
+					<section>
+						<h2>Командная строка</h2>
+					</section>
+
+					<section>
+						<p>Запуск js файла</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								node main.js
+
+								node -e "console.log(123)"
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Переменные окружения</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								console.log(process.env.MYAPIKEY)
+
+								// Linux => MYAPIKEY=ndhsdt74d node main.js
+								// Windows => set MYAPIKEY=ndhsdt74d && node main.js
+								// cross-env => cross-env MYAPIKEY=ndhsdt74d node main.js
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Аргументы командной строки</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								// node main.js --a a b=b
+
+								console.log(process.argv)
+
+								/* 
+								[
+									'/Users/grisshafkn/.nvm/versions/node/v18.12.1/bin/node',
+									'/Users/grisshafkn/Projects/slides-2023-2024/lectures/web/examples/commandLine.js',
+									'--a',
+									'a',
+									'b=b'
+								] 
+								*/
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						Пример
+					</section>
+				</section>
+
+				<section id="filesystem">
+					<section>
+						<h2>Работа с файловой системой</h2>
+					</section>
+
+					<section>
+						<p>Модуль <code>path</code></p>
+						<pre> 
+							<code data-trim data-line-numbers="1-7|10-11|14-15|19">
+								const path = require('node:path');
+
+								const notes = '/users/joe/notes.txt';
+
+								path.dirname(notes); // /users/joe
+								path.basename(notes); // notes.txt
+								path.extname(notes); // .txt
+
+								// Объединение  нескольких частей пути
+								const name = 'joe';
+								path.join('/', 'users', name, 'notes.txt'); // '/users/joe/notes.txt'
+
+								// Получение абсолютного пути из относительного
+								path.resolve('joe.txt'); // '/Users/joe/joe.txt' если запустить из домашней директории
+								path.resolve('tmp', 'joe.txt'); // '/Users/joe/tmp/joe.txt'
+
+
+								// Вычисление пути, когда есть относительные спецификаторы
+								path.normalize('/users/joe/..//test.txt'); // '/users/test.txt'
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Чтение файла</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								const fs = require('node:fs');
+
+								fs.readFile('/Users/joe/test.txt', 'utf8', (err, data) => {
+									if (err) {
+										console.error(err);
+										return;
+									}
+									console.log(data);
+								});
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Запись файла</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								const fs = require('node:fs');
+
+								const content = 'Some content!';
+
+								fs.writeFile('/Users/joe/test.txt', content, err => {
+									if (err) {
+										console.error(err);
+									} else {
+										// Файл записан успешно
+									}
+								});
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section id="http">
+					<section>
+						<h2>Модуль <code>http</code></h2>
+					</section>
+
+					<section>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								const http = require('node:http');
+
+								const server = http.createServer();
+
+								server.listen(3000);
+
+								server.on('request', (req, res) => {
+									res.setHeader("location", "hhh");
+									res.statusCode = 200;
+
+									res.end();
+								})
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h2>Пример</h2>
+					</section>
+				</section>
+
+				<section id="streams">
+					<section>
+						<h2>Стримы</h2>
+					</section>
+
+					<section>
+						<h2>Стрим – это абстракция, с помощью которой можно обрабатывать данные небольшими частями</h2>
+					</section>
+
+					<section>
+						<p>Пример. Читаем целиком в память</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								const fs = require('node:fs');
+								const path = require('node:path');
+								const server = require('node:http').createServer();
+
+								server.on('request', (req, res) => {
+									const src = fs.readFile(path.resolve(__dirname, './ClickerDemo.key'), (err, data) => {
+										res.end(data);
+									});	
+								})
+
+								server.listen(3000);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Пример. Возвращаем по частям</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								const fs = require('node:fs');
+								const path = require('node:path');
+								const server = require('node:http').createServer();
+
+								server.on('request', (req, res) => {
+									const src = fs.createReadStream(path.resolve(__dirname, './ClickerDemo.key'));
+									src.pipe(res);
+								})
+
+								server.listen(3000);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Пример. Все-равно все в памяти</p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								const fs = require('node:fs');
+								const path = require('node:path');
+								const server = require('node:http').createServer();
+
+								server.on('request', (req, res) => {
+									let buffer = '';
+
+									const src = fs.createReadStream(path.resolve(__dirname, './ClickerDemo.key'));
+
+									src.on('data', data => {
+										buffer += data;
+									});
+
+									src.on('end', data => {
+										res.end(res);
+									})
+								})
+
+								server.listen(3000);
+							</code>
+						</pre>
+					</section>
+
+				</section>
+
+				<section id="modules-system">
+					<section>
+						<h2>Модульная система</h2>
+					</section>
+
+					<section>
+						<p>Организация nodejs проекта</p>
+					</section>
+
+					<section><p>В NodeJS каждый отдельный файл рассматривается как модуль</p></section>
+					
+					<section>
+						<p >Одновременно есть две системы модулей</p>
+						<ul class="">
+							<li ><b>CommonJS</b></li>
+							<li ><b>ECMAScript</b></li>
+						</ul>
+					</section>
+				</section>
+
+				<section id="commonjs">
+					<section>
+						<h2>CommonJS</h2>
+					</section>
+					<section>
+						circle.js
+						<pre>
+							<code data-trim data-line-numbers=>
+								const { PI } = Math;
+
+								exports.area = (r) => PI * r ** 2;
+
+								exports.circumference = (r) => 2 * PI * r;
+							</code>
+						</pre>
+						main.js
+						<pre>
+							<code data-trim data-line-numbers=>
+								const circle = require("./circle.js");
+								console.log(`The area of a circle of radius 4 is ${circle.area(4)}`);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>Переменные внутри модуля доступны только в этом модуле</p>
+					</section>
+					<section>
+						<p >Для того, чтобы вернуть что-то из модуля используется <code>module.exports</code></p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								const { PI } = Math;
+
+								const area = (r) => PI * r ** 2;
+
+								const circumference = (r) => 2 * PI * r;
+
+								module.exports = { area, circumference };
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p style="text-align: left;"><code>exports</code> - ссылка на объект <code>module.exports</code></p>
+						<p style="text-align: left;">В <code>module.exports</code> можно положить не только объект, но и класс или функцию</p>
+					</section>
+					<section>
+						<p style="text-align: left;">Модуль выполняется один раз при первом <code>require()</code> </p>
+						<p style="text-align: left;">То есть объект, возвращаемый из <code>require('foo-module')</code> всегда один и тот же</p>
+					</section>
+
+					<section>
+						<p style="text-align: left;">В NodeJS есть встроенные модули, которые поставляются бинарниками. Обращаться к ним можно через префикс <code>node:</code>, например</p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								const fs = require("node:fs");
+							</code>
+						</pre>
+						<p style="text-align: left;">Есть core модули, которые можно подключать и без префикса <code>node:</code>, их список можно получить:</p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								const builtin = require("node:module").builtinModules;
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						resolution → loading → wrapping → evaluation → caching
+					</section>
+
+					<section>
+						<p>3 основных типа модулей</p>
+						<ul class="">
+							<li >Встроенные <code>core</code></li>
+							<li >Написанные в процессе разработки</li>
+							<li >Установленные через <code>npm</code></li>
+						</ul>
+					</section>
+
+					<section>
+						<pre>
+							
+	require(X) from module at path Y
+	1. If X is a core module,
+		a. return the core module
+		b. STOP
+	2. If X begins with '/'
+		a. set Y to be the file system root
+	3. If X begins with './' or '/' or '../'
+		a. LOAD_AS_FILE(Y + X)
+		b. LOAD_AS_DIRECTORY(Y + X)
+		c. THROW "not found"
+	4. LOAD_NODE_MODULES(X, dirname(Y))
+	5. THROW "not found"
+
+						</pre>
+					</section>
+
+					<section>
+						<pre>
+
+	LOAD_AS_FILE(X)
+	1. If X is a file, 
+		load X as its file extension format. STOP
+	2. If X.js is a file, 
+		load X.js as JavaScript text. STOP
+	3. If X.json is a file, 
+		parse X.json to a JavaScript Object. STOP
+	4. If X.node is a file, 
+		load X.node as binary addon. STOP
+
+						</pre>
+					</section>
+
+					<section>
+						<pre>
+
+	LOAD_AS_DIRECTORY(X)
+	1. If X/package.json is a file,
+		a. Parse X/package.json, and look for "main" field.
+		b. If "main" is a falsy value, GOTO 2.
+		c. let M = X + (json main field)
+		d. LOAD_AS_FILE(M)
+		e. LOAD_INDEX(M)
+		f. LOAD_INDEX(X) DEPRECATED
+		g. THROW "not found"
+	2. LOAD_INDEX(X)
+
+	LOAD_INDEX(X)
+	1. If X/index.js is a file, 
+		load X/index.js as JavaScript text. STOP
+	2. If X/index.json is a file, 
+		parse X/index.json to a JavaScript object. STOP
+	3. If X/index.node is a file, 
+		load X/index.node as binary addon. STOP
+
+						</pre>
+					</section>
+
+
+					<section>
+						<pre>
+
+	NODE_MODULES_PATHS(START)
+	1. let PARTS = path split(START)
+	2. let I = count of PARTS - 1
+	3. let DIRS = []
+	4. while I >= 0,
+		a. if PARTS[I] = "node_modules" CONTINUE
+		b. DIR = path join(PARTS[0 .. I] + "node_modules")
+		c. DIRS = DIR + DIRS
+		d. let I = I - 1
+	5. return DIRS + GLOBAL_FOLDERS
+						</pre>
+					</section>
+
+
+					<section>
+						<p style="text-align: left;">Перед выполнением кода в модуле NodeJS обернет его в функцию:</p>
+						<p style="text-align: left;">Это дает изоляцию переменным и пробрасывает необходимые переменные</p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								(function(exports, require, module, __filename, __dirname) {
+									// Module code actually lives in here
+								});
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p style="text-align: left;"><code>__dirname</code> - название директории, в которой находится модуль</p>
+
+						<p style="text-align: left;"><code>__filename</code> - полный абсолютный путь до текущего файла</p>
+					</section>
+				</section>
+
+				<section id="ecmascript">
+					<section>
+						<h2>EcmaScript Modules</h2>
+					</section>
+
+					<section>
+						<ul class="">
+							<li ><code>{"type": "modules"}</code> в package.json</li>
+							<li >расширение .mjs</li>
+							<li >запуск node с флагом <code>-input-type=module</code></li>
+						</ul>
+					</section>
+
+					<section>	
+						<pre>
+							<code data-trim data-line-numbers="1-7|8-12">
+								// addTwo.mjs
+								function addTwo(num) {
+									return num + 2;
+								}
+
+								export { addTwo }; 
+
+								// app.mjs
+								import { addTwo } from './addTwo.mjs';
+
+								// Prints: 6
+								console.log(addTwo(4)); 
+							</code>
+						</pre>						
+					</section>
+				</section>
+		
+				<section id="event-loop">
+					<section>
+						<h2>Асинхронность</h2>
+						<h2>Event Loop</h2>
+					</section>
+
+					<section>
+						<p><code>setTimeout()</code></p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								const id = setTimeout(() => {
+									// Запустится через 2 сек (минимум)
+								  }, 2000);
+
+								  // Передумали запускать
+								  clearTimeout(id);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p><code>setInterval()</code></p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								const id = setInterval(() => {
+									// Будет запускаться каждые 2 сек
+								}, 2000);
+
+								clearInterval(id);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p><code>setImmediate()</code></p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								setImmediate(() => {
+									// Запустится асинхронно, но как-только будет возможно
+								});
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p><code>process.nextTick()</code></p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								const process = require('node:process');
+
+								process.nextTick(() => {
+									console.log('nextTick')
+								})
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p><code>Синхронное чтение файла</code></p>
+						<pre> 
+							<code data-trim data-line-numbers=>
+								import { readFileSync } from 'node:fs';
+
+								const data = readFileSync('directory');
+
+								console.log(data);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p><code>Асинхронное чтение файла</code></p>
+						<pre>
+							<code data-trim data-line-numbers=>
+								import { readFile } from 'node:fs';
+
+								readFile('/etc/passwd', (err, data) => {
+									if (err) {
+										throw err;
+									}
+									
+									console.log(data);
+								});
+
+								console.log("Continue");
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<p>Event Loop - программная конструкция, которая ожидает прибытия и производит рассылку событий или сообщений в программе</p>
+					</section>
+
+					<section>
+						<div class="media" style="width: 600px">
+							<img src="/utils/assets/lesson26.nodejs/the-Node-js-event-loop.png" />
+						</div>
+						<a 
+							href="https://blog.risingstack.com/node-js-at-scale-understanding-node-js-event-loop/"
+							style="font-size: .3em;"
+						> 
+							https://blog.risingstack.com/node-js-at-scale-understanding-node-js-event-loop/
+						</a>
+					</section>
+
+					<section>
+						<img src="/utils/assets/lesson26.nodejs/libuv.png" />
+						<p>libuv - библиотека на C, создающая абстракцию над операциям ввода/вывода на разных ОС и добавляющая Event Loop</p>
+					</section>
+
+					<section>
+						<div class="media" style="width: 1000px">
+							<img src="/utils/assets/lesson26.nodejs/Screenshot 2024-02-04 at 16.44.05.png" />
+						</div>
+						<a 
+							href="https://blog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810"
+							style="font-size: .3em;"
+						> 
+							https://blog.insiderattack.net/event-loop-and-the-big-picture-nodejs-event-loop-part-1-1cb67a182810
+						</a>
+					</section>
+
+					<section>
+						<pre>
+							<code data-trim data-line-numbers=>
+								int uv_run(uv_loop_t* loop, uv_run_mode mode) {
+									int timeout;
+									int r;
+									int can_sleep;
+								  
+									r = uv__loop_alive(loop);
+									if (!r)
+									  uv__update_time(loop);
+								  
+									/* Maintain backwards compatibility by processing timers before entering the
+									 * while loop for UV_RUN_DEFAULT. Otherwise timers only need to be executed
+									 * once, which should be done after polling in order to maintain proper
+									 * execution order of the conceptual event loop. */
+									if (mode == UV_RUN_DEFAULT && r != 0 && loop->stop_flag == 0) {
+									  uv__update_time(loop);
+									  uv__run_timers(loop);
+									}
+								  
+									while (r != 0 && loop->stop_flag == 0) {
+									  can_sleep =
+										  uv__queue_empty(&loop->pending_queue) &&
+										  uv__queue_empty(&loop->idle_handles);
+								  
+									  uv__run_pending(loop); // Запуск колбэков всех системных операций ввода/вывода
+									  uv__run_idle(loop);
+									  uv__run_prepare(loop);
+								  
+									  timeout = 0;
+									  if ((mode == UV_RUN_ONCE && can_sleep) || mode == UV_RUN_DEFAULT)
+										timeout = uv__backend_timeout(loop);
+								  
+									  uv__metrics_inc_loop_count(loop);
+								  
+									  uv__io_poll(loop, timeout); // Ожидание завершения ввода вывода
+								  
+									  /* Process immediate callbacks (e.g. write_cb) a small fixed number of
+									   * times to avoid loop starvation.*/
+									  for (r = 0; r < 8 && !uv__queue_empty(&loop->pending_queue); r++)
+										uv__run_pending(loop);
+								  
+									  /* Run one final update on the provider_idle_time in case uv__io_poll
+									   * returned because the timeout expired, but no events were received. This
+									   * call will be ignored if the provider_entry_time was either never set (if
+									   * the timeout == 0) or was already updated b/c an event was received.
+									   */
+									  uv__metrics_update_idle_time(loop);
+								  
+									  uv__run_check(loop); // Запуск setImmediate
+									  uv__run_closing_handles(loop); // Коллбэки на close события
+								  
+									  uv__update_time(loop);
+									  uv__run_timers(loop); // Запуск заэкспайренных таймеров
+								  
+									  r = uv__loop_alive(loop);
+									  if (mode == UV_RUN_ONCE || mode == UV_RUN_NOWAIT)
+										break;
+									}
+								  
+									/* The if statement lets gcc compile it to a conditional store. Avoids
+									 * dirtying a cache line.
+									 */
+									if (loop->stop_flag != 0)
+									  loop->stop_flag = 0;
+								  
+									return r;
+								  }
+							</code>
+						</pre>
+						<a 
+							href="https://github.com/nodejs/node/blob/main/deps/uv/src/unix/core.c#L447"
+							style="font-size: .3em;"
+						> 
+							https://github.com/nodejs/node/blob/main/deps/uv/src/unix/core.c#L447
+						</a>
+					</section>
+
+					<section>
+						Пример
+					</section>
+					
+				</section>
+
+				<section id="frameworks">
+					<section>
+						<h2>Фреймворки</h2>
+					</section>
+
+					<section>
+						<p>Для небольших проектов, где есть что-то кроме статики</p>
+						<div style="display: flex;">
+							<div class="media" style="width: 500px">
+								<img src="/utils/assets/lesson26.nodejs/8125e100-61bc-11e9-8d9f-eb01f522f962.png" />
+							</div>
+							<div class="media" style="width: 570px">
+								<img src="/utils/assets/lesson26.nodejs/0_e4r6qOAEkAzLzFEN.png" />
+							</div>
+						</div>
+					</section>
+
+					<section>
+						<p>Для больших проектов</p>
+						<div class="media" style="width: 500px">
+							<img src="/utils/assets/lesson26.nodejs/0_D78HzX93AGbKEMl1.png" />
+						</div>
+					</section>
+				</section>
+
+
+				<section id="thanks">
+					<section>
+						<h2>Спасибо!</h2>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="/utils/dist/reveal.js"></script>
+		<script src="/utils/plugin/plugin/notes/notes.js"></script>
+		<script src="/utils/plugin/plugin/markdown/markdown.js"></script>
+		<script src="/utils/plugin/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

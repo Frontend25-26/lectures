@@ -47,6 +47,12 @@
           "order": 1
         },
         {
+          "title": "NodeJS (самостоятельно)",
+          "link": "/2-sem/infra/nodejs/index.html",
+          "openDate": "2026-03-10T18:30:00",
+          "order": "*"
+        },
+        {
           "title": "Инфраструктура",
           "link": "/2-sem/infra/2-infra/index.html",
           "openDate": "2026-03-17T18:30:00",

@@ -1,39 +1,744 @@
 <!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8">
-    <title>Архитектура</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: #191919;
-            font-family: sans-serif;
-            color: #fff;
-            text-align: center;
-        }
-        .message {
-            max-width: 480px;
-            padding: 2em;
-        }
-        h1 {
-            font-size: 1.6em;
-            margin-bottom: 0.5em;
-        }
-        p {
-            color: #aaa;
-            line-height: 1.6;
-        }
-    </style>
-</head>
-<body>
-    <div class="message">
-        <h1>Лекция ещё не загружена</h1>
-        <p>По вопросам пишите в чат или лектору.</p>
-    </div>
-</body>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Архитектура веб-приложений</title>
+
+		<link rel="stylesheet" href="/utils/dist/reset.css">
+		<link rel="stylesheet" href="/utils/dist/reveal.css">
+		<!-- <link rel="stylesheet" href="dist/theme/black.css"> -->
+		<link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
+		<link rel="stylesheet" href="/utils/css/custom.css">
+
+		<link rel="stylesheet" href="/utils/assets/lesson10.1/index.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<!-- <link rel="stylesheet" href="plugin/highlight/monokai.css"> -->
+		<link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
+		<script src="/utils/js/metrika.js"></script>
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-auto-animate data-auto-animate-unmatched="fade" data-background-image="/utils/assets/background.webp">
+					<h2>Архитектура веб-приложений</h2>
+					<br>
+					<p class="firstRedChar">Александр Ваганов</p>
+				</section>
+
+				<section>
+					<h2>Cодержание</h2>
+					<ol class="mediumDescription">
+						<li class="fragment">Введение</li>
+						<li class="fragment">HTTP/DNS/REST/RPC</li>
+						<li class="fragment">MVC</li>
+						<li class="fragment">MVVM/MVP</li>
+						<li class="fragment">Фронтенд - фреймворки</li>
+						<li class="fragment">Express</li>
+						<li class="fragment">Про SPA и SSR</li>
+					</ol>
+				</section>
+
+				<!-- Краткий экскурс -->
+				<section>
+					<section>
+						<h4>Краткий экскурс</h4>
+
+						<img src="/utils/assets/lesson5.arch/history.png" alt="" width="600">
+					</section>
+
+					<section>
+						<h4>Технологии</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Любое веб-приложение, если оно работает в браузере, работает на 3 основных технологиях: HTML, CSS и JS. Ещё есть WASM.
+						</p>
+
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+// Браузер (пользовательское устройство)
+HTML
+CSS
+JS
+							</code>
+						</pre>
+					</section>
+
+					<section>
+					 	<h4>Однако</h4>
+						<p class="textLeft" style="font-size: 24px;">
+                            Любое сложное приложение — это не только картинка в браузере, это ещё и данные, которые пользователи используют или создают. Эти данные нужно уметь хранить, обрабатывать и выводить
+						</p>
+					</section>
+
+					<section>
+						<h4>Бекенд</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Хранением и обработкой данных обычно занимается сервер или бэкенд.
+Бэкенд — область веб-технологий, работающих на сервере, а также внутренняя часть серверной системы, занимается обработкой данных.
+А архитектура, в которой участвуют сервер (бэкенд) и клиент (браузер, фронтенд) называется клиент-серверной.
+						</p>
+						
+					</section>
+
+					<section>
+						<h4>Клиент-серверная архитектура</h4>
+                        <p style="font-size: 24px;">
+							Бэкенд — область веб-технологий, работающих на сервере.
+						</p>
+						<img src="/utils/assets/lesson5.arch/back-simple.png" height="350"/>
+					</section>
+
+					<section>
+						<h4>Термины</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Архитектура — это описание системы на самом высоком уровне
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Клиент-серверная архитектура описывает, как взаимодействуют между собой клиент (в нашем случае фронтенд) и сервер (бэкенд).
+                            В каноничном случае это связка Браузер - Сервер - База Данных
+						</p>
+					</section>
+
+					<section>
+						<h4>Клиент</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Клиент обращается с запросами к серверу.
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Клиент может попросить сервер отдать какие-то данные или попросить их как-то подготовить перед отдачей.
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Клиент может попросить сервер сохранить что-то, что передаст вместе с запросом сам.
+Роль клиента для сервера в том, чтобы сообщить серверу, что нужно сделать с данными, которые хранятся в базе, или с данными, которые он передаёт.
+Роль клиента для пользователя в том, чтобы представить данные в удобном виде и предоставить механизмы для их обновления
+						</p>
+                        <p class="textLeft" style="font-size: 24px;">
+							В веб разработке - клиент почти всегда браузер.
+						</p>
+					</section>
+
+					<section>
+						<h4>Сервер</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Сервер принимает запросы от клиента.
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Его роль в том, чтобы сохранять информацию от клиента в базе данных, обрабатывать её и предоставлять к ней доступ по некоторым правилам
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							На сервере помимо общения с клиентом могут запускаться какие-то фоновые задачи, например, индексирование информации, email-рассылки.
+						</p>
+					</section>
+
+					<section>
+						<h4>БД</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							База данных (БД) — это хранилище всей пользовательской и служебной информации.
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Её роль в том, чтобы обеспечивать быстрый и бесперебойный доступ к этой информации и собственно хранение.
+						</p>
+					</section>
+
+					<section>
+						<h4>Первые приложения</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Вся бизнес-логика реализовывалась на сервере. Клиент лишь показывал результат в виде HTML-страниц пользователю и посылал запросы на другие страницы.
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Почти любое действие в браузере требовало перезагрузки страницы.
+						</p>
+					</section>
+
+					<section>
+						<h4>Современные приложения</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							В современных приложениях между клиентом и сервером общение строится именно на данных, а не на отрендеренных кусках разметки. Чаще всего для такого общения выбирают JSON.
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							Пользователь совершает какое-то действие, например, просит отсортировать таблицу.
+Клиент в ответ на это действие решает, какой запрос отправить на сервер, строит этот запрос и отправляет его.
+Сервер принимает этот запрос, обрабатывает его и отправляет на клиент порцию новых данных.
+Клиент принимает данные и перерисовывает часть страницы по ним сам.
+						</p>
+					</section>
+				</section>
+
+                <section>
+                    <section>
+						<h4>HTTP</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Сетевое общение между клиентом и сервером в общем случае осуществляется HTTP запросами 
+						</p>
+						<p class="textLeft" style="font-size: 24px;">
+							HTTP / HTTPS, протоколы прикладного уровня в модели <b>OSI</b>. Уровень разрешает приложениям пользователя иметь доступ к сетевым службам, таким как обработчик запросов к базам данных, доступ к файлам, пересылке электронной почты
+						</p>
+					</section>
+
+                    <section>
+						<h4>Пример HTTP запроса</h4>
+
+						<pre class="textLeft">
+							<code data-trim data-line-numbers>
+GET / HTTP/1.1
+Host: yandex.ru
+User-Agent: firefox/5.0 (Linux; Debian 5.0.8; en-US; rv:1.8.1.7)
+							</code>
+						</pre>
+
+                        <p class="textLeft" style="font-size: 24px;">
+							GET - метод запроса <br/>
+                            Host - адрес назначения <br/>
+                            User-Agent – информация о отправителе
+						</p>
+					</section>
+
+                    <section>
+						<h4>HTTP методы</h4>
+
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+GET // запрашивает контент из сервера
+POST // публикует информацию на сервере либо получает ответ с передачей информации
+PATCH // редактирование существующей сущности
+PUT // замена 
+DELETE // удаление
+							</code>
+						</pre>
+					</section>
+
+                    <section>
+						<h4>Популярные HTTP коды</h4>
+
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+1xx // информационный. Запрос получен, сервер готов к продолжению;
+2xx // успешный. Запрос получен, понятен и обработан;
+3xx // перенаправление. Следующие действия нужно выполнить для обработки запроса;
+4xx // ошибка клиента. Запрос содержит ошибки или не отвечает протоколу;
+5xx // ошибка сервера. Сервер не смог обработать запрос, хотя был составлен верно;
+							</code>
+						</pre>
+					</section>
+
+                    <section>
+						<h4>DNS</h4>
+                        <p class="textLeft" style="font-size: 24px;">
+                            «Domain Name System» (система доменных имён). На самом базовом уровне DNS обеспечивает поиск пары из доменного имени и IP-адреса, что позволяет компьютеру отправить запрос на соответствующий сервер.
+						</p>
+
+                        <img src="/utils/assets/lesson5.arch/dns.png" height="350"/>
+					</section>
+
+                    <section>
+						<h4>REST</h4>
+
+                        <p class="textLeft" style="font-size: 24px;">
+                            REST (Representational State Transfer) — стиль общения компонентов, при котором все необходимые данные указываются в параметрах запроса.
+
+                            Отличительная особенность этого стиля — это стиль построения адресов и выбор метода.
+						</p>
+					</section>
+
+                    <section>
+						<h4>Пример REST-запросов</h4>
+
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+// Например, метод и адрес для создания пользователя
+// могли бы выглядеть так:
+// POST /api/users
+
+// Для получения конкретного пользователя:
+// GET /api/users/1
+// (Где 1 — это ID пользователя.)
+
+// Для редактирования данных о пользователе:
+// PATCH /api/users/1
+
+// Для удаления данных:
+// DELETE /api/users/1
+							</code>
+						</pre>
+					</section>
+
+                    <section>
+						<h4>RPC</h4>
+
+                        <p class="textLeft" style="font-size: 24px;">
+                            Во время удаленного вызова процедур (RPC) клиент выполняет удаленный вызов функции (также известной как метод или процедура) на сервере. Как правило, во время вызова на сервер передается одно или несколько значений данных.
+						</p>
+					</section>
+
+                    <section>
+						<h4>Пример разницы запросов</h4>
+
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Действие
+                                    </td>
+                                    <td>
+                                        RPC
+                                    </td>
+                                    <td>
+                                        REST
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Добавление продукта
+                                    </td>
+                                    <td>
+                                                POST /addProduct
+                                                <br/>
+
+                                                api.example.com
+                                                <br/>
+                                                Тип контента: application/json
+                                                <br/>
+                                                {"name": "T-Shirt", "price": "22.00", "category": "Clothes"}
+                                    </td>
+                                    <td>
+                                                POST /products
+                                                <br/>
+                                                api.example.com
+                                                <br/>
+                                                Тип контента: application/json
+                                                <br/>
+                                                {"name": "T-Shirt", "price": "22.00", "category": "Clothes"}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Получение инфо о продукте
+                                    </td>
+                                    <td>
+                                                POST /getProduct
+                                                <br/>
+
+                                                api.example.com
+                                                <br/>
+                                                Тип контента: application/json
+                                                <br/>
+                                                {"productID": "123”}
+                                    </td>
+                                    <td>
+                                                GET /products/123
+                                                <br/>
+                                                api.example.com
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Удаление продукта
+                                    </td>
+                                    <td>
+                                                POST /deleteProduct
+                                                <br/>
+                                                {"productId": "123""}
+                                    </td>
+                                    <td>
+                                                DELETE /products/123
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+					</section>
+                </section>
+
+                <section>
+                    <section>
+						<h4>MVC</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Cхема разделения данных приложения и управляющей логики на три отдельных компонента: модель, представление и контроллер — таким образом, что модификация каждого компонента может осуществляться независимо
+						</p>
+					</section>
+                    <section>
+						<h4>Model</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Модель предоставляет данные и методы работы с ними: запросы в базу данных, проверка на корректность. Модель не зависит от представления (не знает как данные визуализировать) и контроллера (не имеет точек взаимодействия с пользователем), просто предоставляя доступ к данным и управлению ими.
+Модель строится таким образом, чтобы отвечать на запросы, изменяя своё состояние
+						</p>
+					</section>
+                    <section>
+						<h4>View</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Представление отвечает за получение необходимых данных из модели и отправляет их пользователю. Представление не обрабатывает введённые данные пользователя
+						</p>
+					</section>
+                    <section>
+						<h4>Controller</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Контроллер обеспечивает «связь» между пользователем и системой. Контролирует и направляет данные от пользователя к системе. Использует модель и представление для реализации необходимого действия.
+						</p>
+					</section>
+                    <section>
+						<h4>Cхема</h4>
+						<img src="/utils/assets/lesson5.arch/mvc.png" height="350"/>
+					</section>
+                </section>
+
+                <section>
+                    <section>
+						<h4>MVP</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Model-View-Presenter шаблон проектирования пользовательского интерфейса, который был разработан для облегчения автоматического модульного тестирования и улучшения разделения ответственности в презентационной логике (отделения логики от отображения)
+						</p>
+					</section>
+                    <section>
+						<h4>Presenter</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Управляет моделью и представлением, чаще всего работает с представлением через систему событий.
+						</p>
+					</section>
+                    <section>
+						<h4>Cхема</h4>
+						<img src="/utils/assets/lesson5.arch/mvp.png" height="550"/>
+					</section>
+
+                    <section>
+						<h4>MVVM</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Шаблон проектирования Model-View-ViewModel, в котором действия пользователя совершенные в интерфейсе представления связываются с моделью через слой ViewModel.
+						</p>
+					</section>
+                    <section>
+						<h4>ViewModel</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							C одной стороны, абстракция Представления, а с другой — обёртка данных из Модели, подлежащиx связыванию. То есть, она содержит Модель, преобразованную к Представлению, а также команды, которыми может пользоваться Представление, чтобы влиять на Модель
+						</p>
+					</section>
+                    <section>
+						<h4>Cхема</h4>
+						<img src="/utils/assets/lesson5.arch/viewmodel.png" height="550"/>
+					</section>
+                    <section>
+						<h4>Отличие</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Наличие автоматического связывания (databinding) является главным отличием MVVM паттерна от паттерна MVP (в MVP Presenter изменяет View путём вызова на ней методов через предоставленный интерфейс).
+						</p>
+					</section>
+                </section>
+
+                <section>
+                    <section>
+						<h4>Фронтенд фреймворки</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Фреймворк – заранее заготовленный набор инструментов (tools) который упрощает разработку и поддержку проектов.
+                            Задаёт низкоуровневый каркас архитектурного слоя.
+						</p>
+					</section>
+                    <section>
+						<img src="/utils/assets/lesson5.arch/react.webp" style="max-height: 200px;" width="350px"/>
+						<p class="textLeft" style="font-size: 24px;">
+							JS библиотека разработаная компанией Facebook (теперь Meta). Интегрируется с массой известных библиотек чтобы использоваться в качестве фреймворка.
+						</p>
+					</section>
+                    <section>
+						<h4>Преимущества и недостатки</h4>
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+// Преимущества
+– Виртуальный DOM
+– Удобный синтаксис JSX
+– Возможность модульно разделять код и переиспользовать код
+– Большой набор накопленного опыта
+
+// Недостатки
+– Изучать синтаксис JSX
+– Для полноценного фреймворка требуется подключать еще библиотек
+– Скорее всего придётся ещё подучить системы сборки кода (такие как Webpack)
+							</code>
+						</pre>
+					</section>
+                    <section>
+                        <img src="/utils/assets/lesson5.arch/vue.webp" style="max-height: 200px;" width="350px"/>
+						<p class="textLeft" style="font-size: 24px;">
+							Популярный opensource фронтенд-фреймворк написаный в основном разработчиком Эван Ю. Реализует MVVM подход на фронтенде.
+						</p>
+					</section>
+                    <section>
+						<h4>Преимущества и недостатки</h4>
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+// Преимущества
+– Интуитивный синтаксис
+– Развитая компонентная архитектура
+– Малый размер библиотеки
+– Отличная документация
+
+// Недостатки
+– Редко используется в крупных компаниях в РФ в качестве основного фреймворка
+– Меньшее количество накопленного опыта и разработчиков на рынке
+							</code>
+						</pre>
+					</section>
+                    <section>
+                        <img src="/utils/assets/lesson5.arch/angular.webp" style="max-height: 200px;" width="350px"/>
+						<p class="textLeft" style="font-size: 24px;">
+							AngularJS разработан в 2009 году Мишко Хевери и Адамом Абронсом в Brat Tech LLC.
+                            Angular придерживается MVC-шаблона проектирования.
+						</p>
+
+					</section>
+                    <section>
+						<h4>Преимущества и недостатки</h4>
+						<pre class="textLeft">
+							<code data-trim data-line-numbers class="js">
+// Преимущества
+– Использование TypeScript
+– Предоставляет полную инфраструктуру включая менеджмент запросов, управление состоянием и пр.
+
+// Недостатки
+– Высокий порог входа, как в сам фреймворк так и в TypeScript
+– Занимает достаточно большое количество памяти
+– Сильная привязка к архитектуре
+							</code>
+						</pre>
+					</section>
+                </section>
+
+                <section>
+                    <section>
+						<img src="/utils/assets/lesson5.arch/express.webp" style="max-height: 400px;" width="550px"/>
+					</section>
+                    <section>
+						<h4>Express</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Express.js, или просто Express — фреймворк web-приложений для Node.js, реализованный как свободное и открытое программное обеспечение под лицензией MIT. Он спроектирован для создания веб-приложений и API. Де-факто является стандартным каркасом для Node.js.
+						</p>
+					</section>
+                    <section>
+						<h4>Установка</h4>
+						<p class="textLeft" style="font-size: 24px;">
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    $ npm install --save express
+    
+                                    app/
+                                    └── app.js                                    
+                                </code>
+                            </pre>
+						</p>
+					</section>
+                    <section>
+						<p class="textLeft" style="font-size: 24px;">
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    const express = require('express');
+                                    const app = express();
+                                    
+                                    app.get('/name/:name', (req, res) => {
+                                      res.send(`Hello, <b>${req.params.name}</b>`);
+                                    });
+                                    
+                                    app.get('*', (req, res) => {
+                                      res.sendStatus(404);
+                                    });
+                                    
+                                    app.listen(8080);                                  
+                                </code>
+                            </pre>
+						</p>
+					</section>
+                    <section>
+                        <h4>Front Controller</h4>
+						<img src="/utils/assets/lesson5.arch/front-ctrl.png" style="max-height: 400px;" width="550px"/>
+					</section>
+                    <section>
+						<h4>Роутинг</h4>
+						<p class="textLeft" style="font-size: 24px;">
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    const express = require('express');
+                                    const app = express();                             
+                                </code>
+                            </pre>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app.get('/', () => {});                   
+                                </code>
+                            </pre>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app.get('/notes', () => {});                     
+                                </code>
+                            </pre>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app.post('/notes', () => {});
+                                </code>
+                            </pre>
+						</p>
+					</section>
+                    <section>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app.get('/notes/:name', (req, res) => {
+                                        const name = req.params.name;
+                                    
+                                        res.send(`Note with "${name}" name`);
+                                    });                                
+                                </code>
+                            </pre>
+					</section>
+                    <section>
+                            <h4>Обработка ошибок</h4>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app.all('*', res => res.sendStatus(404));                             
+                                </code>
+                            </pre>
+					</section>
+                    <section>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app/
+                                    └── app.js
+                                    └── routes.js
+                                    └── models
+                                        └── note.js
+                                </code>
+                            </pre>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    class Note {
+                                        constructor(data) {
+                                            this._data = data;
+                                        }
+                                    
+                                        save() {}
+                                    
+                                        static findByName(name) {}
+                                    
+                                        static findAll {}
+                                    }
+                                    
+                                    module.exports = Note;
+                                </code>
+                            </pre>
+					</section>
+                    <section>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    app/
+                                    └── app.js
+                                    └── routes.js
+                                    └── models
+                                    └── controllers
+                                        └── notes.js
+                                </code>
+                            </pre>
+                            <pre class="textLeft">
+                                <code data-trim data-line-numbers class="js">
+                                    const Note = require('../models/note');
+
+                                    exports.list = (req, res) => {
+                                        const notes = Note.findAll();
+                                    
+                                        res.send(notes);
+                                    }
+                                    
+                                    exports.item = (req, res) => {
+                                        const note = Note.find(req.params.name);
+                                    
+                                        res.send(note);
+                                    }
+                                </code>
+                            </pre>
+					</section>
+                    <section>
+                        <pre class="textLeft">
+                            <code data-trim data-line-numbers class="js">
+                                app/
+                                └── app.js
+                                └── routes.js
+                                └── models
+                                └── controllers
+                                └── views
+                                    └── index.hbs
+                            </code>
+                        </pre>
+                        <pre class="textLeft">
+                            <code data-trim data-line-numbers class="js">
+                                <h1>{{ message }}</h1>
+                            </code>
+                        </pre>
+                        <pre class="textLeft">
+                            <code data-trim data-line-numbers class="js">
+                                exports.index = (req, res) => {
+                                    res.send('Hello, User!');
+                                    res.render('index', {
+                                        message: 'Hello, User!'
+                                    });
+                                }
+                            </code>
+                        </pre>
+					</section>
+                </section>
+
+                <section>
+                    <section>
+						<h4>SPA</h4>
+					</section>
+                    <section>
+						<h4>SPA</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Одностраничное приложение (англ. single page application, SPA) — это веб-приложение или веб-сайт, использующий единственный HTML-документ как оболочку для всех веб-страниц и организующий взаимодействие с пользователем через динамически подгружаемые HTML, CSS, JavaScript.
+SPA напоминают родные (native) приложения, с той лишь разницей, что исполняются в рамках браузера.
+<br/><br/>
+Пример SPA – https://hd.kinopoisk.ru
+						</p>
+					</section>
+                    <section>
+						<h4>Что такое SSR</h4>
+						<p class="textLeft" style="font-size: 24px;">
+							Рендеринг на стороне сервера (SSR) — это метод отрисовки веб-страницы на сервере, а не в браузере. Чтобы пользователь не смотрел на пустую страницу, ожидая, пока загрузится веб-приложение, файлы JavaScript или CSS, сервер отдаёт ему сгенерированный HTML. Пользователь получает страницу и просматривает её, пока основное приложение загружается и запускается
+						</p>
+					</section>
+                    <section>
+						<h4>Почему удобно использовать SSR</h4>
+						<p class="textLeft" style="font-size: 24px;">
+<b>Быстро загружается.</b> Приложение, отрендеренное на стороне сервера, ускоряет загрузку страниц, когда пользователь страдает от медленного интернет-соединения. Это улучшает пользовательский опыт.
+<b>Легко индексируется поисковыми системами.</b> Поскольку контент может отображаться до загрузки страницы, поисковые системы могут легко индексировать его.
+<b>Доступно. Приложения SSR подходят для пользователей</b> со старыми устройствами, поскольку сервер отправляет предварительно обработанный контент в браузер.
+						</p>
+					</section>
+                </section>
+
+				<section>
+					<h4>Полезные ссылки</h4>
+
+					<ul style="list-style-type: none;">
+                        <li><a href="https://education.yandex.ru/journal/server-side-rendering">https://education.yandex.ru/journal/server-side-rendering</a></li>
+						<li><a href="https://doka.guide/tools/web-app-works/" target="_blank">https://doka.guide/tools/web-app-works/</a></li>
+						<li><a href="https://tproger.ru/translations/web-frameworks-how-to-get-started" target="_blank">https://tproger.ru/translations/web-frameworks-how-to-get-started</a></li>
+						<li><a href="https://www.youtube.com/watch?v=e7MkUjdrWIs" target="_blank">https://youtu.be/e7MkUjdrWIs лекция по Express</a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="/utils/dist/reveal.js"></script>
+		<script src="/utils/plugin/plugin/notes/notes.js"></script>
+		<script src="/utils/plugin/plugin/markdown/markdown.js"></script>
+		<script src="/utils/plugin/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
 </html>
