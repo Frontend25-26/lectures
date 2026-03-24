@@ -1,31 +1,313 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ITMOxFrontEnd 2025-2026 — Хакатоны</title>
     <link rel="stylesheet" href="../style.css">
-</head>
-<body>
-<div class="container">
-    <header>
-        <h1>Курс Frontend разработки ITMO 2025-2026</h1>
-        <nav class="main-menu">
-            <ul>
-                <li><a href="/">На главную</a></li>
-                <li><a href="/2-sem/">Лекции</a></li>
-                <li><a href="/2-sem/mini-lectures.html">Мини-доклады</a></li>
-                <li><a href="/2-sem/hackathons.html" class="active">Хакатоны</a></li>
-            </ul>
-        </nav>
-    </header>
+    <style>
+        .hackathons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
 
-    <section class="rules-section">
-        <h2>Хакатоны</h2>
-        <p style="text-align: center; color: var(--disabled);">
-            Информация о хакатонах появится позже.
-        </p>
-    </section>
-</div>
+        .hackathon-card {
+            background: var(--card-bg, #1a1a2e);
+            border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+            border-radius: 12px;
+            padding: 1.4rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            transition: border-color 0.2s;
+        }
+
+        .hackathon-card:hover {
+            border-color: var(--accent, #7c6af7);
+        }
+
+        .hackathon-card.locked {
+            opacity: 0.45;
+        }
+
+        .hackathon-header {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .hackathon-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent, #7c6af7);
+            line-height: 1;
+            min-width: 2rem;
+        }
+
+        .hackathon-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text, #e0e0e0);
+        }
+
+        .hackathon-date {
+            font-size: 0.78rem;
+            color: var(--disabled, #666);
+        }
+
+        .hackathon-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary, #aaa);
+            line-height: 1.5;
+        }
+
+        .hackathon-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+        }
+
+        .hackathon-link {
+            display: inline-block;
+            font-size: 0.78rem;
+            padding: 0.3em 0.75em;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text, #e0e0e0);
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .hackathon-link:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .hackathon-link.primary {
+            background: rgba(124, 106, 247, 0.15);
+            border-color: rgba(124, 106, 247, 0.4);
+            color: #a89ff7;
+        }
+
+        .hackathon-link.primary:hover {
+            background: rgba(124, 106, 247, 0.25);
+        }
+
+        .goals-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.78rem;
+            color: var(--text-secondary, #aaa);
+        }
+
+        .goals-list li {
+            padding-left: 1.2em;
+            position: relative;
+            margin-bottom: 0.2em;
+            line-height: 1.4;
+        }
+
+        .goals-list li::before {
+            content: "–";
+            position: absolute;
+            left: 0;
+            color: #555;
+        }
+
+        .hackathon-format {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary, #aaa);
+            line-height: 1.6;
+        }
+
+        .hackathon-format strong {
+            color: var(--text, #e0e0e0);
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15em 0.6em;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .status-badge.active {
+            background: rgba(102, 187, 106, 0.2);
+            color: #a5d6a7;
+            border: 1px solid rgba(102, 187, 106, 0.3);
+        }
+
+        .status-badge.upcoming {
+            background: rgba(255, 213, 79, 0.12);
+            color: #ffd54f;
+            border: 1px solid rgba(255, 213, 79, 0.25);
+        }
+
+        .status-badge.locked {
+            background: rgba(255, 255, 255, 0.05);
+            color: #666;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .project-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.6em;
+            text-decoration: none;
+            color: var(--primary, #4dabf7);
+            border: 1px solid var(--primary, #4dabf7);
+            border-radius: 15px;
+            transition: background 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        }
+
+        .project-link:hover {
+            background: var(--primary, #4dabf7);
+            color: var(--bg);
+        }
+
+        .project-link .link-icon {
+            font-size: 1em;
+            line-height: 1;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Курс Frontend разработки ITMO 2025-2026</h1>
+            <nav class="main-menu">
+                <ul>
+                    <li><a href="/">На главную</a></li>
+                    <li><a href="/2-sem/">Лекции</a></li>
+                    <li><a href="/2-sem/mini-lectures.html">Мини-доклады</a></li>
+                    <li><a href="/2-sem/hackathons.html" class="active">Хакатоны</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="rules-section" style="display:none">
+            <h2>Хакатоны</h2>
+
+            <div class="hackathon-format">
+                <strong>Формат:</strong> три хакатона по 5–8 часов в субботу. Каждый хакатон — это спринт:
+                утром договариваемся что делаем, днём делаем, вечером показываем результат и проводим ретро.
+                Между хакатонами работа не останавливается — менторы доступны в чате для вопросов и ревью.
+            </div>
+
+            <nav class="project-nav">
+                <a href="https://github.com/Frontend25-26/HackathonProject" target="_blank" class="project-link">
+                    <span class="link-icon">⎇</span> Репозиторий
+                </a>
+                <a href="https://github.com/orgs/Frontend25-26/projects/1/views/1" target="_blank" class="project-link">
+                    <span class="link-icon">⊞</span> Борда с тикетами
+                </a>
+                <a href="https://www.figma.com/design/xs5EBZjNJameIHxx29cuAL/%D0%A5%D0%B0%D0%BA%D0%B0%D1%82%D0%BE%D0%BD-ITMOxFrontEnd-2026?node-id=0-1&t=RhnSLLVHeMK5KEPI-1"
+                    target="_blank" class="project-link">
+                    <span class="link-icon">✦</span> Референс дизайна
+                </a>
+            </nav>
+
+            <div class="hackathons-grid">
+
+                <!-- Хакатон 1 -->
+                <div class="hackathon-card">
+                    <div class="hackathon-header">
+                        <div class="hackathon-number">1</div>
+                        <div>
+                            <div class="hackathon-title">Старт проекта</div>
+                            <div class="hackathon-date">28 марта</div>
+                        </div>
+                    </div>
+
+                    <p class="hackathon-desc">
+                        Разворачиваем проект с нуля.
+                    </p>
+
+                    <ul class="goals-list">
+                        <li>Настройка организации и репозитория</li>
+                        <li>Инициализация проекта</li>
+                        <li>Качество кода - ESLint, Prettier</li>
+                        <li>CI/CD</li>
+                        <li>Авторизация через GitHub OAuth</li>
+                        <li>Роутинг, layout и API-моки</li>
+                    </ul>
+
+                    <div class="hackathon-links">
+                        <a href="/2-sem/hackathons/1-grooming/" class="hackathon-link primary">Презентация</a>
+                    </div>
+                </div>
+
+                <!-- Хакатон 2 -->
+                <div class="hackathon-card locked">
+                    <div class="hackathon-header">
+                        <div class="hackathon-number" style="color: #555;">2</div>
+                        <div>
+                            <div class="hackathon-title">Основной функционал</div>
+                            <div class="hackathon-date"><span class="status-badge locked">скоро</span></div>
+                        </div>
+                    </div>
+
+                    <p class="hackathon-desc">
+                        Реализуем ключевые фичи платформы.
+                    </p>
+                </div>
+
+                <!-- Хакатон 3 -->
+                <div class="hackathon-card locked">
+                    <div class="hackathon-header">
+                        <div class="hackathon-number" style="color: #555;">3</div>
+                        <div>
+                            <div class="hackathon-title">Полировка и релиз</div>
+                            <div class="hackathon-date"><span class="status-badge locked">скоро</span></div>
+                        </div>
+                    </div>
+
+                    <p class="hackathon-desc">
+                        Финальная полировка.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    <script>
+        (function () {
+            var unlockDate = new Date('2026-03-28T00:00:00');
+            var now = new Date();
+            var params = new URLSearchParams(window.location.search);
+            var section = document.querySelector('.rules-section');
+            if (now < unlockDate && !params.has('preview')) {
+                if (section) {
+                    section.innerHTML = '<h2>Хакатоны</h2><p style="color:var(--text-secondary,#aaa);margin-top:1rem;">Информация будет доступна 28 марта.</p>';
+                }
+            }
+            if (section) section.style.display = '';
+        })();
+    </script>
 </body>
+
 </html>

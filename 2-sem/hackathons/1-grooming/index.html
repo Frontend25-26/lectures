@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Хакатон №1</title>
+
+    <meta name="description" content="Груминг первого хакатона - платформа проверки домашних заданий">
+    <meta name="author" content="Илья Степанов">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 2em;">Хакатон №1</h1>
+                    <p style="text-align: center; font-size: 0.5em;">28 марта 2026</p>
+                </div>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Что мы строим?</h2>
+                </section>
+
+                <section>
+                    <h2>Проект</h2>
+                    <p class="fragment" style="font-size: 0.9em;">Платформа для проверки домашних заданий курса</p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Инструмент, которым будут пользоваться следующие потоки студентов
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; margin-top: 1em;">
+                        У студента есть личный кабинет с оценками и списком домашних заданий. <br>
+                        У каждого задания отслеживается дедлайн. <br>
+                        Студент сдаёт ДЗ через <code>Pull Request</code>
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Ментор смотрит diff, оставляет inline-комментарии, меняет статус
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Под капотом</h2>
+                    <p class="fragment" style="font-size: 0.9em; color: #ffd54f;">GitHub Classroom</p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Мы не изобретаем хранилище кода и инфраструктуру для автоматического тестирования
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Мы делаем <strong>удобный интерфейс поверх GitHub API</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <p style="font-size: 0.85em;">Мы не просто пишем код для учебного задания</p>
+                    <p class="fragment" style="font-size: 0.9em; color: #ffd54f; margin-top: 0.5em;">
+                        Мы играем в настоящую продуктовую команду
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; margin-top: 0.8em;">У нас есть продукт, который нужно
+                        доставить пользователям</p>
+                    <p class="fragment" style="font-size: 0.85em;">У нас есть тикеты, борды и дизайн-система</p>
+                    <p class="fragment" style="font-size: 0.85em;">У нас есть процессы - груминг, декомпозиция, стендап,
+                        ретро</p>
+                    <p class="fragment" style="font-size: 0.85em;">У нас есть заказчик</p>
+                </section>
+
+                <section>
+                    <h2>Вопрос</h2>
+                    <p class="fragment">Что не нравилось в ДЗ прошлого семестра?</li>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Формат хакатонов</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">Три хакатона по 5-8 часов в субботу</li>
+                        <li class="circle fragment">Каждый хакатон - это спринт</li>
+                        <li class="circle fragment">Утром договариваемся что делаем</li>
+                        <li class="circle fragment">Днём делаем</li>
+                        <li class="circle fragment">Вечером показываем результат и проводим ретро</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Между хакатонами</h2>
+                    <p class="fragment" style="font-size: 0.85em;">Работа не останавливается</p>
+                    <p class="fragment" style="font-size: 0.85em;">Задачи продолжаются</p>
+                    <p class="fragment" style="font-size: 0.85em;">Менторы доступны в чате для вопросов и ревью</p>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Роли</h2>
+                </section>
+
+                <section>
+                    <h2>Кто есть кто</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Куратор/Заказчик</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">общее направление, финальная оценка</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">PM</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">декомпозиция, синхронизация, разблокировка, контроль</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Менторы</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">code review, помощь на груммингах, помощь с реализацией,
+                                бэкенд</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Студенты</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">весь фронтенд от вёрстки до деплоя</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Как строится работа?</h2>
+                </section>
+
+                <section>
+                    <h2>Процессы команды</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Груминг</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Разбираем стори, уточняем требования, предлагаем варианты
+                                решения</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Декомпозиция</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Делим стори на конкретные подзадачи и назначаем
+                                исполнителей</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Стендап</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Обсуждаем: что сделал, что делаю, есть ли блокер</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Ретро</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Обсуждаем: что хорошо, что улучшить, что поменять в
+                                процессе</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Тикеты и доска</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Вся работа живёт в <code>GitHub Issues</code>
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em;">
+                        Каждая задача - отдельный issue. Внутри - чеклист подзадач.
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em;">
+                        Статусы двигаете сами по ходу работы
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Тикеты и доска</h2>
+                    <img src="assets/tickets.png" alt="Tickets">
+                    <a href="https://github.com/Frontend25-26/HackathonProject" target="_blank"
+                        class="fragment">Репозиторий</a>
+
+                </section>
+                <section>
+                    <h2>Тикеты и доска</h2>
+                    <img src="assets/board.png" alt="Tickets">
+                    <a href="https://github.com/orgs/Frontend25-26/projects/1" target="_blank"
+                        class="fragment">Борда</a>
+                </section>
+
+                <section>
+                    <h2>Статусы задач</h2>
+                    <div class="arch-flow fragment">
+                        <div class="arch-box">Backlog</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Ready</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">In Progress</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">In Review</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Changes<br>Requested</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Done</div>
+                    </div>
+                </section>
+
+
+                <section>
+                    <h2>Приоритеты</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">0</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Блокирует всё остальное, делается первым</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">1</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Важно, но можно начинать пока не закрыто</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">2</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Хорошо иметь, но не критично сегодня</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Ветки и PR</h2>
+                    <p class="fragment" style="font-size: 0.85em;">Каждый issue - отдельная ветка</p>
+                    <div class="arch-flow fragment" style="margin-top: 0.8em;">
+                        <div class="arch-box"><code>feat/{name}</code></div>,
+                        <div class="arch-box"><code>fix/{name}</code></div>,
+                        <div class="arch-box"><code>docs/{name}</code></div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.8em; margin-top: 0.8em;">
+                        Ветку линкуете к issue - тогда issue закроется автоматически при мёрже
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Стратегия веток</h2>
+                    <p class="fragment" style="font-size: 0.85em;">Все ветки вливаются в <code>develop</code></p>
+                    <div class="arch-flow fragment" style="margin-top: 0.8em;">
+                        <div class="arch-box highlight"><code>feat/*</code></div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box highlight"><code>develop</code></div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box"><code>main</code></div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.8em; margin-top: 0.8em; color: #ffd54f;">
+                        <code>main</code> - только для релизов
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        В <code>main</code> напрямую никто не пушит <span class="fragment">(не только лишь все)</span>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Conventional Commits</h2>
+                    <div class="arch-flow fragment">
+                        <div class="arch-box"><code>feat:</code></div>,
+                        <div class="arch-box"><code>fix:</code></div>,
+                        <div class="arch-box"><code>docs:</code></div>, ...
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Code Review</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Без апрува ментора в <code>develop</code> не мёржится
+                    </p>
+                    <div class="timeline" style="margin-top: 0.8em;">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Ментор</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Оставил комментарии</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Задача</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Переходит в <code>Changes Requested</code></span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">Студент</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Дорабатывает и просит ревью повторно</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Дизайн-система</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        В продуктовой команде есть единый набор UI-компонентов
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Не изобретаем кнопки и инпуты - берём из библиотеки
+                    </p>
+                    <h3 class="fragment">shadcn/ui</h3>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Компоненты копируются в проект - полный контроль над кодом
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Легко кастомизировать через Tailwind CSS
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Стильно, модно, молодежно
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+
+                        <a href="https://ui.shadcn.com/" target="_blank">Документация</a>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Дизайн-макет</h2>
+                    <p class="fragment">У нас в команде нет дизайнера, поэтому дизайн отдается на откуп программистов и
+                        их менторов.</p>
+                    <p class="fragment">Но, есть примерный референс - какие страницы с какой информацией скорее всего
+                        понядобятся.</p>
+                    <a href="https://www.figma.com/design/xs5EBZjNJameIHxx29cuAL/%D0%A5%D0%B0%D0%BA%D0%B0%D1%82%D0%BE%D0%BD-ITMOxFrontEnd-2026?node-id=0-1&t=fOed8ohGbfMxqoMf-1"
+                        target="_blank" class="fragment">ССЫЛКА НА FIGMA</a>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>План на сегодня</h2>
+                </section>
+
+                <section>
+                    <h2>Расписание</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">10:30 - 11:30</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Лекция - стейт-менеджеры</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">11:30 - 12:30</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Груминг и декомпозиция</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">12:30 - 14:30</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Работа</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">14:30 - 14:50</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Обед</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">14:50 - 15:00</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Стендап</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">15:00 - 17:00</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Опять работа...</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">17:00 - 17:30</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Финальный стендап - показываем результат</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">17:30 - 18:00</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Ретро</span>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 0.8em; color: rgba(255,255,255,0.6);">
+                        *Чистого времени на код - около 4 часов
+                    </p>
+                </section>
+            </section>
+
+
+            <section>
+                <h1>Лекция</h1>
+                <h2>State Managers</h2>
+            </section>
+
+            <section>
+                <h2>Груминг сторей</h2>
+                <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                    Идём по порядку приоритета
+                </p>
+                <p class="fragment" style="font-size: 0.75em;">
+                    Для каждой: описание -> вопросы -> декомпозиция -> назначение
+                </p>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Issue 1</h2>
+                    <p>Инициализация проекта</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: M</code> &nbsp;
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 1 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Поднять Next.js с App Router и подключить весь стек
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Результат - приложение запускается локально и <code>npm run build</code> проходит
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; color: #ffd54f; margin-top: 0.8em;">
+                        Этот issue разблокирует всё что связано с вёрсткой и компонентами
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 1 - стек</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label" style="min-width: 160px;"><code>next@latest</code></span>
+                            <span class="timeline-arrow">-></span>
+                            <a href="https://nextjs.org/docs/app/getting-started/installation" class="timeline-desc">App
+                                Router, не Pages Router</a>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label" style="min-width: 160px;"><code>typescript</code></span>
+                            <span class="timeline-arrow">-></span>
+                            <a href="https://www.typescriptlang.org/download/" class="timeline-desc">строгий режим</a>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label" style="min-width: 160px;"><code>postcss-preset-env</code> +
+                                <code>sass</code></span>
+                            <span class="timeline-arrow">-></span>
+                            <a href="https://www.npmjs.com/package/postcss-preset-env" class="timeline-desc">поддержка
+                                SCSS</a>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label" style="min-width: 160px;"><code>shadcn</code></span>
+                            <span class="timeline-arrow">-></span>
+                            <a href="https://ui.shadcn.com/docs/installation/next" target="_blank"
+                                class="timeline-desc">компонентная библиотека</a>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label" style="min-width: 160px;"><code>zustand</code></span>
+                            <span class="timeline-arrow">-></span>
+                            <a href="https://www.npmjs.com/package/zustand" class="timeline-desc">стейт-менеджер</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Issue 1 - тикеты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><code>create-next-app</code> с TypeScript и App Router</li>
+                        <li class="circle fragment">PostCSS: <code>postcss-preset-env</code> + <code>sass</code></li>
+                        <li class="circle fragment">ДС: <code>@shadcn</code>
+                        </li>
+                        <li class="circle fragment">Zustand: установить, создать skeleton store</li>
+                        <li class="circle fragment">Path aliases: <code>@/</code> -> <code>src/</code></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 1 - кто ответственный?</h2>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Issue 2</h2>
+                    <p>Качество кода - ESLint, Prettier</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 1</code> &nbsp; <code>Size: S</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 2 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Настроить ESLint и Prettier так чтобы весь код выглядел одинаково
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Вне зависимости от того кто его писал
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; color: #ffd54f; margin-top: 0.8em;">
+                        Это не бюрократия - это то что делает code review предметным
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em;">
+                        Ментор смотрит на логику, а не на стиль
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 2 - тикеты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">ESLint: Next.js + TypeScript + <code>import-order</code></li>
+                        <li class="circle fragment">Prettier + <code>eslint-config-prettier</code></li>
+                        <li class="circle fragment">Скрипты в <code>package.json</code>: <code>lint</code>,
+                            <code>lint:fix</code>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 2 - кто ответственный?</h2>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Issue 3</h2>
+                    <p>CI/CD и деплой</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 1</code> &nbsp; <code>Size: M</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 3 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Настроить GitHub Actions и Vercel
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Каждый PR автоматически проверяется и деплоится на preview-URL
+                    </p>л
+                </section>
+
+                <section>
+                    <h2>Issue 3 - тикеты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">GitHub Action: job <code>lint</code> на каждый PR</li>
+                        <li class="circle fragment">GitHub Action: job <code>build</code> на каждый PR</li>
+                        <li class="circle fragment">Подключить Vercel</li>
+                        <li class="circle fragment">Preview deployment на каждый PR</li>
+                        <li class="circle fragment">Автодеплой <code>main</code> в production</li>
+                        <li class="circle fragment">Статус CI блокирует мёрж при падении</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 3 - кто ответственный?</h2>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Issue 4</h2>
+                    <p>Архитектура и соглашения</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: S</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 4 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Договориться о структуре проекта и зафиксировать её в коде и документации
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Без этого у каждого будет своё представление о том куда что класть
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: #e53935;">
+                        Через неделю репозиторий превратится в хаос
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Feature-Sliced Design</h2>
+                    <pre class="fragment code-example-one"><code>src/
+├── app/          # Next.js App Router: layouts, pages, providers
+├── features/     # Фичи: auth, homework, pr-viewer, admin
+├── entities/     # Сущности: user, homework, pr, review
+├── shared/       # UI-кит, утилиты, конфиг API, типы
+└── widgets/      # Составные блоки страниц</code></pre>
+                </section>
+
+                <section>
+                    <h2>Обсуждение</h2>
+                    <p class="fragment">Какие страницы нам нужны в сервисе?</p>
+                    <p class="fragment">
+                        Разделить их на 4 группы:
+                    </p>
+                    <ul class="fragment">
+                        <li>Общие страницы</li>
+                        <li>Страницы для студентов</li>
+                        <li>Страницы для менторов</li>
+                        <li>Страницы для администраторов</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 4 - тикеты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">Написать <code>README.md</code>: стек, структура, команды запуска,
+                            нейминг коммитов и PR</li>
+                        <li class="circle fragment">Создать FSD-структуру папок в репозитории</li>
+                        <li class="circle fragment">Добавить правило в ESLint для сохранения FSD</li>
+                        <li class="circle fragment">Создать стори для каждой группы страниц и декомпозировать их по страницам группы</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 4 - кто ответственный?</h2>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Issue 5</h2>
+                    <p>Авторизация через GitHub OAuth</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: L</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 5 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Весь вход в платформу - через GitHub. Никаких логинов и паролей
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; margin-top: 0.5em;">
+                        После авторизации запрашиваем роль с бэкенда
+                    </p>
+                    <div class="arch-flow fragment" style="margin-top: 0.8em;">
+                        <div class="arch-box">GitHub OAuth</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Back-end</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box highlight">student / mentor / admin</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.8em; margin-top: 0.8em;">
+                        Роль хранится в JWT-сессии, используется в middleware и компонентах
+                    </p>
+                    <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.6);">
+                        Стек: Auth.js v5 (NextAuth) + GitHub provider
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 5 - тикеты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">GitHub OAuth App в настройках Organization</li>
+                        <li class="circle fragment">Auth.js с GitHub авторизацией</li>
+                        <li class="circle fragment">После логина - получение роли с бэкенда</li>
+                        <li class="circle fragment">Роль хранится в JWT-сессии</li>
+                        <li class="circle fragment">Страница `/login` с кнопкой «Войти через GitHub»</li>
+                        <li class="circle fragment">Редирект на профиль после логина</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 5 - кто ответственный?</h2>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Issue 6</h2>
+                    <p>Роутинг, layout и API-моки</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 1</code> &nbsp; <code>Size: L</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 6 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Скелет приложения: все основные страницы существуют
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Роли защищают маршруты, контент различается по роли пользователя
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; margin-top: 0.8em; color: #ffd54f;">
+                        Фронт работает полностью без бэкенда через <code>NEXT_PUBLIC_USE_MOCKS=true</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Issue 6 - тикеты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">
+                            Маршруты - выбор и реализация
+                        </li>
+                        <li class="circle fragment">Middleware: неавторизованные -> <code>/login</code></li>
+                        <li class="circle fragment"><code>/admin</code> закрыт для всех кроме <code>admin</code></li>
+                        <li class="circle fragment">Layout: Header (аватар, имя, роль, logout) + Sidebar + main</li>
+                        <li class="circle fragment">Заглушки для роутов
+                        </li>
+                        <li class="circle fragment">TypeScript-интерфейсы в <code>shared/api/types.ts</code>
+                        </li>
+                        <li class="circle fragment">Мок-данные в <code>shared/api/mocks/</code></li>
+                        <li class="circle fragment">Zustand store: текущий пользователь + роль</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Issue 6 - кто ответственный?</h2>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+    </script>
+</body>
+
+</html>
