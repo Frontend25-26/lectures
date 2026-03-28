@@ -13,13 +13,13 @@
         {
           "title": "Управление состоянием приложения",
           "link": "/2-sem/modern/3-states/index.html",
-          "openDate": "2026-03-17T18:30:00",
+          "openDate": "2026-03-28T10:30:00",
           "order": 2
         },
         {
           "title": "Роутинг и навигация в SPA",
           "link": "/2-sem/modern/4-routing/index.html",
-          "openDate": "2026-03-31T18:30:00",
+          "openDate": "2026-03-17T18:30:00",
           "order": 3
         },
         {
