@@ -109,7 +109,7 @@
       },
       "subtopics": [
         {
-          "title": "Мини-лекция 1 по теме «SSR/SSG»",
+          "title": "React Server Components",
           "student": {
             "name": "",
             "telegram": ""
@@ -117,7 +117,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 2 по теме «SSR/SSG»",
+          "title": "SSR в Next.js",
           "student": {
             "name": "",
             "telegram": ""
@@ -125,7 +125,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 3 по теме «SSR/SSG»",
+          "title": "SSR в других фреймворках (Nuxt.js, SvelteKit, Gatsby)",
           "student": {
             "name": "",
             "telegram": ""
@@ -133,7 +133,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 4 по теме «SSR/SSG»",
+          "title": "Streaming Components",
           "student": {
             "name": "",
             "telegram": ""
