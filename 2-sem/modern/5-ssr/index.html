@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>SSR - Server-Side Rendering</title>
+    <meta name="author" content="Илья Степанов">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ===== ТИТУЛ ===== -->
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 2em;">SSR</h1>
+                    <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+                </div>
+            </section>
+
+            <!-- ===== ЧАСТЬ 1: ПРОБЛЕМА ===== -->
+            <section>
+                <section>
+                    <h1>Проблема SPA</h1>
+                </section>
+
+                <section>
+                    <h2>Как работает SPA</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box fragment">Браузер</div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box fragment">GET /<br><small>пустой HTML</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box fragment">GET bundle.js<br><small>~500 KB</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box highlight fragment">React<br><small>рендер в браузере</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box fragment">DOM готов</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 1em; opacity: 0.8;">
+                        До загрузки и выполнения JS пользователь видит <strong>белый экран</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Что страдает</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">FCP</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">First Contentful Paint запаздывает - контент появляется только
+                                после выполнения JS</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">SEO</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Поисковики видят пустой <code>&lt;div id="root"&gt;</code> -
+                                контент не индексируется</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">og-теги</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Превью при шаринге в соцсетях формируется из HTML - он пустой
+                            </div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Медленный канал</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">На 3G пользователь ждёт загрузки всего бандла прежде чем увидеть
+                                хоть что-то</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Когда SPA достаточно</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">Внутренние инструменты - CRM, дашборды, админки</li>
+                        <li class="circle fragment">Приложения за авторизацией - SEO не нужен</li>
+                        <li class="circle fragment">Интерактивные редакторы - figma-like, IDE-like</li>
+                        <br>
+                        <li class="minus fragment">Публичный сайт с контентом - лендинг, блог, каталог</li>
+                        <li class="minus fragment">Страницы, которые шарят в соцсетях</li>
+                        <li class="minus fragment">E-commerce с SEO-трафиком</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 2: СПОСОБЫ РЕНДЕРИНГА ===== -->
+            <section>
+                <section>
+                    <h1>Способы рендеринга</h1>
+                </section>
+
+                <section>
+                    <h2>CSR - Client-Side Rendering</h2>
+                    <div class="arch-flow" style="margin-bottom: 0.8em;">
+                        <div class="arch-box">Сервер</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Пустой HTML</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box highlight">Браузер рендерит</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; opacity: 0.85; margin-bottom: 0.6em;">
+                        Сервер отдаёт пустую HTML-оболочку и весь JS-бандл. Браузер скачивает его, выполняет и только тогда строит DOM - вся логика рендера живёт на устройстве пользователя.
+                    </p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Мгновенные переходы после загрузки</li>
+                        <li class="plus fragment">Дешёвый хостинг - только статика</li>
+                        <li class="minus fragment">Медленный первый экран</li>
+                        <li class="minus fragment">SEO проблемы</li>
+                        <li class="circle fragment">React create-react-app, Vite SPA</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SSR - Server-Side Rendering</h2>
+                    <div class="arch-flow" style="margin-bottom: 0.8em;">
+                        <div class="arch-box">Запрос</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box highlight">Сервер рендерит HTML</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Готовый HTML</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Hydration</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; opacity: 0.85; margin-bottom: 0.6em;">
+                        На каждый запрос сервер запускает React, получает данные и возвращает готовый HTML. Браузер показывает его сразу - без ожидания бандла. Потом JS подключается и «оживляет» интерактивность через hydration.
+                    </p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Быстрый FCP - пользователь сразу видит контент</li>
+                        <li class="plus fragment">SEO работает из коробки</li>
+                        <li class="minus fragment">Нужен сервер для каждого запроса</li>
+                        <li class="minus fragment">Сложнее с кешированием</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SSG - Static Site Generation</h2>
+                    <div class="arch-flow" style="margin-bottom: 0.8em;">
+                        <div class="arch-box highlight">Build time</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">HTML-файлы</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">CDN</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Браузер</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; opacity: 0.85; margin-bottom: 0.6em;">
+                        Все страницы генерируются один раз во время сборки и публикуются как статические файлы на CDN. Данные фиксируются на момент деплоя - живой сервер не нужен.
+                    </p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Максимально быстрый ответ - отдаёт CDN</li>
+                        <li class="plus fragment">SEO отличный</li>
+                        <li class="plus fragment">Дёшево</li>
+                        <li class="minus fragment">Данные актуальны только на момент сборки</li>
+                        <li class="minus fragment">Долгий rebuild при большом числе страниц</li>
+                        <li class="circle fragment">Блог, документация, лендинг</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>ISR - Incremental Static Regeneration</h2>
+                    <div class="arch-flow" style="margin-bottom: 0.8em;">
+                        <div class="arch-box">CDN</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box highlight">Stale-while-revalidate</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Фоновый rebuild</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; opacity: 0.85; margin-bottom: 0.6em;">
+                        Страницы генерируются статически, но перестраиваются автоматически через заданный интервал. Пока новая версия собирается в фоне, CDN отдаёт старую - компромисс между скоростью SSG и свежестью данных.
+                    </p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Скорость CDN + свежесть данных</li>
+                        <li class="plus fragment">Не нужно пересобирать весь сайт</li>
+                        <li class="minus fragment">Первый запрос после инвалидации отдаёт устаревшее</li>
+                        <li class="circle fragment">E-commerce: цены и остатки могут устаревать на несколько секунд</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Когда что выбирать</h2>
+                    <table class="render-table">
+                        <thead>
+                            <tr>
+                                <th>Режим</th>
+                                <th>Когда данные меняются</th>
+                                <th>Нужен сервер</th>
+                                <th>Пример</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td><strong>CSR</strong></td>
+                                <td>Всегда / real-time</td>
+                                <td>Нет</td>
+                                <td>Дашборд, чат</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>SSR</strong></td>
+                                <td>При каждом запросе</td>
+                                <td>Да</td>
+                                <td>Профиль пользователя</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>SSG</strong></td>
+                                <td>Редко (деплой)</td>
+                                <td>Нет</td>
+                                <td>Блог, документация</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td><strong>ISR</strong></td>
+                                <td>Иногда (N секунд)</td>
+                                <td>Да</td>
+                                <td>Каталог товаров</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 3: NEXT.JS APP ROUTER ===== -->
+            <section>
+                <section>
+                    <h1>Next.js SSR</h1>
+                </section>
+
+                <!-- --- Гидрация --- -->
+                <section>
+                    <h2>Гидрация</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.7em;">
+                        Сервер отдаёт готовый HTML - пользователь видит контент сразу. Но HTML <strong>мёртвый</strong> - кнопки не работают, события не слушаются
+                    </p>
+                    <div class="arch-flow fragment">
+                        <div class="arch-box">Сервер<br><small>готовый HTML</small></div>
+                        <div class="arch-arrow">-</div>
+                        <div class="arch-box">Браузер<br><small>рисует HTML</small></div>
+                        <div class="arch-arrow">-</div>
+                        <div class="arch-box highlight">Загружается JS<br><small>bundle.js</small></div>
+                        <div class="arch-arrow">-</div>
+                        <div class="arch-box">React «оживляет»<br><small>hydration</small></div>
+                    </div>
+                    <ul style="margin-top: 0.8em;">
+                        <li class="fragment">React повторно обходит дерево компонентов и <strong>присоединяет обработчики</strong> к уже существующему DOM</li>
+                        <li class="fragment">DOM при этом не перерисовывается - React доверяет HTML с сервера</li>
+                        <li class="fragment">До завершения гидрации кнопки видны, но <strong>не реагируют на клики</strong></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ошибки гидрации</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.5em;">
+                        React сравнивает HTML с сервера с тем, что рендерит на клиенте. Если они расходятся - ошибка
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Ошибки гидрации</h2>
+                    <pre class="javascript size-l code-example-one"><code>// ❌ Классика: Date и Math.random()
+const Page: FC = () => (
+    &lt;div&gt;
+        Сейчас: {new Date().toLocaleTimeString()}  {/* разное время на сервере и клиенте */}
+        ID: {Math.random()}                        {/* разные числа */}
+    &lt;/div&gt;
+);
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// ❌ Секундомер - обновляется каждую секунду
+const Timer: FC = () => {
+    const [time, setTime] = useState(new Date().toLocaleTimeString());
+    useEffect(() => {
+        const id = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
+        return () => clearInterval(id);
+    }, []);
+    return &lt;span&gt;{time}&lt;/span&gt;;  // сервер рендерит одно время, клиент - другое
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Ошибки гидрации</h2>
+                    <pre class="javascript size-l code-example-one" style="margin-top: 0.8em;"><code>// ✅ suppressHydrationWarning - React не сравнивает содержимое этого тега
+const Timer: FC = () => (
+    &lt;span suppressHydrationWarning&gt;
+        {new Date().toLocaleTimeString()}
+    &lt;/span&gt;
+);
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Работает только на <strong>один уровень вложенности</strong> - дочерние теги не защищает</li>
+                        <li class="fragment">Подходит для значений, которые всегда будут разными: время, случайные ID</li>
+                        <li class="fragment">Альтернатива - <code>dynamic(..., &#123; ssr: false &#125;)</code> для полного отключения SSR компонента</li>
+                    </ul><pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// page.tsx - загружаем Timer только на клиенте
+import dynamic from 'next/dynamic';
+
+const Timer = dynamic(() => import('./Timer'), { ssr: false });
+
+export default function Page() {
+    return &lt;div&gt;Текущее время: &lt;Timer /&gt;&lt;/div&gt;;
+}
+</code></pre>
+                </section>
+
+                <!-- --- Pages Router: исторический контекст --- -->
+                <section>
+                    <h2>Pages Router - как было раньше</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.5em;">
+                        До App Router данные получали через специальные функции на уровне страницы
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// pages/products.tsx - SSR: выполняется на каждый запрос
+export async function getServerSideProps() {
+    const products = await fetch('https://api.example.com/products').then(r => r.json());
+    return { props: { products } };  // обязательно обернуть в { props }
+}
+
+const ProductsPage: FC&lt;{ products: Product[] }&gt; = ({ products }) =&gt; &lt;List items={products} /&gt;;
+export default ProductsPage;
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// pages/blog/[slug].tsx - SSG + ISR
+export async function getStaticProps({ params }) {
+    const post = await getPost(params.slug);
+    return { props: { post }, revalidate: 60 };  // перестраивать каждые 60с
+}
+
+export async function getStaticPaths() {
+    return { paths: [...], fallback: 'blocking' };
+}
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        App Router убрал эти функции - данные теперь получают прямо в async-компоненте
+                    </p>
+                </section>
+
+                <!-- --- Серверные и клиентские компоненты --- -->
+                <section>
+                    <h2>Серверные компоненты</h2>
+                    <p class="fragment" style="font-size: 0.78em; margin-bottom: 0.6em;">
+                        В App Router <strong>все компоненты серверные по умолчанию</strong>
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// app/products/page.tsx - серверный компонент
+// async/await без useEffect, fetch прямо здесь
+const ProductsPage: FC = async () => {
+    const products = await fetch('https://api.example.com/products').then(r => r.json());
+
+    return (
+        &lt;ul&gt;
+            {products.map(p => &lt;li key={p.id}&gt;{p.name}&lt;/li&gt;)}
+        &lt;/ul&gt;
+    );
+}
+export default ProductsPage;
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Этот код выполняется <strong>только на сервере</strong> - в браузер уходит готовый HTML
+                    </p>
+                </section>
+
+                <section>
+                    <h2><code>"use client"</code></h2>
+                    <p class="fragment" style="font-size: 0.78em; margin-bottom: 0.5em;">
+                        Директива в начале файла - переключает компонент в клиентский режим
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>'use client';
+
+import { useState } from 'react';
+
+const Counter: FC = () => {
+    const [count, setCount] = useState(0);
+    return &lt;button onClick={() => setCount(c => c + 1)}&gt;{count}&lt;/button&gt;;
+}
+export default Counter;
+</code></pre>
+                    <p class="fragment" style="font-size: 0.78em; margin-top: 0.6em;">Когда ставить <code>"use client"</code>:</p>
+                    <ul>
+                        <li class="fragment">Используете хуки - <code>useState</code>, <code>useEffect</code>,
+                            <code>useRef</code></li>
+                        <li class="fragment">Обрабатываете события - <code>onClick</code>, <code>onChange</code></li>
+                        <li class="fragment">Нужны браузерные API - <code>localStorage</code>, <code>window</code></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ограничения компонентов</h2>
+                    <div class="compare">
+                        <div class="compare-block">
+                            <h3>Серверный</h3>
+                            <ul class="opinion">
+                                <li class="plus">Прямой доступ к БД</li>
+                                <li class="plus">Секреты и env-переменные</li>
+                                <li class="plus">async/await на верхнем уровне</li>
+                                <li class="minus fragment">Нельзя: хуки</li>
+                                <li class="minus fragment">Нельзя: обработчики событий</li>
+                                <li class="minus fragment">Нельзя: браузерные API</li>
+                            </ul>
+                        </div>
+                        <div class="compare-block">
+                            <h3>Клиентский</h3>
+                            <ul class="opinion">
+                                <li class="plus">useState, useEffect</li>
+                                <li class="plus">onClick, onChange</li>
+                                <li class="plus">localStorage, window</li>
+                                <li class="minus fragment">Нельзя: прямой fetch к БД</li>
+                                <li class="minus fragment">Нельзя: секреты (попадут в бандл)</li>
+                                <li class="minus fragment">Нельзя: async компонент</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Композиция компонентов</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Серверный оборачивает клиентский - ОК
+const Page: FC = async () => {
+    const data = await fetchData();
+    return (
+        &lt;Layout&gt;
+            &lt;ClientWidget data={data} /&gt;  {/* 'use client' */}
+        &lt;/Layout&gt;
+    );
+}
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// Клиентский импортирует серверный - ОШИБКА
+'use client';
+import { ServerComponent } from './ServerComponent'; // ❌
+
+const ClientWrapper: FC = () => {
+    return &lt;ServerComponent /&gt;;  // серверная логика попадёт в бандл
+}
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                        Серверные компоненты можно передавать как <code>children</code> - это работает
+                    </p>
+                </section>
+
+                <!-- --- Получение данных --- -->
+                <section>
+                    <h2>Получение данных</h2>
+                    <p class="fragment" style="font-size: 0.78em; margin-bottom: 0.4em;">
+                        Вместо <code>useEffect + useState</code> - просто <code>async</code> компонент
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Раньше (CSR):
+const Products: FC = () => {
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        fetch('/api/products').then(r => r.json()).then(setData);
+    }, []);
+    if (!data) return &lt;Spinner /&gt;;
+    return &lt;List items={data} /&gt;;
+}
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// Теперь (Next.js App Router):
+const Products: FC = async () => {
+    const data = await fetch('https://api.example.com/products').then(r => r.json());
+    return &lt;List items={data} /&gt;;
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Кеширование и ревалидация</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// По умолчанию - кешируется навсегда (SSG-поведение)
+fetch('https://api.example.com/products');
+
+// Не кешировать - SSR на каждый запрос
+fetch('https://api.example.com/products', { cache: 'no-store' });
+
+// Обновлять каждые N секунд - ISR-поведение
+fetch('https://api.example.com/products', {
+    next: { revalidate: 60 }  // раз в минуту
+});
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Один инструмент - <code>fetch</code> - закрывает все три режима рендеринга
+                    </p>
+                </section>
+
+                <section>
+                    <h2>loading.tsx и error.tsx</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// app/products/loading.tsx
+// Показывается пока async-компонент грузит данные
+const Loading: FC = () => &lt;Skeleton /&gt;;
+export default Loading;
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// app/products/error.tsx
+'use client';  // обязательно - нужен для обработки ошибок
+const Error: FC&lt;{ error: Error; reset: () =&gt; void }&gt; = ({ error, reset }) =&gt; (
+    &lt;div&gt;
+        &lt;p&gt;Что-то пошло не так: {error.message}&lt;/p&gt;
+        &lt;button onClick={reset}&gt;Попробовать снова&lt;/button&gt;
+    &lt;/div&gt;
+);
+export default Error;
+</code></pre>
+                </section>
+
+                <!-- --- use server --- -->
+                <section>
+                    <h2><code>'use server'</code></h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.6em;">
+                        Директива помечает функцию как <strong>серверную</strong> - она никогда не попадёт в клиентский бандл
+                    </p>
+                    <div class="compare fragment">
+                        <div class="compare-block">
+                            <h3>На файл</h3>
+                            <pre class="code-example-one javascript"><code>// actions.ts
+'use server';
+
+// все экспорты - серверные
+export async function createPost() { ... }
+export async function deletePost() { ... }
+</code></pre>
+                        </div>
+                        <div class="compare-block">
+                            <h3>На функцию</h3>
+                            <pre class="code-example-one javascript"><code>// прямо в серверном компоненте
+const Page: FC = async () => {
+    async function save(data: FormData) {
+        'use server';
+        await db.save(data);
+    }
+    return &lt;form action={save}&gt;...&lt;/form&gt;;
+}
+</code></pre>
+                        </div>
+                    </div>
+                    <ul style="margin-top: 0.7em;">
+                        <li class="fragment">Вызывается из клиентского компонента как обычная функция</li>
+                        <li class="fragment">Под капотом - POST-запрос к Next.js-серверу</li>
+                        <li class="fragment">Доступны: БД, файловая система, секреты из env</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Зачем нужен <code>'use server'</code></h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.7em;">
+                        Без него пришлось бы писать отдельный API-роут и вручную делать <code>fetch</code>
+                    </p>
+                    <div class="compare fragment">
+                        <div class="compare-block">
+                            <h3>Без 'use server'</h3>
+                            <pre class="code-example-one javascript"><code>// 1. Создать app/api/posts/route.ts
+export async function POST(req: Request) {
+    const { title } = await req.json();
+    await db.posts.create({ title });
+    return Response.json({ ok: true });
+}
+
+// 2. Вызвать из клиента
+const handleSubmit = async () => {
+    await fetch('/api/posts', {
+        method: 'POST',
+        body: JSON.stringify({ title }),
+    });
+};
+</code></pre>
+                        </div>
+                        <div class="compare-block">
+                            <h3>С 'use server'</h3>
+                            <pre class="code-example-one javascript"><code>// actions.ts
+'use server';
+export async function createPost(title: string) {
+    await db.posts.create({ title });
+}
+
+// клиентский компонент
+const handleSubmit = async () => {
+    await createPost(title);  // просто вызов
+};
+</code></pre>
+                        </div>
+                    </div>
+                    <ul style="margin-top: 0.6em;">
+                        <li class="fragment">Нет маршрута - нет URL - нет случайных прямых обращений</li>
+                        <li class="fragment">Аргументы сериализуются автоматически - не нужен <code>JSON.stringify</code></li>
+                        <li class="fragment">TypeScript-типы работают сквозь границу клиент/сервер</li>
+                    </ul>
+                </section>
+
+                <!-- --- Server Actions --- -->
+                <section>
+                    <h2>Server Actions</h2>
+                    <p class="fragment" style="font-size: 0.78em; margin-bottom: 0.5em;">
+                        Функции, которые выполняются на сервере - вызываются напрямую из компонента
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// actions.ts
+'use server';
+
+export async function createPost(formData: FormData) {
+    const title = formData.get('title') as string;
+    await db.posts.create({ title });
+    revalidatePath('/posts');  // сбросить кеш страницы
+}
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// page.tsx - форма без API-роута
+import { createPost } from './actions';
+
+const NewPostPage: FC = () => (
+    &lt;form action={createPost}&gt;
+        &lt;input name="title" placeholder="Заголовок" /&gt;
+        &lt;button type="submit"&gt;Создать&lt;/button&gt;
+    &lt;/form&gt;
+);
+export default NewPostPage;
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Server Actions - мутации</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>'use server';
+
+export async function deletePost(id: string) {
+    await db.posts.delete({ where: { id } });
+    revalidatePath('/posts');
+}
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>'use client';
+import { deletePost } from './actions';
+
+const PostCard: FC&lt;{ post: Post }&gt; = ({ post }) => (
+    &lt;div&gt;
+        &lt;h3&gt;{post.title}&lt;/h3&gt;
+        {/* Server Action вызывается как обычная функция */}
+        &lt;button onClick={() => deletePost(post.id)}&gt;Удалить&lt;/button&gt;
+    &lt;/div&gt;
+);
+export default PostCard;
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                        Никакого API-роута, никакого <code>fetch('/api/posts/delete')</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Server Actions - когда не подходят</h2>
+                    <ul>
+                        <li class="fragment">Бэкенд уже существует - <strong>отдельный сервис</strong> на Go / Python / Java</li>
+                        <li class="fragment">Разные клиенты - мобилка, другой фронтенд, сторонние сервисы <strong>не могут вызвать</strong> Server Action</li>
+                        <li class="fragment">Разные команды - нет явного контракта, нет OpenAPI, сложно разграничить ответственность</li>
+                        <li class="fragment">Тяжело тестировать - QA не могут легко тестировать работу Server Action, тк к доступ к ним только в коде</li>
+                        <li class="fragment">Авторизацию легко забыть - у HTTP-эндпоинта есть явная "граница входа", у Action - нет</li>
+                    </ul>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.6em;">
+                        Server Actions - отличный выбор для небольших fullstack-проектов.<br/>
+                        В компаниях явный API остаётся стандартом.
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 4: ТИПИЧНЫЕ ОШИБКИ ===== -->
+            <section>
+                <section>
+                    <h2>Типичная ошибка</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// ❌ "use client" везде
+'use client';
+
+// Этот компонент только отображает данные
+// Никаких хуков, никаких событий
+// Но "use client" поставили "на всякий случай"
+const ProductCard: FC&lt;{ product: Product }&gt; = ({ product }) => (
+    &lt;div&gt;
+        &lt;h3&gt;{product.name}&lt;/h3&gt;
+        &lt;p&gt;{product.price} ₽&lt;/p&gt;
+    &lt;/div&gt;
+);
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Компонент попадает в JS-бандл - увеличивает его размер</li>
+                        <li class="fragment">Нельзя использовать прямой доступ к БД или секреты</li>
+                        <li class="fragment">Вся поддерево становится клиентским</li>
+                    </ul>
+                    <p class="fragment" style="font-size: 0.78em; margin-top: 0.5em; color: #ffd54f;">
+                        Правило: <code>"use client"</code> только там, где это необходимо
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Граница клиент/сервер</h2>
+                    <pre class="javascript size-l code-example-one"><code>// Правильная архитектура:
+// Серверный компонент загружает данные,
+// передаёт их в клиентские «острова» интерактивности
+
+const ProductPage: FC&lt;{ params: { id: string } }&gt; = async ({ params }) => {
+    const product = await db.products.findById(params.id);  // серверно
+    return (
+        &lt;div&gt;
+            &lt;ProductInfo product={product} /&gt;   {/* серверный */}
+            &lt;AddToCartButton id={product.id} /&gt; {/* клиентский */}
+            &lt;Reviews productId={product.id} /&gt;  {/* серверный */}
+        &lt;/div&gt;
+    );
+}
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        «Острова» интерактивности - минимум клиентского JS, максимум серверного HTML
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 5: ДРУГИЕ ФРЕЙМВОРКИ ===== -->
+            <section>
+                <section>
+                    <h1>Другие фреймворки</h1>
+                </section>
+
+                <section>
+                    <h2>Nuxt 3 - Vue</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// pages/products.vue
+&lt;script setup&gt;
+// useFetch - аналог серверного fetch в Next.js
+const { data: products } = await useFetch('/api/products');
+&lt;/script&gt;
+
+&lt;template&gt;
+    &lt;ul&gt;
+        &lt;li v-for="p in products" :key="p.id"&gt;{{ p.name }}&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/template&gt;
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Те же идеи: SSR, SSG, ISR - через <code>useFetch</code> и
+                            <code>useAsyncData</code></li>
+                        <li class="fragment">Файловый роутинг как в Next.js</li>
+                        <li class="fragment">Server routes вместо Server Actions</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SvelteKit</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// src/routes/products/+page.server.ts
+// Функция load выполняется на сервере
+export async function load() {
+    const products = await db.getProducts();
+    return { products };
+}
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment"><code>&lt;!-- src/routes/products/+page.svelte --&gt;
+&lt;script&gt;
+    export let data;  // приходит из load()
+&lt;/script&gt;
+
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
+                        Svelte компилируется - нет runtime, самый маленький бандл
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Remix</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// app/routes/products.tsx
+// loader - выполняется на сервере, перед рендером
+export async function loader() {
+    const products = await db.getProducts();
+    return json({ products });
+}
+
+// action - мутации (как Server Actions в Next.js)
+export async function action({ request }) {
+    const formData = await request.formData();
+    await db.createProduct(Object.fromEntries(formData));
+    return redirect('/products');
+}
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Ближе к web-стандартам - <code>Request</code>, <code>Response</code>,
+                            <code>FormData</code></li>
+                        <li class="fragment">Вложенные роуты с независимой загрузкой данных</li>
+                        <li class="fragment">Используется React под капотом</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сравнение фреймворков</h2>
+                    <div class="compare" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="compare-block">
+                            <h3>Next.js</h3>
+                            <ul>
+                                <li>React</li>
+                                <li>App Router</li>
+                                <li>Server Components</li>
+                                <li>Vercel</li>
+                            </ul>
+                        </div>
+                        <div class="compare-block">
+                            <h3>Nuxt 3</h3>
+                            <ul>
+                                <li>Vue 3</li>
+                                <li>Auto-imports</li>
+                                <li>Nitro server</li>
+                                <li>Netlify, Vercel</li>
+                            </ul>
+                        </div>
+                        <div class="compare-block">
+                            <h3>SvelteKit</h3>
+                            <ul>
+                                <li>Svelte</li>
+                                <li>Минимальный JS</li>
+                                <li>+server.ts файлы</li>
+                                <li>Адаптеры</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.8em;">
+                        Концепции одни и те же - различается синтаксис и экосистема
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ИТОГ ===== -->
+            <section>
+                <h2>Итог</h2>
+                <div class="timeline">
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">SPA</div>
+                        <div class="timeline-arrow">-></div>
+                        <div class="timeline-desc">Подходит для приложений за авторизацией, не требующих SEO</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">SSR / SSG / ISR</div>
+                        <div class="timeline-arrow">-></div>
+                        <div class="timeline-desc">Выбирайте под задачу - один fetch с разными опциями решает всё</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">App Router</div>
+                        <div class="timeline-arrow">-></div>
+                        <div class="timeline-desc">По умолчанию всё серверное - <code>"use client"</code> только по
+                            необходимости</div>
+                    </div>
+                    <div class="timeline-item fragment">
+                        <div class="timeline-label">Server Actions</div>
+                        <div class="timeline-arrow">-></div>
+                        <div class="timeline-desc">Мутации без API-роутов - функция с <code>'use server'</code></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+   <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/utils/lib/js/code-example.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false, progress: true, history: true, center: false,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+        Reveal.configure({ slideNumber: true });
+    </script>
+</body>
+
+</html>

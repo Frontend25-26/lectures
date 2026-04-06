@@ -180,6 +180,7 @@ ul.opinion {
     .timeline-arrow {
         font-size: 1.2em;
         opacity: 0.5;
+        white-space: nowrap;
     }
 
     .timeline-desc {

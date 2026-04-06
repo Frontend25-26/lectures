@@ -1,0 +1,23 @@
+/* Стили специфичные для лекции по SSR.
+   Общие шрифты и компоненты — в /utils/css/custom-base.css */
+
+/* Таблица сравнения CSR/SSR/SSG/ISR */
+.render-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.65em;
+    text-align: left;
+}
+
+.render-table th {
+    background: rgba(255, 213, 79, 0.12);
+    color: #ffd54f;
+    padding: 0.5em 0.8em;
+    border-bottom: 2px solid rgba(255, 213, 79, 0.35);
+}
+
+.render-table td {
+    padding: 0.45em 0.8em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    vertical-align: top;
+}
