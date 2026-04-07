@@ -151,7 +151,7 @@
       },
       "subtopics": [
         {
-          "title": "Мини-лекция 1 по теме «Безопасность в вебе»",
+          "title": "Что такое OWASP, CVE, и как узнавать про уязвимости?",
           "student": {
             "name": "",
             "telegram": ""
@@ -159,7 +159,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 2 по теме «Безопасность в вебе»",
+          "title": "Исторические уязвимости: flash, java applet, js sandbox",
           "student": {
             "name": "",
             "telegram": ""
@@ -167,7 +167,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 3 по теме «Безопасность в вебе»",
+          "title": "XSS",
           "student": {
             "name": "",
             "telegram": ""
@@ -175,7 +175,23 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 4 по теме «Безопасность в вебе»",
+          "title": "Clickjacking, iframe-ы, postMessage",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "HTTPS и его требование в современных web api",
+          "student": {
+            "name": "",
+            "telegram": ""
+          },
+          "link": ""
+        },
+        {
+          "title": "Supply chain poisoning",
           "student": {
             "name": "",
             "telegram": ""
