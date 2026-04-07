@@ -23,22 +23,28 @@
           "order": 3
         },
         {
+          "title": "Сборка приложения",
+          "link": "/2-sem/modern/2-build/index.html",
+          "openDate": "2026-04-07T18:30:00",
+          "order": 4
+        },
+        {
           "title": "SSR / SSG",
           "link": "/2-sem/modern/5-ssr/index.html",
           "openDate": "2026-04-07T18:30:00",
-          "order": 4
+          "order": 5
         },
         {
           "title": "Производительность",
           "link": "/2-sem/modern/7-performance/index.html",
           "openDate": "2026-04-14T18:30:00",
-          "order": 5
+          "order": 6
         },
         {
           "title": "Тестирование",
           "link": "/2-sem/modern/6-tests/index.html",
           "openDate": "2026-04-28T18:30:00",
-          "order": 6
+          "order": 7
         }
       ]
     },

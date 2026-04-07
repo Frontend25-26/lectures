@@ -17,36 +17,12 @@
           "link": "https://docs.google.com/presentation/d/1pXOe0QbcDizFZvqc30DBOaenQM5gZBceaRf2Wvpvc1I/edit?usp=sharing"
         },
         {
-          "title": "Svelte",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
           "title": "Solid.js",
           "student": {
             "name": "Каймакова Анастасия",
             "telegram": "@purr_meoow"
           },
           "link": "https://docs.google.com/presentation/d/1vVhzHjr_W3kP0ll5nPgMj1kztPUE5nTPJZApQhwYbzg/edit?usp=sharing"
-        },
-        {
-          "title": "rx.js",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "NextJS",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
         }
       ]
     },
@@ -59,20 +35,12 @@
       },
       "subtopics": [
         {
-          "title": "Webpack",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
           "title": "Gulp",
           "student": {
             "name": "Каймакова Анастасия",
             "telegram": "@purr_meoow"
           },
-          "link": ""
+          "link": "https://docs.google.com/presentation/d/16BMTr_6fG8eUE99D5EonbRszeAknE5DEcCdYLyABchU/edit?slide=id.p#slide=id.p"
         },
         {
           "title": "Vite",
@@ -80,65 +48,7 @@
             "name": "Беспалов Александр",
             "telegram": "@Alex2184"
           },
-          "link": ""
-        },
-        {
-          "title": "Rollup и esbuild",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "Babel и транспиляция",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        }
-      ]
-    },
-    {
-      "date": "2026-04-07T00:00:00",
-      "title": "SSR/SSG",
-      "presenter": {
-        "name": "Артем Швецов",
-        "telegram": "@ArtyomShvetsov"
-      },
-      "subtopics": [
-        {
-          "title": "React Server Components",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "SSR в Next.js",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "SSR в других фреймворках (Nuxt.js, SvelteKit, Gatsby)",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "Streaming Components",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
+          "link": "https://onedrive.live.com/:p:/g/personal/9b251eb32dc73f19/IQDE3cGFPfcxS51fnR4IhbldAaR1Ic-dYfH5YCwg7nRNNgs?rtime=F6hzqb6U3kg&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy85YjI1MWViMzJkYzczZjE5L0lRREUzY0dGUGZjeFM1MWZuUjRJaGJsZEFhUjFJYy1kWWZINVlDd2c3blJOTmdzP2U9alB6MVJq"
         }
       ]
     },

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>Сборка приложения</title>
+    <meta name="author" content="Илья Степанов">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ===== ТИТУЛ ===== -->
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 2em;">Сборка</h1>
+                    <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+                </div>
+            </section>
+
+            <!-- ===== ЧАСТЬ 1: ЗАЧЕМ ===== -->
+            <section>
+                <section>
+                    <h1>Зачем нужен сборщик</h1>
+                </section>
+
+                <section>
+                    <h2>Жизнь без сборщика</h2>
+                    <pre class="javascript size-l code-example-one"><code>&lt;!-- index.html - порядок тегов важен, иначе «ReferenceError» --&gt;
+&lt;script src="vendor/jquery.js"&gt;&lt;/script&gt;
+&lt;script src="vendor/lodash.js"&gt;&lt;/script&gt;
+&lt;script src="utils/helpers.js"&gt;&lt;/script&gt;
+&lt;script src="components/modal.js"&gt;&lt;/script&gt;
+&lt;script src="components/cart.js"&gt;&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;
+</code></pre>
+                    <ul style="margin-top: 0.7em;">
+                        <li class="fragment">Все переменные в глобальном скоупе - легко получить конфликт имён</li>
+                        <li class="fragment">Браузер делает отдельный HTTP-запрос на каждый файл</li>
+                        <li class="fragment">TypeScript, SCSS, JSX - браузер не понимает нативно</li>
+                        <li class="fragment">В продакшн уходит читаемый исходный код без оптимизации</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что хотим от сборки</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Модули</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc"><code>import/export</code> без конфликтов, явные зависимости между файлами</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Трансформации</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">TypeScript -> JS, SCSS -> CSS, JSX -> JS, новый синтаксис -> старый</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Оптимизация</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Минификация, удаление неиспользуемого кода, разбиение на чанки</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Dev experience</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Hot Module Replacement, source maps, быстрый перезапуск</div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 2: ДВА КЛАССА ИНСТРУМЕНТОВ ===== -->
+            <section>
+                <section>
+                    <h1>Два класса инструментов</h1>
+                </section>
+
+                <section>
+                    <h2>Task Runner vs Bundler</h2>
+                    <div class="compare">
+                        <div class="compare-block">
+                            <h3>Task Runner - Gulp</h3>
+                            <ul class="opinion">
+                                <li class="circle"><strong>Императивный</strong> - описываешь <em>как</em> делать</li>
+                                <li class="circle">Не знает ничего про <code>import/export</code></li>
+                                <li class="plus">Любая задача с файлами - без ограничений</li>
+                            </ul>
+                        </div>
+                        <div class="compare-block">
+                            <h3>Bundler - Webpack, Vite</h3>
+                            <ul class="opinion">
+                                <li class="circle"><strong>Декларативный</strong> - описываешь <em>что</em> хочешь получить</li>
+                                <li class="circle">Понимает граф зависимостей</li>
+                                <li class="plus">Tree shaking, code splitting из коробки</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 3: WEBPACK ===== -->
+            <section>
+                <section>
+                    <h1>Webpack</h1>
+                </section>
+
+                <section>
+                    <h2>Как работает Webpack</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box highlight fragment">Entry<br><small>src/index.js</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box fragment">Граф<br><small>все import</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box fragment">Loaders<br><small>трансформации</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box fragment">Plugins<br><small>оптимизация</small></div>
+                        <div class="arch-arrow fragment">-></div>
+                        <div class="arch-box highlight fragment">Output<br><small>dist/bundle.js</small></div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 1em; opacity: 0.8;">
+                        Webpack начинает с entry point, обходит все <code>import</code> рекурсивно и строит граф зависимостей
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Минимальный webpack.config.js</h2>
+                    <pre class="javascript size-l code-example-one"><code>// webpack.config.js
+module.exports = {
+    entry: './src/index.js',       // с чего начинать обход
+
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+    },
+
+    mode: 'development',           // 'production' - минификация + оптимизации
+};
+</code></pre>
+                    <ul style="margin-top: 0.7em;">
+                        <li class="fragment"><code>entry</code> - точка входа, с которой начинается граф</li>
+                        <li class="fragment"><code>output</code> - куда положить результат</li>
+                        <li class="fragment"><code>mode</code> - переключает пресеты оптимизаций</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Loaders - трансформация файлов</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.8em;">
+                        По умолчанию Webpack понимает только JS и JSON. Loader учит его обрабатывать всё остальное
+                    </p>
+                    <table class="loaders-table fragment">
+                        <thead>
+                            <tr>
+                                <th>Loader</th>
+                                <th>Что делает</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>babel-loader</code></td>
+                                <td>ES2020+ -> ES5, JSX -> JS</td>
+                            </tr>
+                            <tr>
+                                <td><code>ts-loader</code></td>
+                                <td>TypeScript -> JS</td>
+                            </tr>
+                            <tr>
+                                <td><code>css-loader</code></td>
+                                <td>Понимает <code>@import</code> и <code>url()</code> в CSS</td>
+                            </tr>
+                            <tr>
+                                <td><code>sass-loader</code></td>
+                                <td>SCSS -> CSS</td>
+                            </tr>
+                            <tr>
+                                <td><code>file-loader</code></td>
+                                <td>Копирует файл в output, возвращает URL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Plugins - постобработка бандла</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.6em;">
+                        Loaders трансформируют отдельные файлы. Plugins работают с результатом сборки целиком
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+    plugins: [
+        // Генерирует index.html и автоматически вставляет тег &lt;script&gt;
+        new HtmlWebpackPlugin({ template: './src/index.html' }),
+
+        // Выносит CSS в отдельный файл вместо inline &lt;style&gt;
+        new MiniCssExtractPlugin({ filename: 'styles.css' }),
+    ],
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Code Splitting</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.6em;">
+                        Разбивает бандл на части - браузер загружает только то, что нужно прямо сейчас
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Статический импорт - попадает в основной бандл
+import { format } from 'date-fns';
+
+// Динамический импорт - Webpack создаёт отдельный чанк
+// Загружается только когда пользователь открывает страницу настроек
+const SettingsPage = React.lazy(() => import('./pages/Settings'));
+</code></pre>
+                    <div class="arch-flow fragment" style="margin-top: 0.8em;">
+                        <div class="arch-box highlight">bundle.js<br><small>~100 KB</small></div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box">settings.chunk.js<br><small>~30 KB</small></div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box">vendor.chunk.js<br><small>react, lodash</small></div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Tree Shaking</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.6em;">
+                        Убирает неиспользуемый код из бандла. Работает только со статическими <code>import/export</code>
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// utils.js - экспортирует три функции
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+export const multiply = (a, b) => a * b;
+
+// app.js - импортирует только одну
+import { add } from './utils';
+</code></pre>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 0.6em; opacity: 0.8;">
+                        В production-бандл попадёт только <code>add</code> - <code>subtract</code> и <code>multiply</code> будут удалены
+                    </p>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Включён автоматически при <code>mode: 'production'</code></li>
+                        <li class="fragment">Не работает с CommonJS (<code>require()</code>) - только ESM</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 4: WEBPACK В NEXT.JS ===== -->
+            <section>
+                <section>
+                    <h1>Webpack в Next.js</h1>
+                </section>
+
+                <section>
+                    <h2>Что Next.js настраивает за вас</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.8em;">
+                        Next.js скрывает <code>webpack.config.js</code> - вы работаете с фреймворком, а не с Webpack напрямую
+                    </p>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">TypeScript</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Автоматически через <code>ts-loader</code> / <code>babel-loader</code> - просто создайте <code>tsconfig.json</code></div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">CSS Modules</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Файл <code>*.module.css</code> - и стили автоматически изолируются по компоненту</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Code Splitting</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Каждая страница в <code>app/</code> автоматически становится отдельным чанком</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">HMR</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Fast Refresh - изменения в компоненте применяются без перезагрузки страницы</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Кастомизация через next.config.js</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.6em;">
+                        Если стандартных возможностей не хватает - можно расширить конфиг Webpack
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// next.config.js
+module.exports = {
+    webpack(config, { isServer }) {
+        // Добавляем SVG-лоадер
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: ['@svgr/webpack'],
+        });
+
+        // Добавляем плагин только для клиентской сборки
+        if (!isServer) {
+            config.plugins.push(new MyAnalyticsPlugin());
+        }
+
+        return config;  // обязательно вернуть изменённый конфиг
+    },
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Turbopack - будущее Next.js</h2>
+                    <p class="fragment" style="font-size: 0.75em; margin-bottom: 0.8em;">
+                        В Next.js 15 появился Turbopack - написанный на Rust замена Webpack для dev-режима
+                    </p>
+                    <div class="compare">
+                        <div class="compare-block">
+                            <h3>Webpack (текущий)</h3>
+                            <ul class="opinion">
+                                <li class="plus">Зрелый, огромная экосистема</li>
+                                <li class="plus">Все edge-кейсы покрыты</li>
+                                <li class="minus">Медленный холодный старт на больших проектах</li>
+                                <li class="minus">HMR замедляется с ростом приложения</li>
+                            </ul>
+                        </div>
+                        <div class="compare-block">
+                            <h3>Turbopack (новый)</h3>
+                            <ul class="opinion">
+                                <li class="plus">До 10x быстрее холодный старт</li>
+                                <li class="plus">HMR не деградирует с размером проекта</li>
+                                <li class="minus">Только dev-режим (production - всё ещё Webpack)</li>
+                                <li class="minus">Не все webpack-плагины совместимы</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.8em;"><code>// package.json - включить Turbopack для next dev
+"scripts": {
+    "dev": "next dev --turbopack"
+}
+</code></pre>
+                </section>
+            </section>
+
+            <!-- ===== ПОДВОДКА К СТУДЕНТАМ ===== -->
+            <section>
+                <h2>Дальше - студенты</h2>
+                <ul class="opinion">
+                    <li class="circle fragment"><strong>Gulp</strong> - task runner</li>
+                    <li class="circle fragment"><strong>Vite</strong> - bundler</li>
+                </ul>
+            </section>
+
+        </div>
+    </div>
+
+
+   <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/utils/lib/js/code-example.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false, progress: true, history: true, center: false,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+        Reveal.configure({ slideNumber: true });
+    </script>
+</body>
+
+</html>
