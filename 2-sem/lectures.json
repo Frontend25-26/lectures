@@ -36,7 +36,7 @@
         },
         {
           "title": "Производительность",
-          "link": "/2-sem/modern/7-performance/index.html",
+          "link": "https://docs.google.com/presentation/d/1G3kaJDBn4l70tg_zYRkJgUc6K2X1GyyID6OEJ5cm4yQ/edit?usp=sharing",
           "openDate": "2026-04-14T18:30:00",
           "order": 6
         },
@@ -75,6 +75,12 @@
           "link": "/2-sem/infra/4-logging/index.html",
           "openDate": "2026-04-07T18:30:00",
           "order": 3
+        },
+        {
+          "title": "Безопасность",
+          "link": "/2-sem/infra/web-security/index.html",
+          "openDate": "2026-04-14T18:30:00",
+          "order": "*"
         },
         {
           "title": "Построение надежных приложений",

