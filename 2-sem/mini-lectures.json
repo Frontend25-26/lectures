@@ -114,12 +114,12 @@
       "date": "2026-04-28T00:00:00",
       "title": "Куки, localStorage, разные Web APIs",
       "presenter": {
-        "name": "",
-        "telegram": ""
+        "name": "Илья Степанов",
+        "telegram": "@ilyahtml"
       },
       "subtopics": [
         {
-          "title": "Мини-лекция 1 по теме «Куки, localStorage, разные Web APIs»",
+          "title": "Cookies",
           "student": {
             "name": "",
             "telegram": ""
@@ -127,7 +127,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 2 по теме «Куки, localStorage, разные Web APIs»",
+          "title": "localStorage и sessionStorage",
           "student": {
             "name": "",
             "telegram": ""
@@ -135,7 +135,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 3 по теме «Куки, localStorage, разные Web APIs»",
+          "title": "IndexedDB",
           "student": {
             "name": "",
             "telegram": ""
@@ -143,7 +143,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 4 по теме «Куки, localStorage, разные Web APIs»",
+          "title": "Observer APIs: Intersection, Resize, Mutation etc.",
           "student": {
             "name": "",
             "telegram": ""
