@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Хакатон №2</title>
+
+    <meta name="description" content="Груминг второго хакатона - основной функционал платформы">
+    <meta name="author" content="Илья Степанов">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 2em;">Хакатон №2</h1>
+                    <p style="text-align: center; font-size: 0.5em;">25 апреля 2026</p>
+                    <p style="text-align: center; font-size: 0.35em; color: rgba(255,255,255,0.6);">Основной функционал
+                    </p>
+                </div>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Где мы сейчас</h2>
+                </section>
+
+                <section>
+                    <h2>Итоги хакатона 1</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">Проект развёрнут (локально), FSD, ESLint, Prettier, CI/CD</li>
+                        <li class="circle fragment">Бэкенд: Prisma + MySQL, CRUD, Swagger, защита ручек</li>
+                        <li class="circle fragment">GitHub Auth работает - студент логинится</li>
+                        <li class="circle fragment">Layout, routing, защита ролей</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что делаем сегодня</h2>
+                    <p class="fragment" style="font-size: 0.9em;">Собираем <strong>основной функционал
+                            платформы</strong></p>
+                    <p class="fragment" style="font-size: 0.85em; color: rgba(255,255,255,0.7);">
+                        Сквозной путь для трёх ролей: админ, студент, ментор
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; margin-top: 0.8em;">
+                        Админ создаёт ДЗ
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Студент принимает, коммитит, видит фидбек
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Ментор смотрит diff, оставляет inline-комментарии
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Но это не спринт на день</h2>
+                    <p class="fragment" style="font-size: 0.9em; color: #ffd54f;">
+                        У нас месяц до хакатона 3
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Сегодня - кикофф: груминг, декомпозиция, критический путь
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Весь месяц - реализация сторей и weekly-синки
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        К хакатону 3 продукт проходится end-to-end
+                    </p>
+                </section>
+            </section>
+
+
+            <section>
+                <h2>Одна сторя = один человек</h2>
+                <p class="fragment" style="font-size: 0.85em;">Vertical slice - каждый ведёт свою роль целиком</p>
+                <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                    От страницы до интеграции с реальным бэком
+                </p>
+                <p class="fragment" style="font-size: 0.8em; color: #ffd54f;">
+                    Не горизонтальные слои, а полный путь роли
+                </p>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Процессы - напоминание</h2>
+                </section>
+
+                <section>
+                    <h2>Статусы задач</h2>
+                    <div class="arch-flow fragment">
+                        <div class="arch-box">Backlog</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Ready</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">In Progress</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">In Review</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Done</div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Приоритеты</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">0</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Блокирует всё остальное, делается первым</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">1</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Важно, но можно начинать пока не закрыто</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">2</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Хорошо иметь, но не критично</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Swagger - единственный источник правды</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Все контракты ручек живут в Swagger
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        TS-типы генерируются из OpenAPI
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Моки строятся под тот же контракт
+                    </p>
+                </section>
+            </section>
+
+
+            <section>
+                <h1>Груминг сторей</h1>
+                <p class="fragment" style="font-size: 0.75em;">
+                    Для каждой: описание -> подзадачи -> критерии готовности
+                </p>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Сторя <a href="https://github.com/Frontend25-26/HackathonProject/issues/74"
+                            target="_blank">#74</a></h2>
+                    <p>Админ: курсы, задания, назначение менторов</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: M</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #74 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Админ управляет семестром: создаёт курсы, добавляет ДЗ из Classroom, назначает менторов
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; margin-top: 0.8em;">
+                        Матрица для назначения менторов: <br>строки - студенты,<br>столбцы - курсы, <br>на пересечении -
+                        селект с менторами, которых можно назначить
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #74 - подзадачи</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/78"
+                                target="_blank"><code>#78</code></a> CRUD курсов - <code>/admin/courses</code></li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/82"
+                                target="_blank"><code>#82</code></a> Страница курса: студенты + выбор ментора на каждого
+                        </li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/83"
+                                target="_blank"><code>#83</code></a> Список Classroom-заданий + создание ДЗ на курсе
+                        </li>
+                        <li class="circle fragment">Редактирование дедлайна ДЗ</li>
+                        <li class="circle fragment">Пагинация, поиск, пустые состояния</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сторя #74 - блокеры</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a href="https://github.com/Frontend25-26/HackathonProject/issues/94" target="_blank"><code>#94</code></a> ручки бэкенда (курсы, Classroom, назначения)</li>
+                    </ul>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Сторя <a href="https://github.com/Frontend25-26/HackathonProject/issues/75"
+                            target="_blank">#75</a></h2>
+                    <p>Студент: курсы, ДЗ, сдачи, фидбек</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: M</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #75 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Студент видит все курсы (он зачислен автоматически) и свои ДЗ
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Принимает задание по invite-ссылке, после первого коммита видит свой репо
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Читает inline-фидбек ментора на странице сдачи и отвечает в тредах
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #75 - подзадачи</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/79"
+                                target="_blank"><code>#79</code></a> Список курсов + страница курса</li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/84"
+                                target="_blank"><code>#84</code></a> <code>/assignments</code> с фильтрами и статусами
+                        </li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/87"
+                                target="_blank"><code>#87</code></a> Страница ДЗ: invite, принять, история коммитов, CI
+                        </li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/93"
+                                target="_blank"><code>#93</code></a> Вкладка «Ревью» - фидбек ментора, ответы в тредах
+                        </li>
+                        <li class="circle fragment">Компонент CI-бейджа</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сторя #75 - блокеры</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a href="https://github.com/Frontend25-26/HackathonProject/issues/94" target="_blank"><code>#94</code></a> ручки бэкенда</li>
+                        <li class="circle fragment">Компоненты из бэклога:
+                            <a href="https://github.com/Frontend25-26/HackathonProject/issues/30" target="_blank"><code>#30</code></a> таблица,
+                            <a href="https://github.com/Frontend25-26/HackathonProject/issues/33" target="_blank"><code>#33</code></a> markdown,
+                            <a href="https://github.com/Frontend25-26/HackathonProject/issues/34" target="_blank"><code>#34</code></a> карточка,
+                            <a href="https://github.com/Frontend25-26/HackathonProject/issues/35" target="_blank"><code>#35</code></a> табы
+                        </li>
+                        <li class="circle fragment">Сторя <a href="https://github.com/Frontend25-26/HackathonProject/issues/77" target="_blank"><code>#77</code></a> - тред-компоненты для вкладки «Ревью»</li>
+                    </ul>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Сторя <a href="https://github.com/Frontend25-26/HackathonProject/issues/76"
+                            target="_blank">#76</a></h2>
+                    <p>Ментор: очередь работ и diff</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: L</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #76 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Ментор на <code>/review</code> видит очередь работ студентов, которых он ведёт
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Открывает работу - файл-дерево, diff, коммиты, CI
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em; color: #ffd54f; margin-top: 0.8em;">
+                        Комментарии из следующей стори подключаются сюда
+                    </p>
+                    <p class="fragment" style="font-size: 0.8em; color: rgba(255,255,255,0.7);">
+                        Финальный вердикт и оценка - в хакатоне 3
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #76 - подзадачи</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/80"
+                                target="_blank"><code>#80</code></a> Очередь <code>/review</code> с фильтрами</li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/85"
+                                target="_blank"><code>#85</code></a> <code>/review/:id</code> - двухпанельный layout
+                        </li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/88"
+                                target="_blank"><code>#88</code></a> Diff-вьюшка на <code>@git-diff-view/react</code>
+                        </li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/89"
+                                target="_blank"><code>#89</code></a> Header работы: автор, PR, CI, дедлайн</li>
+                        <li class="circle fragment">Ленивая догрузка файлов</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сторя #76 - блокеры</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a href="https://github.com/Frontend25-26/HackathonProject/issues/94" target="_blank"><code>#94</code></a> ручки бэкенда (очередь, diff, сдачи)</li>
+                        <li class="circle fragment">Компоненты из бэклога:
+                            <a href="https://github.com/Frontend25-26/HackathonProject/issues/30" target="_blank"><code>#30</code></a> таблица,
+                            <a href="https://github.com/Frontend25-26/HackathonProject/issues/36" target="_blank"><code>#36</code></a> профиль пользователя
+                        </li>
+                    </ul>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Сторя <a href="https://github.com/Frontend25-26/HackathonProject/issues/77"
+                            target="_blank">#77</a></h2>
+                    <p>Комментарии и треды</p>
+                    <p class="fragment" style="font-size: 0.75em;">
+                        <code>Priority: 0</code> &nbsp; <code>Size: M</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #77 - описание</h2>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Клик на строку в diff -> форма с Markdown -> тред появляется у строки
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Комментарий улетает в PR на GitHub
+                    </p>
+                    <p class="fragment" style="font-size: 0.85em;">
+                        Студент видит тред, отвечает - ответ тоже в GitHub
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Сторя #77 - подзадачи</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/90"
+                                target="_blank"><code>#90</code></a> Inline-якоря: подсветка строки + иконка «+»</li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/81"
+                                target="_blank"><code>#81</code></a> Форма треда с Markdown-превью</li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/86"
+                                target="_blank"><code>#86</code></a> Компонент треда: автор, реплаи, свернуть</li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/92"
+                                target="_blank"><code>#92</code></a> Сайдбар с тредами файла</li>
+                        <li class="circle fragment"><a
+                                href="https://github.com/Frontend25-26/HackathonProject/issues/91"
+                                target="_blank"><code>#91</code></a> Общие комментарии PR - отдельная вкладка</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сторя #77 - блокеры</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><a href="https://github.com/Frontend25-26/HackathonProject/issues/94" target="_blank"><code>#94</code></a> ручки бэкенда (треды, комментарии)</li>
+                        <li class="circle fragment">Компонент <a href="https://github.com/Frontend25-26/HackathonProject/issues/33" target="_blank"><code>#33</code></a> markdown из бэклога</li>
+                        <li class="circle fragment"><a href="https://github.com/Frontend25-26/HackathonProject/issues/90" target="_blank"><code>#90</code></a> требует рабочего <a href="https://github.com/Frontend25-26/HackathonProject/issues/88" target="_blank"><code>#88</code></a> (diff из стори <a href="https://github.com/Frontend25-26/HackathonProject/issues/76" target="_blank"><code>#76</code></a>)</li>
+                    </ul>
+                </section>
+            </section>
+
+
+            <section>
+                <h2>В хакатоне 3</h2>
+                <ul class="opinion">
+                    <li class="circle fragment">Финальный вердикт ревью + оценка</li>
+                    <li class="circle fragment">Уведомления (колокольчик, email)</li>
+                    <li class="circle fragment">Профили, дашборды для всех ролей</li>
+                    <li class="circle fragment">Ролевые оверрайды, админ-аналитика</li>
+                    <li class="circle fragment">Resolve тредов, hotkeys в diff</li>
+                    <li class="circle fragment">Production-готовность бэкенда (кэш, устойчивость, логи)</li>
+                    <li class="circle fragment">Релиз на prod-домен</li>
+                    <li class="circle fragment">Адаптивность, a11y</li>
+                </ul>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Расписание сегодня</h2>
+                </section>
+
+                <section>
+                    <h2>Кикофф - день</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">10:00 - 10:45</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Груминг + декомпозиция</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">10:45 - 14:30</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Работа</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">14:30 - 15:00</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Обед</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">15:00 - 15:10</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Стендап</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">15:00 - 17:00</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Опять работа</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">17:00 - 17:30</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Демо: скелеты + моки + навигация</span>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <span class="timeline-label">17:30 - 18:00</span>
+                            <span class="timeline-arrow">-></span>
+                            <span class="timeline-desc">Ретро</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Результат к хакатону 3</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">Админ создал курс и ДЗ из Classroom, назначил менторов</li>
+                        <li class="circle fragment">Студент принял задание, коммитит, видит CI</li>
+                        <li class="circle fragment">Ментор в очереди открывает работу, листает diff</li>
+                        <li class="circle fragment">Ментор оставляет inline-комментарии</li>
+                        <li class="circle fragment">Студент читает фидбек и отвечает</li>
+                        <li class="circle fragment">Всё видно в PR на GitHub</li>
+                    </ul>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+    </script>
+</body>
+
+</html>
