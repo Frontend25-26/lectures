@@ -111,48 +111,6 @@
       ]
     },
     {
-      "date": "2026-04-28T00:00:00",
-      "title": "Куки, localStorage, разные Web APIs",
-      "presenter": {
-        "name": "Илья Степанов",
-        "telegram": "@ilyahtml"
-      },
-      "subtopics": [
-        {
-          "title": "Cookies",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "localStorage и sessionStorage",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "IndexedDB",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        },
-        {
-          "title": "Observer APIs: Intersection, Resize, Mutation etc.",
-          "student": {
-            "name": "",
-            "telegram": ""
-          },
-          "link": ""
-        }
-      ]
-    },
-    {
       "date": "2026-05-05T00:00:00",
       "title": "Современные формы, formik",
       "presenter": {
@@ -161,7 +119,7 @@
       },
       "subtopics": [
         {
-          "title": "Мини-лекция 1 по теме «Современные формы, formik»",
+          "title": "Formik",
           "student": {
             "name": "",
             "telegram": ""
@@ -169,7 +127,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 2 по теме «Современные формы, formik»",
+          "title": "React Hook Form",
           "student": {
             "name": "",
             "telegram": ""
@@ -177,7 +135,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 3 по теме «Современные формы, formik»",
+          "title": "TanStack Form",
           "student": {
             "name": "",
             "telegram": ""
@@ -185,7 +143,7 @@
           "link": ""
         },
         {
-          "title": "Мини-лекция 4 по теме «Современные формы, formik»",
+          "title": "Server Actions и <Form> в Next.js",
           "student": {
             "name": "",
             "telegram": ""
