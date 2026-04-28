@@ -83,16 +83,22 @@
           "order": "*"
         },
         {
+          "title": "Cookie, LS, SS, IndexedDB, Observers",
+          "link": "/2-sem/infra/6-web-apis/index.html",
+          "openDate": "2026-04-28T18:30:00",
+          "order": "4"
+        },
+        {
           "title": "Построение надежных приложений",
           "link": "/2-sem/infra/7-building_applications/index.html",
           "openDate": "2026-05-05T18:30:00",
-          "order": 4
+          "order": 5
         },
         {
           "title": "A/B тестирование + Websockets",
           "link": "/2-sem/infra/8-ab/index.html",
           "openDate": "2026-05-12T18:30:00",
-          "order": 5
+          "order": 6
         }
       ]
     }

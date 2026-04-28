@@ -1,0 +1,63 @@
+/* Стили специфичные для лекции по тестированию.
+   Общие шрифты и компоненты — в /utils/css/custom-base.css */
+
+/* Таблица сравнения библиотек */
+.lib-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.6em;
+    text-align: left;
+}
+
+.lib-table th {
+    background: rgba(255, 213, 79, 0.12);
+    color: #ffd54f;
+    padding: 0.5em 0.8em;
+    border-bottom: 2px solid rgba(255, 213, 79, 0.35);
+}
+
+.lib-table td {
+    padding: 0.4em 0.8em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    vertical-align: top;
+}
+
+/* Пирамида тестов */
+.pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 0.5em auto;
+}
+
+.pyramid-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 213, 79, 0.5);
+    background: rgba(255, 213, 79, 0.08);
+    color: #ffd54f;
+    font-size: 0.7em;
+    padding: 0.5em 0.8em;
+    border-radius: 0.3em;
+}
+
+.pyramid-row.e2e   { width: 280px; }
+.pyramid-row.intg  { width: 480px; }
+.pyramid-row.unit  { width: 680px; }
+
+/* Карточка fragment'а */
+.frag-tree {
+    text-align: left;
+    font-family: monospace;
+    font-size: 0.7em;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 0.4em;
+    padding: 0.8em 1em;
+    color: #ddd;
+}
+
+.frag-tree .key { color: #ffd54f; }
+.frag-tree .type { color: #6cb6ff; }
