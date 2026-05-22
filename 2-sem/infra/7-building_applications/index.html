@@ -57,7 +57,7 @@
                         Один сервер справляется. Потом пользователей стало в 10 раз больше
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
-                        <strong>Масштабируемость</strong> — способность системы справляться с ростом нагрузки
+                        <strong>Масштабируемость</strong> - способность системы справляться с ростом нагрузки
                         без переписывания архитектуры
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
@@ -72,7 +72,7 @@
                             <h3>Вертикальное (scale up)</h3>
                             <p style="font-size: 0.72em;">Больше CPU, RAM, SSD</p>
                             <p style="font-size: 0.72em;">Не требует изменений в коде</p>
-                            <p style="font-size: 0.72em; color: #ef9a9a;">Предел — самое мощное железо</p>
+                            <p style="font-size: 0.72em; color: #ef9a9a;">Предел - самое мощное железо</p>
                             <p style="font-size: 0.72em; color: #ef9a9a;">Single point of failure</p>
                         </div>
                         <div class="compare-block">
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <p class="fragment" style="font-size: 0.72em; margin-top: 0.6em; color: #ffd54f;">
-                        Горизонтальное масштабирование — стандарт в production
+                        Горизонтальное масштабирование - стандарт в production
                     </p>
                 </section>
 
@@ -92,7 +92,7 @@
                     <h2>Проблема: состояние на сервере</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
                         Сессия хранится в памяти <em>одного</em> сервера.
-                        Следующий запрос попадёт на <em>другой</em> — сессия потеряна
+                        Следующий запрос попадёт на <em>другой</em> - сессия потеряна
                     </p>
                     <div class="arch-flow fragment" style="margin-top: 0.8em;">
                         <div class="arch-box">User</div>
@@ -117,28 +117,28 @@
                 <section>
                     <h2>Решение: stateless</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Сервер <strong>не хранит состояние</strong> — любой сервер может обработать любой запрос
+                        Сервер <strong>не хранит состояние</strong> - любой сервер может обработать любой запрос
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
-                        Всё что «живёт» между запросами — <strong>выносится за пределы сервера</strong>:
+                        Всё что «живёт» между запросами - <strong>выносится за пределы сервера</strong>:
                         в базу данных, в отдельный кэш, в облачное хранилище
                     </p>
                     <p class="fragment" style="font-size: 0.72em; margin-top: 0.8em; color: #ffd54f;">
                         Stateless = добавить новый сервер можно в любой момент без миграции данных
                     </p>
                     <p class="fragment" style="font-size: 0.65em; opacity: 0.5; margin-top: 0.4em;">
-                        о конкретных инструментах — поговорим дальше
+                        о конкретных инструментах - поговорим дальше
                     </p>
                 </section>
 
                 <section>
                     <h2>Файлы: S3</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Файлы нельзя хранить на диске сервера — при горизонтальном масштабировании
+                        Файлы нельзя хранить на диске сервера - при горизонтальном масштабировании
                         каждый сервер видит только свой диск
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
-                        <strong>S3</strong> (Simple Storage Service) — объектное хранилище.
+                        <strong>S3</strong> (Simple Storage Service) - объектное хранилище.
                         Загружаешь файл по HTTP, получаешь URL. Читать может любой сервер
                     </p>
                     <ul style="margin-top: 0.5em;">
@@ -158,7 +158,7 @@
                 <section>
                     <h2>Проблема: один сервер</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Один сервер — единая точка отказа. Упал — всё лежит
+                        Один сервер - единая точка отказа. Упал - всё лежит
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
                         Ставим несколько серверов. Но как клиент узнает, к какому идти?
@@ -183,22 +183,22 @@
                     </div>
                     <ul style="margin-top: 0.6em;">
                         <li class="fragment">Распределяет трафик по нескольким серверам</li>
-                        <li class="fragment">Проверяет здоровье — не отправляет на упавший сервер</li>
-                        <li class="fragment">Терминирует TLS — серверы за ним работают по HTTP</li>
+                        <li class="fragment">Проверяет здоровье - не отправляет на упавший сервер</li>
+                        <li class="fragment">Терминирует TLS - серверы за ним работают по HTTP</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>Модель OSI</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        <strong>Open Systems Interconnection</strong> — эталонная модель взаимодействия открытых систем
+                        <strong>Open Systems Interconnection</strong> - эталонная модель взаимодействия открытых систем
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
                         Описывает, как устройства в сетях обмениваются данными и что происходит с этими данными
                         на каждом этапе передачи
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
-                        7 уровней — от физического кабеля до приложения
+                        7 уровней - от физического кабеля до приложения
                     </p>
                 </section>
 
@@ -208,7 +208,7 @@
                         <tr class="fragment" style="background: rgba(255,213,79,0.07);">
                             <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); width: 2em; font-weight: bold; color: #ffd54f; text-align: center;">7</td>
                             <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); font-weight: bold; min-width: 120px;">Прикладной</td>
-                            <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); opacity: 0.65;">HTTP, DNS — <strong style="opacity:1; color:#ffd54f;">L7 балансировщик</strong></td>
+                            <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); opacity: 0.65;">HTTP, DNS - <strong style="opacity:1; color:#ffd54f;">L7 балансировщик</strong></td>
                         </tr>
                         <tr class="fragment">
                             <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); font-weight: bold; color: #ffd54f; text-align: center;">6</td>
@@ -223,7 +223,7 @@
                         <tr class="fragment" style="background: rgba(102,187,106,0.07);">
                             <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); font-weight: bold; color: #ffd54f; text-align: center;">4</td>
                             <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); font-weight: bold;">Транспортный</td>
-                            <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); opacity: 0.65;">TCP, UDP — <strong style="opacity:1; color:#a5d6a7;">L4 балансировщик</strong></td>
+                            <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); opacity: 0.65;">TCP, UDP - <strong style="opacity:1; color:#a5d6a7;">L4 балансировщик</strong></td>
                         </tr>
                         <tr class="fragment">
                             <td style="padding: 0.32em 0.7em; border-bottom: 1px solid rgba(255,255,255,0.07); font-weight: bold; color: #ffd54f; text-align: center;">3</td>
@@ -262,7 +262,7 @@
                         </div>
                     </div>
                     <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.6em;">
-                        Обычно нужен <strong>L7</strong> — умеет роутить <code>/api</code> на один сервис,
+                        Обычно нужен <strong>L7</strong> - умеет роутить <code>/api</code> на один сервис,
                         <code>/static</code> на другой
                     </p>
                 </section>
@@ -278,7 +278,7 @@
                         <div class="timeline-item fragment">
                             <div class="timeline-label">Weighted RR</div>
                             <div class="timeline-arrow">-></div>
-                            <div class="timeline-desc">Серверу с весом 3 — втрое больше запросов. Когда серверы разные</div>
+                            <div class="timeline-desc">Серверу с весом 3 - втрое больше запросов. Когда серверы разные</div>
                         </div>
                         <div class="timeline-item fragment">
                             <div class="timeline-label">Least Conn</div>
@@ -316,11 +316,11 @@ server {
                 <section>
                     <h2>Health checks</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Балансировщик проверяет, живы ли серверы. Упавший — исключается автоматически
+                        Балансировщик проверяет, живы ли серверы. Упавший - исключается автоматически
                     </p>
                     <ul style="margin-top: 0.5em;">
-                        <li class="fragment"><strong>Passive</strong> — следит за реальными ответами, 3 ошибки → исключает</li>
-                        <li class="fragment"><strong>Active</strong> — сам шлёт запрос каждые N секунд на <code>GET /health</code></li>
+                        <li class="fragment"><strong>Passive</strong> - следит за реальными ответами, 3 ошибки → исключает</li>
+                        <li class="fragment"><strong>Active</strong> - сам шлёт запрос каждые N секунд на <code>GET /health</code></li>
                     </ul>
                     <pre class="javascript size-l code-example-one fragment" style="margin-top: 0.5em;"><code>app.get('/health', (req, res) => {
     res.json({ status: 'ok' });
@@ -336,12 +336,12 @@ server {
                 </section>
 
                 <section>
-                    <h2>Проблема: БД — узкое место</h2>
+                    <h2>Проблема: БД - узкое место</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Серверов приложений — много. База данных — одна
+                        Серверов приложений - много. База данных - одна
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.6em;">
-                        Все они пишут и читают в одну БД. При росте нагрузки — она становится бутылочным горлышком
+                        Все они пишут и читают в одну БД. При росте нагрузки - она становится бутылочным горлышком
                     </p>
                     <div class="compare fragment" style="margin-top: 0.8em;">
                         <div class="compare-block">
@@ -374,8 +374,8 @@ server {
                     </div>
                     <ul style="margin-top: 0.6em;">
                         <li class="fragment">Writes → Master. Reads → любая Replica</li>
-                        <li class="fragment"><strong>Replication lag</strong> — реплика немного отстаёт от мастера</li>
-                        <li class="fragment">Если Master упал — одна Replica становится новым Master (failover)</li>
+                        <li class="fragment"><strong>Replication lag</strong> - реплика немного отстаёт от мастера</li>
+                        <li class="fragment">Если Master упал - одна Replica становится новым Master (failover)</li>
                     </ul>
                 </section>
 
@@ -410,8 +410,8 @@ server {
                 <section>
                     <h2>Зачем кэш</h2>
                     <ul>
-                        <li class="fragment">Запрос к PostgreSQL — <strong>1–10 мс</strong></li>
-                        <li class="fragment">Запрос к Redis — <strong>0.1–0.5 мс</strong> (данные в RAM)</li>
+                        <li class="fragment">Запрос к PostgreSQL - <strong>1–10 мс</strong></li>
+                        <li class="fragment">Запрос к Redis - <strong>0.1–0.5 мс</strong> (данные в RAM)</li>
                         <li class="fragment">80–90% запросов читают одни и те же данные</li>
                         <li class="fragment">Кэшируем горячее: профиль пользователя, топ товаров, конфиги</li>
                     </ul>
@@ -423,7 +423,7 @@ server {
                 <section>
                     <h2>Redis</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        In-memory key-value хранилище. Данные в RAM — поэтому быстро
+                        In-memory key-value хранилище. Данные в RAM - поэтому быстро
                     </p>
                     <div class="timeline" style="margin-top: 0.5em;">
                         <div class="timeline-item fragment">
@@ -455,7 +455,7 @@ server {
     const cached = await redis.get(`user:${id}`);
     if (cached) return JSON.parse(cached);  // cache hit
 
-    // cache miss — идём в БД
+    // cache miss - идём в БД
     const user = await db.query(
         'SELECT * FROM users WHERE id = $1', [id]
     );
@@ -464,7 +464,7 @@ server {
 }
 </code></pre>
                     <p class="fragment" style="font-size: 0.72em; opacity: 0.8; margin-top: 0.4em;">
-                        При изменении — удалить ключ: <code>redis.del(`user:${id}`)</code>
+                        При изменении - удалить ключ: <code>redis.del(`user:${id}`)</code>
                     </p>
                 </section>
             </section>
@@ -478,11 +478,11 @@ server {
                 <section>
                     <h2>Зачем очереди</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Пользователь нажал «Зарегистрироваться» — нужно отправить email,
+                        Пользователь нажал «Зарегистрироваться» - нужно отправить email,
                         сгенерировать аватар, пушнуть аналитику
                     </p>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85; margin-top: 0.5em;">
-                        <strong>Синхронно</strong>: пользователь ждёт всё это — 500+ мс
+                        <strong>Синхронно</strong>: пользователь ждёт всё это - 500+ мс
                     </p>
                     <p class="fragment" style="font-size: 0.78em; color: #a5d6a7; margin-top: 0.4em;">
                         <strong>С очередью</strong>: сервер кладёт задачу за 1 мс → отвечает →
@@ -504,7 +504,7 @@ server {
                     </div>
                     <ul style="margin-top: 0.6em;">
                         <li class="fragment">Producer и consumer <strong>не знают</strong> друг о друге</li>
-                        <li class="fragment">Если worker упал — задача вернётся в очередь (ack)</li>
+                        <li class="fragment">Если worker упал - задача вернётся в очередь (ack)</li>
                         <li class="fragment">Worker'ов можно масштабировать независимо от API-серверов</li>
                     </ul>
                 </section>
@@ -519,7 +519,7 @@ server {
                 <section>
                     <h2>Как выкатить изменения?</h2>
                     <p class="fragment" style="font-size: 0.78em; opacity: 0.85;">
-                        Остановить сервер → обновить → запустить. Пока обновляемся — сайт лежит
+                        Остановить сервер → обновить → запустить. Пока обновляемся - сайт лежит
                     </p>
                     <p class="fragment" style="font-size: 0.78em; color: #ef9a9a; margin-top: 0.6em;">
                         Для продакшена это неприемлемо
@@ -546,9 +546,9 @@ server {
                         <div class="arch-box">Пользователи</div>
                     </div>
                     <ul style="margin-top: 0.7em;">
-                        <li class="fragment">Деплоим новую версию на <em>green</em> — трафик всё ещё идёт на <em>blue</em></li>
-                        <li class="fragment">Тестируем green. Всё ок — переключаем балансировщик</li>
-                        <li class="fragment">Что-то сломалось — мгновенный откат: переключаем обратно на blue</li>
+                        <li class="fragment">Деплоим новую версию на <em>green</em> - трафик всё ещё идёт на <em>blue</em></li>
+                        <li class="fragment">Тестируем green. Всё ок - переключаем балансировщик</li>
+                        <li class="fragment">Что-то сломалось - мгновенный откат: переключаем обратно на blue</li>
                     </ul>
                     <p class="fragment" style="font-size: 0.72em; margin-top: 0.6em; color: #ffd54f;">
                         Требует удвоенных ресурсов, зато переключение мгновенное
@@ -572,9 +572,9 @@ server {
                         </div>
                     </div>
                     <ul style="margin-top: 0.7em;">
-                        <li class="fragment">Новая версия получает малый процент трафика — «канарейка»</li>
-                        <li class="fragment">Смотрим на метрики и ошибки. Всё хорошо — постепенно увеличиваем</li>
-                        <li class="fragment">Проблема — откатываем только canary, не трогая остальных</li>
+                        <li class="fragment">Новая версия получает малый процент трафика - «канарейка»</li>
+                        <li class="fragment">Смотрим на метрики и ошибки. Всё хорошо - постепенно увеличиваем</li>
+                        <li class="fragment">Проблема - откатываем только canary, не трогая остальных</li>
                     </ul>
                     <p class="fragment" style="font-size: 0.72em; margin-top: 0.6em; color: #ffd54f;">
                         Позволяет проверить новую версию на реальных пользователях с минимальным риском
@@ -620,7 +620,7 @@ server {
                         <div class="timeline-item fragment">
                             <div class="timeline-label">DNS + CDN</div>
                             <div class="timeline-arrow">-></div>
-                            <div class="timeline-desc">DNS — домен в IP. CDN — статика (JS, CSS, картинки) из ближайшего датацентра</div>
+                            <div class="timeline-desc">DNS - домен в IP. CDN - статика (JS, CSS, картинки) из ближайшего датацентра</div>
                         </div>
                         <div class="timeline-item fragment">
                             <div class="timeline-label">Load Balancer</div>
@@ -640,7 +640,7 @@ server {
                         <div class="timeline-item fragment">
                             <div class="timeline-label">RabbitMQ</div>
                             <div class="timeline-arrow">-></div>
-                            <div class="timeline-desc">Долгие задачи — в фон. Worker масштабируется отдельно</div>
+                            <div class="timeline-desc">Долгие задачи - в фон. Worker масштабируется отдельно</div>
                         </div>
                         <div class="timeline-item fragment">
                             <div class="timeline-label">PostgreSQL</div>
@@ -665,8 +665,8 @@ server {
                         <li class="plus fragment">3. Load Balancer + 2–3 сервера приложения</li>
                         <li class="plus fragment">4. Очереди для фоновых задач</li>
                         <li class="plus fragment">5. PostgreSQL Replica, Prometheus + Grafana</li>
-                        <li class="circle fragment">6. CDN, Kubernetes — когда реально нужно</li>
-                        <li class="minus fragment">Шардинг и Kafka — до 10 млн пользователей не нужны</li>
+                        <li class="circle fragment">6. CDN, Kubernetes - когда реально нужно</li>
+                        <li class="minus fragment">Шардинг и Kafka - до 10 млн пользователей не нужны</li>
                     </ul>
                 </section>
             </section>

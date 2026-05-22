@@ -62,22 +62,22 @@
                 <div class="timeline">
                     <div class="timeline-item fragment">
                         <div class="timeline-label">Перехватить клик</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Не делать переход, остановить дефолтное поведение ссылки</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">Обновить URL</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Поменять адрес в строке браузера без перезагрузки - History API</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">Обновить UI</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Показать нужный компонент / экран, загрузить данные</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">Обработать «назад»</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Как-то отследить навигацию браузера и обновить UI</div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ console.log(window.history); // объект History
                 <p style="font-size: 0.78em; margin-bottom: 0.5em;">
                     Количество записей в стеке истории текущей сессии.
                 </p>
-                <pre class="javascript size-l code-example-one"><code>// Открыли браузер —> перешли на /about —> перешли на /contact
+                <pre class="javascript size-l code-example-one"><code>// Открыли браузер -> перешли на /about -> перешли на /contact
 
 console.log(history.length); // 3
 </code></pre><br>
@@ -147,7 +147,7 @@ console.log(history.length); // всё ещё 3
             <!-- 4. history.back и history.forward -->
             <section>
                 <h2><code>history.back()</code> и <code>history.forward()</code></h2>
-                <pre class="javascript size-l code-example-one"><code>// Эквивалент кнопок браузера &lt;— и —&gt;
+                <pre class="javascript size-l code-example-one"><code>// Эквивалент кнопок браузера &lt;- и -&gt;
 history.back();    // сдвинуть указатель на −1
 history.forward(); // сдвинуть указатель на +1
 </code></pre>
@@ -230,7 +230,7 @@ history.replaceState({ sort: 'price' }, '', '/products?sort=price');
                     <div class="compare-block fragment">
                         <h3>Когда replace?</h3>
                         <ul>
-                            <li>Редирект (логин —> дашборд)</li>
+                            <li>Редирект (логин -> дашборд)</li>
                             <li>Фильтры / сортировка в URL</li>
                             <li>Исправление URL без смысла «назад»</li>
                         </ul>
@@ -529,33 +529,33 @@ const q  = route.query.search; // query string
                 <div class="timeline">
                     <div class="timeline-item fragment">
                         <div class="timeline-label">pages/index.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>/</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">pages/about.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>/about</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">pages/products/[id].tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>/products/139</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">pages/products/[...slug].tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>/products/iphone</code>,
                             <br><code>/products/phone/iphone/iphone-15-pro</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">pages/_app.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Глобальный лейаут и провайдеры для всего приложения</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">pages/api/users.ts</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">API-эндпоинт <code>/api/users</code></div>
                     </div>
                 </div>
@@ -581,17 +581,17 @@ export default function Page() {
                 <div class="timeline">
                     <div class="timeline-item fragment">
                         <div class="timeline-label">/products/a</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>{slug: ['a']}</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">/products/a/b</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>{slug: ['a', 'b']}</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">/products/a/b/c</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc"><code>{slug: ['a', 'b', 'c']}</code></div>
                     </div>
                 </div>
@@ -605,42 +605,42 @@ export default function Page() {
                 <div class="timeline">
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/page.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Страница маршрута <code>/</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/catalog/page.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Страница маршрута <code>/catalog</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/catalog/[id]/page.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Страница маршрута <code>/catalog/:id</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/catalog/[...slug]/page.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Страница маршрута <code>/catalog/*</code></div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/layout.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Персистентный лейаут, не пересоздаётся при переходах</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/loading.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Автоматический Suspense-скелетон при загрузке</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/error.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Error Boundary для маршрута</div>
                     </div>
                     <div class="timeline-item fragment">
                         <div class="timeline-label">app/(shop)/layout.tsx</div>
-                        <div class="timeline-arrow">—></div>
+                        <div class="timeline-arrow">-></div>
                         <div class="timeline-desc">Route Group - лейаут для группы, URL не меняется</div>
                     </div>
                 </div>

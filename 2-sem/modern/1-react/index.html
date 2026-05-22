@@ -1066,7 +1066,7 @@ function App() {
             </section>
 
             <section>
-                <h2>Типизация компонента — вариант 1</h2>
+                <h2>Типизация компонента - вариант 1</h2>
                 <p style="font-size: 0.75em;">Тип описывается отдельно, стрелочная функция с типизированными props</p>
                 <pre class="size-l code-example-one"><code class="javascript">type StudentItemProps = {
   name: string;
@@ -1085,8 +1085,8 @@ const StudentItem = ({ name, grade, isActive = false }: StudentItemProps) =&gt; 
             </section>
 
             <section>
-                <h2>Типизация компонента — вариант 2</h2>
-                <p style="font-size: 0.75em;"><code>React.FC</code> — специальный тип для функционального компонента</p>
+                <h2>Типизация компонента - вариант 2</h2>
+                <p style="font-size: 0.75em;"><code>React.FC</code> - специальный тип для функционального компонента</p>
                 <pre class="size-l code-example-one"><code class="typescript">import { FC } from 'react';
 
 type StudentItemProps = {
@@ -1104,7 +1104,7 @@ const StudentItem: FC&lt;StudentItemProps&gt; = ({ name, grade, isActive = false
   );
 };</code></pre>
                 <p class="fragment" style="font-size: 0.75em; color: rgba(255,255,255,0.7);">
-                    <code>FC&lt;Props&gt;</code> явно указывает, что функция — React-компонент.<br>
+                    <code>FC&lt;Props&gt;</code> явно указывает, что функция - React-компонент.<br>
                     Минус: запрещает возвращать <code>undefined</code>, только <code>JSX | null</code>
                 </p>
             </section>

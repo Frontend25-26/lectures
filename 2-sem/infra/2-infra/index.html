@@ -208,7 +208,7 @@ CMD ["node", "server.js"]  # Команда запуска</code></pre>
                 <section>
                     <h3>Зачем Docker фронтенду?</h3>
                     <ul class="opinion">
-                        <li class="plus fragment">«Работает на моей машине» —> работает везде</li>
+                        <li class="plus fragment">«Работает на моей машине» -> работает везде</li>
                         <li class="plus fragment">Единая среда для dev, CI и prod</li>
                         <li class="plus fragment">Лёгкое горизонтальное масштабирование</li>
                     </ul>
@@ -216,14 +216,14 @@ CMD ["node", "server.js"]  # Команда запуска</code></pre>
 
                 <section>
                     <h3>Docker Compose</h3>
-                    <p class="fragment">Один контейнер — один процесс. Но реальное приложение состоит из нескольких
+                    <p class="fragment">Один контейнер - один процесс. Но реальное приложение состоит из нескольких
                         сервисов</p>
                     <ul>
                         <li class="fragment">frontend (nginx)</li>
                         <li class="fragment">backend (Node.js / Python)</li>
                         <li class="fragment">база данных (PostgreSQL)</li>
                     </ul>
-                    <p class="fragment"><strong>Docker Compose</strong> — инструмент для запуска группы контейнеров
+                    <p class="fragment"><strong>Docker Compose</strong> - инструмент для запуска группы контейнеров
                         одной командой</p>
                 </section>
 
@@ -256,11 +256,11 @@ volumes:
                 <section>
                     <h3>Основные команды</h3>
                     <ul>
-                        <li class="fragment"><code>docker compose up</code> — поднять все сервисы</li>
-                        <li class="fragment"><code>docker compose up --build</code> — пересобрать образы и запустить
+                        <li class="fragment"><code>docker compose up</code> - поднять все сервисы</li>
+                        <li class="fragment"><code>docker compose up --build</code> - пересобрать образы и запустить
                         </li>
-                        <li class="fragment"><code>docker compose down</code> — остановить и удалить контейнеры</li>
-                        <li class="fragment"><code>docker compose logs -f</code> — следить за логами в реальном времени
+                        <li class="fragment"><code>docker compose down</code> - остановить и удалить контейнеры</li>
+                        <li class="fragment"><code>docker compose logs -f</code> - следить за логами в реальном времени
                         </li>
                     </ul>
                 </section>
@@ -304,9 +304,9 @@ volumes:
 
                 <section>
                     <h3>Bump версии через npm</h3>
-                    <pre class="javascript size-l code-example-one"><code>npm version patch   # 1.0.0 —> 1.0.1
-npm version minor   # 1.0.0 —> 1.1.0
-npm version major   # 1.0.0 —> 2.0.0</code></pre>
+                    <pre class="javascript size-l code-example-one"><code>npm version patch   # 1.0.0 -> 1.0.1
+npm version minor   # 1.0.0 -> 1.1.0
+npm version major   # 1.0.0 -> 2.0.0</code></pre>
                     <p class="fragment" style="margin-top: 0.7em; font-size: 0.8em;">Автоматически создаёт git-тег и
                         коммит</p>
                 </section>
@@ -340,22 +340,22 @@ npm version major   # 1.0.0 —> 2.0.0</code></pre>
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-label">Stand</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Проверка отдельного изменения</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-label">Testing</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Проверка набора последних изменений</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-label">Prestable</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Проверка с продовыми данными</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-label">Production</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Финальная версия для пользователей</div>
                         </div>
                     </div>
@@ -404,22 +404,22 @@ npm version major   # 1.0.0 —> 2.0.0</code></pre>
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-label">Lint</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">eslint, stylelint - статический анализ</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-label">Unit</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Изолированное тестирование функций и компонентов</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-label">Screenshot</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Сравнение визуального вывода компонентов</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-label">e2e</div>
-                            <div class="timeline-arrow">—></div>
+                            <div class="timeline-arrow">-></div>
                             <div class="timeline-desc">Сценарии в реальном браузере (Playwright, Cypress)</div>
                         </div>
                     </div>

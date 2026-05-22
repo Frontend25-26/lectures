@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITMOxFrontEnd 2025-2026 — Хакатоны</title>
+    <title>ITMOxFrontEnd 2025-2026 - Хакатоны</title>
     <link rel="stylesheet" href="../style.css">
     <style>
         .hackathons-grid {
@@ -213,9 +213,9 @@
             <h2>Хакатоны</h2>
 
             <div class="hackathon-format">
-                <strong>Формат:</strong> три хакатона по 5–8 часов в субботу. Каждый хакатон — это спринт:
+                <strong>Формат:</strong> три хакатона по 5–8 часов в субботу. Каждый хакатон - это спринт:
                 утром договариваемся что делаем, днём делаем, вечером показываем результат и проводим ретро.
-                Между хакатонами работа не останавливается — менторы доступны в чате для вопросов и ревью.
+                Между хакатонами работа не останавливается - менторы доступны в чате для вопросов и ревью.
             </div>
 
             <nav class="project-nav">
@@ -289,18 +289,31 @@
                 </div>
 
                 <!-- Хакатон 3 -->
-                <div class="hackathon-card locked">
+                <div class="hackathon-card" id="hackathon-3-card">
                     <div class="hackathon-header">
-                        <div class="hackathon-number" style="color: #555;">3</div>
+                        <div class="hackathon-number">3</div>
                         <div>
-                            <div class="hackathon-title">Полировка и релиз</div>
-                            <div class="hackathon-date"><span class="status-badge locked">скоро</span></div>
+                            <div class="hackathon-title">Финализация и релиз</div>
+                            <div class="hackathon-date">23 мая</div>
                         </div>
                     </div>
 
                     <p class="hackathon-desc">
-                        Финальная полировка.
+                        Завершаем функционал и готовим продукт к защите.
                     </p>
+
+                    <ul class="goals-list">
+                        <li>Сторя #124 - Финализация ревью и оценки</li>
+                        <li>Сторя #125 - Уведомления</li>
+                        <li>Сторя #126 - Админ-панель: оверрайды и аналитика</li>
+                        <li>Сторя #127 - Профили и дашборды</li>
+                        <li>После хакатона - доработка до <b>X</b> июня</li>
+                        <li><b>X</b> июня - защита проекта перед заказчиком</li>
+                    </ul>
+
+                    <div class="hackathon-links">
+                        <a href="/2-sem/hackathons/3-grooming/" class="hackathon-link primary">Презентация</a>
+                    </div>
                 </div>
 
             </div>
@@ -318,6 +331,20 @@
                 }
             }
             if (section) section.style.display = '';
+
+            var hack3Card = document.getElementById('hackathon-3-card');
+            var hack3UnlockDate = new Date('2026-05-23T07:50:00Z'); // 10:50 МСК = 07:50 UTC
+            if (hack3Card && now < hack3UnlockDate && !params.has('preview')) {
+                hack3Card.className = 'hackathon-card locked';
+                hack3Card.innerHTML =
+                    '<div class="hackathon-header">' +
+                    '<div class="hackathon-number" style="color:#555;">3</div>' +
+                    '<div>' +
+                    '<div class="hackathon-title">Финализация и релиз</div>' +
+                    '<div class="hackathon-date"><span class="status-badge locked">скоро</span></div>' +
+                    '</div></div>' +
+                    '<p class="hackathon-desc">Финальная полировка.</p>';
+            }
         })();
     </script>
 </body>
